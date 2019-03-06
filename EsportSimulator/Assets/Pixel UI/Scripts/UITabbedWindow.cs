@@ -4,14 +4,19 @@
  * Created on: 01/15/2019
  * Last Modified: 01/16/2019
  * Description:
- * This script controls the hiding and showing of content panes for each tab.  If you need
+ * This script controls the hiding and showing of content tabs for each tab.  If you need
  * to add more tabs, in the hiearchy duplicate one of the existing tabs and change its
- * ID to be one higher than the current highest.  Then duplicate a content pane as well
- * and extend the ContentPanes count in the inspector and attach the new content pane
+ * ID to be one higher than the current highest.  Then duplicate a content tab as well
+ * and extend the Tabs count in the inspector and attach the new content tab
  * to the last slot.
  ******************************************************************************************/
+
+ // Script has been customized for the use of this project
+ // The word pane or panes has been changed to tab or tabs
+
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace PixelsoftGames.PixelUI
 {
@@ -20,14 +25,22 @@ namespace PixelsoftGames.PixelUI
         #region Fields & Properties
 
         [SerializeField]
-        [Tooltip("List of content panes for this tabbed window")]
-        List<GameObject> ContentPanes;
+        [Tooltip("List of content tabs for this tabbed window")]
+        List<GameObject> Tabs;
         [SerializeField]
-        [Tooltip("The default pane to display on instantiation")]
-        GameObject DefaultPane;
+        [Tooltip("The default tab to display on instantiation")]
+        GameObject DefaultTab;
 
-        // The currently active pane
-        GameObject activePane;
+        // Customized
+        [SerializeField]
+        [Tooltip("Color the deactivted tabs will have")]
+        Color deactivatedColor;
+        [SerializeField]
+        [Tooltip("The default color the activated tab will have")]
+        Color defaultColor;
+
+        // The currently active tab
+        GameObject activeTab;
 
         #endregion
 
@@ -43,20 +56,23 @@ namespace PixelsoftGames.PixelUI
         #region Public Methods
 
         /// <summary>
-        /// This changes the active content pane and deactivates the previously active one.
+        /// This changes the active content tab and deactivates the previously active one.
         /// </summary>
         /// <param name="index"></param>
-        public void ActivateContentPane(int index)
+        public void ActivateContentTab(int index)
         {
-            if (ContentPanes == null || index >= ContentPanes.Count)
+            if (Tabs == null || index >= Tabs.Count)
             {
-                Debug.LogError("Could not switch to the requested content pane because the requested pane index is out of bounds or the content panes list is null.", gameObject);
+                Debug.LogError("Could not switch to the requested content tab because the requested tab index is out of bounds or the content tabs list is null.", gameObject);
                 return;
             }
-
-            activePane.SetActive(false);
-            activePane = ContentPanes[index];
-            activePane.SetActive(true);
+            
+            // Customized
+            activeTab.transform.GetChild(0).GetComponent<Image>().color = deactivatedColor;
+            activeTab.transform.GetChild(1).gameObject.SetActive(false);
+            activeTab = Tabs[index];
+            activeTab.transform.GetChild(1).gameObject.SetActive(true);
+            activeTab.transform.GetChild(0).GetComponent<Image>().color = defaultColor;
         }
 
         #endregion
@@ -68,26 +84,30 @@ namespace PixelsoftGames.PixelUI
         /// </summary>
         void SetupContent()
         {
-            if (ContentPanes == null || ContentPanes.Count == 0)
+            if (Tabs == null || Tabs.Count == 0)
             {
-                Debug.LogError("Could not set up content panes because the content panes list is null or empty.", gameObject);
+                Debug.LogError("Could not set up content tabs because the content tabs list is null or empty.", gameObject);
                 return;
             }
 
-            if (DefaultPane == null)
+            if (DefaultTab == null)
             {
-                Debug.LogWarning("No default pane for tabbed window has been set up, choosing the first pane in the list by default", gameObject);
-                DefaultPane = ContentPanes[0];
+                Debug.LogWarning("No default tab for tabbed window has been set up, choosing the first tab in the list by default", gameObject);
+                DefaultTab = Tabs[0];
             }
 
-            activePane = DefaultPane;
+            activeTab = DefaultTab;
 
-            foreach (GameObject g in ContentPanes)
+            // Customized
+            foreach (GameObject g in Tabs)
             {
-                if (g == activePane)
-                    g.SetActive(true);
+                if (g == activeTab)
+                    g.transform.GetChild(1).gameObject.SetActive(true);
                 else
-                    g.SetActive(false);
+                {
+                    g.transform.GetChild(1).gameObject.SetActive(false);
+                    g.transform.GetChild(0).GetComponent<Image>().color = deactivatedColor;
+                }
             }
         }
 
