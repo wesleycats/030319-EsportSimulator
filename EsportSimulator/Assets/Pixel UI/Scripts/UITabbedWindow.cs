@@ -66,13 +66,13 @@ namespace PixelsoftGames.PixelUI
                 Debug.LogError("Could not switch to the requested content tab because the requested tab index is out of bounds or the content tabs list is null.", gameObject);
                 return;
             }
-            
+
             // Customized
             activeTab.transform.GetChild(0).GetComponent<Image>().color = deactivatedColor;
             activeTab.transform.GetChild(1).gameObject.SetActive(false);
             activeTab = Tabs[index];
-            activeTab.transform.GetChild(1).gameObject.SetActive(true);
             activeTab.transform.GetChild(0).GetComponent<Image>().color = defaultColor;
+            activeTab.transform.GetChild(1).gameObject.SetActive(true);
         }
 
         #endregion
@@ -102,11 +102,14 @@ namespace PixelsoftGames.PixelUI
             foreach (GameObject g in Tabs)
             {
                 if (g == activeTab)
+                {
+                    g.transform.GetChild(0).GetComponent<Image>().color = defaultColor;
                     g.transform.GetChild(1).gameObject.SetActive(true);
+                }
                 else
                 {
-                    g.transform.GetChild(1).gameObject.SetActive(false);
                     g.transform.GetChild(0).GetComponent<Image>().color = deactivatedColor;
+                    g.transform.GetChild(1).gameObject.SetActive(false);
                 }
             }
         }
