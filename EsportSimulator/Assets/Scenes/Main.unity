@@ -18523,7 +18523,7 @@ MonoBehaviour:
   timeMultiplier: 1
   costMultiplier: 0
   resultMultiplier: 10
-  energyMultiplier: 0
+  energyMultiplier: 10
   skillName: 
 --- !u!1 &558865704
 GameObject:
@@ -31118,7 +31118,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 414613397}
   m_Direction: 2
   m_Value: 0.9999998
-  m_Size: 0.25000003
+  m_Size: 0.25
   m_NumberOfSteps: 1
   m_OnValueChanged:
     m_PersistentCalls:
