@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e54be1c9295da334c8f5e36fe9340da9
+guid: 0f117480947f3614a956cd3bcc4b5ed3
 TextureImporter:
   fileIDToRecycleName:
     21300000: computer_excellent_0
@@ -134,7 +134,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c24217e81d40c1a47b0229fcbc89b1dd
+      spriteID: b65b974c2bb64b7408ca93dfb57ce07c
       vertices: []
       indices: 
       edges: []
@@ -154,7 +154,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b2ccf2a4eaaaf184383f420fb448a7bb
+      spriteID: 636705679d1775142af846210bc20736
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4d53900d395859e40acc194c10504a7a
+      spriteID: 824e1482d5b697844a049f96538e7bae
       vertices: []
       indices: 
       edges: []
@@ -182,7 +182,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: f1e37f5dfd548f548a9e1f8e4e7eb1ed
+    spriteID: bcbc57fad199da044a25f1a586b7b4db
     vertices: []
     indices: 
     edges: []
