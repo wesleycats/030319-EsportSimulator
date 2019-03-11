@@ -31117,7 +31117,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 414613398}
   m_HandleRect: {fileID: 414613397}
   m_Direction: 2
-  m_Value: 0.9999998
+  m_Value: 0.9999999
   m_Size: 0.25
   m_NumberOfSteps: 1
   m_OnValueChanged:
@@ -39528,8 +39528,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeMultiplier: 2
   costMultiplier: 0
-  resultMultiplier: 25
-  energyMultiplier: 0
+  resultMultiplier: 0
+  energyMultiplier: 25
   skillName: 
 --- !u!114 &1258686264
 MonoBehaviour:
