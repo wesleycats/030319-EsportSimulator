@@ -51,4 +51,11 @@ public class SliderToText : MonoBehaviour
     {
         textToChange.text = "+" + (slider.value * resultMultiplier).ToString() + " " + skillName + ", -" + (slider.value * energyMultiplier).ToString() + "% energy, -$" + (slider.value * costMultiplier).ToString();
     }
+
+	public void ValueToSreamResult(Text textToChange)
+	{
+		//TODO get fame amount
+
+		textToChange.text = "between +$" + (slider.value * resultMultiplier).ToString() + "-$" + (slider.value * resultMultiplier * 3).ToString() + ", -" + (slider.value * energyMultiplier).ToString() + "% energy";
+	}
 }
