@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class DisEnableObject : MonoBehaviour
 {
-    public void Enable(bool enable)
+    public void Enable(bool active)
     {
-        this.gameObject.SetActive(enable);
+        this.gameObject.SetActive(active);
     }
 }

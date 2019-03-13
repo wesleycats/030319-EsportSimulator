@@ -7,7 +7,7 @@ public class SliderToText : MonoBehaviour
     public float timeMultiplier;
     public float costMultiplier;
     public float resultMultiplier;
-    public float energyMultiplier;
+    public float tirednessMultiplier;
     public string skillName;
 
     Slider slider;
@@ -34,28 +34,33 @@ public class SliderToText : MonoBehaviour
 
     public void ValueToSleepResult(Text textToChange)
     {
-        textToChange.text = "+" + (slider.value * energyMultiplier).ToString() + "% energy";
+        textToChange.text = "+" + (slider.value * tirednessMultiplier).ToString() + "% tiredness";
     }
 
     public void ValueToWorkResult(Text textToChange)
     {
-        textToChange.text = "+$" + (slider.value * resultMultiplier).ToString() + ", -" + (slider.value * energyMultiplier).ToString() + "% energy";
+        textToChange.text = "+$" + (slider.value * resultMultiplier).ToString() + ", -" + (slider.value * tirednessMultiplier).ToString() + "% tiredness";
     }
 
     public void ValueToTrainFreeResult(Text textToChange)
     {
-        textToChange.text = "+" + (slider.value * resultMultiplier).ToString() + " " + skillName + ", -" + (slider.value * energyMultiplier).ToString() + "% energy";
+        textToChange.text = "+" + (slider.value * resultMultiplier).ToString() + " " + skillName + ", -" + (slider.value * tirednessMultiplier).ToString() + "% tiredness";
     }
 
     public void ValueToTrainResult(Text textToChange)
     {
-        textToChange.text = "+" + (slider.value * resultMultiplier).ToString() + " " + skillName + ", -" + (slider.value * energyMultiplier).ToString() + "% energy, -$" + (slider.value * costMultiplier).ToString();
+        textToChange.text = "+" + (slider.value * resultMultiplier).ToString() + " " + skillName + ", -" + (slider.value * tirednessMultiplier).ToString() + "% tiredness, -$" + (slider.value * costMultiplier).ToString();
     }
 
 	public void ValueToSreamResult(Text textToChange)
 	{
 		//TODO get fame amount
 
-		textToChange.text = "between +$" + (slider.value * resultMultiplier).ToString() + "-$" + (slider.value * resultMultiplier * 3).ToString() + ", -" + (slider.value * energyMultiplier).ToString() + "% energy";
+		textToChange.text = "between +$" + (slider.value * resultMultiplier).ToString() + "-$" + (slider.value * resultMultiplier * 3).ToString() + ", -" + (slider.value * tirednessMultiplier).ToString() + "% tiredness";
 	}
+
+    private void OnDisable()
+    {
+        slider.value = 0;
+    }
 }
