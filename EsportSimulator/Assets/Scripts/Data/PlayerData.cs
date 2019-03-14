@@ -51,9 +51,9 @@ public class PlayerData : ScriptableObject
         money = defaultMoney;
         rating = 0;
         fame = 0;
-        workLevel = 1;
+        workLevel = 0;
         workExperience = 0;
-        houseLevel = 1;
+        houseLevel = 0;
         tiredness = 0;
         hunger = 0;
         thirst = 0;

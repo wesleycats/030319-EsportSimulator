@@ -26,6 +26,7 @@ public class ArtManager : MonoBehaviour
     public Sprite[] keyboardSprites;
     public Sprite[] screenSprites;
     public Sprite[] chairSprites;
+    public Sprite[] tableSprites;
     public Sprite[] workstationSprites;
 
     #endregion
@@ -65,34 +66,11 @@ public class ArtManager : MonoBehaviour
 
             case ActivityManager.Activity.Idle:
                 playerAnimator.Play("Idle");
-                workstationAnimator.Play("Idle");
+                workstationAnimator.Play("WoodenTable");
 
-                switch (playerData.HouseLevel)
-                {
-                    case 1:
-                        background.sprite = houseSprites[0];
-
-                        break;
-
-                    case 2:
-                        background.sprite = houseSprites[1];
-
-                        break;
-
-                    case 3:
-                        background.sprite = houseSprites[2];
-
-                        break;
-
-                    case 4:
-                        background.sprite = houseSprites[3];
-
-                        break;
-
-                    default:
-
-                        break;
-                }
+                background.sprite = houseSprites[(int)playerData.HouseLevel];
+                chair.sprite = chairSprites[(int)playerData.HouseLevel];
+                workstation.sprite = tableSprites[(int)playerData.HouseLevel];
 
                 break;
 
@@ -109,29 +87,30 @@ public class ArtManager : MonoBehaviour
                 break;
 
             case ActivityManager.Activity.Work:
+                background.sprite = workplaceSprites[(int)playerData.WorkLevel];
+                screen.sprite = null;
+                keyboard.sprite = null;
                 
                 switch (playerData.WorkLevel)
                 {
-                    case 1:
+                    case 0:
                         playerAnimator.Play("Working1");
                         workstationAnimator.Play("Grill");
-                        background.sprite = workplaceSprites[0];
-                        screen.sprite = null;
-                        keyboard.sprite = null;
+                        chair.sprite = null;
 
                         break;
 
-                    case 2:
+                    case 1:
                         background.sprite = workplaceSprites[1];
 
                         break;
 
-                    case 3:
+                    case 2:
                         background.sprite = workplaceSprites[2];
 
                         break;
 
-                    case 4:
+                    case 3:
                         background.sprite = workplaceSprites[3];
 
                         break;

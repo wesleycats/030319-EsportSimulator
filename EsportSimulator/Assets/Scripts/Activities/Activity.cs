@@ -10,17 +10,17 @@ public class Activity : MonoBehaviour
     public ActivityManager.Activity activity;
 
     [Tooltip("Use SetDurationSlider() and keep 0 if slider is used")]
-    public int duration;
+    public int hourAmount;
 
     public void SetDurationSlider()
     {
         if (!bar) return;
 
-        duration = (int)(bar.value * bar.GetComponent<SliderToText>().timeMultiplier);
+        hourAmount = (int)(bar.value * bar.GetComponent<SliderToText>().TimeMultiplier);
     }
 
     public void ChangeActivity()
     {
-        activityManager.ChangeActivity(activity);
+        activityManager.ChangeActivity(activity, hourAmount);
     }
 }

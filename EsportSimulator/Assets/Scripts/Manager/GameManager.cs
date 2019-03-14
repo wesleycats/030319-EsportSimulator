@@ -25,12 +25,16 @@ public class GameManager : MonoBehaviour
     public PlayerData playerData;
     public UIManager uiManager;
     public ArtManager artManager;
+    public TimeManager timeManager;
 
     void Start()
     {
         if (!playerData.Saved) ResetGame();
 
         InitializePlayerData();
+        timeManager.InitializeGameData();
+        uiManager.InitializePlayerData();
+        uiManager.InitializeGameData();
     }
 
     public void ResetGame()
@@ -54,21 +58,21 @@ public class GameManager : MonoBehaviour
         gameKnowledge = playerData.GameKnowledge;
         teamPlay = playerData.TeamPlay;
         mechanics = playerData.Mechanics;
-
-        uiManager.InitializePlayerData();
     }
 
     #region Getters & Setters
 
-    public float Money { get { return money; } }
-    public float Rating { get { return rating; } }
-    public float Fame { get { return fame; } }
-    public float Tiredness { get { return tiredness; } }
-    public float Hunger { get { return hunger; } }
-    public float Thirst { get { return thirst; } }
-    public float GameKnowledge { get { return gameKnowledge; } }
-    public float TeamPlay { get { return teamPlay; } }
-    public float Mechanics { get { return mechanics; } }
+    public float Money { get { return money; } set { money = value; } }
+    public float Rating { get { return rating; } set { rating = value; } }
+    public float Fame { get { return fame; } set { fame = value; } }
+    public float WorkExperience { get { return workExperience; } set { workExperience = value; } }
+    public float WorkLevel { get { return workLevel; } set { workLevel = value; } }
+    public float Tiredness { get { return tiredness; } set { tiredness = value; } }
+    public float Hunger { get { return hunger; } set { hunger = value; } }
+    public float Thirst { get { return thirst; } set { thirst = value; } }
+    public float GameKnowledge { get { return gameKnowledge; } set { gameKnowledge = value; } }
+    public float TeamPlay { get { return teamPlay; } set { teamPlay = value; } }
+    public float Mechanics { get { return mechanics; } set { mechanics = value; } }
 
     #endregion
 }

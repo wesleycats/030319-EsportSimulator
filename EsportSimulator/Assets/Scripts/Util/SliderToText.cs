@@ -4,11 +4,26 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Slider))]
 public class SliderToText : MonoBehaviour
 {
-    public float timeMultiplier;
-    public float costMultiplier;
-    public float resultMultiplier;
-    public float tirednessMultiplier;
-    public string skillName;
+    [SerializeField] private float timeMultiplier;
+    [SerializeField] private float costMultiplier;
+    [SerializeField] private float resultMultiplier;
+    [SerializeField] private float tirednessMultiplier;
+    [SerializeField] private string skillName;
+    [SerializeField] private bool sleep;
+
+    private float duration;
+    private float tiredness;
+    private float hunger;
+    private float thirst;
+    private float money;
+    private float moneyMin;
+    private float moneyMax;
+    private float rating;
+    private float fame;
+    private float skill;
+
+    private float debuffMultiplier = 1f;
+    private float debuffMultiplierAmount = 1f;
 
     Slider slider;
 
@@ -19,48 +34,90 @@ public class SliderToText : MonoBehaviour
 
     private void Start()
     {
-        slider.value = 0f;
+        ResetValues();
     }
 
+    //TODO Change responsibility of text changes to UIManager
     public void ValueToTimeText(Text textToChange)
     {
-        textToChange.text = slider.value.ToString() + " hours";
-    }
-
-    public void ValueToSleepTimeText(Text textToChange)
-    {
-        textToChange.text = (slider.value * timeMultiplier).ToString() + " hours";
+        duration = slider.value * timeMultiplier;
+        textToChange.text = duration.ToString() + " hours";
     }
 
     public void ValueToSleepResult(Text textToChange)
     {
-        textToChange.text = "+" + (slider.value * tirednessMultiplier).ToString() + "% tiredness";
+        tiredness = slider.value * tirednessMultiplier * (debuffMultiplier * debuffMultiplierAmount);
+        textToChange.text = "-" + tiredness.ToString() + "% tiredness";
     }
 
     public void ValueToWorkResult(Text textToChange)
     {
-        textToChange.text = "+$" + (slider.value * resultMultiplier).ToString() + ", -" + (slider.value * tirednessMultiplier).ToString() + "% tiredness";
+        tiredness = slider.value * tirednessMultiplier;
+        money = slider.value * resultMultiplier * (debuffMultiplier * debuffMultiplierAmount);
+        textToChange.text = "+$" + money.ToString() + ", -" + tiredness.ToString() + "% tiredness";
     }
 
     public void ValueToTrainFreeResult(Text textToChange)
     {
-        textToChange.text = "+" + (slider.value * resultMultiplier).ToString() + " " + skillName + ", -" + (slider.value * tirednessMultiplier).ToString() + "% tiredness";
+        tiredness = slider.value * tirednessMultiplier;
+        skill = slider.value * resultMultiplier * (debuffMultiplier * debuffMultiplierAmount);
+        textToChange.text = "+" + skill.ToString() + " " + skillName + ", -" + tiredness.ToString() + "% tiredness";
     }
 
     public void ValueToTrainResult(Text textToChange)
     {
-        textToChange.text = "+" + (slider.value * resultMultiplier).ToString() + " " + skillName + ", -" + (slider.value * tirednessMultiplier).ToString() + "% tiredness, -$" + (slider.value * costMultiplier).ToString();
+        tiredness = slider.value * tirednessMultiplier;
+        money = slider.value * costMultiplier;
+        skill = slider.value * resultMultiplier * (debuffMultiplier * debuffMultiplierAmount);
+        textToChange.text = "+" + skill.ToString() + " " + skillName + ", -" + tiredness.ToString() + "% tiredness, -$" + money.ToString();
     }
 
-	public void ValueToSreamResult(Text textToChange)
-	{
-		//TODO get fame amount
-
-		textToChange.text = "between +$" + (slider.value * resultMultiplier).ToString() + "-$" + (slider.value * resultMultiplier * 3).ToString() + ", -" + (slider.value * tirednessMultiplier).ToString() + "% tiredness";
-	}
-
+    public void ValueToSreamResult(Text textToChange)
+    {
+        //TODO get fame amount
+        tiredness = slider.value * tirednessMultiplier;
+        moneyMin = slider.value * resultMultiplier * (debuffMultiplier * debuffMultiplierAmount);
+        moneyMax = slider.value * (resultMultiplier * 3) * (debuffMultiplier * debuffMultiplierAmount);
+        textToChange.text = "between +$" + moneyMin.ToString() + "-$" + moneyMax.ToString() + ", -" + tiredness.ToString() + "% tiredness";
+    }
+    
     private void OnDisable()
     {
-        slider.value = 0;
+        ResetValues();
     }
+
+    private void ResetValues()
+    {
+        slider.value = 0f;
+        tiredness = 0f;
+        hunger = 0f;
+        thirst = 0f;
+        money = 0f;
+        rating = 0f;
+        fame = 0f;
+        skill = 0f;
+    }
+
+    #region Getters & Setters
+
+    public float Duration { get { return duration; } }
+    public float Tiredness { get { return tiredness; } }
+    public float Hunger { get { return hunger; } }
+    public float Thirst { get { return thirst; } }
+    public float Money { get { return money; } }
+    public float MoneyMin { get { return moneyMin; } }
+    public float MoneyMax { get { return moneyMax; } }
+    public float Rating { get { return rating; } }
+    public float Fame { get { return fame; } }
+
+    public float TimeMultiplier { get { return timeMultiplier; } }
+    public float CostMultiplier { get { return costMultiplier; } }
+    public float ResultMultiplier { get { return resultMultiplier; } }
+    public float TirednessMultiplier { get { return tirednessMultiplier; } }
+    public string SkillName { get { return skillName; } }
+
+    public float DebuffMultiplier { get { return debuffMultiplier; } set { debuffMultiplier = value; } }
+    public float DebuffMultiplierAmount { get { return debuffMultiplierAmount; } set { debuffMultiplierAmount = value; } }
+    
+    #endregion
 }

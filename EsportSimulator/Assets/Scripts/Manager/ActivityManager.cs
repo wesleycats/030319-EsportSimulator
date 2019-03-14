@@ -10,10 +10,11 @@ public class ActivityManager : MonoBehaviour
 
     public UIManager uiManager;
     public ArtManager artManager;
+    public TimeManager timeManager;
 
     private void Start()
     {
-        ChangeActivity(currentActivity);
+        ChangeActivity(currentActivity, 0);
     }
 
     /// <summary>
@@ -21,12 +22,9 @@ public class ActivityManager : MonoBehaviour
     /// </summary>
     /// <param name="activity"></param>
     /// <param name="duration"></param>
-    public void ChangeActivity(Activity activity)
+    public void ChangeActivity(Activity activity, int hourAmount)
     {
-        currentActivity = activity;
-        artManager.ChangeArt(currentActivity);
-
-        switch (currentActivity)
+        switch (activity)
         {
             case Activity.Battle:
                 uiManager.activityText.text = "Battling...";
@@ -69,7 +67,10 @@ public class ActivityManager : MonoBehaviour
                 break;
 
             case Activity.Work:
+                if (hourAmount <= 0) return;
+                
                 uiManager.activityText.text = "Working...";
+                timeManager.IncreaseTime(hourAmount);
 
                 break;
 
@@ -79,5 +80,7 @@ public class ActivityManager : MonoBehaviour
                 break;
 
         }
+
+        artManager.ChangeArt(activity);
     }
 }
