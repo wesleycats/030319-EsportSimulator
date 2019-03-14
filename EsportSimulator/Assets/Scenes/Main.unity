@@ -681,6 +681,7 @@ MonoBehaviour:
   resultMultiplier: 3
   tirednessMultiplier: 0
   skillName: team play
+  sleep: 0
 --- !u!114 &11170996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -879,7 +880,7 @@ GameObject:
   - component: {fileID: 16411387}
   m_Layer: 5
   m_Name: ReturnButton
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2210,7 +2211,7 @@ GameObject:
   - component: {fileID: 83403427}
   m_Layer: 5
   m_Name: ReturnButton
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2915,7 +2916,7 @@ GameObject:
   - component: {fileID: 98569230}
   m_Layer: 8
   m_Name: DarkOverlay
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2981,6 +2982,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1572549440}
         m_MethodName: Enable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1070449419}
+        m_MethodName: UnAndPauseGame
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4435,7 +4447,7 @@ GameObject:
   - component: {fileID: 135897695}
   m_Layer: 5
   m_Name: Button
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4485,7 +4497,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -4504,6 +4516,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1572549440}
         m_MethodName: Enable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1070449419}
+        m_MethodName: UnAndPauseGame
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4879,7 +4902,7 @@ GameObject:
   - component: {fileID: 148672974}
   m_Layer: 5
   m_Name: Window Tab
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6560,7 +6583,7 @@ GameObject:
   - component: {fileID: 197400533}
   m_Layer: 5
   m_Name: Button
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6608,7 +6631,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -6811,6 +6834,7 @@ MonoBehaviour:
   resultMultiplier: 10
   tirednessMultiplier: 0
   skillName: team play
+  sleep: 0
 --- !u!114 &206821160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8431,6 +8455,7 @@ MonoBehaviour:
   resultMultiplier: 1
   tirednessMultiplier: 0
   skillName: 
+  sleep: 0
 --- !u!114 &267066470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9346,6 +9371,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 158959112}
         m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1070449419}
+        m_MethodName: UnAndPauseGame
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11344,7 +11380,7 @@ GameObject:
   - component: {fileID: 389474000}
   m_Layer: 5
   m_Name: ResumeButton
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13942,7 +13978,7 @@ GameObject:
   - component: {fileID: 472832675}
   m_Layer: 8
   m_Name: DarkOverlay
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14008,6 +14044,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 583671031}
         m_MethodName: Enable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1070449419}
+        m_MethodName: UnAndPauseGame
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15424,6 +15471,7 @@ MonoBehaviour:
   resultMultiplier: 10
   tirednessMultiplier: 0
   skillName: mechanics
+  sleep: 0
 --- !u!114 &507565439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15765,7 +15813,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.2627451, g: 0.2627451, b: 0.2627451, a: 1}
+  m_BackGroundColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -16889,7 +16937,7 @@ GameObject:
   - component: {fileID: 549403736}
   m_Layer: 5
   m_Name: QuitButton
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17211,6 +17259,7 @@ MonoBehaviour:
   resultMultiplier: 10
   tirednessMultiplier: 10
   skillName: 
+  sleep: 0
 --- !u!1 &558865704
 GameObject:
   m_ObjectHideFlags: 0
@@ -18120,7 +18169,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!1 &585937083
 GameObject:
@@ -21170,6 +21219,7 @@ MonoBehaviour:
   resultMultiplier: 1
   tirednessMultiplier: 0
   skillName: game knowledge
+  sleep: 0
 --- !u!114 &707678878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21741,7 +21791,7 @@ GameObject:
   - component: {fileID: 739181430}
   m_Layer: 5
   m_Name: Button
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21789,7 +21839,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -25507,6 +25557,7 @@ MonoBehaviour:
   resultMultiplier: 3
   tirednessMultiplier: 0
   skillName: mechanics
+  sleep: 0
 --- !u!114 &893019657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27059,9 +27110,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3ca736ce6fb65ac48aaada38b2d438d6, type: 3}
   chairSprites:
   - {fileID: 21300000, guid: 191fe487cd45d524bb005379440253ac, type: 3}
+  tableSprites:
+  - {fileID: 21300000, guid: 7f2b7bdbe52e01940a26fa5afce8052a, type: 3}
   workstationSprites:
-  - {fileID: 21300000, guid: 7f2b7bdbe52e01940a26fa5afce8052a, type: 3}
-  - {fileID: 21300000, guid: 7f2b7bdbe52e01940a26fa5afce8052a, type: 3}
+  - {fileID: 21300000, guid: af44cdbf984522a42a85f17212fb64f2, type: 3}
   playerAnimator: {fileID: 1962322940}
   workstationAnimator: {fileID: 1143623491}
   playerData: {fileID: 11400000, guid: b5721d035e1bf074789a14536477e52e, type: 2}
@@ -29269,6 +29321,8 @@ GameObject:
   - component: {fileID: 1022755326}
   - component: {fileID: 1022755327}
   - component: {fileID: 1022755328}
+  - component: {fileID: 1022755330}
+  - component: {fileID: 1022755329}
   m_Layer: 5
   m_Name: Progress
   m_TagString: Untagged
@@ -29335,6 +29389,43 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &1022755329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1022755325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!222 &1022755330
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1022755325}
+  m_CullTransparentMesh: 0
 --- !u!1 &1023914062
 GameObject:
   m_ObjectHideFlags: 0
@@ -30239,6 +30330,8 @@ GameObject:
   - component: {fileID: 1070449417}
   - component: {fileID: 1070449418}
   - component: {fileID: 1070449416}
+  - component: {fileID: 1070449419}
+  - component: {fileID: 1070449420}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -30261,6 +30354,7 @@ MonoBehaviour:
   currentActivity: 0
   uiManager: {fileID: 1579866881}
   artManager: {fileID: 949353603}
+  timeManager: {fileID: 1070449419}
 --- !u!4 &1070449417
 Transform:
   m_ObjectHideFlags: 0
@@ -30301,6 +30395,272 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: b5721d035e1bf074789a14536477e52e, type: 2}
   uiManager: {fileID: 1579866881}
   artManager: {fileID: 949353603}
+  timeManager: {fileID: 1070449419}
+--- !u!114 &1070449419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070449415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 758fcd61139aa1c48b09f380bb665d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hour: 0
+  minutes: 0
+  month: 0
+  year: 0
+  waitTime: 1
+  gameManager: {fileID: 1070449418}
+  activityManager: {fileID: 1070449416}
+  uiManager: {fileID: 1579866881}
+  buttonManager: {fileID: 1579866883}
+  resultManager: {fileID: 1070449420}
+  gameData: {fileID: 11400000, guid: 89c743619d053e14397cbd8cd75f0f6b, type: 2}
+--- !u!114 &1070449420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070449415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1051a114a343894e83fe305098818ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  workLevel1:
+    duration: 1
+    tiredness: 10
+    hunger: 0
+    thirst: 0
+    money: 10
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    workExperience: 1
+  workLevel2:
+    duration: 1
+    tiredness: 10
+    hunger: 0
+    thirst: 0
+    money: 30
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 1
+    teamPlay: 0
+    mechanics: 0
+    workExperience: 1
+  workLevel3:
+    duration: 1
+    tiredness: 10
+    hunger: 0
+    thirst: 0
+    money: 60
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 1
+    teamPlay: 0
+    mechanics: 1
+    workExperience: 1
+  workLevel4:
+    duration: 1
+    tiredness: 10
+    hunger: 0
+    thirst: 0
+    money: 120
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 1
+    teamPlay: 1
+    mechanics: 1
+    workExperience: 1
+  trainLevel1:
+    duration: 0
+    tiredness: 0
+    hunger: 0
+    thirst: 0
+    money: 0
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    workExperience: 0
+  trainLevel2:
+    duration: 0
+    tiredness: 0
+    hunger: 0
+    thirst: 0
+    money: 0
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    workExperience: 0
+  trainLevel3:
+    duration: 0
+    tiredness: 0
+    hunger: 0
+    thirst: 0
+    money: 0
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    workExperience: 0
+  trainLevel4:
+    duration: 0
+    tiredness: 0
+    hunger: 0
+    thirst: 0
+    money: 0
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    workExperience: 0
+  foodBad:
+    duration: 0
+    tiredness: 0
+    hunger: 0
+    thirst: 0
+    money: 0
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    workExperience: 0
+  foodStandard:
+    duration: 0
+    tiredness: 0
+    hunger: 0
+    thirst: 0
+    money: 0
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    workExperience: 0
+  foodGood:
+    duration: 0
+    tiredness: 0
+    hunger: 0
+    thirst: 0
+    money: 0
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    workExperience: 0
+  foodExcellent:
+    duration: 0
+    tiredness: 0
+    hunger: 0
+    thirst: 0
+    money: 0
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    workExperience: 0
+  drinksBad:
+    duration: 0
+    tiredness: 0
+    hunger: 0
+    thirst: 0
+    money: 0
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    workExperience: 0
+  drinksStandard:
+    duration: 0
+    tiredness: 0
+    hunger: 0
+    thirst: 0
+    money: 0
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    workExperience: 0
+  drinksGood:
+    duration: 0
+    tiredness: 0
+    hunger: 0
+    thirst: 0
+    money: 0
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    workExperience: 0
+  drinksExcellent:
+    duration: 0
+    tiredness: 0
+    hunger: 0
+    thirst: 0
+    money: 0
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    workExperience: 0
+  debuff: 0
+  debuffMultiplier: 0.5
+  debuffMultiplierAmount: 1
+  uiManager: {fileID: 1579866881}
+  gameManager: {fileID: 1070449418}
+  playerData: {fileID: 11400000, guid: b5721d035e1bf074789a14536477e52e, type: 2}
 --- !u!1 &1071355473
 GameObject:
   m_ObjectHideFlags: 0
@@ -33685,6 +34045,7 @@ GameObject:
   - component: {fileID: 1152147829}
   - component: {fileID: 1152147830}
   - component: {fileID: 1152147831}
+  - component: {fileID: 1152147832}
   m_Layer: 5
   m_Name: Calender
   m_TagString: Untagged
@@ -33710,7 +34071,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 153, y: -26.999996}
+  m_AnchoredPosition: {x: 154, y: -26.999996}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1152147830
@@ -33751,6 +34112,14 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!222 &1152147832
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1152147828}
+  m_CullTransparentMesh: 0
 --- !u!1 &1156299423
 GameObject:
   m_ObjectHideFlags: 0
@@ -34016,6 +34385,7 @@ MonoBehaviour:
   resultMultiplier: 1
   tirednessMultiplier: 0
   skillName: team play
+  sleep: 0
 --- !u!114 &1156644615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37373,6 +37743,7 @@ MonoBehaviour:
   resultMultiplier: 0
   tirednessMultiplier: 0
   skillName: 
+  sleep: 0
 --- !u!114 &1258686264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38051,7 +38422,7 @@ GameObject:
   - component: {fileID: 1296643366}
   m_Layer: 5
   m_Name: Button
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38099,7 +38470,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -38797,8 +39168,8 @@ GameObject:
   - component: {fileID: 1311542104}
   - component: {fileID: 1311542103}
   m_Layer: 5
-  m_Name: Button
-  m_TagString: Untagged
+  m_Name: PauseButton
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38846,7 +39217,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -38863,8 +39234,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 158959112}
+      - m_Target: {fileID: 1969320547}
         m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1070449419}
+        m_MethodName: UnAndPauseGame
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -40125,7 +40507,7 @@ GameObject:
   - component: {fileID: 1350229473}
   m_Layer: 5
   m_Name: ReturnButton
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40332,7 +40714,7 @@ GameObject:
   - component: {fileID: 1352407230}
   m_Layer: 5
   m_Name: ReturnButton
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42173,7 +42555,7 @@ GameObject:
   - component: {fileID: 1433846814}
   m_Layer: 5
   m_Name: Window Tab
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42646,6 +43028,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1442085403}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1443736029
@@ -42700,7 +43093,7 @@ MonoBehaviour:
   activityManager: {fileID: 1070449416}
   bar: {fileID: 551149349}
   activity: 4
-  duration: 0
+  hourAmount: 0
 --- !u!1 &1449695525
 GameObject:
   m_ObjectHideFlags: 0
@@ -42989,7 +43382,7 @@ GameObject:
   - component: {fileID: 1471595736}
   - component: {fileID: 1471595735}
   m_Layer: 5
-  m_Name: YearMonth
+  m_Name: Date
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43047,7 +43440,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 12th month of year 99
+  m_Text: Month 12 of year 99
 --- !u!222 &1471595736
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -43070,7 +43463,7 @@ GameObject:
   - component: {fileID: 1474621607}
   m_Layer: 5
   m_Name: Button
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43118,7 +43511,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -44496,6 +44889,7 @@ MonoBehaviour:
   resultMultiplier: 3
   tirednessMultiplier: 0
   skillName: game knowledge
+  sleep: 0
 --- !u!114 &1525858046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46700,7 +47094,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!1 &1576617501
 GameObject:
@@ -47069,6 +47463,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1579866882}
   - component: {fileID: 1579866881}
+  - component: {fileID: 1579866883}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -47088,6 +47483,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88a1f3ba9020ee743a168140686772db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  time: {fileID: 610274395}
+  date: {fileID: 1471595735}
   moneyValue: {fileID: 190877994}
   ratingValue: {fileID: 631086048}
   fameValue: {fileID: 176488281}
@@ -47101,6 +47498,7 @@ MonoBehaviour:
   teamPlayValue: {fileID: 1674117319}
   mechanicsValue: {fileID: 190431498}
   activityText: {fileID: 1536123651}
+  timeManager: {fileID: 1070449419}
   playerData: {fileID: 11400000, guid: b5721d035e1bf074789a14536477e52e, type: 2}
 --- !u!4 &1579866882
 Transform:
@@ -47116,6 +47514,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1579866883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1579866880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 800efcb6f57a12647b04178c2b892c7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allButtons: []
 --- !u!1 &1586688333
 GameObject:
   m_ObjectHideFlags: 0
@@ -48031,7 +48442,7 @@ GameObject:
   - component: {fileID: 1613151310}
   m_Layer: 5
   m_Name: Button
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48055,7 +48466,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 306, y: 54}
+  m_SizeDelta: {x: 308, y: 54}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1613151310
 MonoBehaviour:
@@ -48080,7 +48491,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -48099,6 +48510,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 583671031}
         m_MethodName: Enable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1070449419}
+        m_MethodName: UnAndPauseGame
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -48432,6 +48854,7 @@ MonoBehaviour:
   resultMultiplier: 1
   tirednessMultiplier: 0
   skillName: mechanics
+  sleep: 0
 --- !u!114 &1630901432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49844,6 +50267,7 @@ MonoBehaviour:
   resultMultiplier: 10
   tirednessMultiplier: 0
   skillName: game knowledge
+  sleep: 0
 --- !u!114 &1689264627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55090,7 +55514,7 @@ RectTransform:
   m_GameObject: {fileID: 1856144299}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 158959113}
   m_RootOrder: 0
@@ -55113,7 +55537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4784314, g: 0.4784314, b: 0.4784314, a: 1}
+  m_Color: {r: 0.90196085, g: 0.90196085, b: 0.90196085, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -55985,7 +56409,7 @@ GameObject:
   - component: {fileID: 1901625958}
   m_Layer: 5
   m_Name: Window Tab
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -57882,7 +58306,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &1969320552
 MonoBehaviour:
@@ -59080,7 +59504,7 @@ GameObject:
   - component: {fileID: 2008183449}
   m_Layer: 8
   m_Name: DarkOverlay
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59146,6 +59570,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1969320549}
         m_MethodName: Enable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1070449419}
+        m_MethodName: UnAndPauseGame
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -61113,7 +61548,7 @@ GameObject:
   - component: {fileID: 2082147529}
   m_Layer: 5
   m_Name: MainMenuButton
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61178,8 +61613,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Enable
+      - m_Target: {fileID: 158959112}
+        m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -61188,39 +61623,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 588566974}
-        m_MethodName: Enable
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 714503}
-        m_MethodName: Enable
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1969320549}
-        m_MethodName: Enable
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
