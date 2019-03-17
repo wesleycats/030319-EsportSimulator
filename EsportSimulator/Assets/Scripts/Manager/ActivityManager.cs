@@ -24,6 +24,8 @@ public class ActivityManager : MonoBehaviour
     /// <param name="duration"></param>
     public void ChangeActivity(Activity activity, int hourAmount)
     {
+        currentActivity = activity;
+
         switch (activity)
         {
             case Activity.Battle:
@@ -36,23 +38,15 @@ public class ActivityManager : MonoBehaviour
 
                 break;
 
-            case Activity.Drink:
-                uiManager.activityText.text = "Drinking...";
-
-                break;
-
-            case Activity.Eat:
-                uiManager.activityText.text = "Eating...";
-
-                break;
-
             case Activity.Idle:
                 uiManager.activityText.text = "Idle";
 
                 break;
 
             case Activity.Sleep:
-                uiManager.activityText.text = "Sleep...";
+                uiManager.activityText.text = "Sleeping...";
+                uiManager.ActivateSleepOverlay();
+                timeManager.IncreaseTime(hourAmount, false);
 
                 break;
 
@@ -70,15 +64,9 @@ public class ActivityManager : MonoBehaviour
                 if (hourAmount <= 0) return;
                 
                 uiManager.activityText.text = "Working...";
-                timeManager.IncreaseTime(hourAmount);
+                timeManager.IncreaseTime(hourAmount, false);
 
                 break;
-
-            default:
-                uiManager.activityText.text = "Idle";
-
-                break;
-
         }
 
         artManager.ChangeArt(activity);

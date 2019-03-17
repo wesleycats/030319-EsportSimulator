@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// </summary>
 public class TimeManager : MonoBehaviour
 {
-    [SerializeField] private int hour;
+    [SerializeField] private int hours;
     [SerializeField] private int minutes = 0;
     [SerializeField] private int month;
     [SerializeField] private int year;
@@ -22,30 +22,51 @@ public class TimeManager : MonoBehaviour
     public ResultManager resultManager;
     public GameData gameData;
 
-    public void IncreaseTime(int hourAmount)
+    public void IncreaseTime(int hourAmount, bool instant)
     {
         if (hourAmount <= 0) return;
 
-        float duration = 0;
-        duration = hourAmount;
+        if (instant)
+        {
+            for (int i = 0; i < hourAmount; i++)
+            {
+                AddHours(1);
 
-        StartCoroutine(TimeTimer(duration));
+                if (hours >= 24)
+                {
+                    hours = 0;
+                    month++;
+                }
+
+                if (month > 12)
+                {
+                    month = 0;
+                    year++;
+                }
+            }
+        }
+        else
+        {
+            StartCoroutine(TimeTimer(hourAmount));
+        }
+
     }
 
     private IEnumerator TimeTimer(float duration)
     {
         float totalDuration = duration;
 
-        buttonManager.DisEnableAllButtons(false, "Navigation");
+        buttonManager.DisableAllButtons("Navigation");
 
         yield return new WaitForSeconds(waitTime);
         duration--;
-        hour++;
+        AddHours(1);
 
-        if (hour >= 24)
+        if (hours >= 24)
         {
-            hour = 0;
+            hours = 0;
             month++;
+            resultManager.PayRent();
         }
 
         if (month > 12)
@@ -53,22 +74,70 @@ public class TimeManager : MonoBehaviour
             month = 0;
             year++;
         }
+        
+        switch (activityManager.currentActivity)
+        {
+            case ActivityManager.Activity.Battle:
 
-        resultManager.WorkResults();
+                break;
+
+            case ActivityManager.Activity.Contest:
+
+                break;
+
+            case ActivityManager.Activity.Idle:
+
+                break;
+
+            case ActivityManager.Activity.Sleep:
+
+                resultManager.SleepResults();
+
+                break;
+
+            case ActivityManager.Activity.Stream:
+
+                break;
+
+            case ActivityManager.Activity.Train:
+
+                break;
+
+            case ActivityManager.Activity.Work:
+
+                resultManager.WorkResults();
+
+                break;
+
+            default:
+
+                break;
+
+        }
 
         uiManager.UpdateProgress(gameManager.Money, gameManager.Rating, gameManager.Fame);
         uiManager.UpdateNeeds(gameManager.Tiredness, gameManager.Hunger, gameManager.Thirst);
-        uiManager.UpdateTime(hour, minutes, year, month);
+        uiManager.UpdateTime(hours, minutes, year, month);
 
         if (duration <= 0)
         {
             activityManager.ChangeActivity(ActivityManager.Activity.Idle, 0);
-            buttonManager.DisEnableAllButtons(true);
+            buttonManager.EnableAllButtons();
         }
         else
         {
             StartCoroutine(TimeTimer(duration));
         }
+    }
+
+    /// <summary>
+    /// For debug is set public
+    /// </summary>
+    /// <param name="amount"></param>
+    public void AddHours(int amount)
+    {
+        hours += amount;
+        uiManager.UpdateTime(hours, minutes, year, month);
     }
 
     public void UnAndPauseGame(bool pause)
@@ -81,7 +150,7 @@ public class TimeManager : MonoBehaviour
 
     public void InitializeGameData()
     {
-        hour = gameData.Hour;
+        hours = gameData.Hour;
         //minutes = gameData.minutes;
         month = gameData.Hour;
         year = gameData.Hour;
@@ -91,7 +160,7 @@ public class TimeManager : MonoBehaviour
 
     #region Getters & Setters 
 
-    public int Hour { get { return hour; } }
+    public int Hour { get { return hours; } }
     public int Minutes { get { return minutes; } }
     public int Year { get { return year; } }
     public int Month { get { return month; } }

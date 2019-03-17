@@ -2,7 +2,14 @@
 
 public class MenuOptions : MonoBehaviour
 {
-	public void Quit()
+    public ButtonManager buttonManager;
+
+    private void OnEnable()
+    {
+        buttonManager.EnableAllButtonsOf("Navigation");
+    }
+
+    public void Quit()
 	{
 		Application.Quit();
 	}

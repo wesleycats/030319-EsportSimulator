@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System;
 
 /// <summary>
-/// Controls game stages
+/// Controls game stages & keeps track of session variables
 /// </summary>
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float fame;
     [SerializeField] private float workExperience;
     [SerializeField] private float workLevel;
+    [SerializeField] private float houseLevel;
     [SerializeField] private float tiredness;
     [SerializeField] private float hunger;
     [SerializeField] private float thirst;
@@ -23,13 +25,16 @@ public class GameManager : MonoBehaviour
     #endregion
 
     public PlayerData playerData;
+    public GameData gameData;
     public UIManager uiManager;
     public ArtManager artManager;
     public TimeManager timeManager;
+    public ButtonManager buttonManager;
+    public ActivityManager activityManager;
 
     void Start()
     {
-        if (!playerData.Saved) ResetGame();
+        if (!playerData.Saved) ResetGame(true);
 
         InitializePlayerData();
         timeManager.InitializeGameData();
@@ -37,9 +42,31 @@ public class GameManager : MonoBehaviour
         uiManager.InitializeGameData();
     }
 
-    public void ResetGame()
+    public void ResetGame(bool reset)
     {
-        playerData.Reset(true);
+        playerData.Reset(reset);
+        gameData.Reset(reset);
+    }
+
+    public void RestartGame(bool restart)
+    {
+        if (!restart) return;
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void DecreaseMoney(float amount)
+    {
+        money -= amount;
+    }
+
+    /// <summary>
+    /// Debug
+    /// </summary>
+    /// <param name="amount"></param>
+    public void AddMoney(float amount)
+    {
+        money += amount;
     }
 
     /// <summary>
@@ -67,6 +94,7 @@ public class GameManager : MonoBehaviour
     public float Fame { get { return fame; } set { fame = value; } }
     public float WorkExperience { get { return workExperience; } set { workExperience = value; } }
     public float WorkLevel { get { return workLevel; } set { workLevel = value; } }
+    public float HouseLevel { get { return houseLevel; } set { houseLevel = value; } }
     public float Tiredness { get { return tiredness; } set { tiredness = value; } }
     public float Hunger { get { return hunger; } set { hunger = value; } }
     public float Thirst { get { return thirst; } set { thirst = value; } }

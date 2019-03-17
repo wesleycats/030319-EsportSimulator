@@ -26,8 +26,10 @@ public class UIManager : MonoBehaviour
 
     #endregion
     
-    public TimeManager timeManager;
+    public Image sleepOverlay;
+    public Image needsMenuButton;
     public PlayerData playerData;
+    public TimeManager timeManager;
 
     public void UpdateTime(int hour, int minutes, int year, int month)
     {
@@ -55,6 +57,19 @@ public class UIManager : MonoBehaviour
         tirednessBar.value = tiredness / 100;
         hungerBar.value = hunger / 100;
         thirstBar.value = thirst / 100;
+    }
+
+    public void ActivateSleepOverlay()
+    {
+        sleepOverlay.GetComponent<LerpColor>().Increasing = true;
+        sleepOverlay.GetComponent<LerpColor>().LerpMaxAmount = 2;
+        sleepOverlay.GetComponent<LerpColor>().LerpActivated = true;
+    }
+
+    public void DeactivateSleepOverlay()
+    {
+        sleepOverlay.GetComponent<LerpColor>().Increasing = false;
+        sleepOverlay.GetComponent<LerpColor>().LerpActivated = true;
     }
 
     /// <summary>
