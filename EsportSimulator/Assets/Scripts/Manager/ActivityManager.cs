@@ -8,6 +8,9 @@ public class ActivityManager : MonoBehaviour
     public enum Activity { Idle, Sleep, Eat, Drink, Work, Train, Battle, Stream, Contest }
     public Activity currentActivity = Activity.Idle;
 
+    private int trainingLevel;
+    private string skillName;
+
     public UIManager uiManager;
     public ArtManager artManager;
     public TimeManager timeManager;
@@ -57,6 +60,7 @@ public class ActivityManager : MonoBehaviour
 
             case Activity.Train:
                 uiManager.activityText.text = "Training...";
+                
 
                 break;
 
