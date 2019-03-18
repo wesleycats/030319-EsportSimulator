@@ -6,15 +6,15 @@ using UnityEngine.UI;
 public class LerpColor : MonoBehaviour
 {
     [SerializeField] private bool lerpActivated;
+    [SerializeField] private bool lerping = true;
     [Range(0, 1)]
     [SerializeField] private float lerpValue;
     [SerializeField] private float lerpSpeed;
     [SerializeField] private bool lerpStop;
     [SerializeField] private bool lerpPause;
-    [SerializeField] private float waitTime;
+    [SerializeField] private float pauseTime = 2f;
     [SerializeField] private int lerpMaxAmount;
 
-    private bool lerping = true;
     private bool increasing = true;
     private float lerpSteps;
     private int timer;
@@ -38,7 +38,7 @@ public class LerpColor : MonoBehaviour
         {
             timer++;
 
-            if (timer % (waitTime * 60) == 0)
+            if (timer % (pauseTime * 60) == 0)
             {
                 lerping = true;
                 timer = 0;
@@ -93,20 +93,19 @@ public class LerpColor : MonoBehaviour
 
             if (lerpStop)
             {
-                lerping = false;
                 lerpPause = false;
                 lerpStop = false;
                 lerpAmount = 0;
             }
         }
-
     }
 
     #region Getters & Setters 
 
     public bool LerpActivated { get { return lerpActivated; } set { lerpActivated = value; } }
-    public bool Lerp { get { return lerping; } set { lerping = value; } }
+    public bool Lerping { get { return lerping; } set { lerping = value; } }
     public bool LerpPause { get { return lerpPause; } set { lerpPause = value; } }
+    public float PauseTime { get { return pauseTime; } set { pauseTime = value; } }
     public bool LerpStop { get { return lerpStop; } set { lerpStop = value; } }
     public int LerpAmount { get { return lerpAmount; } set { lerpAmount = value; } }
     public int LerpMaxAmount { get { return lerpMaxAmount; } set { lerpMaxAmount = value; } }

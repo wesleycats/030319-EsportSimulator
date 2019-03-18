@@ -59,6 +59,13 @@ public class UIManager : MonoBehaviour
         thirstBar.value = thirst / 100;
     }
 
+    public void UpdateSkills(float gameKnowledge, float teamPlay, float mechanics)
+    {
+        gameKnowledgeValue.text = gameKnowledge.ToString();
+        teamPlayValue.text = teamPlay.ToString();
+        mechanicsValue.text = mechanics.ToString();
+    }
+
     public void ActivateSleepOverlay()
     {
         sleepOverlay.GetComponent<LerpColor>().Increasing = true;
@@ -71,10 +78,7 @@ public class UIManager : MonoBehaviour
         sleepOverlay.GetComponent<LerpColor>().Increasing = false;
         sleepOverlay.GetComponent<LerpColor>().LerpActivated = true;
     }
-
-    /// <summary>
-    /// Initializes player data in UI
-    /// </summary>
+    
     public void InitializePlayerData()
     {
         moneyValue.text = playerData.Money.ToString();
@@ -91,7 +95,7 @@ public class UIManager : MonoBehaviour
         hungerBar.value = playerData.Hunger / 100;
         thirstBar.value = playerData.Thirst / 100;
     }
-
+    
     public void InitializeGameData()
     {
         time.text = timeManager.Hour.ToString() + "0:" + timeManager.Minutes.ToString() + "0";

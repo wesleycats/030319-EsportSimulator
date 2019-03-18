@@ -91,7 +91,7 @@ public class TimeManager : MonoBehaviour
 
             case ActivityManager.Activity.Sleep:
 
-                resultManager.SleepResults();
+                resultManager.SleepResults(resultManager.GetTirednessDecreaseRate);
 
                 break;
 
@@ -101,11 +101,13 @@ public class TimeManager : MonoBehaviour
 
             case ActivityManager.Activity.Train:
 
+                resultManager.TrainResults(activityManager.currentTrainType);
+
                 break;
 
             case ActivityManager.Activity.Work:
 
-                resultManager.WorkResults();
+                resultManager.WorkResults(gameManager.WorkLevel);
 
                 break;
 
@@ -115,6 +117,7 @@ public class TimeManager : MonoBehaviour
 
         }
 
+        uiManager.UpdateSkills(gameManager.GameKnowledge, gameManager.TeamPlay, gameManager.Mechanics);
         uiManager.UpdateProgress(gameManager.Money, gameManager.Rating, gameManager.Fame);
         uiManager.UpdateNeeds(gameManager.Tiredness, gameManager.Hunger, gameManager.Thirst);
         uiManager.UpdateTime(hours, minutes, year, month);
@@ -140,12 +143,14 @@ public class TimeManager : MonoBehaviour
         uiManager.UpdateTime(hours, minutes, year, month);
     }
 
-    public void UnAndPauseGame(bool pause)
+    public void PauseGame()
     {
-        if (pause)
-            Time.timeScale = 0f;
-        else
-            Time.timeScale = 1f;
+        Time.timeScale = 0f;
+    }
+
+    public void UnPauseGame()
+    {
+        Time.timeScale = 1f;
     }
 
     public void InitializeGameData()

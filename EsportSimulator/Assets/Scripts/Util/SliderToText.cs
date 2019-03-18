@@ -46,7 +46,7 @@ public class SliderToText : MonoBehaviour
 
     public void ValueToSleepResult(Text textToChange)
     {
-        tiredness = slider.value * tirednessMultiplier * (debuffMultiplier * debuffMultiplierAmount);
+        tiredness = slider.value * tirednessMultiplier;
         textToChange.text = "-" + tiredness.ToString() + "% tiredness";
     }
 

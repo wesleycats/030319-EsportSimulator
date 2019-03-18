@@ -83,6 +83,12 @@ public class ArtManager : MonoBehaviour
                 break;
 
             case ActivityManager.Activity.Train:
+                playerAnimator.Play("OnComputer");
+                workstationAnimator.Play("WoodenTable");
+
+                background.sprite = houseSprites[(int)playerData.HouseLevel];
+                chair.sprite = chairSprites[(int)playerData.HouseLevel];
+                workstation.sprite = tableSprites[(int)playerData.HouseLevel];
 
                 break;
 

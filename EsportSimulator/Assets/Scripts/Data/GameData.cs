@@ -16,6 +16,7 @@ public class GameData : ScriptableObject
 
     [Header("Time")]
     [SerializeField] private int hour;
+    [SerializeField] private int minute;
     [SerializeField] private int month;
     [SerializeField] private int year;
 

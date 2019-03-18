@@ -8,12 +8,15 @@ public class ActivityManager : MonoBehaviour
     public enum Activity { Idle, Sleep, Eat, Drink, Work, Train, Battle, Stream, Contest }
     public Activity currentActivity = Activity.Idle;
 
-    private int trainingLevel;
-    private string skillName;
+    public enum TrainType { None, WatchingGK, WatchingTP, WatchingM, CourseGK, CourseTP, CourseM, CoursePlusGK, CoursePlusTP, CoursePlusM }
+    [Tooltip("GK = Game Knowledge, TP = Team Play, M = Mechanics")]
+    public TrainType currentTrainType = TrainType.None;
 
     public UIManager uiManager;
     public ArtManager artManager;
     public TimeManager timeManager;
+    public GameManager gameManager;
+    public ResultManager resultsManager;
 
     private void Start()
     {
@@ -28,8 +31,7 @@ public class ActivityManager : MonoBehaviour
     public void ChangeActivity(Activity activity, int hourAmount)
     {
         currentActivity = activity;
-
-        switch (activity)
+        switch (currentActivity)
         {
             case Activity.Battle:
                 uiManager.activityText.text = "Battling...";
@@ -49,7 +51,6 @@ public class ActivityManager : MonoBehaviour
             case Activity.Sleep:
                 uiManager.activityText.text = "Sleeping...";
                 uiManager.ActivateSleepOverlay();
-                timeManager.IncreaseTime(hourAmount, false);
 
                 break;
 
@@ -59,20 +60,23 @@ public class ActivityManager : MonoBehaviour
                 break;
 
             case Activity.Train:
-                uiManager.activityText.text = "Training...";
+
+                //TODO create not enough money signal
+                if (gameManager.Money < resultsManager.GetTrainingCostAmount(currentTrainType, hourAmount)) return;
                 
+                uiManager.activityText.text = "Training...";
 
                 break;
 
-            case Activity.Work:
-                if (hourAmount <= 0) return;
-                
+            case Activity.Work:                
                 uiManager.activityText.text = "Working...";
-                timeManager.IncreaseTime(hourAmount, false);
 
                 break;
         }
 
+        if (hourAmount == 0) currentActivity = Activity.Idle;
+        timeManager.IncreaseTime(hourAmount, false);
         artManager.ChangeArt(activity);
     }
+    
 }

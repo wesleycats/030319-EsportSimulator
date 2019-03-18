@@ -20,8 +20,8 @@ public class PlayerData : ScriptableObject
     [SerializeField] private float rating;
     [SerializeField] private float fame;
     [SerializeField] private float workExperience;
-    [SerializeField] private float workLevel;
-    [SerializeField] private float houseLevel;
+    [SerializeField] private int workLevel;
+    [SerializeField] private int houseLevel;
 
     #endregion
 
@@ -91,7 +91,7 @@ public class PlayerData : ScriptableObject
         workExperience = amount;
     }
 
-    public void SetWorkLevel(float amount)
+    public void SetWorkLevel(int amount)
     {
         if (!saved || !debug) return;
 
@@ -147,8 +147,8 @@ public class PlayerData : ScriptableObject
     public float Rating { get { return rating; } }
     public float Fame { get { return fame; } }
     public float WorkExperience { get { return workExperience; } }
-    public float WorkLevel { get { return workLevel; } }
-    public float HouseLevel { get { return houseLevel; } }
+    public int WorkLevel { get { return workLevel; } }
+    public int HouseLevel { get { return houseLevel; } }
     public float Tiredness { get { return tiredness; } }
     public float Hunger { get { return hunger; } }
     public float Thirst { get { return thirst; } }

@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 using System;
 
 /// <summary>
-/// Controls game stages & keeps track of session variables
+/// Controls game stages & keeps track of variables in current session
 /// </summary>
 public class GameManager : MonoBehaviour
 {
@@ -13,8 +13,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float rating;
     [SerializeField] private float fame;
     [SerializeField] private float workExperience;
-    [SerializeField] private float workLevel;
-    [SerializeField] private float houseLevel;
+    [SerializeField] private int workLevel;
+    [SerializeField] private int houseLevel;
     [SerializeField] private float tiredness;
     [SerializeField] private float hunger;
     [SerializeField] private float thirst;
@@ -60,6 +60,46 @@ public class GameManager : MonoBehaviour
         money -= amount;
     }
 
+    public bool IsMoneyLowEnough(float amount)
+    {
+        return money <= amount;
+    }
+    
+    public bool IsMoneyHighEnough(float amount)
+    {
+        return money >= amount;
+    }
+
+    public bool IsTirednessLowEnough(float amount)
+    {
+        return tiredness <= amount;
+    }
+
+    public bool IsTirednessHighEnough(float amount)
+    {
+        return tiredness >= amount;
+    }
+
+    public bool IsHungerLowEnough(float amount)
+    {
+        return hunger <= amount;
+    }
+
+    public bool IsHungerHighEnough(float amount)
+    {
+        return hunger >= amount;
+    }
+
+    public bool IsThirstLowEnough(float amount)
+    {
+        return thirst <= amount;
+    }
+
+    public bool IsThirstHighEnough(float amount)
+    {
+        return thirst >= amount;
+    }
+
     /// <summary>
     /// Debug
     /// </summary>
@@ -93,8 +133,8 @@ public class GameManager : MonoBehaviour
     public float Rating { get { return rating; } set { rating = value; } }
     public float Fame { get { return fame; } set { fame = value; } }
     public float WorkExperience { get { return workExperience; } set { workExperience = value; } }
-    public float WorkLevel { get { return workLevel; } set { workLevel = value; } }
-    public float HouseLevel { get { return houseLevel; } set { houseLevel = value; } }
+    public int WorkLevel { get { return workLevel; } set { workLevel = value; } }
+    public int HouseLevel { get { return houseLevel; } set { houseLevel = value; } }
     public float Tiredness { get { return tiredness; } set { tiredness = value; } }
     public float Hunger { get { return hunger; } set { hunger = value; } }
     public float Thirst { get { return thirst; } set { thirst = value; } }
