@@ -5202,12 +5202,12 @@ GameObject:
   - component: {fileID: 158959114}
   - component: {fileID: 158959117}
   m_Layer: 5
-  m_Name: MainMenu
+  m_Name: MainMenuScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &158959113
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5292,7 +5292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d14b63896bfb9584494d8a200713cd6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadTime: 10
+  loadTime: 5
   switchOverlay: {fileID: 1739649207}
 --- !u!1 &165314541
 GameObject:
@@ -21912,7 +21912,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 8ab51c1c1a075b24dbae878c9ecca604, type: 3}
-    m_FontSize: 18
+    m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -30650,7 +30650,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 8ab51c1c1a075b24dbae878c9ecca604, type: 3}
-    m_FontSize: 1
+    m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
