@@ -12,7 +12,7 @@ public class LerpColor : MonoBehaviour
     [SerializeField] private float lerpSpeed;
     [SerializeField] private bool lerpStop;
     [SerializeField] private bool lerpPause;
-    [SerializeField] private float pauseTime = 2f;
+    [SerializeField] private float lerpPauseTime = 2f;
     [SerializeField] private int lerpMaxAmount;
 
     private bool increasing = true;
@@ -23,13 +23,7 @@ public class LerpColor : MonoBehaviour
     public Color startColor;
     public Color endColor;
     public Image image;
-
-    private void Start()
-    {
-        lerpActivated = false;
-        lerping = true;
-    }
-
+    
     void Update()
     {
         if (!lerpActivated) return;
@@ -38,7 +32,7 @@ public class LerpColor : MonoBehaviour
         {
             timer++;
 
-            if (timer % (pauseTime * 60) == 0)
+            if (timer % (lerpPauseTime * 60) == 0)
             {
                 lerping = true;
                 timer = 0;
@@ -52,10 +46,8 @@ public class LerpColor : MonoBehaviour
         if (lerpMaxAmount > 0)
             lerpPause = true;
 
-        if (lerpAmount >= lerpMaxAmount-1)
-        {
+        if (lerpAmount >= lerpMaxAmount-1 && lerpMaxAmount != 0)
             lerpStop = true;
-        }
 
         if (increasing)
             lerpValue += lerpSteps;
@@ -100,12 +92,17 @@ public class LerpColor : MonoBehaviour
         }
     }
 
+    public bool isLerping()
+    {
+        return lerping;
+    }
+
     #region Getters & Setters 
 
     public bool LerpActivated { get { return lerpActivated; } set { lerpActivated = value; } }
     public bool Lerping { get { return lerping; } set { lerping = value; } }
     public bool LerpPause { get { return lerpPause; } set { lerpPause = value; } }
-    public float PauseTime { get { return pauseTime; } set { pauseTime = value; } }
+    public float LerpPauseTime { get { return lerpPauseTime; } set { lerpPauseTime = value; } }
     public bool LerpStop { get { return lerpStop; } set { lerpStop = value; } }
     public int LerpAmount { get { return lerpAmount; } set { lerpAmount = value; } }
     public int LerpMaxAmount { get { return lerpMaxAmount; } set { lerpMaxAmount = value; } }

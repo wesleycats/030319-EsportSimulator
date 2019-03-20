@@ -28,15 +28,15 @@ public class UIManager : MonoBehaviour
     
     public Image sleepOverlay;
     public Image needsMenuButton;
-    public PlayerData playerData;
     public TimeManager timeManager;
+    public GameManager gameManager;
 
-    public void UpdateTime(int hour, int minutes, int year, int month)
+    public void UpdateTime(int hour, int minute, int year, int month)
     {
         if (hour < 10)
-            time.text = "0" + hour.ToString() + ":" + minutes.ToString() + "0";
+            time.text = "0" + hour.ToString() + ":" + minute.ToString() + "0";
         else
-            time.text = hour.ToString() + ":" + minutes.ToString() + "0";
+            time.text = hour.ToString() + ":" + minute.ToString() + "0";
 
         date.text = "Month " + month.ToString() + " of year " + year.ToString();
     }
@@ -59,7 +59,7 @@ public class UIManager : MonoBehaviour
         thirstBar.value = thirst / 100;
     }
 
-    public void UpdateSkills(float gameKnowledge, float teamPlay, float mechanics)
+    public void UpdateSkills(int gameKnowledge, int teamPlay, int mechanics)
     {
         gameKnowledgeValue.text = gameKnowledge.ToString();
         teamPlayValue.text = teamPlay.ToString();
@@ -78,27 +78,12 @@ public class UIManager : MonoBehaviour
         sleepOverlay.GetComponent<LerpColor>().Increasing = false;
         sleepOverlay.GetComponent<LerpColor>().LerpActivated = true;
     }
-    
-    public void InitializePlayerData()
-    {
-        moneyValue.text = playerData.Money.ToString();
-        ratingValue.text = playerData.Rating.ToString();
-        fameValue.text = playerData.Fame.ToString();
-        tirednessValue.text = playerData.Tiredness.ToString() + "%";
-        hungerValue.text = playerData.Hunger.ToString() + "%";
-        thirstValue.text = playerData.Thirst.ToString() + "%";
-        gameKnowledgeValue.text = playerData.GameKnowledge.ToString();
-        teamPlayValue.text = playerData.TeamPlay.ToString();
-        mechanicsValue.text = playerData.Mechanics.ToString();
 
-        tirednessBar.value = playerData.Tiredness / 100;
-        hungerBar.value = playerData.Hunger / 100;
-        thirstBar.value = playerData.Thirst / 100;
-    }
-    
-    public void InitializeGameData()
+    public void InitializeData()
     {
-        time.text = timeManager.Hour.ToString() + "0:" + timeManager.Minutes.ToString() + "0";
-        date.text = "Month " + timeManager.Month.ToString() + " of year " + timeManager.Year.ToString();
+        UpdateNeeds(gameManager.GetTiredness, gameManager.Hunger, gameManager.Thirst);
+        UpdateProgress(gameManager.GetMoney, gameManager.GetRating, gameManager.GetFame);
+        UpdateSkills(gameManager.GetGameKnowledge, gameManager.GetTeamPlay, gameManager.GetMechanics);
+        UpdateTime(timeManager.GetHour, timeManager.GetMinute, timeManager.GetYear, timeManager.GetMonth);
     }
 }
