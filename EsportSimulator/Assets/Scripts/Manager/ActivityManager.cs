@@ -17,6 +17,7 @@ public class ActivityManager : MonoBehaviour
     public TimeManager timeManager;
     public GameManager gameManager;
     public ResultManager resultsManager;
+    public Debugger debug;
 
     private void Start()
     {
@@ -31,6 +32,13 @@ public class ActivityManager : MonoBehaviour
     public void ChangeActivity(Activity activity, int hourAmount)
     {
         currentActivity = activity;
+
+        if (debug.noWait)
+        {
+            timeManager.IncreaseTime(hourAmount, debug.noWait);
+            return;
+        }
+        
         switch (currentActivity)
         {
             case Activity.Battle:
@@ -62,7 +70,7 @@ public class ActivityManager : MonoBehaviour
             case Activity.Train:
 
                 //TODO create not enough money signal
-                if (gameManager.Money < resultsManager.GetTrainingCostAmount(currentTrainType, hourAmount)) return;
+                if (gameManager.GetMoney < resultsManager.GetTrainingCostAmount(currentTrainType, hourAmount)) return;
                 
                 uiManager.activityText.text = "Training...";
 
@@ -75,8 +83,9 @@ public class ActivityManager : MonoBehaviour
         }
 
         if (hourAmount == 0) currentActivity = Activity.Idle;
+
         timeManager.IncreaseTime(hourAmount, false);
-        artManager.ChangeArt(activity);
+        artManager.ChangeArt(currentActivity);
     }
     
 }
