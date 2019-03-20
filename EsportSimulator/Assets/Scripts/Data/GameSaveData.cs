@@ -24,9 +24,11 @@ public class GameSaveData
     #endregion
 
     #region Skills
+
     public int gameKnowledge;
     public int teamPlay;
     public int mechanics;
+
     #endregion
 
     #region Time
@@ -38,9 +40,17 @@ public class GameSaveData
 
     #endregion
 
+    #region RealDate
+
+    public int realDay;
+    public int realMonth;
+    public int realYear;
+
+    #endregion
+
     #region Utilities
-    
-    public int saved;
+
+    public int saveSlotUsed;
 
     #endregion
 }

@@ -34,15 +34,12 @@ public class PlayerData : ScriptableObject
     #endregion
 
     #region Skills
-    [SerializeField] private float gameKnowledge;
-    [SerializeField] private float teamPlay;
-    [SerializeField] private float mechanics;
+    [SerializeField] private int gameKnowledge;
+    [SerializeField] private int teamPlay;
+    [SerializeField] private int mechanics;
     #endregion
 
     #region Utilities
-
-    [SerializeField] private bool saved;
-    [SerializeField] private bool debug;
 
     #endregion
 
@@ -60,102 +57,37 @@ public class PlayerData : ScriptableObject
         gameKnowledge = 0;
         teamPlay = 0;
         mechanics = 0;
-        saved = false;
-    }
-
-    public void SetMoney(float amount)
-    {
-        if (!saved || !debug) return;
-
-        money = amount;
-    }
-
-    public void SetRating(float amount)
-    {
-        if (!saved || !debug) return;
-
-        rating = amount;
-    }
-
-    public void SetFame(float amount)
-    {
-        if (!saved || !debug) return;
-
-        money = amount;
-    }
-
-    public void SetWorkExperience(float amount)
-    {
-        if (!saved || !debug) return;
-
-        workExperience = amount;
-    }
-
-    public void SetWorkLevel(int amount)
-    {
-        if (!saved || !debug) return;
-
-        workLevel = amount;
-    }
-
-    public void SetTiredness(float amount)
-    {
-        if (!saved || !debug) return;
-
-        tiredness = amount;
-    }
-
-    public void SetHunger(float amount)
-    {
-        if (!saved || !debug) return;
-
-        hunger = amount;
-    }
-
-    public void SetThirst(float amount)
-    {
-        if (!saved || !debug) return;
-
-        thirst = amount;
-    }
-
-    public void SetGameKnowledge(float amount)
-    {
-        if (!saved || !debug) return;
-
-        gameKnowledge = amount;
-    }
-
-    public void SetTeamPlay(float amount)
-    {
-        if (!saved || !debug) return;
-
-        teamPlay = amount;
-    }
-
-    public void SetMechanics(float amount)
-    {
-        if (!saved || !debug) return;
-
-        mechanics = amount;
     }
 
     #region Getters & Setters
 
-    public float DefaultMoney { get { return defaultMoney; } }
-    public float Money { get { return money; } }
-    public float Rating { get { return rating; } }
-    public float Fame { get { return fame; } }
-    public float WorkExperience { get { return workExperience; } }
-    public int WorkLevel { get { return workLevel; } }
-    public int HouseLevel { get { return houseLevel; } }
-    public float Tiredness { get { return tiredness; } }
-    public float Hunger { get { return hunger; } }
-    public float Thirst { get { return thirst; } }
-    public float GameKnowledge { get { return gameKnowledge; } }
-    public float TeamPlay { get { return teamPlay; } }
-    public float Mechanics { get { return mechanics; } }
-    public bool Saved { get { return saved; } set { saved = value; } }
+    public float GetDefaultMoney { get { return defaultMoney; } }
+    public float GetMoney { get { return money; } }
+    public float GetRating { get { return rating; } }
+    public float GetFame { get { return fame; } }
+    public float GetWorkExperience { get { return workExperience; } }
+    public int GetWorkLevel { get { return workLevel; } }
+    public int GetHouseLevel { get { return houseLevel; } }
+    public float GetTiredness { get { return tiredness; } }
+    public float GetHunger { get { return hunger; } }
+    public float GetThirst { get { return thirst; } }
+    public int GetGameKnowledge { get { return gameKnowledge; } }
+    public int GetTeamPlay { get { return teamPlay; } }
+    public int GetMechanics { get { return mechanics; } }
+
+    public float SetDefaultMoney { set { defaultMoney = value; } }
+    public float SetMoney { set { money = value; } }
+    public float SetRating { set { rating = value; } }
+    public float SetFame { set { fame = value; } }
+    public float SetWorkExperience { set { workExperience = value; } }
+    public int SetWorkLevel { set { workLevel = value; } }
+    public int SetHouseLevel { set { houseLevel = value; } }
+    public float SetTiredness { set { tiredness = value; } }
+    public float SetHunger { set { hunger = value; } }
+    public float SetThirst { set { thirst = value; } }
+    public int SetGameKnowledge { set { gameKnowledge = value; } }
+    public int SetTeamPlay { set { teamPlay = value; } }
+    public int SetMechanics { set { mechanics = value; } }
 
     #endregion
 }

@@ -24,39 +24,27 @@ public class GameData : ScriptableObject
 
     #region Utilities
 
-    [SerializeField] private bool saved;
-    [SerializeField] private bool debug;
-
     #endregion
 
     public void Reset(bool reset)
     {
         hour = 0;
+        minute = 0;
         month = 0;
         year = 0;
     }
 
-    public void SetTime(int h)
-    {
-        if (!saved || !debug) return;
-
-        hour = h;
-    }
-
-    public void SetDate(int m, int y)
-    {
-        if (!saved || !debug) return;
-
-        month = m;
-        year = y;
-    }
-
     #region Getters & Setters
-    
-    public int Hour { get { return hour; } }
-    public int Month { get { return month; } }
-    public int Year { get { return year; } }
-    public bool Saved { get { return saved; } set { saved = value; } }
+
+    public int GetHour { get { return hour; } }
+    public int GetMinute { get { return minute; } }
+    public int GetMonth { get { return month; } }
+    public int GetYear { get { return year; } }
+
+    public int SetHour { set { hour = value; } }
+    public int SetMinute { set { minute = value; } }
+    public int SetMonth { set { month = value; } }
+    public int SetYear { set { year = value; } }
 
     #endregion
 }

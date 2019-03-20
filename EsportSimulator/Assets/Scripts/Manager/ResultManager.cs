@@ -110,23 +110,24 @@ public class ResultManager : MonoBehaviour
         }
     }
 
-    public void PayRent()
+    public void PayRent(int houseLevel)
     {
-        switch (gameManager.HouseLevel)
+        switch (houseLevel)
         {
             case 0:
-                gameManager.Money -= houseLevel1.Money;
+                gameManager.DecreaseMoney(houseLevel1.Money);
+
                 break;
             case 1:
-                gameManager.Money -= houseLevel2.Money;
+                gameManager.DecreaseMoney(houseLevel2.Money);
 
                 break;
             case 2:
-                gameManager.Money -= houseLevel3.Money;
+                gameManager.DecreaseMoney(houseLevel3.Money);
 
                 break;
             case 3:
-                gameManager.Money -= houseLevel4.Money;
+                gameManager.DecreaseMoney(houseLevel4.Money);
 
                 break;
         }
@@ -151,34 +152,34 @@ public class ResultManager : MonoBehaviour
         switch (workLevel)
         {
             case 0:
-                gameManager.Money += workLevel1.Money * currentDebuffMultiplier;
+                gameManager.IncreaseMoney(workLevel1.Money * currentDebuffMultiplier);
                 gameManager.Tiredness += workLevel1.Tiredness;
                 gameManager.WorkExperience += workLevel1.WorkExperience;
                 break;
 
             case 1:
-                gameManager.Money += workLevel2.Money * currentDebuffMultiplier;
+                gameManager.IncreaseMoney(workLevel2.Money * currentDebuffMultiplier);
                 gameManager.Tiredness += workLevel2.Tiredness;
                 gameManager.WorkExperience += workLevel2.WorkExperience;
-                gameManager.GameKnowledge += workLevel2.GameKnowledge * currentDebuffMultiplier;
+                gameManager.GameKnowledge += (int)(workLevel2.GameKnowledge * currentDebuffMultiplier);
 
                 break;
 
             case 2:
-                gameManager.Money += workLevel3.Money * currentDebuffMultiplier;
+                gameManager.IncreaseMoney(workLevel3.Money * currentDebuffMultiplier);
                 gameManager.Tiredness += workLevel3.Tiredness;
                 gameManager.WorkExperience += workLevel3.WorkExperience;
-                gameManager.GameKnowledge += workLevel3.GameKnowledge * currentDebuffMultiplier;
-                gameManager.GameKnowledge += workLevel3.Mechanics * currentDebuffMultiplier;
+                gameManager.GameKnowledge += (int)(workLevel3.GameKnowledge * currentDebuffMultiplier);
+                gameManager.GameKnowledge += (int)(workLevel3.Mechanics * currentDebuffMultiplier);
 
                 break;
 
             case 3:
-                gameManager.Money += workLevel4.Money * currentDebuffMultiplier;
+                gameManager.IncreaseMoney(workLevel4.Money * currentDebuffMultiplier);
                 gameManager.Tiredness += workLevel4.Tiredness;
                 gameManager.WorkExperience += workLevel4.WorkExperience;
-                gameManager.GameKnowledge += workLevel4.GameKnowledge * currentDebuffMultiplier;
-                gameManager.GameKnowledge += workLevel4.TeamPlay * currentDebuffMultiplier;
+                gameManager.GameKnowledge += (int)(workLevel4.GameKnowledge * currentDebuffMultiplier);
+                gameManager.GameKnowledge += (int)(workLevel4.TeamPlay * currentDebuffMultiplier);
 
                 break;
 
@@ -203,61 +204,61 @@ public class ResultManager : MonoBehaviour
         {
             case ActivityManager.TrainType.WatchingGK:
                 gameManager.Tiredness += trainLevel1.Tiredness;
-                gameManager.GameKnowledge += trainLevel1.GameKnowledge * currentDebuffMultiplier;
+                gameManager.GameKnowledge += (int)(trainLevel1.GameKnowledge * currentDebuffMultiplier);
 
                 break;
 
             case ActivityManager.TrainType.WatchingTP:
                 gameManager.Tiredness += trainLevel1.Tiredness;
-                gameManager.TeamPlay += trainLevel1.TeamPlay * currentDebuffMultiplier;
+                gameManager.TeamPlay += (int)(trainLevel1.TeamPlay * currentDebuffMultiplier);
 
                 break;
 
             case ActivityManager.TrainType.WatchingM:
                 gameManager.Tiredness += trainLevel1.Tiredness;
-                gameManager.Mechanics += trainLevel1.Mechanics * currentDebuffMultiplier;
+                gameManager.Mechanics += (int)(trainLevel1.Mechanics * currentDebuffMultiplier);
 
                 break;
                 
             case ActivityManager.TrainType.CourseGK:
-                gameManager.Money -= trainLevel2.Money;
+                gameManager.DecreaseMoney(trainLevel2.Money);
                 gameManager.Tiredness += trainLevel2.Tiredness;
-                gameManager.GameKnowledge += trainLevel2.GameKnowledge * currentDebuffMultiplier;
+                gameManager.GameKnowledge += (int)(trainLevel2.GameKnowledge * currentDebuffMultiplier);
 
                 break;
 
             case ActivityManager.TrainType.CourseTP:
-                gameManager.Money -= trainLevel2.Money;
+                gameManager.DecreaseMoney(trainLevel2.Money);
                 gameManager.Tiredness += trainLevel2.Tiredness;
-                gameManager.TeamPlay += trainLevel2.TeamPlay * currentDebuffMultiplier;
+                gameManager.TeamPlay += (int)(trainLevel2.TeamPlay * currentDebuffMultiplier);
 
                 break;
 
             case ActivityManager.TrainType.CourseM:
-                gameManager.Money -= trainLevel2.Money;
+                gameManager.DecreaseMoney(trainLevel2.Money);
                 gameManager.Tiredness += trainLevel2.Tiredness;
-                gameManager.Mechanics += trainLevel2.Mechanics * currentDebuffMultiplier;
+                gameManager.Mechanics += (int)(trainLevel2.Mechanics * currentDebuffMultiplier);
 
                 break;
                 
             case ActivityManager.TrainType.CoursePlusGK:
-                gameManager.Money -= trainLevel3.Money;
+                gameManager.DecreaseMoney(trainLevel3.Money);
                 gameManager.Tiredness += trainLevel3.Tiredness;
-                gameManager.GameKnowledge += trainLevel3.GameKnowledge * currentDebuffMultiplier;
+                gameManager.GameKnowledge += (int)(trainLevel3.GameKnowledge * currentDebuffMultiplier);
 
                 break;
 
             case ActivityManager.TrainType.CoursePlusTP:
-                gameManager.Money -= trainLevel3.Money;
+                gameManager.DecreaseMoney(trainLevel3.Money);
                 gameManager.Tiredness += trainLevel3.Tiredness;
-                gameManager.TeamPlay += trainLevel3.TeamPlay * currentDebuffMultiplier;
+                gameManager.TeamPlay += (int)(trainLevel3.TeamPlay * currentDebuffMultiplier);
 
                 break;
 
             case ActivityManager.TrainType.CoursePlusM:
-                gameManager.Money -= trainLevel3.Money;
+                gameManager.DecreaseMoney(trainLevel3.Money);
                 gameManager.Tiredness += trainLevel3.Tiredness;
-                gameManager.Mechanics += trainLevel3.Mechanics * currentDebuffMultiplier;
+                gameManager.Mechanics += (int)(trainLevel3.Mechanics * currentDebuffMultiplier);
 
                 break;
 
@@ -306,31 +307,31 @@ public class ResultManager : MonoBehaviour
         {
             case 1:
                 //TODO create not enough money signal
-                if (gameManager.Money < foodBad.Money) return;
+                if (gameManager.GetMoney < foodBad.Money) return;
 
                 DecreaseHunger(foodBad.Hunger);
-                DecreaseMoney(foodBad.Money);
+                gameManager.DecreaseMoney(foodBad.Money);
                 break;
             case 2:
                 //TODO create not enough money signal
-                if (gameManager.Money < foodStandard.Money) return;
+                if (gameManager.GetMoney < foodStandard.Money) return;
 
                 DecreaseHunger(foodStandard.Hunger);
-                DecreaseMoney(foodStandard.Money);
+                gameManager.DecreaseMoney(foodStandard.Money);
                 break;
             case 3:
                 //TODO create not enough money signal
-                if (gameManager.Money < foodGood.Money) return;
+                if (gameManager.GetMoney < foodGood.Money) return;
 
                 DecreaseHunger(foodGood.Hunger);
-                DecreaseMoney(foodGood.Money);
+                gameManager.DecreaseMoney(foodGood.Money);
                 break;
             case 4:
                 //TODO create not enough money signal
-                if (gameManager.Money < foodExcellent.Money) return;
+                if (gameManager.GetMoney < foodExcellent.Money) return;
 
                 DecreaseHunger(foodExcellent.Hunger);
-                DecreaseMoney(foodExcellent.Money);
+                gameManager.DecreaseMoney(foodExcellent.Money);
                 break;
 
             default:
@@ -338,7 +339,7 @@ public class ResultManager : MonoBehaviour
                 break;
         }
         
-        uiManager.UpdateProgress(gameManager.Money, gameManager.Rating, gameManager.Fame);
+        uiManager.UpdateProgress(gameManager.GetMoney, gameManager.Rating, gameManager.Fame);
         uiManager.UpdateNeeds(gameManager.Tiredness, gameManager.Hunger, gameManager.Thirst);
     }
 
@@ -348,31 +349,31 @@ public class ResultManager : MonoBehaviour
         {
             case 1:
                 //TODO create not enough money signal
-                if (gameManager.Money < drinkBad.Money) return;
+                if (gameManager.GetMoney < drinkBad.Money) return;
 
                 DecreaseThirst(drinkBad.Thirst);
-                DecreaseMoney(drinkBad.Money);
+                gameManager.DecreaseMoney(drinkBad.Money);
                 break;
             case 2:
                 //TODO create not enough money signal
-                if (gameManager.Money < drinkStandard.Money) return;
+                if (gameManager.GetMoney < drinkStandard.Money) return;
 
                 DecreaseThirst(drinkStandard.Thirst);
-                DecreaseMoney(drinkStandard.Money);
+                gameManager.DecreaseMoney(drinkStandard.Money);
                 break;
             case 3:
                 //TODO create not enough money signal
-                if (gameManager.Money < drinkGood.Money) return;
+                if (gameManager.GetMoney < drinkGood.Money) return;
 
                 DecreaseThirst(drinkGood.Thirst);
-                DecreaseMoney(drinkGood.Money);
+                gameManager.DecreaseMoney(drinkGood.Money);
                 break;
             case 4:
                 //TODO create not enough money signal
-                if (gameManager.Money < drinkExcellent.Money) return;
+                if (gameManager.GetMoney < drinkExcellent.Money) return;
 
                 DecreaseThirst(drinkExcellent.Thirst);
-                DecreaseMoney(drinkExcellent.Money);
+                gameManager.DecreaseMoney(drinkExcellent.Money);
                 break;
 
             default:
@@ -380,7 +381,7 @@ public class ResultManager : MonoBehaviour
                 break;
         }
 
-        uiManager.UpdateProgress(gameManager.Money, gameManager.Rating, gameManager.Fame);
+        uiManager.UpdateProgress(gameManager.GetMoney, gameManager.Rating, gameManager.Fame);
         uiManager.UpdateNeeds(gameManager.Tiredness, gameManager.Hunger, gameManager.Thirst);
     }
 
@@ -488,17 +489,7 @@ public class ResultManager : MonoBehaviour
             uiManager.needsMenuButton.GetComponent<LerpColor>().LerpActivated = false;
         }
     }
-
-    private void IncreaseMoney(float amount)
-    {
-        gameManager.Money += amount;
-    }
-
-    private void DecreaseMoney(float amount)
-    {
-        gameManager.Money -= amount;
-    }
-
+    
     #region Getters & Setters
 
     public float GetTirednessDecreaseRate { get { return tirednessDecreaseRate; } }

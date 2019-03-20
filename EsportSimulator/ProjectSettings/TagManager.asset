@@ -7,6 +7,9 @@ TagManager:
   - Navigation
   - SubMenu
   - Menu
+  - GoMainMenu
+  - GoQuit
+  - MainMenu
   layers:
   - Default
   - TransparentFX
@@ -17,7 +20,7 @@ TagManager:
   - 
   - 
   - Background
-  - 
+  - MainMenu
   - 
   - 
   - 
