@@ -68,9 +68,9 @@ public class ArtManager : MonoBehaviour
                 playerAnimator.Play("Idle");
                 workstationAnimator.Play("WoodenTable");
 
-                background.sprite = houseSprites[(int)playerData.HouseLevel];
-                chair.sprite = chairSprites[(int)playerData.HouseLevel];
-                workstation.sprite = tableSprites[(int)playerData.HouseLevel];
+                background.sprite = houseSprites[(int)playerData.GetHouseLevel];
+                chair.sprite = chairSprites[(int)playerData.GetHouseLevel];
+                workstation.sprite = tableSprites[(int)playerData.GetHouseLevel];
 
                 break;
 
@@ -86,18 +86,18 @@ public class ArtManager : MonoBehaviour
                 playerAnimator.Play("OnComputer");
                 workstationAnimator.Play("WoodenTable");
 
-                background.sprite = houseSprites[(int)playerData.HouseLevel];
-                chair.sprite = chairSprites[(int)playerData.HouseLevel];
-                workstation.sprite = tableSprites[(int)playerData.HouseLevel];
+                background.sprite = houseSprites[(int)playerData.GetHouseLevel];
+                chair.sprite = chairSprites[(int)playerData.GetHouseLevel];
+                workstation.sprite = tableSprites[(int)playerData.GetHouseLevel];
 
                 break;
 
             case ActivityManager.Activity.Work:
-                background.sprite = workplaceSprites[(int)playerData.WorkLevel];
+                background.sprite = workplaceSprites[(int)playerData.GetWorkLevel];
                 screen.sprite = null;
                 keyboard.sprite = null;
                 
-                switch (playerData.WorkLevel)
+                switch (playerData.GetWorkLevel)
                 {
                     case 0:
                         playerAnimator.Play("Working1");
