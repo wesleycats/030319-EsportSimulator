@@ -18,9 +18,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float tiredness;
     [SerializeField] private float hunger;
     [SerializeField] private float thirst;
-    [SerializeField] private float gameKnowledge;
-    [SerializeField] private float teamPlay;
-    [SerializeField] private float mechanics;
+    [SerializeField] private int gameKnowledge;
+    [SerializeField] private int teamPlay;
+    [SerializeField] private int mechanics;
 
     #endregion
 
@@ -34,18 +34,21 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        if (!playerData.Saved) ResetGame(true);
-
-        InitializePlayerData();
-        timeManager.InitializeGameData();
-        uiManager.InitializePlayerData();
-        uiManager.InitializeGameData();
+        LoadData();
     }
 
-    public void ResetGame(bool reset)
+    public void LoadData()
     {
-        playerData.Reset(reset);
-        gameData.Reset(reset);
+        InitializePlayerData();
+        timeManager.InitializeGameData();
+        uiManager.InitializeData();
+    }
+
+    public void ResetGame()
+    {
+        playerData.Reset(true);
+        gameData.Reset(true);
+        LoadData();
     }
 
     public void RestartGame(bool restart)
@@ -55,9 +58,18 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    public void IncreaseMoney(float amount)
+    {
+        money += amount;
+
+        uiManager.UpdateProgress(money, rating, fame);
+    }
+
     public void DecreaseMoney(float amount)
     {
         money -= amount;
+
+        uiManager.UpdateProgress(money, rating, fame);
     }
 
     public bool IsMoneyLowEnough(float amount)
@@ -99,35 +111,52 @@ public class GameManager : MonoBehaviour
     {
         return thirst >= amount;
     }
-
-    /// <summary>
-    /// Debug
-    /// </summary>
-    /// <param name="amount"></param>
-    public void AddMoney(float amount)
-    {
-        money += amount;
-    }
-
+    
     /// <summary>
     /// Initializes player data in variables
     /// </summary>
     void InitializePlayerData()
     {
-        money = playerData.Money;
-        rating = playerData.Rating;
-        fame = playerData.Fame;
-        workExperience = playerData.WorkExperience;
-        workLevel = playerData.WorkLevel;
-        tiredness = playerData.Tiredness;
-        hunger = playerData.Hunger;
-        thirst = playerData.Thirst;
-        gameKnowledge = playerData.GameKnowledge;
-        teamPlay = playerData.TeamPlay;
-        mechanics = playerData.Mechanics;
+        money = playerData.GetMoney;
+        rating = playerData.GetRating;
+        fame = playerData.GetFame;
+        workExperience = playerData.GetWorkExperience;
+        workLevel = playerData.GetWorkLevel;
+        tiredness = playerData.GetTiredness;
+        hunger = playerData.GetHunger;
+        thirst = playerData.GetThirst;
+        gameKnowledge = playerData.GetGameKnowledge;
+        teamPlay = playerData.GetTeamPlay;
+        mechanics = playerData.GetMechanics;
     }
 
     #region Getters & Setters
+
+    public float GetMoney { get { return money; } }
+    public float GetRating { get { return rating; } }
+    public float GetFame { get { return fame; } }
+    public float GetWorkExperience { get { return workExperience; } }
+    public int GetWorkLevel { get { return workLevel; } }
+    public int GetHouseLevel { get { return houseLevel; } }
+    public float GetTiredness { get { return tiredness; } }
+    public float GetHunger { get { return hunger; } }
+    public float GetThirst { get { return thirst; } }
+    public int GetGameKnowledge { get { return gameKnowledge; } }
+    public int GetTeamPlay { get { return teamPlay; } }
+    public int GetMechanics { get { return mechanics; } }
+
+    public float SetMoney { set { money = value; } }
+    public float SetRating { set { rating = value; } }
+    public float SetFame { set { fame = value; } }
+    public float SetWorkExperience { set { workExperience = value; } }
+    public int SetWorkLevel { set { workLevel = value; } }
+    public int SetHouseLevel { set { houseLevel = value; } }
+    public float SetTiredness { set { tiredness = value; } }
+    public float SetHunger { set { hunger = value; } }
+    public float SetThirst { set { thirst = value; } }
+    public int SetGameKnowledge { set { gameKnowledge = value; } }
+    public int SetTeamPlay { set { teamPlay = value; } }
+    public int SetMechanics { set { mechanics = value; } }
 
     public float Money { get { return money; } set { money = value; } }
     public float Rating { get { return rating; } set { rating = value; } }
@@ -138,9 +167,10 @@ public class GameManager : MonoBehaviour
     public float Tiredness { get { return tiredness; } set { tiredness = value; } }
     public float Hunger { get { return hunger; } set { hunger = value; } }
     public float Thirst { get { return thirst; } set { thirst = value; } }
-    public float GameKnowledge { get { return gameKnowledge; } set { gameKnowledge = value; } }
-    public float TeamPlay { get { return teamPlay; } set { teamPlay = value; } }
-    public float Mechanics { get { return mechanics; } set { mechanics = value; } }
+    public int GameKnowledge { get { return gameKnowledge; } set { gameKnowledge = value; } }
+    public int TeamPlay { get { return teamPlay; } set { teamPlay = value; } }
+    public int Mechanics { get { return mechanics; } set { mechanics = value; } }
+
 
     #endregion
 }
