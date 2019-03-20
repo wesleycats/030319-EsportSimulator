@@ -34,10 +34,10 @@ public class SliderToText : MonoBehaviour
 
     private void Start()
     {
+        SetSliderMaxValue(tirednessMultiplier);
         ResetValues();
     }
 
-    //TODO Change responsibility of text changes to UIManager
     public void ValueToTimeText(Text textToChange)
     {
         duration = slider.value * timeMultiplier;
@@ -79,6 +79,12 @@ public class SliderToText : MonoBehaviour
         moneyMin = slider.value * resultMultiplier * (debuffMultiplier * debuffMultiplierAmount);
         moneyMax = slider.value * (resultMultiplier * 3) * (debuffMultiplier * debuffMultiplierAmount);
         textToChange.text = "between +$" + moneyMin.ToString() + "-$" + moneyMax.ToString() + ", -" + tiredness.ToString() + "% tiredness";
+    }
+
+    public void SetSliderMaxValue(float divisor)
+    {
+        slider.maxValue = Mathf.Floor(100 / divisor);
+        slider.value = slider.maxValue;
     }
     
     private void OnDisable()

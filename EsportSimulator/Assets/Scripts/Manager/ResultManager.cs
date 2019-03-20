@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Manages the results of all actions
+/// </summary>
 public class ResultManager : MonoBehaviour
 {
     [Header("Houses")]
@@ -112,24 +115,41 @@ public class ResultManager : MonoBehaviour
 
     public void PayRent(int houseLevel)
     {
+        float rent = 0;
         switch (houseLevel)
         {
             case 0:
-                gameManager.DecreaseMoney(houseLevel1.Money);
+                rent = houseLevel1.Money;
 
+                if (!gameManager.IsMoneyHighEnough(rent)) gameManager.GameOver();
+
+                gameManager.DecreaseMoney(rent);
                 break;
+
             case 1:
-                gameManager.DecreaseMoney(houseLevel2.Money);
+                rent = houseLevel2.Money;
 
+                if (!gameManager.IsMoneyHighEnough(rent)) gameManager.GameOver();
+
+                gameManager.DecreaseMoney(rent);
                 break;
+
             case 2:
-                gameManager.DecreaseMoney(houseLevel3.Money);
+                rent = houseLevel3.Money;
 
+                if (!gameManager.IsMoneyHighEnough(rent)) gameManager.GameOver();
+
+                gameManager.DecreaseMoney(rent);
                 break;
+
             case 3:
-                gameManager.DecreaseMoney(houseLevel4.Money);
+                rent = houseLevel4.Money;
 
+                if (!gameManager.IsMoneyHighEnough(rent)) gameManager.GameOver();
+
+                gameManager.DecreaseMoney(rent);
                 break;
+
         }
     }
 

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    // Just for initialization
     #region UI Elements
 
     public Text time;
@@ -23,6 +22,7 @@ public class UIManager : MonoBehaviour
     public Text teamPlayValue;
     public Text mechanicsValue;
     public Text activityText;
+    public GameObject gameOverMenu;
 
     #endregion
     

@@ -51,11 +51,14 @@ public class GameManager : MonoBehaviour
         LoadData();
     }
 
-    public void RestartGame(bool restart)
+    public void RestartGame()
     {
-        if (!restart) return;
-
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void GameOver()
+    {
+        uiManager.gameOverMenu.SetActive(true);
     }
 
     public void IncreaseMoney(float amount)
