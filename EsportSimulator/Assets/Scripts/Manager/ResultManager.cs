@@ -62,7 +62,10 @@ public class ResultManager : MonoBehaviour
     {
         if (debuff)
             ApplyDebuffs(debuffMultiplier, debuffMultiplierAmount);
-        
+    }
+
+    private void Update()
+    {
     }
 
     public float GetTrainingCostAmount(ActivityManager.TrainType trainType, float duration)
@@ -223,63 +226,54 @@ public class ResultManager : MonoBehaviour
         switch (trainType)
         {
             case ActivityManager.TrainType.WatchingGK:
-                gameManager.Tiredness += trainLevel1.Tiredness;
                 gameManager.GameKnowledge += (int)(trainLevel1.GameKnowledge * currentDebuffMultiplier);
-
+                IncreaseTiredness(trainLevel1.Tiredness);
                 break;
 
             case ActivityManager.TrainType.WatchingTP:
-                gameManager.Tiredness += trainLevel1.Tiredness;
                 gameManager.TeamPlay += (int)(trainLevel1.TeamPlay * currentDebuffMultiplier);
-
+                IncreaseTiredness(trainLevel1.Tiredness);
                 break;
 
             case ActivityManager.TrainType.WatchingM:
-                gameManager.Tiredness += trainLevel1.Tiredness;
                 gameManager.Mechanics += (int)(trainLevel1.Mechanics * currentDebuffMultiplier);
-
+                IncreaseTiredness(trainLevel1.Tiredness);
                 break;
                 
             case ActivityManager.TrainType.CourseGK:
                 gameManager.DecreaseMoney(trainLevel2.Money);
-                gameManager.Tiredness += trainLevel2.Tiredness;
                 gameManager.GameKnowledge += (int)(trainLevel2.GameKnowledge * currentDebuffMultiplier);
-
+                IncreaseTiredness(trainLevel2.Tiredness);
                 break;
 
             case ActivityManager.TrainType.CourseTP:
                 gameManager.DecreaseMoney(trainLevel2.Money);
-                gameManager.Tiredness += trainLevel2.Tiredness;
                 gameManager.TeamPlay += (int)(trainLevel2.TeamPlay * currentDebuffMultiplier);
-
+                IncreaseTiredness(trainLevel2.Tiredness);
                 break;
 
             case ActivityManager.TrainType.CourseM:
                 gameManager.DecreaseMoney(trainLevel2.Money);
-                gameManager.Tiredness += trainLevel2.Tiredness;
                 gameManager.Mechanics += (int)(trainLevel2.Mechanics * currentDebuffMultiplier);
-
+                IncreaseTiredness(trainLevel2.Tiredness);
                 break;
                 
             case ActivityManager.TrainType.CoursePlusGK:
                 gameManager.DecreaseMoney(trainLevel3.Money);
-                gameManager.Tiredness += trainLevel3.Tiredness;
                 gameManager.GameKnowledge += (int)(trainLevel3.GameKnowledge * currentDebuffMultiplier);
-
+                IncreaseTiredness(trainLevel3.Tiredness);
                 break;
 
             case ActivityManager.TrainType.CoursePlusTP:
                 gameManager.DecreaseMoney(trainLevel3.Money);
-                gameManager.Tiredness += trainLevel3.Tiredness;
                 gameManager.TeamPlay += (int)(trainLevel3.TeamPlay * currentDebuffMultiplier);
-
+                IncreaseTiredness(trainLevel3.Tiredness);
                 break;
 
             case ActivityManager.TrainType.CoursePlusM:
                 gameManager.DecreaseMoney(trainLevel3.Money);
-                gameManager.Tiredness += trainLevel3.Tiredness;
                 gameManager.Mechanics += (int)(trainLevel3.Mechanics * currentDebuffMultiplier);
-
+                IncreaseTiredness(trainLevel3.Tiredness);
                 break;
 
             default:
@@ -297,7 +291,7 @@ public class ResultManager : MonoBehaviour
     {
         currentDebuffMultiplier = debuffMultiplier;
         currentDebuffMultiplierAmount = debuffMultiplierAmount;
-
+        
         SliderToText[] sliders = Resources.FindObjectsOfTypeAll<SliderToText>();
 
         foreach (SliderToText s in sliders)
@@ -407,9 +401,9 @@ public class ResultManager : MonoBehaviour
 
     private void IncreaseTiredness(float amount)
     {
-        gameManager.Tiredness += amount;
+        gameManager.SetTiredness = gameManager.GetTiredness + amount;
 
-        if (gameManager.Tiredness >= 70)
+        if (gameManager.GetTiredness >= 70)
         {
             if (uiManager.needsMenuButton.GetComponent<LerpColor>().endColor != Color.red)
             {
@@ -418,7 +412,7 @@ public class ResultManager : MonoBehaviour
             }
         }
 
-        if (gameManager.Tiredness >= 100)
+        if (gameManager.GetTiredness >= 100)
         {
             ApplyDebuffs(debuffMultiplier, debuffMultiplierAmount);
             uiManager.needsMenuButton.GetComponent<LerpColor>().endColor = Color.red;

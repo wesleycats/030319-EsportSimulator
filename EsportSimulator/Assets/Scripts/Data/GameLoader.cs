@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class GameLoader : MonoBehaviour
 {
@@ -12,8 +13,11 @@ public class GameLoader : MonoBehaviour
     public PlayerData playerData;
     public GameObject mainMenu;
     public ButtonManager buttonManager;
+    public OpponentManager opponentManager;
+    public GameSaveData gameSaveData;
 
     private int saveSlotToBeCleared = 0;
+    private string dataPath;
 
     public void LoadGame(int saveSlot)
     {
@@ -22,6 +26,7 @@ public class GameLoader : MonoBehaviour
             Debug.LogError("The given slot number is not available");
             return;
         }
+        dataPath = Path.Combine(Application.persistentDataPath, "GameSaveData_SaveSlot_" + saveSlot + ".txt");
 
         switchOverlay.LerpMaxAmount = 1;
         switchOverlay.Increasing = true;
@@ -36,7 +41,8 @@ public class GameLoader : MonoBehaviour
 
         if (!switchOverlay.Lerping && switchOverlay.LerpValue == 1)
         {
-            LoadData(saveSlot);
+            LoadData(saveSlot, dataPath);
+
             switchOverlay.LerpMaxAmount = 1;
             switchOverlay.Increasing = false;
             switchOverlay.Lerping = true;
@@ -49,27 +55,35 @@ public class GameLoader : MonoBehaviour
         }
     }
 
-    public void LoadData(int saveSlot)
+    public void LoadData(int saveSlot, string path)
     {
-        playerData.SetMoney = PlayerPrefs.GetFloat("money_SaveSlot" + saveSlot);
-        playerData.SetRating = PlayerPrefs.GetFloat("rating_SaveSlot" + saveSlot);
-        playerData.SetFame = PlayerPrefs.GetFloat("fame_SaveSlot" + saveSlot);
-        playerData.SetWorkExperience = PlayerPrefs.GetFloat("workExperience_SaveSlot" + saveSlot);
-        playerData.SetWorkLevel = PlayerPrefs.GetInt("workLevel_SaveSlot" + saveSlot);
-        playerData.SetHouseLevel = PlayerPrefs.GetInt("houseLevel_SaveSlot" + saveSlot);
+        using (StreamReader streamReader = File.OpenText(path))
+        {
+            string jsonString = streamReader.ReadToEnd();
+            gameSaveData = JsonUtility.FromJson<GameSaveData>(jsonString);
+        }
 
-        playerData.SetTiredness = PlayerPrefs.GetFloat("tiredness_SaveSlot" + saveSlot);
-        playerData.SetHunger = PlayerPrefs.GetFloat("hunger_SaveSlot" + saveSlot);
-        playerData.SetThirst = PlayerPrefs.GetFloat("thirst_SaveSlot" + saveSlot);
+        playerData.SetMoney = gameSaveData.money;
+        playerData.SetRating = gameSaveData.rating;
+        playerData.SetFame = gameSaveData.fame;
+        playerData.SetWorkExperience = gameSaveData.workExperience;
+        playerData.SetWorkLevel = gameSaveData.workLevel;
+        playerData.SetHouseLevel = gameSaveData.houseLevel;
 
-        playerData.SetGameKnowledge = PlayerPrefs.GetInt("gameKnowledge_SaveSlot" + saveSlot);
-        playerData.SetTeamPlay = PlayerPrefs.GetInt("teamPlay_SaveSlot" + saveSlot);
-        playerData.SetMechanics = PlayerPrefs.GetInt("mechanics_SaveSlot" + saveSlot);
+        playerData.SetTiredness = gameSaveData.tiredness;
+        playerData.SetHunger = gameSaveData.hunger;
+        playerData.SetThirst = gameSaveData.thirst;
 
-        gameData.SetHour = PlayerPrefs.GetInt("hour_SaveSlot" + saveSlot);
-        gameData.SetMinute = PlayerPrefs.GetInt("minute_SaveSlot" + saveSlot);
-        gameData.SetYear = PlayerPrefs.GetInt("year_SaveSlot" + saveSlot);
-        gameData.SetMonth = PlayerPrefs.GetInt("month_SaveSlot" + saveSlot);
+        playerData.SetGameKnowledge = gameSaveData.gameKnowledge;
+        playerData.SetTeamPlay = gameSaveData.teamPlay;
+        playerData.SetMechanics = gameSaveData.mechanics;
+
+        gameData.SetHour = gameSaveData.hour;
+        gameData.SetMinute = gameSaveData.minute;
+        gameData.SetYear = gameSaveData.year;
+        gameData.SetMonth = gameSaveData.month;
+
+        opponentManager.ApplyOpponents(gameSaveData.opponents, opponentManager.GetOpponents);
 
         mainMenu.SetActive(false);
 
@@ -81,7 +95,7 @@ public class GameLoader : MonoBehaviour
 
     public void ClearSlot()
     {
-        PlayerPrefs.SetInt("saveSlotUsed_SaveSlot" + saveSlotToBeCleared, 0);
+        File.Delete(Path.Combine(Application.persistentDataPath, "GameSaveData_SaveSlot_" + saveSlotToBeCleared + ".txt"));
     }
 
     #region Getters & Setters

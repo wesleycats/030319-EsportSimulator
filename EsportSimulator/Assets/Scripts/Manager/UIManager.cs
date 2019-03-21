@@ -23,13 +23,18 @@ public class UIManager : MonoBehaviour
     public Text mechanicsValue;
     public Text activityText;
     public GameObject gameOverMenu;
+    public Text leaderboardNames;
+    public Text leaderboardRatings;
 
     #endregion
-    
+
+    [Tooltip("[0]=champion, [1]=diamond, etc.")]
+    public Color[] divisionColors;
     public Image sleepOverlay;
     public Image needsMenuButton;
     public TimeManager timeManager;
     public GameManager gameManager;
+    public OpponentManager opponentManager;
 
     public void UpdateTime(int hour, int minute, int year, int month)
     {
@@ -64,6 +69,19 @@ public class UIManager : MonoBehaviour
         gameKnowledgeValue.text = gameKnowledge.ToString();
         teamPlayValue.text = teamPlay.ToString();
         mechanicsValue.text = mechanics.ToString();
+    }
+
+    public void UpdateLeaderboard(List<Opponent> leaderboard)
+    {
+        leaderboardNames.text = "";
+        leaderboardRatings.text = "";
+
+        for (int i = 0; i < leaderboard.Count; i++)
+        {
+            leaderboardNames.text += i+1 + ". " + leaderboard[i].name + "\n";
+            leaderboardRatings.text += leaderboard[i].eloRating.ToString() + "\n";
+        }
+
     }
 
     public void ActivateSleepOverlay()

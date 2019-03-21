@@ -31,10 +31,14 @@ public class GameManager : MonoBehaviour
     public TimeManager timeManager;
     public ButtonManager buttonManager;
     public ActivityManager activityManager;
+    public OpponentManager opponentManager;
+
+    public Debugger debug;
 
     void Start()
     {
         LoadData();
+        Time.timeScale = 1f;
     }
 
     public void LoadData()
@@ -42,6 +46,7 @@ public class GameManager : MonoBehaviour
         InitializePlayerData();
         timeManager.InitializeGameData();
         uiManager.InitializeData();
+        opponentManager.InitializeOpponents();
     }
 
     public void ResetGame()
@@ -51,13 +56,10 @@ public class GameManager : MonoBehaviour
         LoadData();
     }
 
-    public void RestartGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
     public void GameOver()
     {
+        if (debug.noLose) return;
+
         uiManager.gameOverMenu.SetActive(true);
     }
 

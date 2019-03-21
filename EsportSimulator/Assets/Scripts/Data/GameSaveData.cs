@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using UnityEngine;
 
 [Serializable]
 
@@ -31,7 +33,7 @@ public class GameSaveData
 
     #endregion
 
-    #region Time
+    #region In-game time
 
     public int hour;
     public int minute;
@@ -40,7 +42,7 @@ public class GameSaveData
 
     #endregion
 
-    #region RealDate
+    #region Real date
 
     public int realDay;
     public int realMonth;
@@ -50,7 +52,9 @@ public class GameSaveData
 
     #region Utilities
 
-    public int saveSlotUsed;
+    public int saveSlotIndex;
 
     #endregion
+
+    public Opponent[] opponents;
 }

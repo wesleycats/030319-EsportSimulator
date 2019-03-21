@@ -30,21 +30,8 @@ public class TimeManager : MonoBehaviour
         {
             for (int i = 0; i < hourAmount; i++)
             {
-                AddHours(1);
-
-                if (hour >= 24)
-                {
-                    resultManager.PayRent(gameManager.HouseLevel);
-                    hour = 0;
-                    month++;
-                }
-
-                if (month > 12)
-                {
-                    month = 0;
-                    year++;
-                }
-
+                IncreaseHours(1);
+                
                 switch (activityManager.currentActivity)
                 {
                     case ActivityManager.Activity.Battle:
@@ -109,20 +96,7 @@ public class TimeManager : MonoBehaviour
 
         yield return new WaitForSeconds(waitTime);
         duration--;
-        AddHours(1);
-
-        if (hour >= 24)
-        {
-            resultManager.PayRent(gameManager.HouseLevel);
-            hour = 0;
-            month++;
-        }
-
-        if (month > 12)
-        {
-            month = 0;
-            year++;
-        }
+        IncreaseHours(1);
         
         switch (activityManager.currentActivity)
         {
@@ -183,12 +157,55 @@ public class TimeManager : MonoBehaviour
     }
 
     /// <summary>
-    /// For debug is set public
+    /// Increases hours and checks time and months
     /// </summary>
     /// <param name="amount"></param>
-    public void AddHours(int amount)
+    public void IncreaseHours(int amount)
     {
-        hour += amount;
+        for (int i = 0; i < amount; i++)
+        {
+            hour++;
+
+            if (hour >= 24)
+            {
+                resultManager.PayRent(gameManager.HouseLevel);
+                hour = 0;
+                month++;
+            }
+
+            if (month > 12)
+            {
+                month = 1;
+                year++;
+            }
+        }
+
+        uiManager.UpdateTime(hour, minute, year, month);
+    }
+
+    /// <summary>
+    /// Decreases hours and checks time and months
+    /// </summary>
+    /// <param name="amount"></param>
+    public void DecreaseHours(int amount)
+    {
+        for (int i = 0; i < amount; i++)
+        {
+            hour--;
+
+            if (hour < 0)
+            {
+                hour = 23;
+                month--;
+            }
+
+            if (month < 1)
+            {
+                month = 12;
+                year--;
+            }
+        }
+
         uiManager.UpdateTime(hour, minute, year, month);
     }
 

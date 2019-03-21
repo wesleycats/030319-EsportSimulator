@@ -12,13 +12,21 @@ public class GameData : ScriptableObject
 
     #endregion
 
-    #region Time
+    #region In-game time
 
     [Header("Time")]
     [SerializeField] private int hour;
     [SerializeField] private int minute;
     [SerializeField] private int month;
     [SerializeField] private int year;
+
+    #endregion
+
+    #region Real date
+
+    public int realDay;
+    public int realMonth;
+    public int realYear;
 
     #endregion
 
@@ -30,7 +38,7 @@ public class GameData : ScriptableObject
     {
         hour = 0;
         minute = 0;
-        month = 0;
+        month = 1;
         year = 0;
     }
 
@@ -45,6 +53,11 @@ public class GameData : ScriptableObject
     public int SetMinute { set { minute = value; } }
     public int SetMonth { set { month = value; } }
     public int SetYear { set { year = value; } }
+
+    public int SetRealDay { set { realDay = value; } }
+    public int SetRealMonth { set { realMonth = value; } }
+    public int SetRealYear { set { realYear = value; } }
+
 
     #endregion
 }

@@ -17,6 +17,7 @@ public class ActivityManager : MonoBehaviour
     public TimeManager timeManager;
     public GameManager gameManager;
     public ResultManager resultsManager;
+
     public Debugger debug;
 
     private void Start()
