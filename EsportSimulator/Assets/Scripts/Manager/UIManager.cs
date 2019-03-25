@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour
     public Text mechanicsValue;
     public Text activityText;
     public GameObject gameOverMenu;
+    public GameObject winGameMenu;
     public Text leaderboardNames;
     public Text leaderboardRatings;
 
@@ -35,6 +36,16 @@ public class UIManager : MonoBehaviour
     public TimeManager timeManager;
     public GameManager gameManager;
     public OpponentManager opponentManager;
+    public LeaderboardManager leaderboardManager;
+
+    public void UpdateAll()
+    {
+        UpdateTime(timeManager.GetHour, timeManager.GetMinute, timeManager.GetYear, timeManager.GetMonth);
+        UpdateProgress(gameManager.GetMoney, gameManager.GetRating, gameManager.GetFame);
+        UpdateNeeds(gameManager.GetTiredness, gameManager.GetHunger, gameManager.GetThirst);
+        UpdateSkills(gameManager.GetGameKnowledge, gameManager.GetTeamPlay, gameManager.GetMechanics);
+        UpdateLeaderboard(leaderboardManager.GetLeaderboard);
+    }
 
     public void UpdateTime(int hour, int minute, int year, int month)
     {
@@ -97,11 +108,8 @@ public class UIManager : MonoBehaviour
         sleepOverlay.GetComponent<LerpColor>().LerpActivated = true;
     }
 
-    public void InitializeData()
+    public void Initialize()
     {
-        UpdateNeeds(gameManager.GetTiredness, gameManager.Hunger, gameManager.Thirst);
-        UpdateProgress(gameManager.GetMoney, gameManager.GetRating, gameManager.GetFame);
-        UpdateSkills(gameManager.GetGameKnowledge, gameManager.GetTeamPlay, gameManager.GetMechanics);
-        UpdateTime(timeManager.GetHour, timeManager.GetMinute, timeManager.GetYear, timeManager.GetMonth);
+        UpdateAll();
     }
 }

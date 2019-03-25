@@ -49,7 +49,12 @@ public class ArtManager : MonoBehaviour
         switch (activity)
         {
             case ActivityManager.Activity.Battle:
+                playerAnimator.Play("OnComputer");
+                workstationAnimator.Play("WoodenTable");
 
+                background.sprite = houseSprites[(int)playerData.GetHouseLevel];
+                chair.sprite = chairSprites[(int)playerData.GetHouseLevel];
+                workstation.sprite = tableSprites[(int)playerData.GetHouseLevel];
                 break;
 
             case ActivityManager.Activity.Contest:
@@ -68,10 +73,13 @@ public class ArtManager : MonoBehaviour
                 playerAnimator.Play("Idle");
                 workstationAnimator.Play("WoodenTable");
 
+                screen.sprite = screenSprites[0];
+                keyboard.sprite = keyboardSprites[0];
+                //screen.sprite = screenSprites[(int)playerData.GetScreenLevel];
+                //keyboard.sprite = keyboardSprites[(int)playerData.GetKeyboardLevel];
                 background.sprite = houseSprites[(int)playerData.GetHouseLevel];
                 chair.sprite = chairSprites[(int)playerData.GetHouseLevel];
                 workstation.sprite = tableSprites[(int)playerData.GetHouseLevel];
-
                 break;
 
             case ActivityManager.Activity.Sleep:
@@ -85,11 +93,6 @@ public class ArtManager : MonoBehaviour
             case ActivityManager.Activity.Train:
                 playerAnimator.Play("OnComputer");
                 workstationAnimator.Play("WoodenTable");
-
-                background.sprite = houseSprites[(int)playerData.GetHouseLevel];
-                chair.sprite = chairSprites[(int)playerData.GetHouseLevel];
-                workstation.sprite = tableSprites[(int)playerData.GetHouseLevel];
-
                 break;
 
             case ActivityManager.Activity.Work:

@@ -8,9 +8,9 @@ public class GameSaveData
 {
     #region Progress
 
-    public float money;
-    public float rating;
-    public float fame;
+    public int money;
+    public int rating;
+    public int fame;
     public float workExperience;
     public int workLevel;
     public int houseLevel;
@@ -19,9 +19,9 @@ public class GameSaveData
 
     #region Needs
 
-    public float tiredness;
-    public float hunger;
-    public float thirst;
+    public int tiredness;
+    public int hunger;
+    public int thirst;
 
     #endregion
 

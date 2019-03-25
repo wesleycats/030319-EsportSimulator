@@ -14,8 +14,18 @@ public class OpponentManager : MonoBehaviour
     [SerializeField] private List<Opponent> opponents = new List<Opponent>();
     
     private int opponentAmount;
+    private Opponent player = new Opponent();
 
     public LeagueForm league;
+    
+    public void UpdatePlayerAttributes(Opponent player, GameManager gameManager)
+    {
+        player.name = "YOU";
+        player.gameKnowledge = gameManager.GetGameKnowledge;
+        player.teamPlay = gameManager.GetTeamPlay;
+        player.mechanics = gameManager.GetMechanics;
+        player.eloRating = gameManager.GetRating;
+    }
 
     /// <summary>
     /// Creates new opponents
@@ -53,7 +63,6 @@ public class OpponentManager : MonoBehaviour
 
         existingOpponents.Sort(SortByRating);
         existingOpponents.Reverse();
-        uiManager.UpdateLeaderboard(existingOpponents);
     }
 
     /// <summary>
@@ -73,10 +82,31 @@ public class OpponentManager : MonoBehaviour
             }
             
             opponents[i].eloRating = randomRating;
+                                  
         }
 
         opponents.Sort(SortByRating);
         opponents.Reverse();
+
+        for (int i = 0; i < opponents.Count; i++)
+        {
+            int gameKnowledge = 0;
+            int teamPlay = 0;
+            int mechanics = 0;
+
+            for (int j = 0; j < league.divisions.Length; j++)
+            {
+                if (GetOpponentRank(opponents[i], opponents) >= league.divisions[j].maxRank && GetOpponentRank(opponents[i], opponents) <= league.divisions[j].minRank)
+                {
+                    gameKnowledge = Random.Range(league.divisions[j].minGameKnowledge, league.divisions[j].maxGameKnowledge);
+                    teamPlay = Random.Range(league.divisions[j].minTeamPlay, league.divisions[j].maxTeamPlay);
+                    mechanics = Random.Range(league.divisions[j].minMechanics, league.divisions[j].maxMechanics);
+                }
+            }
+            opponents[i].gameKnowledge = gameKnowledge;
+            opponents[i].teamPlay = teamPlay;
+            opponents[i].mechanics = mechanics;
+        }
     }
 
     /// <summary>
@@ -90,6 +120,13 @@ public class OpponentManager : MonoBehaviour
         return allOpponents.IndexOf(opponent) + 1;
     }
 
+    public void InitializeOpponents(GameManager gameManager)
+    {
+        opponents = CreateNewOpponents(opponentNames);
+        RandomizeOpponentAttributes(opponents);
+        UpdatePlayerAttributes(player, gameManager);
+    }
+    
     static int SortByRating(Opponent o1, Opponent o2)
     {
         return o1.eloRating.CompareTo(o2.eloRating);
@@ -110,13 +147,11 @@ public class OpponentManager : MonoBehaviour
         return o1.mechanics.CompareTo(o2.mechanics);
     }
 
-    public void InitializeOpponents()
-    {
-        opponents = CreateNewOpponents(opponentNames);
-        RandomizeOpponentAttributes(opponents);
-        uiManager.UpdateLeaderboard(opponents);
-    }
+    #region Getters & Setters
 
     public List<Opponent> GetOpponents { get { return opponents; } }
     public int GetOpponentAmount { get { return opponentAmount; } }
+    public Opponent GetPlayer { get { return player; } }
+
+    #endregion
 }

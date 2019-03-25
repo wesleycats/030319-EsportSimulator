@@ -20,6 +20,8 @@ public class TimeManager : MonoBehaviour
     public UIManager uiManager;
     public ButtonManager buttonManager;
     public ResultManager resultManager;
+    public LeaderboardManager lbManager;
+    public OpponentManager opponentManager;
     public GameData gameData;
 
     public void IncreaseTime(int hourAmount, bool instant)
@@ -31,55 +33,13 @@ public class TimeManager : MonoBehaviour
             for (int i = 0; i < hourAmount; i++)
             {
                 IncreaseHours(1);
-                
-                switch (activityManager.currentActivity)
-                {
-                    case ActivityManager.Activity.Battle:
 
-                        break;
+                CheckActivity(activityManager.currentActivity, activityManager.currentTrainType, gameManager.GetWorkLevel, activityManager.currentBattleMode);
 
-                    case ActivityManager.Activity.Contest:
-
-                        break;
-
-                    case ActivityManager.Activity.Idle:
-
-                        break;
-
-                    case ActivityManager.Activity.Sleep:
-
-                        resultManager.SleepResults(resultManager.GetTirednessDecreaseRate);
-
-                        break;
-
-                    case ActivityManager.Activity.Stream:
-
-                        break;
-
-                    case ActivityManager.Activity.Train:
-
-                        resultManager.TrainResults(activityManager.currentTrainType);
-
-                        break;
-
-                    case ActivityManager.Activity.Work:
-
-                        resultManager.WorkResults(gameManager.WorkLevel);
-
-                        break;
-
-                    default:
-
-                        break;
-
-                }
             }
-            
+
             activityManager.ChangeActivity(ActivityManager.Activity.Idle, 0);
-            uiManager.UpdateSkills(gameManager.GameKnowledge, gameManager.TeamPlay, gameManager.Mechanics);
-            uiManager.UpdateProgress(gameManager.GetMoney, gameManager.Rating, gameManager.Fame);
-            uiManager.UpdateNeeds(gameManager.Tiredness, gameManager.Hunger, gameManager.Thirst);
-            uiManager.UpdateTime(hour, minute, year, month);
+            uiManager.UpdateAll();
         }
         else
         {
@@ -97,53 +57,9 @@ public class TimeManager : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         duration--;
         IncreaseHours(1);
-        
-        switch (activityManager.currentActivity)
-        {
-            case ActivityManager.Activity.Battle:
 
-                break;
-
-            case ActivityManager.Activity.Contest:
-
-                break;
-
-            case ActivityManager.Activity.Idle:
-
-                break;
-
-            case ActivityManager.Activity.Sleep:
-
-                resultManager.SleepResults(resultManager.GetTirednessDecreaseRate);
-
-                break;
-
-            case ActivityManager.Activity.Stream:
-
-                break;
-
-            case ActivityManager.Activity.Train:
-
-                resultManager.TrainResults(activityManager.currentTrainType);
-
-                break;
-
-            case ActivityManager.Activity.Work:
-
-                resultManager.WorkResults(gameManager.WorkLevel);
-
-                break;
-
-            default:
-
-                break;
-
-        }
-
-        uiManager.UpdateSkills(gameManager.GameKnowledge, gameManager.TeamPlay, gameManager.Mechanics);
-        uiManager.UpdateProgress(gameManager.GetMoney, gameManager.Rating, gameManager.Fame);
-        uiManager.UpdateNeeds(gameManager.Tiredness, gameManager.Hunger, gameManager.Thirst);
-        uiManager.UpdateTime(hour, minute, year, month);
+        CheckActivity(activityManager.currentActivity, activityManager.currentTrainType, gameManager.GetWorkLevel, activityManager.currentBattleMode);
+        uiManager.UpdateAll();
 
         if (duration <= 0)
         {
@@ -225,6 +141,40 @@ public class TimeManager : MonoBehaviour
         minute = gameData.GetMinute;
         month = gameData.GetMonth;
         year = gameData.GetYear;
+    }
+
+    private void CheckActivity(ActivityManager.Activity currentActivity, ActivityManager.TrainType currentTrainType, int workLevel, Battle.Mode currentBattleMode)
+    {
+        switch (currentActivity)
+        {
+            case ActivityManager.Activity.Battle:
+                resultManager.BattleResults(lbManager.GetRandomOpponent(lbManager.GetLeaderboard, lbManager.GetOpponentDivision(opponentManager.GetPlayer, lbManager.GetLeaderboard, opponentManager.league)), currentBattleMode);
+                break;
+
+            case ActivityManager.Activity.Contest:
+
+                break;
+
+            case ActivityManager.Activity.Sleep:
+                resultManager.SleepResults(resultManager.GetTirednessDecreaseRate);
+                break;
+
+            case ActivityManager.Activity.Stream:
+
+                break;
+
+            case ActivityManager.Activity.Train:
+                resultManager.TrainResults(currentTrainType);
+                break;
+
+            case ActivityManager.Activity.Work:
+                resultManager.WorkResults(workLevel);
+                break;
+
+            default:
+                Debug.Log("Given activity is not available");
+                break;
+        }
     }
 
     #region Getters & Setters 

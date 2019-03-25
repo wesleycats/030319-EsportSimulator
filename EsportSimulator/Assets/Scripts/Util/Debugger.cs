@@ -10,12 +10,12 @@ public class Debugger : MonoBehaviour
     public GameManager gameManager;
     public TimeManager timeManager;
 
-    public void IncreaseMoney(float amount)
+    public void IncreaseMoney(int amount)
     {
         gameManager.IncreaseMoney(amount);
     }
 
-    public void DecreaseMoney(float amount)
+    public void DecreaseMoney(int amount)
     {
         gameManager.DecreaseMoney(amount);
     }

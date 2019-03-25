@@ -9,15 +9,15 @@ public class GameManager : MonoBehaviour
 {
     #region Player Variables
 
-    [SerializeField] private float money;
-    [SerializeField] private float rating;
-    [SerializeField] private float fame;
+    [SerializeField] private int money;
+    [SerializeField] private int rating;
+    [SerializeField] private int fame;
     [SerializeField] private float workExperience;
     [SerializeField] private int workLevel;
     [SerializeField] private int houseLevel;
-    [SerializeField] private float tiredness;
-    [SerializeField] private float hunger;
-    [SerializeField] private float thirst;
+    [SerializeField] private int tiredness;
+    [SerializeField] private int hunger;
+    [SerializeField] private int thirst;
     [SerializeField] private int gameKnowledge;
     [SerializeField] private int teamPlay;
     [SerializeField] private int mechanics;
@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
     public ButtonManager buttonManager;
     public ActivityManager activityManager;
     public OpponentManager opponentManager;
+    public LeaderboardManager leaderboardManager;
+    public ResultManager resultManager;
 
     public Debugger debug;
 
@@ -45,8 +47,9 @@ public class GameManager : MonoBehaviour
     {
         InitializePlayerData();
         timeManager.InitializeGameData();
-        uiManager.InitializeData();
-        opponentManager.InitializeOpponents();
+        opponentManager.InitializeOpponents(this);
+        leaderboardManager.Initialize();
+        uiManager.Initialize();
     }
 
     public void ResetGame()
@@ -63,19 +66,96 @@ public class GameManager : MonoBehaviour
         uiManager.gameOverMenu.SetActive(true);
     }
 
-    public void IncreaseMoney(float amount)
+    public void WinGame()
+    {
+        uiManager.winGameMenu.SetActive(true);
+    }
+    
+    public void IncreaseMoney(int amount)
     {
         money += amount;
 
         uiManager.UpdateProgress(money, rating, fame);
     }
 
-    public void DecreaseMoney(float amount)
+    public void DecreaseMoney(int amount)
     {
         money -= amount;
 
         uiManager.UpdateProgress(money, rating, fame);
     }
+
+    public void IncreaseFame(int amount)
+    {
+        fame += amount;
+
+        uiManager.UpdateProgress(money, rating, fame);
+    }
+
+    public void DecreaseFame(int amount)
+    {
+        fame -= amount;
+
+        uiManager.UpdateProgress(money, rating, fame);
+    }
+
+    public void IncreaseRating(int amount)
+    {
+        rating += amount;
+
+        uiManager.UpdateProgress(money, rating, fame);
+    }
+
+    public void DecreaseRating(int amount)
+    {
+        rating -= amount;
+
+        uiManager.UpdateProgress(money, rating, fame);
+    }
+
+
+    public void IncreaseGameKnowledge(int amount)
+    {
+        gameKnowledge += amount;
+
+        uiManager.UpdateSkills(gameKnowledge, teamPlay, mechanics);
+    }
+
+    public void IncreaseTeamPlay(int amount)
+    {
+        teamPlay += amount;
+
+        uiManager.UpdateSkills(gameKnowledge, teamPlay, mechanics);
+    }
+
+    public void IncreaseMechanics(int amount)
+    {
+        mechanics += amount;
+
+        uiManager.UpdateSkills(gameKnowledge, teamPlay, mechanics);
+    }
+
+    public void IncreaseTiredness(int amount)
+    {
+        SetTiredness = GetTiredness + amount;
+
+        if (GetTiredness >= 70)
+        {
+            if (uiManager.needsMenuButton.GetComponent<LerpColor>().endColor != Color.red)
+            {
+                uiManager.needsMenuButton.GetComponent<LerpColor>().endColor = Color.yellow;
+                uiManager.needsMenuButton.GetComponent<LerpColor>().LerpActivated = true;
+            }
+        }
+
+        if (GetTiredness >= 100)
+        {
+            resultManager.ApplyDebuffs(resultManager.GetDebuffMultiplier, resultManager.GetDebuffMultiplierAmount);
+            uiManager.needsMenuButton.GetComponent<LerpColor>().endColor = Color.red;
+        }
+    }
+
+
 
     public bool IsMoneyLowEnough(float amount)
     {
@@ -137,41 +217,41 @@ public class GameManager : MonoBehaviour
 
     #region Getters & Setters
 
-    public float GetMoney { get { return money; } }
-    public float GetRating { get { return rating; } }
-    public float GetFame { get { return fame; } }
+    public int GetMoney { get { return money; } }
+    public int GetRating { get { return rating; } }
+    public int GetFame { get { return fame; } }
     public float GetWorkExperience { get { return workExperience; } }
     public int GetWorkLevel { get { return workLevel; } }
     public int GetHouseLevel { get { return houseLevel; } }
-    public float GetTiredness { get { return tiredness; } }
-    public float GetHunger { get { return hunger; } }
-    public float GetThirst { get { return thirst; } }
+    public int GetTiredness { get { return tiredness; } }
+    public int GetHunger { get { return hunger; } }
+    public int GetThirst { get { return thirst; } }
     public int GetGameKnowledge { get { return gameKnowledge; } }
     public int GetTeamPlay { get { return teamPlay; } }
     public int GetMechanics { get { return mechanics; } }
 
-    public float SetMoney { set { money = value; } }
-    public float SetRating { set { rating = value; } }
-    public float SetFame { set { fame = value; } }
+    public int SetMoney { set { money = value; } }
+    public int SetRating { set { rating = value; } }
+    public int SetFame { set { fame = value; } }
     public float SetWorkExperience { set { workExperience = value; } }
     public int SetWorkLevel { set { workLevel = value; } }
     public int SetHouseLevel { set { houseLevel = value; } }
-    public float SetTiredness { set { tiredness = value; } }
-    public float SetHunger { set { hunger = value; } }
-    public float SetThirst { set { thirst = value; } }
+    public int SetTiredness { set { tiredness = value; } }
+    public int SetHunger { set { hunger = value; } }
+    public int SetThirst { set { thirst = value; } }
     public int SetGameKnowledge { set { gameKnowledge = value; } }
     public int SetTeamPlay { set { teamPlay = value; } }
     public int SetMechanics { set { mechanics = value; } }
 
-    public float Money { get { return money; } set { money = value; } }
-    public float Rating { get { return rating; } set { rating = value; } }
-    public float Fame { get { return fame; } set { fame = value; } }
+    public int Money { get { return money; } set { money = value; } }
+    public int Rating { get { return rating; } set { rating = value; } }
+    public int Fame { get { return fame; } set { fame = value; } }
     public float WorkExperience { get { return workExperience; } set { workExperience = value; } }
     public int WorkLevel { get { return workLevel; } set { workLevel = value; } }
     public int HouseLevel { get { return houseLevel; } set { houseLevel = value; } }
-    public float Tiredness { get { return tiredness; } set { tiredness = value; } }
-    public float Hunger { get { return hunger; } set { hunger = value; } }
-    public float Thirst { get { return thirst; } set { thirst = value; } }
+    public int Tiredness { get { return tiredness; } set { tiredness = value; } }
+    public int Hunger { get { return hunger; } set { hunger = value; } }
+    public int Thirst { get { return thirst; } set { thirst = value; } }
     public int GameKnowledge { get { return gameKnowledge; } set { gameKnowledge = value; } }
     public int TeamPlay { get { return teamPlay; } set { teamPlay = value; } }
     public int Mechanics { get { return mechanics; } set { mechanics = value; } }

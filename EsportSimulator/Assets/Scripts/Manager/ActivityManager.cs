@@ -12,6 +12,8 @@ public class ActivityManager : MonoBehaviour
     [Tooltip("GK = Game Knowledge, TP = Team Play, M = Mechanics")]
     public TrainType currentTrainType = TrainType.None;
 
+    public Battle.Mode currentBattleMode = Battle.Mode.None;
+
     public UIManager uiManager;
     public ArtManager artManager;
     public TimeManager timeManager;
@@ -22,7 +24,7 @@ public class ActivityManager : MonoBehaviour
 
     private void Start()
     {
-        ChangeActivity(currentActivity, 0);
+        ChangeActivity(Activity.Idle, 0);
     }
 
     /// <summary>
@@ -44,49 +46,45 @@ public class ActivityManager : MonoBehaviour
         {
             case Activity.Battle:
                 uiManager.activityText.text = "Battling...";
-
                 break;
 
             case Activity.Contest:
                 uiManager.activityText.text = "Contesting...";
-
                 break;
 
             case Activity.Idle:
                 uiManager.activityText.text = "Idle";
-
                 break;
 
             case Activity.Sleep:
                 uiManager.activityText.text = "Sleeping...";
                 uiManager.ActivateSleepOverlay();
-
                 break;
 
             case Activity.Stream:
                 uiManager.activityText.text = "Streaming...";
-
                 break;
 
             case Activity.Train:
-
                 //TODO create not enough money signal
                 if (gameManager.GetMoney < resultsManager.GetTrainingCostAmount(currentTrainType, hourAmount)) return;
                 
                 uiManager.activityText.text = "Training...";
-
                 break;
 
             case Activity.Work:                
                 uiManager.activityText.text = "Working...";
-
                 break;
         }
 
-        if (hourAmount == 0) currentActivity = Activity.Idle;
+        if (hourAmount == 0)
+        {
+            currentActivity = Activity.Idle;
+            currentTrainType = TrainType.None;
+            currentBattleMode = Battle.Mode.None;
+        }
 
         timeManager.IncreaseTime(hourAmount, false);
         artManager.ChangeArt(currentActivity);
     }
-    
 }
