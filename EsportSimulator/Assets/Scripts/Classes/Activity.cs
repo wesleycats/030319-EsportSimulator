@@ -16,17 +16,20 @@ public class Activity : MonoBehaviour
     [Tooltip("Only used for training action")]
     public ActivityManager.TrainType trainType;
 
+    [Tooltip("Only used for battling & contests")]
+    public Battle.Mode battleMode;
+
     public int GetSliderDuration()
     {
-        if (!bar) return 0;
-
         return (int)(bar.value * bar.GetComponent<SliderToText>().TimeMultiplier);
     }
 
     public void ChangeActivity()
     {
-        hourAmount = GetSliderDuration();
+        if (bar) hourAmount = GetSliderDuration();
+
         activityManager.currentTrainType = trainType;
+        activityManager.currentBattleMode = battleMode;
         activityManager.ChangeActivity(activity, hourAmount);
     }
 }

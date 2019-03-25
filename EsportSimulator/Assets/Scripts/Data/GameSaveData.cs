@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using UnityEngine;
 
 [Serializable]
 
@@ -6,9 +8,9 @@ public class GameSaveData
 {
     #region Progress
 
-    public float money;
-    public float rating;
-    public float fame;
+    public int money;
+    public int rating;
+    public int fame;
     public float workExperience;
     public int workLevel;
     public int houseLevel;
@@ -17,9 +19,9 @@ public class GameSaveData
 
     #region Needs
 
-    public float tiredness;
-    public float hunger;
-    public float thirst;
+    public int tiredness;
+    public int hunger;
+    public int thirst;
 
     #endregion
 
@@ -31,7 +33,7 @@ public class GameSaveData
 
     #endregion
 
-    #region Time
+    #region In-game time
 
     public int hour;
     public int minute;
@@ -40,7 +42,7 @@ public class GameSaveData
 
     #endregion
 
-    #region RealDate
+    #region Real date
 
     public int realDay;
     public int realMonth;
@@ -50,7 +52,9 @@ public class GameSaveData
 
     #region Utilities
 
-    public int saveSlotUsed;
+    public int saveSlotIndex;
 
     #endregion
+
+    public Opponent[] opponents;
 }

@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Manages the results of all actions
+/// </summary>
 public class ResultManager : MonoBehaviour
 {
+    #region Forms
+
     [Header("Houses")]
     [SerializeField] private ResultsForm houseLevel1;
     [SerializeField] private ResultsForm houseLevel2;
@@ -23,21 +28,28 @@ public class ResultManager : MonoBehaviour
     [SerializeField] private ResultsForm trainLevel1;
     [SerializeField] private ResultsForm trainLevel2;
     [SerializeField] private ResultsForm trainLevel3;
-    
+
     [Header("Food")]
     [Tooltip("Results per purchase")]
     [SerializeField] private ResultsForm foodBad;
     [SerializeField] private ResultsForm foodStandard;
     [SerializeField] private ResultsForm foodGood;
     [SerializeField] private ResultsForm foodExcellent;
-    
+
     [Header("Drinks")]
     [Tooltip("Results per purchase")]
     [SerializeField] private ResultsForm drinkBad;
     [SerializeField] private ResultsForm drinkStandard;
     [SerializeField] private ResultsForm drinkGood;
     [SerializeField] private ResultsForm drinkExcellent;
-    
+
+    [Header("Battles")]
+    [SerializeField] private ResultsForm oneVsOne;
+    [SerializeField] private ResultsForm threeVsThree;
+    [SerializeField] private ResultsForm fiveVsFive;
+
+    #endregion
+
     [SerializeField] private bool debuff = false;
 
     [SerializeField] private float currentDebuffMultiplier = 1f;
@@ -45,21 +57,35 @@ public class ResultManager : MonoBehaviour
     [SerializeField] private float debuffMultiplier = 0.5f;
     [SerializeField] private float debuffMultiplierAmount = 1f;
 
-    [SerializeField] private float hungerIncreaseRate = 10;
-    [SerializeField] private float thirstIncreaseRate = 5;
+    [SerializeField] private int hungerIncreaseRate = 10;
+    [SerializeField] private int thirstIncreaseRate = 5;
 
     // How much tiredness you lose by sleeping
-    [SerializeField] private float tirednessDecreaseRate = 25;
+    [SerializeField] private int tirednessDecreaseRate = 25;
+    
+    [SerializeField] private int winBiasPercentage;
+
+    private List<Opponent> leaderboard;
+    private Opponent player;
 
     public UIManager uiManager;
     public GameManager gameManager;
+    public LeaderboardManager lbManager;
+    public OpponentManager opponentManager;
     public PlayerData playerData;
 
     private void Start()
     {
+        leaderboard = lbManager.GetLeaderboard;
+        player = opponentManager.GetPlayer;
+
         if (debuff)
             ApplyDebuffs(debuffMultiplier, debuffMultiplierAmount);
-        
+    }
+
+    public void TryBattle(Battle.Mode battleType)
+    {
+        BattleResults(lbManager.GetRandomOpponent(leaderboard, lbManager.GetOpponentDivision(player, leaderboard, opponentManager.league)), battleType);
     }
 
     public float GetTrainingCostAmount(ActivityManager.TrainType trainType, float duration)
@@ -112,31 +138,48 @@ public class ResultManager : MonoBehaviour
 
     public void PayRent(int houseLevel)
     {
+        int rent = 0;
         switch (houseLevel)
         {
             case 0:
-                gameManager.DecreaseMoney(houseLevel1.Money);
+                rent = houseLevel1.Money;
 
+                if (!gameManager.IsMoneyHighEnough(rent)) gameManager.GameOver();
+
+                gameManager.DecreaseMoney(rent);
                 break;
+
             case 1:
-                gameManager.DecreaseMoney(houseLevel2.Money);
+                rent = houseLevel2.Money;
 
+                if (!gameManager.IsMoneyHighEnough(rent)) gameManager.GameOver();
+
+                gameManager.DecreaseMoney(rent);
                 break;
+
             case 2:
-                gameManager.DecreaseMoney(houseLevel3.Money);
+                rent = houseLevel3.Money;
 
+                if (!gameManager.IsMoneyHighEnough(rent)) gameManager.GameOver();
+
+                gameManager.DecreaseMoney(rent);
                 break;
+
             case 3:
-                gameManager.DecreaseMoney(houseLevel4.Money);
+                rent = houseLevel4.Money;
 
+                if (!gameManager.IsMoneyHighEnough(rent)) gameManager.GameOver();
+
+                gameManager.DecreaseMoney(rent);
                 break;
+
         }
     }
 
     /// <summary>
     /// Applies the results you will get from sleeping per hour
     /// </summary>
-    public void SleepResults(float tirednessDecreaseRate)
+    public void SleepResults(int tirednessDecreaseRate)
     {
         DecreaseTiredness(tirednessDecreaseRate);
     }
@@ -152,13 +195,13 @@ public class ResultManager : MonoBehaviour
         switch (workLevel)
         {
             case 0:
-                gameManager.IncreaseMoney(workLevel1.Money * currentDebuffMultiplier);
+                gameManager.IncreaseMoney((int)(workLevel1.Money * currentDebuffMultiplier));
                 gameManager.Tiredness += workLevel1.Tiredness;
                 gameManager.WorkExperience += workLevel1.WorkExperience;
                 break;
 
             case 1:
-                gameManager.IncreaseMoney(workLevel2.Money * currentDebuffMultiplier);
+                gameManager.IncreaseMoney((int)(workLevel2.Money * currentDebuffMultiplier));
                 gameManager.Tiredness += workLevel2.Tiredness;
                 gameManager.WorkExperience += workLevel2.WorkExperience;
                 gameManager.GameKnowledge += (int)(workLevel2.GameKnowledge * currentDebuffMultiplier);
@@ -166,7 +209,7 @@ public class ResultManager : MonoBehaviour
                 break;
 
             case 2:
-                gameManager.IncreaseMoney(workLevel3.Money * currentDebuffMultiplier);
+                gameManager.IncreaseMoney((int)(workLevel3.Money * currentDebuffMultiplier));
                 gameManager.Tiredness += workLevel3.Tiredness;
                 gameManager.WorkExperience += workLevel3.WorkExperience;
                 gameManager.GameKnowledge += (int)(workLevel3.GameKnowledge * currentDebuffMultiplier);
@@ -175,7 +218,7 @@ public class ResultManager : MonoBehaviour
                 break;
 
             case 3:
-                gameManager.IncreaseMoney(workLevel4.Money * currentDebuffMultiplier);
+                gameManager.IncreaseMoney((int)(workLevel4.Money * currentDebuffMultiplier));
                 gameManager.Tiredness += workLevel4.Tiredness;
                 gameManager.WorkExperience += workLevel4.WorkExperience;
                 gameManager.GameKnowledge += (int)(workLevel4.GameKnowledge * currentDebuffMultiplier);
@@ -203,63 +246,54 @@ public class ResultManager : MonoBehaviour
         switch (trainType)
         {
             case ActivityManager.TrainType.WatchingGK:
-                gameManager.Tiredness += trainLevel1.Tiredness;
-                gameManager.GameKnowledge += (int)(trainLevel1.GameKnowledge * currentDebuffMultiplier);
-
+                gameManager.IncreaseGameKnowledge((int)(trainLevel1.GameKnowledge * currentDebuffMultiplier));
+                gameManager.IncreaseTiredness(trainLevel1.Tiredness);
                 break;
 
             case ActivityManager.TrainType.WatchingTP:
-                gameManager.Tiredness += trainLevel1.Tiredness;
-                gameManager.TeamPlay += (int)(trainLevel1.TeamPlay * currentDebuffMultiplier);
-
+                gameManager.IncreaseTeamPlay((int)(trainLevel1.TeamPlay * currentDebuffMultiplier));
+                gameManager.IncreaseTiredness(trainLevel1.Tiredness);
                 break;
 
             case ActivityManager.TrainType.WatchingM:
-                gameManager.Tiredness += trainLevel1.Tiredness;
-                gameManager.Mechanics += (int)(trainLevel1.Mechanics * currentDebuffMultiplier);
-
+                gameManager.IncreaseMechanics((int)(trainLevel1.Mechanics * currentDebuffMultiplier));
+                gameManager.IncreaseTiredness(trainLevel1.Tiredness);
                 break;
-                
+
             case ActivityManager.TrainType.CourseGK:
                 gameManager.DecreaseMoney(trainLevel2.Money);
-                gameManager.Tiredness += trainLevel2.Tiredness;
-                gameManager.GameKnowledge += (int)(trainLevel2.GameKnowledge * currentDebuffMultiplier);
-
+                gameManager.IncreaseGameKnowledge((int)(trainLevel2.GameKnowledge * currentDebuffMultiplier));
+                gameManager.IncreaseTiredness(trainLevel2.Tiredness);
                 break;
 
             case ActivityManager.TrainType.CourseTP:
+                gameManager.IncreaseTeamPlay((int)(trainLevel2.TeamPlay * currentDebuffMultiplier));
                 gameManager.DecreaseMoney(trainLevel2.Money);
-                gameManager.Tiredness += trainLevel2.Tiredness;
-                gameManager.TeamPlay += (int)(trainLevel2.TeamPlay * currentDebuffMultiplier);
-
+                gameManager.IncreaseTiredness(trainLevel2.Tiredness);
                 break;
 
             case ActivityManager.TrainType.CourseM:
+                gameManager.IncreaseMechanics((int)(trainLevel2.Mechanics * currentDebuffMultiplier));
                 gameManager.DecreaseMoney(trainLevel2.Money);
-                gameManager.Tiredness += trainLevel2.Tiredness;
-                gameManager.Mechanics += (int)(trainLevel2.Mechanics * currentDebuffMultiplier);
-
+                gameManager.IncreaseTiredness(trainLevel2.Tiredness);
                 break;
-                
-            case ActivityManager.TrainType.CoursePlusGK:
-                gameManager.DecreaseMoney(trainLevel3.Money);
-                gameManager.Tiredness += trainLevel3.Tiredness;
-                gameManager.GameKnowledge += (int)(trainLevel3.GameKnowledge * currentDebuffMultiplier);
 
+            case ActivityManager.TrainType.CoursePlusGK:
+                gameManager.IncreaseGameKnowledge((int)(trainLevel3.GameKnowledge * currentDebuffMultiplier));
+                gameManager.DecreaseMoney(trainLevel3.Money);
+                gameManager.IncreaseTiredness(trainLevel3.Tiredness);
                 break;
 
             case ActivityManager.TrainType.CoursePlusTP:
+                gameManager.IncreaseTeamPlay((int)(trainLevel3.TeamPlay * currentDebuffMultiplier));
                 gameManager.DecreaseMoney(trainLevel3.Money);
-                gameManager.Tiredness += trainLevel3.Tiredness;
-                gameManager.TeamPlay += (int)(trainLevel3.TeamPlay * currentDebuffMultiplier);
-
+                gameManager.IncreaseTiredness(trainLevel3.Tiredness);
                 break;
 
             case ActivityManager.TrainType.CoursePlusM:
+                gameManager.IncreaseMechanics((int)(trainLevel3.Mechanics * currentDebuffMultiplier));
                 gameManager.DecreaseMoney(trainLevel3.Money);
-                gameManager.Tiredness += trainLevel3.Tiredness;
-                gameManager.Mechanics += (int)(trainLevel3.Mechanics * currentDebuffMultiplier);
-
+                gameManager.IncreaseTiredness(trainLevel3.Tiredness);
                 break;
 
             default:
@@ -268,9 +302,143 @@ public class ResultManager : MonoBehaviour
         }
     }
 
-    public void StreamResults(float fame, float duration)
+    public void StreamResults(int fame, float duration)
     {
 
+    }
+
+    public void BattleResults(Opponent opponent, Battle.Mode battleMode)
+    {
+        int randomizer = 0;
+        int winChance = 0;
+        int gkDelta = gameManager.GetGameKnowledge - opponent.gameKnowledge;
+        int mDelta = gameManager.GetMechanics - opponent.mechanics;
+        int tpDelta = gameManager.GetTeamPlay - opponent.teamPlay;
+        int[] skillsDelta = new int[0];
+
+        bool win = false;
+        currentDebuffMultiplier *= currentDebuffMultiplierAmount;
+
+        switch (battleMode)
+        {
+            case Battle.Mode.OneVersusOne:
+                randomizer = Random.Range(0, 100);
+                skillsDelta = new int[2];
+                skillsDelta[0] = gkDelta;
+                skillsDelta[1] = mDelta;
+                winChance = GetWinChance(skillsDelta) + winBiasPercentage;
+
+                /*
+                Debug.Log("Player gk: " + gameManager.GetGameKnowledge+ " Player m: " + gameManager.GetMechanics + " Player tp: " + gameManager.GetTeamPlay);
+                Debug.Log(opponent.name + " gk: " + opponent.gameKnowledge + " Opponent m: " + opponent.mechanics + " Opponent tp: " + opponent.teamPlay);
+                Debug.Log("Win chance + bias= " + winChance);
+                Debug.Log("randomizer= " + randomizer);
+                */
+
+                if (randomizer < winChance || win)
+                    win = true;
+                else
+                    win = false;
+
+                //Debug.Log("Win=" + win);
+
+                gameManager.IncreaseGameKnowledge((int)oneVsOne.GameKnowledge );
+                gameManager.IncreaseMechanics((int)oneVsOne.Mechanics);
+                gameManager.IncreaseTeamPlay((int)threeVsThree.Mechanics);
+                gameManager.IncreaseTiredness(oneVsOne.Tiredness);
+
+                if (win)
+                {
+                    gameManager.IncreaseFame(oneVsOne.Fame);
+                    gameManager.IncreaseRating(oneVsOne.Rating);
+                }
+                else
+                {
+                    gameManager.DecreaseFame(oneVsOne.Fame);
+                    gameManager.DecreaseRating(oneVsOne.Rating);
+                }
+                break;
+
+            case Battle.Mode.ThreeVersusThree:
+                randomizer = Random.Range(0, 100);
+                skillsDelta = new int[3];
+                skillsDelta[0] = gkDelta;
+                skillsDelta[1] = mDelta;
+                skillsDelta[2] = tpDelta;
+                winChance = GetWinChance(skillsDelta) + winBiasPercentage;
+
+                /*
+                Debug.Log("Player gk: " + gameManager.GetGameKnowledge+ " Player m: " + gameManager.GetMechanics + " Player tp: " + gameManager.GetTeamPlay);
+                Debug.Log(opponent.name + " gk: " + opponent.gameKnowledge + " Opponent m: " + opponent.mechanics + " Opponent tp: " + opponent.teamPlay);
+                Debug.Log("Win chance + bias= " + winChance);
+                Debug.Log("randomizer= " + randomizer);
+                */
+
+                if (randomizer < winChance || win)
+                    win = true;
+                else
+                    win = false;
+
+                //Debug.Log("Win=" + win);
+
+                gameManager.IncreaseGameKnowledge((int)threeVsThree.GameKnowledge);
+                gameManager.IncreaseMechanics((int)threeVsThree.Mechanics);
+                gameManager.IncreaseTeamPlay((int)threeVsThree.Mechanics);
+                gameManager.IncreaseTiredness(threeVsThree.Tiredness);
+
+                if (win)
+                {
+                    gameManager.IncreaseFame(threeVsThree.Fame);
+                    gameManager.IncreaseRating(threeVsThree.Rating);
+                }
+                else
+                {
+                    gameManager.DecreaseFame(threeVsThree.Fame);
+                    gameManager.DecreaseRating(threeVsThree.Rating);
+                }
+                break;
+
+            case Battle.Mode.FiveVersusFive:
+                randomizer = Random.Range(0, 100);
+                skillsDelta = new int[3];
+                skillsDelta[0] = gkDelta;
+                skillsDelta[1] = mDelta;
+                skillsDelta[2] = tpDelta;
+                winChance = GetWinChance(skillsDelta) + winBiasPercentage;
+                
+                Debug.Log("Player gk: " + gameManager.GetGameKnowledge+ " Player m: " + gameManager.GetMechanics + " Player tp: " + gameManager.GetTeamPlay);
+                Debug.Log(opponent.name + " gk: " + opponent.gameKnowledge + " Opponent m: " + opponent.mechanics + " Opponent tp: " + opponent.teamPlay);
+                Debug.Log("Win chance + bias= " + winChance);
+                Debug.Log("randomizer= " + randomizer);
+
+                if (randomizer < winChance || win)
+                    win = true;
+                else
+                    win = false;
+
+                Debug.Log("Win=" + win);
+
+                gameManager.IncreaseGameKnowledge((int)fiveVsFive.GameKnowledge);
+                gameManager.IncreaseMechanics((int)fiveVsFive.Mechanics);
+                gameManager.IncreaseTeamPlay((int)fiveVsFive.Mechanics);
+                gameManager.IncreaseTiredness(fiveVsFive.Tiredness);
+
+                if (win)
+                {
+                    gameManager.IncreaseFame(fiveVsFive.Fame);
+                    gameManager.IncreaseRating(fiveVsFive.Rating);
+                }
+                else
+                {
+                    gameManager.DecreaseFame(fiveVsFive.Fame);
+                    gameManager.DecreaseRating(fiveVsFive.Rating);
+                }
+                break;
+        }
+
+        opponentManager.UpdatePlayerAttributes(player, gameManager);
+        lbManager.SortLeaderboard(lbManager.GetLeaderboard);
+        uiManager.UpdateAll();
     }
 
     public void ApplyDebuffs(float debuffMultiplier, float debuffMultiplierAmount)
@@ -338,7 +506,7 @@ public class ResultManager : MonoBehaviour
                 Debug.LogError("No food level has been given");
                 break;
         }
-        
+
         uiManager.UpdateProgress(gameManager.GetMoney, gameManager.Rating, gameManager.Fame);
         uiManager.UpdateNeeds(gameManager.Tiredness, gameManager.Hunger, gameManager.Thirst);
     }
@@ -384,28 +552,8 @@ public class ResultManager : MonoBehaviour
         uiManager.UpdateProgress(gameManager.GetMoney, gameManager.Rating, gameManager.Fame);
         uiManager.UpdateNeeds(gameManager.Tiredness, gameManager.Hunger, gameManager.Thirst);
     }
-
-    private void IncreaseTiredness(float amount)
-    {
-        gameManager.Tiredness += amount;
-
-        if (gameManager.Tiredness >= 70)
-        {
-            if (uiManager.needsMenuButton.GetComponent<LerpColor>().endColor != Color.red)
-            {
-                uiManager.needsMenuButton.GetComponent<LerpColor>().endColor = Color.yellow;
-                uiManager.needsMenuButton.GetComponent<LerpColor>().LerpActivated = true;
-            }
-        }
-
-        if (gameManager.Tiredness >= 100)
-        {
-            ApplyDebuffs(debuffMultiplier, debuffMultiplierAmount);
-            uiManager.needsMenuButton.GetComponent<LerpColor>().endColor = Color.red;
-        }
-    }
     
-    private void IncreaseHunger(float amount)
+    private void IncreaseHunger(int amount)
     {
         gameManager.Hunger += amount;
 
@@ -425,7 +573,7 @@ public class ResultManager : MonoBehaviour
         }
     }
 
-    private void IncreaseThirst(float amount)
+    private void IncreaseThirst(int amount)
     {
         gameManager.Thirst += amount;
 
@@ -445,7 +593,7 @@ public class ResultManager : MonoBehaviour
         }
     }
 
-    private void DecreaseTiredness(float amount)
+    private void DecreaseTiredness(int amount)
     {
         gameManager.Tiredness -= amount;
 
@@ -460,7 +608,7 @@ public class ResultManager : MonoBehaviour
         }
     }
 
-    private void DecreaseHunger(float amount)
+    private void DecreaseHunger(int amount)
     {
         gameManager.Hunger -= amount;
 
@@ -475,7 +623,7 @@ public class ResultManager : MonoBehaviour
         }
     }
 
-    private void DecreaseThirst(float amount)
+    private void DecreaseThirst(int amount)
     {
         gameManager.Thirst -= amount;
 
@@ -489,10 +637,76 @@ public class ResultManager : MonoBehaviour
             uiManager.needsMenuButton.GetComponent<LerpColor>().LerpActivated = false;
         }
     }
-    
+
+    /// <summary>
+    /// Checks the delta of the skills between player and opponent and returns win percentage
+    /// </summary>
+    /// <param name="skills"></param>
+    /// <returns></returns>
+    private int GetWinChance(int[] skillsDelta)
+    {
+        int winChance = 0;
+
+        foreach (int s in skillsDelta)
+        {
+            if (s < -300)
+            {
+                winChance -= 30;
+            }
+            else if (s <= -200)
+            {
+                winChance -= 20;
+            }
+            else if (s <= -100)
+            {
+                winChance -= 15;
+            }
+            else if (s <= -50)
+            {
+                winChance -= 10;
+            }
+            else if (s <= -20)
+            {
+                winChance -= 5;
+            }
+            else if (s <= 0)
+            {
+                winChance = 0;
+            }
+            else if (s <= 20)
+            {
+                winChance += 5;
+            }
+            else if (s <= 50)
+            {
+                winChance += 10;
+            }
+            else if (s <= 100)
+            {
+                winChance += 15;
+            }
+            else if (s <= 200)
+            {
+                winChance += 20;
+            }
+            else if (s <= 300)
+            {
+                winChance += 30;
+            }
+            else if (s > 300)
+            {
+                winChance += 50;
+            }
+        }
+
+        return winChance;
+    }
+
     #region Getters & Setters
 
-    public float GetTirednessDecreaseRate { get { return tirednessDecreaseRate; } }
+    public int GetTirednessDecreaseRate { get { return tirednessDecreaseRate; } }
+    public float GetDebuffMultiplier { get { return debuffMultiplier; } }
+    public float GetDebuffMultiplierAmount { get { return debuffMultiplierAmount; } }
 
     #endregion
 }

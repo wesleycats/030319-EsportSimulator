@@ -33,6 +33,11 @@ public class MenuOptions : MonoBehaviour
         StartCoroutine(LoadDelayer());
     }
 
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     private IEnumerator LoadDelayer()
     {
         yield return new WaitForSeconds(loadTime);
@@ -64,7 +69,7 @@ public class MenuOptions : MonoBehaviour
         switch (action)
         {
             case "GoMainMenu":
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                RestartGame();
                 break;
 
             case "GoQuit":

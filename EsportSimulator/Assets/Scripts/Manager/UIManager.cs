@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    // Just for initialization
     #region UI Elements
 
     public Text time;
@@ -23,13 +22,30 @@ public class UIManager : MonoBehaviour
     public Text teamPlayValue;
     public Text mechanicsValue;
     public Text activityText;
+    public GameObject gameOverMenu;
+    public GameObject winGameMenu;
+    public Text leaderboardNames;
+    public Text leaderboardRatings;
 
     #endregion
-    
+
+    [Tooltip("[0]=champion, [1]=diamond, etc.")]
+    public Color[] divisionColors;
     public Image sleepOverlay;
     public Image needsMenuButton;
     public TimeManager timeManager;
     public GameManager gameManager;
+    public OpponentManager opponentManager;
+    public LeaderboardManager leaderboardManager;
+
+    public void UpdateAll()
+    {
+        UpdateTime(timeManager.GetHour, timeManager.GetMinute, timeManager.GetYear, timeManager.GetMonth);
+        UpdateProgress(gameManager.GetMoney, gameManager.GetRating, gameManager.GetFame);
+        UpdateNeeds(gameManager.GetTiredness, gameManager.GetHunger, gameManager.GetThirst);
+        UpdateSkills(gameManager.GetGameKnowledge, gameManager.GetTeamPlay, gameManager.GetMechanics);
+        UpdateLeaderboard(leaderboardManager.GetLeaderboard);
+    }
 
     public void UpdateTime(int hour, int minute, int year, int month)
     {
@@ -66,6 +82,19 @@ public class UIManager : MonoBehaviour
         mechanicsValue.text = mechanics.ToString();
     }
 
+    public void UpdateLeaderboard(List<Opponent> leaderboard)
+    {
+        leaderboardNames.text = "";
+        leaderboardRatings.text = "";
+
+        for (int i = 0; i < leaderboard.Count; i++)
+        {
+            leaderboardNames.text += i+1 + ". " + leaderboard[i].name + "\n";
+            leaderboardRatings.text += leaderboard[i].eloRating.ToString() + "\n";
+        }
+
+    }
+
     public void ActivateSleepOverlay()
     {
         sleepOverlay.GetComponent<LerpColor>().Increasing = true;
@@ -79,11 +108,8 @@ public class UIManager : MonoBehaviour
         sleepOverlay.GetComponent<LerpColor>().LerpActivated = true;
     }
 
-    public void InitializeData()
+    public void Initialize()
     {
-        UpdateNeeds(gameManager.GetTiredness, gameManager.Hunger, gameManager.Thirst);
-        UpdateProgress(gameManager.GetMoney, gameManager.GetRating, gameManager.GetFame);
-        UpdateSkills(gameManager.GetGameKnowledge, gameManager.GetTeamPlay, gameManager.GetMechanics);
-        UpdateTime(timeManager.GetHour, timeManager.GetMinute, timeManager.GetYear, timeManager.GetMonth);
+        UpdateAll();
     }
 }

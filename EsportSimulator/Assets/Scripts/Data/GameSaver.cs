@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class GameSaver : MonoBehaviour
 {
@@ -8,7 +9,10 @@ public class GameSaver : MonoBehaviour
 
     public GameSaveData gameSaveData;
     public GameManager gameManager;
+    public OpponentManager opponentManager;
     public TimeManager timeManager;
+
+    private string dataPath;
 
     public void SaveGame(int saveSlot)
     {
@@ -17,6 +21,8 @@ public class GameSaver : MonoBehaviour
             Debug.LogError("The given slot number is not available");
             return;
         }
+
+        dataPath = Path.Combine(Application.persistentDataPath, "GameSaveData_SaveSlot_" + saveSlot + ".txt");
 
         gameSaveData.money = gameManager.GetMoney;
         gameSaveData.rating = gameManager.GetRating;
@@ -34,40 +40,25 @@ public class GameSaver : MonoBehaviour
         gameSaveData.minute = timeManager.GetMinute;
         gameSaveData.year = timeManager.GetYear;
         gameSaveData.month = timeManager.GetMonth;
-        gameSaveData.saveSlotUsed = 1;
+        
+        gameSaveData.opponents = new Opponent[opponentManager.GetOpponentAmount];
 
-        SaveData(gameSaveData, saveSlot);
+        for (int i = 0; i < opponentManager.GetOpponentAmount; i++)
+        {
+            gameSaveData.opponents[i] = opponentManager.GetOpponents[i];
+        }
+
+        SaveData(gameSaveData, saveSlot, dataPath);
     }
 
-    static void SaveData(GameSaveData data, int saveSlot)
+    static void SaveData(GameSaveData data, int saveSlot, string path)
     {
-        PlayerPrefs.SetInt("saveSlotUsed_SaveSlot" + saveSlot, data.saveSlotUsed);
+        string jsonString = JsonUtility.ToJson(data);
 
-        PlayerPrefs.SetInt("realDay_SaveSlot" + saveSlot, System.DateTime.Now.Day);
-        PlayerPrefs.SetInt("realMonth_SaveSlot" + saveSlot, System.DateTime.Now.Month);
-        PlayerPrefs.SetInt("realYear_SaveSlot" + saveSlot, System.DateTime.Now.Year);
-
-        PlayerPrefs.SetFloat("money_SaveSlot" + saveSlot, data.money);
-        PlayerPrefs.SetFloat("rating_SaveSlot" + saveSlot, data.rating);
-        PlayerPrefs.SetFloat("fame_SaveSlot" + saveSlot, data.fame);
-        PlayerPrefs.SetFloat("workExperience_SaveSlot" + saveSlot, data.workExperience);
-        PlayerPrefs.SetInt("workLevel_SaveSlot" + saveSlot, data.workLevel);
-        PlayerPrefs.SetInt("houseLevel_SaveSlot" + saveSlot, data.houseLevel);
-
-        PlayerPrefs.SetFloat("tiredness_SaveSlot" + saveSlot, data.tiredness);
-        PlayerPrefs.SetFloat("hunger_SaveSlot" + saveSlot, data.hunger);
-        PlayerPrefs.SetFloat("thirst_SaveSlot" + saveSlot, data.thirst);
-
-        PlayerPrefs.SetInt("gameKnowledge_SaveSlot" + saveSlot, data.gameKnowledge);
-        PlayerPrefs.SetInt("teamPlay_SaveSlot" + saveSlot, data.teamPlay);
-        PlayerPrefs.SetInt("mechanics_SaveSlot" + saveSlot, data.mechanics);
-
-        PlayerPrefs.SetInt("hour_SaveSlot" + saveSlot, data.hour);
-        PlayerPrefs.SetInt("minute_SaveSlot" + saveSlot, data.minute);
-        PlayerPrefs.SetInt("year_SaveSlot" + saveSlot, data.year);
-        PlayerPrefs.SetInt("month_SaveSlot" + saveSlot, data.month);
-        
-        PlayerPrefs.Save();
+        using (StreamWriter streamWriter = File.CreateText(path))
+        {
+            streamWriter.Write(jsonString);
+        }
     }
 
     #region Getters & Setters

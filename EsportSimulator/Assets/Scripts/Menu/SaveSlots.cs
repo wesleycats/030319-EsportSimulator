@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
 /// <summary>
 /// Manages the saved slots and applies those to the load game menu UI
@@ -21,7 +22,11 @@ public class SaveSlots : MonoBehaviour
 
     public bool isSaveSlotUsed(int saveSlot)
     {
-        return PlayerPrefs.GetInt("saveSlotUsed_SaveSlot" + saveSlot) == 1;
+        string path = Path.Combine(Application.persistentDataPath, "GameSaveData_SaveSlot_" + saveSlot + ".txt");
+
+        if (!File.Exists(path)) return false;
+
+        return true;
     }
 
     public void ApplySavedSlots()
@@ -33,7 +38,7 @@ public class SaveSlots : MonoBehaviour
     {
         for (int i = 0; i < saveSlots.Length; i++)
         {
-            if (PlayerPrefs.GetInt("saveSlotUsed_SaveSlot" + i) == 0)
+            if (!isSaveSlotUsed(i))
             {
                 EmptySaveSlot(saveSlots, i);
                 continue;

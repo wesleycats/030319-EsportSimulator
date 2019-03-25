@@ -5,22 +5,38 @@ using UnityEngine;
 public class Debugger : MonoBehaviour
 {
     public bool noWait;
+    public bool noLose;
 
     public GameManager gameManager;
     public TimeManager timeManager;
 
-    public void AddMoney(float amount)
+    public void IncreaseMoney(int amount)
     {
         gameManager.IncreaseMoney(amount);
     }
 
-    public void AddHours(int amount)
+    public void DecreaseMoney(int amount)
     {
-        timeManager.AddHours(amount);
+        gameManager.DecreaseMoney(amount);
+    }
+
+    public void IncreaseHours(int amount)
+    {
+        timeManager.IncreaseHours(amount);
+    }
+
+    public void DecreaseHours(int amount)
+    {
+        timeManager.DecreaseHours(amount);
     }
 
     public void SwitchNoWait()
     {
         noWait = !noWait;
+    }
+
+    public void SwitchNoGameOver()
+    {
+        noLose = !noLose;
     }
 }
