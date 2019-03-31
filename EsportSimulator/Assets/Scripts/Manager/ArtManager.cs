@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Controls dedicated art
@@ -9,16 +10,15 @@ public class ArtManager : MonoBehaviour
 
     public SpriteRenderer background;
     public SpriteRenderer character;
+    public SpriteRenderer chair;
+    public SpriteRenderer workstation;
     public SpriteRenderer headset;
     public SpriteRenderer keyboard;
     public SpriteRenderer screen;
-    public SpriteRenderer chair;
-    public SpriteRenderer workstation;
-
     #endregion
 
     #region Sprites
-    
+
     public Sprite[] houseSprites;
     public Sprite[] workplaceSprites;
     public Sprite[] characterSprites;
@@ -39,7 +39,9 @@ public class ArtManager : MonoBehaviour
     #endregion
 
     public PlayerData playerData;
-    
+    public ShopManager shopManager;
+    public GameManager gameManager;
+
     /// <summary>
     /// Changes art according to activity and progress
     /// </summary>
@@ -137,5 +139,34 @@ public class ArtManager : MonoBehaviour
 
         }
 
+    }
+
+    public void UpdateItems(List<ItemForm> equipedItems)
+    {
+        foreach (ItemForm f in equipedItems)
+        { 
+            switch (f.type)
+            {
+                case Item.Type.Headset:
+                    headset.sprite = f.sprite;
+                    break;
+                case Item.Type.Keyboard:
+                    keyboard.sprite = f.sprite;
+                    break;
+                case Item.Type.Screen:
+                    screen.sprite = f.sprite;
+                    break;
+            }
+        }
+    }
+
+    public void UpdateAccommodation(AccommodationForm currentAccommodation)
+    {
+        background.sprite = currentAccommodation.sprite;
+    }
+
+    public void Initialize()
+    {
+        UpdateItems(gameManager.GetEquipedItems);
     }
 }

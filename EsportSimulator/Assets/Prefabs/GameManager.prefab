@@ -1,0 +1,941 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5455414519704674119
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5455414519704674121}
+  - component: {fileID: 5455414519704674125}
+  - component: {fileID: 5455414519704674122}
+  - component: {fileID: 5455414519704674120}
+  - component: {fileID: 5455414519704674123}
+  - component: {fileID: 5455414519704674126}
+  - component: {fileID: 5455414519704674127}
+  - component: {fileID: 5455414519704674124}
+  - component: {fileID: 5455414519704674128}
+  - component: {fileID: 5455414519704674129}
+  - component: {fileID: 5455414519704674130}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5455414519704674121
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5455414519704674119}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5455414519704674125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5455414519704674119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d78d30ce1e501743a6c4d552210ac70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allObjects: []
+--- !u!114 &5455414519704674122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5455414519704674119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27695fb1872f89a4fa83e21b5a37d28f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  money: 0
+  rating: 0
+  fame: 0
+  workExperience: 0
+  workLevel: 0
+  houseLevel: 0
+  tiredness: 0
+  hunger: 0
+  thirst: 0
+  gameKnowledge: 0
+  teamPlay: 0
+  mechanics: 0
+  equipedItems:
+  - elementName: Mouse
+    type: 1
+    quality: 0
+    cost: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    sprite: {fileID: 0}
+  - elementName: Keyboard
+    type: 2
+    quality: 0
+    cost: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    sprite: {fileID: 0}
+  - elementName: Headset
+    type: 3
+    quality: 0
+    cost: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    sprite: {fileID: 0}
+  - elementName: Guide
+    type: 4
+    quality: 0
+    cost: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    sprite: {fileID: 0}
+  - elementName: Screen
+    type: 5
+    quality: 0
+    cost: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    sprite: {fileID: 0}
+  currentAccommodation:
+    elementName: 
+    type: 0
+    cost: 0
+    rent: 0
+    trainingLevel1Amount: 1
+    trainingLevel2Amount: 3
+    trainingLevel3Amount: 10
+    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
+  playerData: {fileID: 11400000, guid: b5721d035e1bf074789a14536477e52e, type: 2}
+  gameData: {fileID: 11400000, guid: 89c743619d053e14397cbd8cd75f0f6b, type: 2}
+  uiManager: {fileID: 0}
+  artManager: {fileID: 0}
+  timeManager: {fileID: 5455414519704674123}
+  buttonManager: {fileID: 0}
+  activityManager: {fileID: 5455414519704674120}
+  opponentManager: {fileID: 5455414519704674128}
+  leaderboardManager: {fileID: 5455414519704674129}
+  resultManager: {fileID: 5455414519704674124}
+  debug: {fileID: 0}
+--- !u!114 &5455414519704674120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5455414519704674119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccd47152b4252e64e8bf0a5a7518923a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentActivity: 0
+  currentTrainType: 0
+  currentBattleMode: 0
+  uiManager: {fileID: 0}
+  artManager: {fileID: 0}
+  timeManager: {fileID: 5455414519704674123}
+  gameManager: {fileID: 5455414519704674122}
+  resultsManager: {fileID: 5455414519704674124}
+  debug: {fileID: 0}
+--- !u!114 &5455414519704674123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5455414519704674119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 758fcd61139aa1c48b09f380bb665d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hour: 0
+  minute: 0
+  month: 0
+  year: 0
+  waitTime: 1
+  gameManager: {fileID: 5455414519704674122}
+  activityManager: {fileID: 5455414519704674120}
+  uiManager: {fileID: 0}
+  buttonManager: {fileID: 0}
+  resultManager: {fileID: 5455414519704674124}
+  lbManager: {fileID: 5455414519704674129}
+  opponentManager: {fileID: 5455414519704674128}
+  gameData: {fileID: 11400000, guid: 89c743619d053e14397cbd8cd75f0f6b, type: 2}
+--- !u!114 &5455414519704674126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5455414519704674119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fe8dd57291e9c948b7a7371b772f764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSaveSlots: 3
+  gameSaveData:
+    money: 0
+    rating: 0
+    fame: 0
+    workExperience: 0
+    workLevel: 0
+    houseLevel: 0
+    tiredness: 0
+    hunger: 0
+    thirst: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    hour: 0
+    minute: 0
+    year: 0
+    month: 0
+    realDay: 0
+    realMonth: 0
+    realYear: 0
+    saveSlotIndex: 0
+    opponents: []
+  gameManager: {fileID: 5455414519704674122}
+  opponentManager: {fileID: 5455414519704674128}
+  timeManager: {fileID: 5455414519704674123}
+--- !u!114 &5455414519704674127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5455414519704674119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d14b63896bfb9584494d8a200713cd6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadTime: 2
+  switchOverlay: {fileID: 0}
+  gameSaver: {fileID: 5455414519704674126}
+  gameData: {fileID: 11400000, guid: 89c743619d053e14397cbd8cd75f0f6b, type: 2}
+  playerData: {fileID: 11400000, guid: b5721d035e1bf074789a14536477e52e, type: 2}
+  mainMenu: {fileID: 0}
+  buttonManager: {fileID: 0}
+  opponentManager: {fileID: 5455414519704674128}
+  gameSaveData:
+    money: 0
+    rating: 0
+    fame: 0
+    workExperience: 0
+    workLevel: 0
+    houseLevel: 0
+    tiredness: 0
+    hunger: 0
+    thirst: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    hour: 0
+    minute: 0
+    year: 0
+    month: 0
+    realDay: 0
+    realMonth: 0
+    realYear: 0
+    saveSlotIndex: 0
+    opponents: []
+--- !u!114 &5455414519704674124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5455414519704674119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1051a114a343894e83fe305098818ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  workLevel1:
+    duration: 1
+    tiredness: 10
+    hunger: 0
+    thirst: 0
+    money: 10
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    trainingLevel1Multiplier: 0
+    trainingLevel2Multiplier: 0
+    trainingLevel3Multiplier: 0
+    workExperience: 1
+  workLevel2:
+    duration: 1
+    tiredness: 10
+    hunger: 0
+    thirst: 0
+    money: 30
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 1
+    teamPlay: 0
+    mechanics: 0
+    trainingLevel1Multiplier: 0
+    trainingLevel2Multiplier: 0
+    trainingLevel3Multiplier: 0
+    workExperience: 1
+  workLevel3:
+    duration: 1
+    tiredness: 10
+    hunger: 0
+    thirst: 0
+    money: 60
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 3
+    teamPlay: 0
+    mechanics: 3
+    trainingLevel1Multiplier: 0
+    trainingLevel2Multiplier: 0
+    trainingLevel3Multiplier: 0
+    workExperience: 1
+  workLevel4:
+    duration: 1
+    tiredness: 10
+    hunger: 0
+    thirst: 0
+    money: 120
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 5
+    teamPlay: 5
+    mechanics: 0
+    trainingLevel1Multiplier: 0
+    trainingLevel2Multiplier: 0
+    trainingLevel3Multiplier: 0
+    workExperience: 1
+  trainLevel1:
+    duration: 1
+    tiredness: 5
+    hunger: 0
+    thirst: 0
+    money: 0
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 1
+    teamPlay: 1
+    mechanics: 1
+    trainingLevel1Multiplier: 0
+    trainingLevel2Multiplier: 0
+    trainingLevel3Multiplier: 0
+    workExperience: 0
+  trainLevel2:
+    duration: 1
+    tiredness: 10
+    hunger: 0
+    thirst: 0
+    money: 30
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 3
+    teamPlay: 3
+    mechanics: 3
+    trainingLevel1Multiplier: 0
+    trainingLevel2Multiplier: 0
+    trainingLevel3Multiplier: 0
+    workExperience: 0
+  trainLevel3:
+    duration: 1
+    tiredness: 20
+    hunger: 0
+    thirst: 0
+    money: 100
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 10
+    teamPlay: 10
+    mechanics: 10
+    trainingLevel1Multiplier: 0
+    trainingLevel2Multiplier: 0
+    trainingLevel3Multiplier: 0
+    workExperience: 0
+  oneVsOne:
+    duration: 1
+    tiredness: 15
+    hunger: 0
+    thirst: 0
+    money: 0
+    moneyMin: 0
+    moneyMax: 0
+    rating: 25
+    fame: 10
+    gameKnowledge: 2
+    teamPlay: 0
+    mechanics: 5
+    trainingLevel1Multiplier: 0
+    trainingLevel2Multiplier: 0
+    trainingLevel3Multiplier: 0
+    workExperience: 0
+  threeVsThree:
+    duration: 1
+    tiredness: 0
+    hunger: 0
+    thirst: 0
+    money: 0
+    moneyMin: 0
+    moneyMax: 0
+    rating: 30
+    fame: 15
+    gameKnowledge: 2
+    teamPlay: 2
+    mechanics: 3
+    trainingLevel1Multiplier: 0
+    trainingLevel2Multiplier: 0
+    trainingLevel3Multiplier: 0
+    workExperience: 0
+  fiveVsFive:
+    duration: 1
+    tiredness: 0
+    hunger: 0
+    thirst: 0
+    money: 0
+    moneyMin: 0
+    moneyMax: 0
+    rating: 40
+    fame: 20
+    gameKnowledge: 3
+    teamPlay: 4
+    mechanics: 2
+    trainingLevel1Multiplier: 0
+    trainingLevel2Multiplier: 0
+    trainingLevel3Multiplier: 0
+    workExperience: 0
+  foodBad:
+    duration: 0
+    tiredness: 0
+    hunger: 25
+    thirst: 0
+    money: 25
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    trainingLevel1Multiplier: 0
+    trainingLevel2Multiplier: 0
+    trainingLevel3Multiplier: 0
+    workExperience: 0
+  foodStandard:
+    duration: 0
+    tiredness: 0
+    hunger: 50
+    thirst: 0
+    money: 50
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    trainingLevel1Multiplier: 0
+    trainingLevel2Multiplier: 0
+    trainingLevel3Multiplier: 0
+    workExperience: 0
+  foodGood:
+    duration: 0
+    tiredness: 0
+    hunger: 75
+    thirst: 0
+    money: 75
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    trainingLevel1Multiplier: 0
+    trainingLevel2Multiplier: 0
+    trainingLevel3Multiplier: 0
+    workExperience: 0
+  foodExcellent:
+    duration: 0
+    tiredness: 0
+    hunger: 100
+    thirst: 0
+    money: 100
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    trainingLevel1Multiplier: 0
+    trainingLevel2Multiplier: 0
+    trainingLevel3Multiplier: 0
+    workExperience: 0
+  drinkBad:
+    duration: 0
+    tiredness: 0
+    hunger: 0
+    thirst: 25
+    money: 25
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    trainingLevel1Multiplier: 0
+    trainingLevel2Multiplier: 0
+    trainingLevel3Multiplier: 0
+    workExperience: 0
+  drinkStandard:
+    duration: 0
+    tiredness: 0
+    hunger: 0
+    thirst: 50
+    money: 50
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    trainingLevel1Multiplier: 0
+    trainingLevel2Multiplier: 0
+    trainingLevel3Multiplier: 0
+    workExperience: 0
+  drinkGood:
+    duration: 0
+    tiredness: 0
+    hunger: 0
+    thirst: 75
+    money: 75
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    trainingLevel1Multiplier: 0
+    trainingLevel2Multiplier: 0
+    trainingLevel3Multiplier: 0
+    workExperience: 0
+  drinkExcellent:
+    duration: 0
+    tiredness: 0
+    hunger: 0
+    thirst: 100
+    money: 100
+    moneyMin: 0
+    moneyMax: 0
+    rating: 0
+    fame: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    trainingLevel1Multiplier: 0
+    trainingLevel2Multiplier: 0
+    trainingLevel3Multiplier: 0
+    workExperience: 0
+  debuff: 0
+  currentDebuffMultiplier: 1
+  currentDebuffMultiplierAmount: 1
+  debuffMultiplier: 0.5
+  debuffMultiplierAmount: 1
+  hungerIncreaseRate: 10
+  thirstIncreaseRate: 5
+  tirednessDecreaseRate: 25
+  winBiasPercentage: 0
+  uiManager: {fileID: 0}
+  gameManager: {fileID: 5455414519704674122}
+  lbManager: {fileID: 5455414519704674129}
+  opponentManager: {fileID: 5455414519704674128}
+  shopManager: {fileID: 0}
+  playerData: {fileID: 11400000, guid: b5721d035e1bf074789a14536477e52e, type: 2}
+--- !u!114 &5455414519704674128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5455414519704674119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b78a0fd0a762520498b479e07ba4b667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiManager: {fileID: 0}
+  maxEloRating: 5000
+  opponentNames:
+  - Sjaak Trekhaak
+  - Piemel Loos
+  - Timon Toeters
+  - Kechie Put Itin
+  - 3.142857142857
+  - Donaldteloentoes
+  - Blauwe Bosaap
+  - Smerige Wesley
+  - Parel Peters
+  - Gele Kanarie
+  - Trex 12
+  - Rode Kaketoe
+  - Blauwe Wouten
+  - Karel Anker
+  - Fatoe Foetsie
+  - Tjoes Oorsplit
+  - Karige Karel
+  - Onhandige Onno
+  - Handige Hans
+  - Peter Neuspeuter
+  - Klaartje Kome
+  - Jack Pot
+  - Dick Sac
+  - Ben Naaktgeboren
+  - Dies Groot
+  - Alco Liest
+  - I.C. Notting
+  - Willie Wortelhoog
+  - Willie Wortellaag
+  - Connie Plassen
+  - Fokje Modder
+  - Constant Lam
+  - Bo Terham
+  - Chil Persoon
+  - Cas Treer
+  - Charrel Kip
+  - Wil Krikke
+  - Meneer K. Bouter
+  - Till Ball
+  - Ka Ching
+  - Pim Mol
+  - Fukhey Man
+  - Cor Netto
+  - Bennie Thuis
+  - Ron de Knikker
+  - Mardin Balloeman
+  - Wil de Pijper
+  - Dick Tevereden
+  - Kerst Boomsma
+  opponents: []
+  league:
+    divisions:
+    - divisionName: Bronze
+      minRank: 50
+      maxRank: 39
+      minGameKnowledge: 20
+      maxGameKnowledge: 100
+      minTeamPlay: 20
+      maxTeamPlay: 100
+      minMechanics: 20
+      maxMechanics: 100
+    - divisionName: Silver
+      minRank: 40
+      maxRank: 29
+      minGameKnowledge: 100
+      maxGameKnowledge: 200
+      minTeamPlay: 100
+      maxTeamPlay: 200
+      minMechanics: 100
+      maxMechanics: 200
+    - divisionName: Gold
+      minRank: 30
+      maxRank: 19
+      minGameKnowledge: 200
+      maxGameKnowledge: 400
+      minTeamPlay: 200
+      maxTeamPlay: 400
+      minMechanics: 200
+      maxMechanics: 400
+    - divisionName: Diamond
+      minRank: 20
+      maxRank: 9
+      minGameKnowledge: 400
+      maxGameKnowledge: 600
+      minTeamPlay: 400
+      maxTeamPlay: 600
+      minMechanics: 400
+      maxMechanics: 600
+    - divisionName: Champion
+      minRank: 10
+      maxRank: 1
+      minGameKnowledge: 600
+      maxGameKnowledge: 800
+      minTeamPlay: 600
+      maxTeamPlay: 800
+      minMechanics: 600
+      maxMechanics: 800
+--- !u!114 &5455414519704674129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5455414519704674119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b719581c4d96291408f52bd7766c436d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  divisionSize: 10
+  leaderboard: []
+  opponentManager: {fileID: 5455414519704674128}
+  gameManager: {fileID: 5455414519704674122}
+  playerData: {fileID: 11400000, guid: b5721d035e1bf074789a14536477e52e, type: 2}
+--- !u!114 &5455414519704674130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5455414519704674119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8766864b192c8a549a2972a02f39c779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  accommodations:
+  - elementName: Garage
+    type: 0
+    cost: 0
+    rent: 50
+    trainingLevel1Amount: 1
+    trainingLevel2Amount: 3
+    trainingLevel3Amount: 10
+    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
+  - elementName: Apartment
+    type: 1
+    cost: 500
+    rent: 200
+    trainingLevel1Amount: 1
+    trainingLevel2Amount: 4
+    trainingLevel3Amount: 12
+    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
+  - elementName: House
+    type: 2
+    cost: 2000
+    rent: 500
+    trainingLevel1Amount: 2
+    trainingLevel2Amount: 5
+    trainingLevel3Amount: 15
+    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
+  - elementName: Luxury apartment
+    type: 3
+    cost: 5000
+    rent: 1500
+    trainingLevel1Amount: 3
+    trainingLevel2Amount: 6
+    trainingLevel3Amount: 20
+    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
+  headsets:
+  - elementName: Bad
+    type: 3
+    quality: 1
+    cost: 50
+    gameKnowledge: 0
+    teamPlay: 10
+    mechanics: 0
+    sprite: {fileID: 21300000, guid: 79b110acc8b3e82459a1605505504597, type: 3}
+  - elementName: Standard
+    type: 3
+    quality: 2
+    cost: 150
+    gameKnowledge: 0
+    teamPlay: 30
+    mechanics: 0
+    sprite: {fileID: 21300000, guid: 6687627d51768dd48a734aa1e110d396, type: 3}
+  - elementName: Good
+    type: 3
+    quality: 3
+    cost: 300
+    gameKnowledge: 0
+    teamPlay: 60
+    mechanics: 0
+    sprite: {fileID: 21300000, guid: ee775794d52f28c4cbdf656b5e09f6ba, type: 3}
+  - elementName: Excellent
+    type: 3
+    quality: 4
+    cost: 600
+    gameKnowledge: 0
+    teamPlay: 120
+    mechanics: 0
+    sprite: {fileID: 21300000, guid: d453bec757b8d654fa07ed51890d8e83, type: 3}
+  gameGuides:
+  - elementName: Bad
+    type: 4
+    quality: 1
+    cost: 50
+    gameKnowledge: 10
+    teamPlay: 0
+    mechanics: 0
+    sprite: {fileID: 0}
+  - elementName: Standard
+    type: 4
+    quality: 2
+    cost: 150
+    gameKnowledge: 30
+    teamPlay: 0
+    mechanics: 0
+    sprite: {fileID: 0}
+  - elementName: Good
+    type: 4
+    quality: 3
+    cost: 300
+    gameKnowledge: 60
+    teamPlay: 0
+    mechanics: 0
+    sprite: {fileID: 0}
+  - elementName: Excellent
+    type: 4
+    quality: 4
+    cost: 600
+    gameKnowledge: 120
+    teamPlay: 0
+    mechanics: 0
+    sprite: {fileID: 0}
+  mouses:
+  - elementName: Bad
+    type: 1
+    quality: 1
+    cost: 25
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 5
+    sprite: {fileID: 0}
+  - elementName: Standard
+    type: 1
+    quality: 2
+    cost: 75
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 15
+    sprite: {fileID: 0}
+  - elementName: Good
+    type: 1
+    quality: 3
+    cost: 150
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 30
+    sprite: {fileID: 0}
+  - elementName: Excellent
+    type: 1
+    quality: 4
+    cost: 300
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 60
+    sprite: {fileID: 0}
+  keyboards:
+  - elementName: Bad
+    type: 2
+    quality: 1
+    cost: 100
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 20
+    sprite: {fileID: 21300000, guid: 10debfb5a49cf464b9a46c5f46840b03, type: 3}
+  - elementName: Standard
+    type: 2
+    quality: 2
+    cost: 200
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 30
+    sprite: {fileID: 21300000, guid: 70e474d072d6bb3459d7fd100a2f5099, type: 3}
+  - elementName: Good
+    type: 2
+    quality: 3
+    cost: 400
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 60
+    sprite: {fileID: 21300000, guid: 213e37d89c432024597c3275db0c75c0, type: 3}
+  - elementName: Excellent
+    type: 2
+    quality: 4
+    cost: 700
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 120
+    sprite: {fileID: 21300000, guid: d4dda4e3513a71c43b6455573791b626, type: 3}
+  screens:
+  - elementName: Bad
+    type: 5
+    quality: 1
+    cost: 100
+    gameKnowledge: 10
+    teamPlay: 10
+    mechanics: 0
+    sprite: {fileID: 21300000, guid: 379fad23aa1d1d946a6042c7705e52f9, type: 3}
+  - elementName: Standard
+    type: 5
+    quality: 2
+    cost: 200
+    gameKnowledge: 15
+    teamPlay: 15
+    mechanics: 0
+    sprite: {fileID: 21300000, guid: 071479a424619244f8c74d2768997dd0, type: 3}
+  - elementName: Good
+    type: 5
+    quality: 3
+    cost: 400
+    gameKnowledge: 30
+    teamPlay: 30
+    mechanics: 0
+    sprite: {fileID: 21300000, guid: 826936e8eb42d5d4683f8b54891f7c80, type: 3}
+  - elementName: Excellent
+    type: 5
+    quality: 4
+    cost: 700
+    gameKnowledge: 60
+    teamPlay: 60
+    mechanics: 0
+    sprite: {fileID: 21300000, guid: 3ca736ce6fb65ac48aaada38b2d438d6, type: 3}
+  artManager: {fileID: 0}
+  resultManager: {fileID: 5455414519704674124}
+  gameManager: {fileID: 5455414519704674122}

@@ -26,10 +26,12 @@ public class SliderToText : MonoBehaviour
     private float debuffMultiplierAmount = 1f;
 
     Slider slider;
+	GameManager gameManager;
 
     private void Awake()
     {
         slider = GetComponent<Slider>();
+		gameManager = FindObjectOfType<GameManager>();
     }
 
     private void Start()
@@ -60,16 +62,23 @@ public class SliderToText : MonoBehaviour
     public void ValueToTrainFreeResult(Text textToChange)
     {
         tiredness = slider.value * tirednessMultiplier;
-        skill = slider.value * resultMultiplier * (debuffMultiplier * debuffMultiplierAmount);
-        textToChange.text = "+" + skill.ToString() + " " + skillName + ", -" + tiredness.ToString() + "% tiredness";
+		skill = slider.value * gameManager.GetCurrentAccommodation.trainingLevel1Amount * (debuffMultiplier * debuffMultiplierAmount);
+
+		textToChange.text = "+" + skill.ToString() + " " + skillName + ", -" + tiredness.ToString() + "% tiredness";
     }
 
     public void ValueToTrainResult(Text textToChange)
     {
         tiredness = slider.value * tirednessMultiplier;
         money = slider.value * costMultiplier;
-        skill = slider.value * resultMultiplier * (debuffMultiplier * debuffMultiplierAmount);
-        textToChange.text = "+" + skill.ToString() + " " + skillName + ", -" + tiredness.ToString() + "% tiredness, -$" + money.ToString();
+
+		// Check for the training level by looking at cost amount
+		if (costMultiplier >= 100)
+			skill = slider.value * gameManager.GetCurrentAccommodation.trainingLevel3Amount * (debuffMultiplier * debuffMultiplierAmount);
+		else
+			skill = slider.value * gameManager.GetCurrentAccommodation.trainingLevel2Amount * (debuffMultiplier * debuffMultiplierAmount);
+
+		textToChange.text = "+" + skill.ToString() + " " + skillName + ", -" + tiredness.ToString() + "% tiredness, -$" + money.ToString();
     }
 
     public void ValueToSreamResult(Text textToChange)

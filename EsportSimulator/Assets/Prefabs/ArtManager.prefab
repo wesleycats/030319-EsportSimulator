@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1032726308518061382
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1032726308518061377}
+  - component: {fileID: 1032726308518061383}
+  m_Layer: 0
+  m_Name: ArtManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1032726308518061377
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032726308518061382}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1032726308518061383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032726308518061382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d8d54c060fe26e469f56a840b9cd074, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  background: {fileID: 0}
+  character: {fileID: 0}
+  headset: {fileID: 0}
+  keyboard: {fileID: 0}
+  screen: {fileID: 0}
+  chair: {fileID: 0}
+  workstation: {fileID: 0}
+  houseSprites:
+  - {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  workplaceSprites:
+  - {fileID: 21300000, guid: a1bac7544557dd24b9c777448cfa4840, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  characterSprites:
+  - {fileID: 21300000, guid: 39ff56dd5b6595d4f85bb6ae687e6148, type: 3}
+  - {fileID: 21300000, guid: 6ee2a60dbb057d34dbe94e13d6fd182f, type: 3}
+  headsetSprites:
+  - {fileID: 21300000, guid: 79b110acc8b3e82459a1605505504597, type: 3}
+  - {fileID: 21300000, guid: 6687627d51768dd48a734aa1e110d396, type: 3}
+  - {fileID: 21300000, guid: ee775794d52f28c4cbdf656b5e09f6ba, type: 3}
+  - {fileID: 21300000, guid: d453bec757b8d654fa07ed51890d8e83, type: 3}
+  keyboardSprites:
+  - {fileID: 21300000, guid: 10debfb5a49cf464b9a46c5f46840b03, type: 3}
+  - {fileID: 21300000, guid: 70e474d072d6bb3459d7fd100a2f5099, type: 3}
+  - {fileID: 21300000, guid: 213e37d89c432024597c3275db0c75c0, type: 3}
+  - {fileID: 21300000, guid: d4dda4e3513a71c43b6455573791b626, type: 3}
+  screenSprites:
+  - {fileID: 21300000, guid: 379fad23aa1d1d946a6042c7705e52f9, type: 3}
+  - {fileID: 21300000, guid: 071479a424619244f8c74d2768997dd0, type: 3}
+  - {fileID: 21300000, guid: 826936e8eb42d5d4683f8b54891f7c80, type: 3}
+  - {fileID: 21300000, guid: 3ca736ce6fb65ac48aaada38b2d438d6, type: 3}
+  chairSprites:
+  - {fileID: 21300000, guid: 191fe487cd45d524bb005379440253ac, type: 3}
+  tableSprites:
+  - {fileID: 21300000, guid: 7f2b7bdbe52e01940a26fa5afce8052a, type: 3}
+  workstationSprites:
+  - {fileID: 21300000, guid: af44cdbf984522a42a85f17212fb64f2, type: 3}
+  playerAnimator: {fileID: 0}
+  workstationAnimator: {fileID: 0}
+  playerData: {fileID: 11400000, guid: b5721d035e1bf074789a14536477e52e, type: 2}
+  shopManager: {fileID: 0}

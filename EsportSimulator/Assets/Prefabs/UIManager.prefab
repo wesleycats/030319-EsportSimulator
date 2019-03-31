@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6333669343616938335
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6333669343616938333}
+  - component: {fileID: 6333669343616938334}
+  - component: {fileID: 6333669343616938332}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6333669343616938333
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6333669343616938335}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6333669343616938334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6333669343616938335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88a1f3ba9020ee743a168140686772db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: {fileID: 0}
+  date: {fileID: 0}
+  moneyValue: {fileID: 0}
+  ratingValue: {fileID: 0}
+  fameValue: {fileID: 0}
+  tirednessValue: {fileID: 0}
+  tirednessBar: {fileID: 0}
+  hungerValue: {fileID: 0}
+  hungerBar: {fileID: 0}
+  thirstValue: {fileID: 0}
+  thirstBar: {fileID: 0}
+  gameKnowledgeValue: {fileID: 0}
+  teamPlayValue: {fileID: 0}
+  mechanicsValue: {fileID: 0}
+  activityText: {fileID: 0}
+  gameOverMenu: {fileID: 0}
+  winGameMenu: {fileID: 0}
+  leaderboardNames: {fileID: 0}
+  leaderboardRatings: {fileID: 0}
+  divisionColors:
+  - {r: 1, g: 0, b: 0.7890277, a: 1}
+  - {r: 0, g: 0.9360783, b: 1, a: 1}
+  - {r: 1, g: 0.75977707, b: 0, a: 1}
+  - {r: 0.38679248, g: 0.38679248, b: 0.38679248, a: 1}
+  - {r: 0.6132076, g: 0.42452297, b: 0, a: 1}
+  sleepOverlay: {fileID: 0}
+  needsMenuButton: {fileID: 0}
+  timeManager: {fileID: 0}
+  gameManager: {fileID: 0}
+  opponentManager: {fileID: 0}
+  leaderboardManager: {fileID: 0}
+--- !u!114 &6333669343616938332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6333669343616938335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 800efcb6f57a12647b04178c2b892c7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allButtons: []

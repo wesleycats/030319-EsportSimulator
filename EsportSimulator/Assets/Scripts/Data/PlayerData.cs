@@ -8,12 +8,16 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New PlayerData", menuName = "Player Data", order = 51)]
 public class PlayerData : ScriptableObject
 {
+    [Header("Default Attributes")]
     #region Default Variables
 
     [SerializeField] private int defaultMoney;
+    [SerializeField] private List<ItemForm> defaultItems;
+    [SerializeField] private AccommodationForm defaultAccommodation;
 
     #endregion
 
+    [Header("Attributes")]
     #region Progress
 
     [SerializeField] private int money;
@@ -34,9 +38,23 @@ public class PlayerData : ScriptableObject
     #endregion
 
     #region Skills
+
     [SerializeField] private int gameKnowledge;
     [SerializeField] private int teamPlay;
     [SerializeField] private int mechanics;
+
+    #endregion
+
+    #region Items 
+    
+    [SerializeField] private List<ItemForm> savedEquipedItems = new List<ItemForm>();
+
+    #endregion
+
+    #region Accommodation
+
+    [SerializeField] private AccommodationForm currentAccommodation;
+
     #endregion
 
     #region Utilities
@@ -57,6 +75,8 @@ public class PlayerData : ScriptableObject
         gameKnowledge = 0;
         teamPlay = 0;
         mechanics = 0;
+		savedEquipedItems = defaultItems;
+        currentAccommodation = defaultAccommodation;
     }
 
     #region Getters & Setters
@@ -74,6 +94,8 @@ public class PlayerData : ScriptableObject
     public int GetGameKnowledge { get { return gameKnowledge; } }
     public int GetTeamPlay { get { return teamPlay; } }
     public int GetMechanics { get { return mechanics; } }
+    public List<ItemForm> GetSavedEquipedItems { get { return savedEquipedItems; } }
+    public AccommodationForm GetCurrentAccommodation { get { return currentAccommodation; } }
 
     public int SetDefaultMoney { set { defaultMoney = value; } }
     public int SetMoney { set { money = value; } }
@@ -88,6 +110,8 @@ public class PlayerData : ScriptableObject
     public int SetGameKnowledge { set { gameKnowledge = value; } }
     public int SetTeamPlay { set { teamPlay = value; } }
     public int SetMechanics { set { mechanics = value; } }
+    public List<ItemForm> SetSavedEquipedItems { set { savedEquipedItems = value; } }
+    public AccommodationForm SetCurrentAccommodation { set { currentAccommodation = value; } }
 
     #endregion
 }

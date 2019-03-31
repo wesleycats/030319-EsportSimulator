@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
-using System;
 
 /// <summary>
 /// Controls game stages & keeps track of variables in current session
@@ -22,6 +23,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int teamPlay;
     [SerializeField] private int mechanics;
 
+    [SerializeField] private List<ItemForm> equipedItems = new List<ItemForm>();
+    [SerializeField] private AccommodationForm currentAccommodation;
+
     #endregion
 
     public PlayerData playerData;
@@ -34,22 +38,25 @@ public class GameManager : MonoBehaviour
     public OpponentManager opponentManager;
     public LeaderboardManager leaderboardManager;
     public ResultManager resultManager;
+    public ShopManager shopManager;
 
     public Debugger debug;
 
     void Start()
     {
-        LoadData();
         Time.timeScale = 1f;
+		ResetGame();
     }
 
     public void LoadData()
     {
         InitializePlayerData();
+        shopManager.Initialize();
         timeManager.InitializeGameData();
         opponentManager.InitializeOpponents(this);
         leaderboardManager.Initialize();
         uiManager.Initialize();
+        artManager.Initialize();
     }
 
     public void ResetGame()
@@ -113,7 +120,6 @@ public class GameManager : MonoBehaviour
         uiManager.UpdateProgress(money, rating, fame);
     }
 
-
     public void IncreaseGameKnowledge(int amount)
     {
         gameKnowledge += amount;
@@ -154,8 +160,6 @@ public class GameManager : MonoBehaviour
             uiManager.needsMenuButton.GetComponent<LerpColor>().endColor = Color.red;
         }
     }
-
-
 
     public bool IsMoneyLowEnough(float amount)
     {
@@ -213,6 +217,13 @@ public class GameManager : MonoBehaviour
         gameKnowledge = playerData.GetGameKnowledge;
         teamPlay = playerData.GetTeamPlay;
         mechanics = playerData.GetMechanics;
+
+		for (int i = 0; i < playerData.GetSavedEquipedItems.Count; i++)
+		{
+			equipedItems[i] = playerData.GetSavedEquipedItems[i];
+		}
+
+		currentAccommodation = playerData.GetCurrentAccommodation;
     }
 
     #region Getters & Setters
@@ -229,6 +240,8 @@ public class GameManager : MonoBehaviour
     public int GetGameKnowledge { get { return gameKnowledge; } }
     public int GetTeamPlay { get { return teamPlay; } }
     public int GetMechanics { get { return mechanics; } }
+    public List<ItemForm> GetEquipedItems { get { return equipedItems; } }
+    public AccommodationForm GetCurrentAccommodation { get { return currentAccommodation; } }
 
     public int SetMoney { set { money = value; } }
     public int SetRating { set { rating = value; } }
@@ -242,6 +255,8 @@ public class GameManager : MonoBehaviour
     public int SetGameKnowledge { set { gameKnowledge = value; } }
     public int SetTeamPlay { set { teamPlay = value; } }
     public int SetMechanics { set { mechanics = value; } }
+    //public List<ItemForm> SetEquipedItems { set { equipedItems = value; } }
+    public AccommodationForm SetCurrentAccommodation { set { currentAccommodation = value; } }
 
     public int Money { get { return money; } set { money = value; } }
     public int Rating { get { return rating; } set { rating = value; } }

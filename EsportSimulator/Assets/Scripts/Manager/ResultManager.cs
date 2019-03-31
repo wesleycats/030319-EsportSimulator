@@ -9,13 +9,7 @@ using UnityEngine.UI;
 public class ResultManager : MonoBehaviour
 {
     #region Forms
-
-    [Header("Houses")]
-    [SerializeField] private ResultsForm houseLevel1;
-    [SerializeField] private ResultsForm houseLevel2;
-    [SerializeField] private ResultsForm houseLevel3;
-    [SerializeField] private ResultsForm houseLevel4;
-
+    
     [Header("Work")]
     [Tooltip("Results per hour")]
     [SerializeField] private ResultsForm workLevel1;
@@ -23,11 +17,16 @@ public class ResultManager : MonoBehaviour
     [SerializeField] private ResultsForm workLevel3;
     [SerializeField] private ResultsForm workLevel4;
 
-    [Header("Training")]
+    [Header("Default Training")]
     [Tooltip("Results per hour")]
     [SerializeField] private ResultsForm trainLevel1;
     [SerializeField] private ResultsForm trainLevel2;
     [SerializeField] private ResultsForm trainLevel3;
+
+    [Header("Battles")]
+    [SerializeField] private ResultsForm oneVsOne;
+    [SerializeField] private ResultsForm threeVsThree;
+    [SerializeField] private ResultsForm fiveVsFive;
 
     [Header("Food")]
     [Tooltip("Results per purchase")]
@@ -43,11 +42,6 @@ public class ResultManager : MonoBehaviour
     [SerializeField] private ResultsForm drinkGood;
     [SerializeField] private ResultsForm drinkExcellent;
 
-    [Header("Battles")]
-    [SerializeField] private ResultsForm oneVsOne;
-    [SerializeField] private ResultsForm threeVsThree;
-    [SerializeField] private ResultsForm fiveVsFive;
-
     #endregion
 
     [SerializeField] private bool debuff = false;
@@ -62,16 +56,22 @@ public class ResultManager : MonoBehaviour
 
     // How much tiredness you lose by sleeping
     [SerializeField] private int tirednessDecreaseRate = 25;
-    
     [SerializeField] private int winBiasPercentage;
 
-    private List<Opponent> leaderboard;
+	private int tirednessAmount;
+	private int costAmount;
+	private int gameKnowledgeAmount;
+	private int teamPlayAmount;
+	private int mechanicsAmount;
+
+	private List<Opponent> leaderboard;
     private Opponent player;
 
     public UIManager uiManager;
     public GameManager gameManager;
     public LeaderboardManager lbManager;
     public OpponentManager opponentManager;
+    public ShopManager shopManager;
     public PlayerData playerData;
 
     private void Start()
@@ -135,45 +135,10 @@ public class ResultManager : MonoBehaviour
                 return 0;
         }
     }
-
-    public void PayRent(int houseLevel)
+	
+    public void PayRent(AccommodationForm accommodation)
     {
-        int rent = 0;
-        switch (houseLevel)
-        {
-            case 0:
-                rent = houseLevel1.Money;
-
-                if (!gameManager.IsMoneyHighEnough(rent)) gameManager.GameOver();
-
-                gameManager.DecreaseMoney(rent);
-                break;
-
-            case 1:
-                rent = houseLevel2.Money;
-
-                if (!gameManager.IsMoneyHighEnough(rent)) gameManager.GameOver();
-
-                gameManager.DecreaseMoney(rent);
-                break;
-
-            case 2:
-                rent = houseLevel3.Money;
-
-                if (!gameManager.IsMoneyHighEnough(rent)) gameManager.GameOver();
-
-                gameManager.DecreaseMoney(rent);
-                break;
-
-            case 3:
-                rent = houseLevel4.Money;
-
-                if (!gameManager.IsMoneyHighEnough(rent)) gameManager.GameOver();
-
-                gameManager.DecreaseMoney(rent);
-                break;
-
-        }
+        gameManager.DecreaseMoney(accommodation.cost);
     }
 
     /// <summary>
@@ -246,52 +211,52 @@ public class ResultManager : MonoBehaviour
         switch (trainType)
         {
             case ActivityManager.TrainType.WatchingGK:
-                gameManager.IncreaseGameKnowledge((int)(trainLevel1.GameKnowledge * currentDebuffMultiplier));
+                gameManager.IncreaseGameKnowledge((int)(gameManager.GetCurrentAccommodation.trainingLevel1Amount * currentDebuffMultiplier));
                 gameManager.IncreaseTiredness(trainLevel1.Tiredness);
                 break;
 
             case ActivityManager.TrainType.WatchingTP:
-                gameManager.IncreaseTeamPlay((int)(trainLevel1.TeamPlay * currentDebuffMultiplier));
+                gameManager.IncreaseTeamPlay((int)(gameManager.GetCurrentAccommodation.trainingLevel1Amount * currentDebuffMultiplier));
                 gameManager.IncreaseTiredness(trainLevel1.Tiredness);
                 break;
 
             case ActivityManager.TrainType.WatchingM:
-                gameManager.IncreaseMechanics((int)(trainLevel1.Mechanics * currentDebuffMultiplier));
+                gameManager.IncreaseMechanics((int)(gameManager.GetCurrentAccommodation.trainingLevel1Amount * currentDebuffMultiplier));
                 gameManager.IncreaseTiredness(trainLevel1.Tiredness);
                 break;
 
             case ActivityManager.TrainType.CourseGK:
                 gameManager.DecreaseMoney(trainLevel2.Money);
-                gameManager.IncreaseGameKnowledge((int)(trainLevel2.GameKnowledge * currentDebuffMultiplier));
+                gameManager.IncreaseGameKnowledge((int)(gameManager.GetCurrentAccommodation.trainingLevel2Amount * currentDebuffMultiplier));
                 gameManager.IncreaseTiredness(trainLevel2.Tiredness);
                 break;
 
             case ActivityManager.TrainType.CourseTP:
-                gameManager.IncreaseTeamPlay((int)(trainLevel2.TeamPlay * currentDebuffMultiplier));
+                gameManager.IncreaseTeamPlay((int)(gameManager.GetCurrentAccommodation.trainingLevel2Amount * currentDebuffMultiplier));
                 gameManager.DecreaseMoney(trainLevel2.Money);
                 gameManager.IncreaseTiredness(trainLevel2.Tiredness);
                 break;
 
             case ActivityManager.TrainType.CourseM:
-                gameManager.IncreaseMechanics((int)(trainLevel2.Mechanics * currentDebuffMultiplier));
+                gameManager.IncreaseMechanics((int)(gameManager.GetCurrentAccommodation.trainingLevel2Amount * currentDebuffMultiplier));
                 gameManager.DecreaseMoney(trainLevel2.Money);
                 gameManager.IncreaseTiredness(trainLevel2.Tiredness);
                 break;
 
             case ActivityManager.TrainType.CoursePlusGK:
-                gameManager.IncreaseGameKnowledge((int)(trainLevel3.GameKnowledge * currentDebuffMultiplier));
+                gameManager.IncreaseGameKnowledge((int)(gameManager.GetCurrentAccommodation.trainingLevel3Amount * currentDebuffMultiplier));
                 gameManager.DecreaseMoney(trainLevel3.Money);
                 gameManager.IncreaseTiredness(trainLevel3.Tiredness);
                 break;
 
             case ActivityManager.TrainType.CoursePlusTP:
-                gameManager.IncreaseTeamPlay((int)(trainLevel3.TeamPlay * currentDebuffMultiplier));
+                gameManager.IncreaseTeamPlay((int)(gameManager.GetCurrentAccommodation.trainingLevel3Amount * currentDebuffMultiplier));
                 gameManager.DecreaseMoney(trainLevel3.Money);
                 gameManager.IncreaseTiredness(trainLevel3.Tiredness);
                 break;
 
             case ActivityManager.TrainType.CoursePlusM:
-                gameManager.IncreaseMechanics((int)(trainLevel3.Mechanics * currentDebuffMultiplier));
+                gameManager.IncreaseMechanics((int)(gameManager.GetCurrentAccommodation.trainingLevel3Amount * currentDebuffMultiplier));
                 gameManager.DecreaseMoney(trainLevel3.Money);
                 gameManager.IncreaseTiredness(trainLevel3.Tiredness);
                 break;

@@ -26,6 +26,8 @@ public class UIManager : MonoBehaviour
     public GameObject winGameMenu;
     public Text leaderboardNames;
     public Text leaderboardRatings;
+    public List<Text> allItemTexts = new List<Text>();
+    public List<Button> allAccommdationButtons = new List<Button>();
 
     #endregion
 
@@ -37,13 +39,14 @@ public class UIManager : MonoBehaviour
     public GameManager gameManager;
     public OpponentManager opponentManager;
     public LeaderboardManager leaderboardManager;
-
+    
     public void UpdateAll()
     {
         UpdateTime(timeManager.GetHour, timeManager.GetMinute, timeManager.GetYear, timeManager.GetMonth);
         UpdateProgress(gameManager.GetMoney, gameManager.GetRating, gameManager.GetFame);
         UpdateNeeds(gameManager.GetTiredness, gameManager.GetHunger, gameManager.GetThirst);
         UpdateSkills(gameManager.GetGameKnowledge, gameManager.GetTeamPlay, gameManager.GetMechanics);
+        UpdateItems(allItemTexts, gameManager.GetEquipedItems);
         UpdateLeaderboard(leaderboardManager.GetLeaderboard);
     }
 
@@ -82,6 +85,57 @@ public class UIManager : MonoBehaviour
         mechanicsValue.text = mechanics.ToString();
     }
 
+    public void UpdateItems(List<Text> allItemTexts, List<ItemForm> equipedItems)
+    {
+        string quality = "";
+        string type = "";
+
+        foreach (Text t in allItemTexts)
+        {
+            foreach (ItemForm f in equipedItems)
+            {
+                type = f.type.ToString();
+                if (t.transform.parent.name == type)
+                {
+                    quality = f.quality.ToString();
+                    t.text = type + ": " + quality;
+                }
+            }
+        }
+    }
+
+    public void UpdateAccommodations(List<Button> allAccommdationButton, AccommodationForm currentAccommodation, List<AccommodationForm> allAccommodations)
+    {
+        string status = "";
+        foreach (Button b in allAccommdationButton)
+        {
+            foreach (AccommodationForm a in allAccommodations)
+            {
+                b.interactable = true;
+
+                if (b.transform.parent.name == a.accommodation.type.ToString())
+                {
+                    if (a.accommodation.bought)
+                    {
+                        status = "OWNED";
+                    }
+                    else
+                    {
+                        status = "BUY";
+                    }
+                }
+            }
+
+            if (b.transform.parent.name == currentAccommodation.accommodation.type.ToString())
+            {
+                b.interactable = false;
+                status = "CURRENT";
+            }
+
+            b.transform.GetChild(0).GetComponent<Text>().text = status;
+        }
+    }
+
     public void UpdateLeaderboard(List<Opponent> leaderboard)
     {
         leaderboardNames.text = "";
@@ -112,4 +166,8 @@ public class UIManager : MonoBehaviour
     {
         UpdateAll();
     }
+
+    #region Getters & Settes
+
+    #endregion
 }

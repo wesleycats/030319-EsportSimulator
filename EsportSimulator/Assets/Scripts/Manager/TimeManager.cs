@@ -84,7 +84,7 @@ public class TimeManager : MonoBehaviour
 
             if (hour >= 24)
             {
-                resultManager.PayRent(gameManager.HouseLevel);
+                resultManager.PayRent(gameManager.GetCurrentAccommodation);
                 hour = 0;
                 month++;
             }
