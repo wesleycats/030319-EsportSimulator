@@ -64,7 +64,8 @@ public class TimeManager : MonoBehaviour
         if (duration <= 0)
         {
             activityManager.ChangeActivity(ActivityManager.Activity.Idle, 0);
-            buttonManager.EnableAllButtons();
+			resultManager.ResetTotalViews();
+			buttonManager.EnableAllButtons();
         }
         else
         {
@@ -160,7 +161,7 @@ public class TimeManager : MonoBehaviour
                 break;
 
             case ActivityManager.Activity.Stream:
-
+				resultManager.StreamResults(gameManager.GetFame);
                 break;
 
             case ActivityManager.Activity.Train:

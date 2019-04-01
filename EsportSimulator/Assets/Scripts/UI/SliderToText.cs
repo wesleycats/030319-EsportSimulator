@@ -27,12 +27,14 @@ public class SliderToText : MonoBehaviour
 
     Slider slider;
 	GameManager gameManager;
+	ResultManager resultManager;
 
-    private void Awake()
+	private void Awake()
     {
         slider = GetComponent<Slider>();
 		gameManager = FindObjectOfType<GameManager>();
-    }
+		resultManager = FindObjectOfType<ResultManager>();
+	}
 
     private void Start()
     {
@@ -81,12 +83,11 @@ public class SliderToText : MonoBehaviour
 		textToChange.text = "+" + skill.ToString() + " " + skillName + ", -" + tiredness.ToString() + "% tiredness, -$" + money.ToString();
     }
 
-    public void ValueToSreamResult(Text textToChange)
+    public void ValueToStreamResult(Text textToChange)
     {
-        //TODO get fame amount
         tiredness = slider.value * tirednessMultiplier;
-        moneyMin = slider.value * resultMultiplier * (debuffMultiplier * debuffMultiplierAmount);
-        moneyMax = slider.value * (resultMultiplier * 3) * (debuffMultiplier * debuffMultiplierAmount);
+        moneyMin = resultManager.GetMinStreamIncome(gameManager.GetFame, (int)slider.value);
+        moneyMax = resultManager.GetMaxStreamIncome(gameManager.GetFame, (int)slider.value);
         textToChange.text = "between +$" + moneyMin.ToString() + "-$" + moneyMax.ToString() + ", -" + tiredness.ToString() + "% tiredness";
     }
 

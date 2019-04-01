@@ -75,10 +75,21 @@ public class ArtManager : MonoBehaviour
                 playerAnimator.Play("Idle");
                 workstationAnimator.Play("WoodenTable");
 
-                screen.sprite = screenSprites[0];
-                keyboard.sprite = keyboardSprites[0];
-                //screen.sprite = screenSprites[(int)playerData.GetScreenLevel];
-                //keyboard.sprite = keyboardSprites[(int)playerData.GetKeyboardLevel];
+				// Sets item sprite to currently equiped item
+				foreach (ItemForm f in gameManager.GetEquipedItems)
+				{
+					switch (f.type)
+					{
+						case Item.Type.Keyboard:
+							keyboard.sprite = f.sprite;
+							break;
+
+						case Item.Type.Screen:
+							screen.sprite = f.sprite;
+							break;
+					}
+				}
+
                 background.sprite = houseSprites[(int)playerData.GetHouseLevel];
                 chair.sprite = chairSprites[(int)playerData.GetHouseLevel];
                 workstation.sprite = tableSprites[(int)playerData.GetHouseLevel];
@@ -89,8 +100,9 @@ public class ArtManager : MonoBehaviour
                 break;
 
             case ActivityManager.Activity.Stream:
-
-                break;
+				playerAnimator.Play("OnComputer");
+				workstationAnimator.Play("WoodenTable");
+				break;
 
             case ActivityManager.Activity.Train:
                 playerAnimator.Play("OnComputer");

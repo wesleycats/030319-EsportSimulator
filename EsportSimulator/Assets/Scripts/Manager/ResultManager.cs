@@ -8,133 +8,243 @@ using UnityEngine.UI;
 /// </summary>
 public class ResultManager : MonoBehaviour
 {
-    #region Forms
-    
-    [Header("Work")]
-    [Tooltip("Results per hour")]
-    [SerializeField] private ResultsForm workLevel1;
-    [SerializeField] private ResultsForm workLevel2;
-    [SerializeField] private ResultsForm workLevel3;
-    [SerializeField] private ResultsForm workLevel4;
+	#region Forms
 
-    [Header("Default Training")]
-    [Tooltip("Results per hour")]
-    [SerializeField] private ResultsForm trainLevel1;
-    [SerializeField] private ResultsForm trainLevel2;
-    [SerializeField] private ResultsForm trainLevel3;
+	[Header("Work")]
+	[Tooltip("Results per hour")]
+	[SerializeField] private ResultsForm workLevel1;
+	[SerializeField] private ResultsForm workLevel2;
+	[SerializeField] private ResultsForm workLevel3;
+	[SerializeField] private ResultsForm workLevel4;
 
-    [Header("Battles")]
-    [SerializeField] private ResultsForm oneVsOne;
-    [SerializeField] private ResultsForm threeVsThree;
-    [SerializeField] private ResultsForm fiveVsFive;
+	[Header("Default Training")]
+	[Tooltip("Results per hour")]
+	[SerializeField] private ResultsForm trainLevel1;
+	[SerializeField] private ResultsForm trainLevel2;
+	[SerializeField] private ResultsForm trainLevel3;
 
-    [Header("Food")]
-    [Tooltip("Results per purchase")]
-    [SerializeField] private ResultsForm foodBad;
-    [SerializeField] private ResultsForm foodStandard;
-    [SerializeField] private ResultsForm foodGood;
-    [SerializeField] private ResultsForm foodExcellent;
+	[Header("Battles")]
+	[SerializeField] private ResultsForm oneVsOne;
+	[SerializeField] private ResultsForm threeVsThree;
+	[SerializeField] private ResultsForm fiveVsFive;
 
-    [Header("Drinks")]
-    [Tooltip("Results per purchase")]
-    [SerializeField] private ResultsForm drinkBad;
-    [SerializeField] private ResultsForm drinkStandard;
-    [SerializeField] private ResultsForm drinkGood;
-    [SerializeField] private ResultsForm drinkExcellent;
+	[Header("Food")]
+	[Tooltip("Results per purchase")]
+	[SerializeField] private ResultsForm foodBad;
+	[SerializeField] private ResultsForm foodStandard;
+	[SerializeField] private ResultsForm foodGood;
+	[SerializeField] private ResultsForm foodExcellent;
 
-    #endregion
+	[Header("Drinks")]
+	[Tooltip("Results per purchase")]
+	[SerializeField] private ResultsForm drinkBad;
+	[SerializeField] private ResultsForm drinkStandard;
+	[SerializeField] private ResultsForm drinkGood;
+	[SerializeField] private ResultsForm drinkExcellent;
 
-    [SerializeField] private bool debuff = false;
+	#endregion
 
-    [SerializeField] private float currentDebuffMultiplier = 1f;
-    [SerializeField] private float currentDebuffMultiplierAmount = 1f;
-    [SerializeField] private float debuffMultiplier = 0.5f;
-    [SerializeField] private float debuffMultiplierAmount = 1f;
+	[SerializeField] private bool debuff = false;
 
-    [SerializeField] private int hungerIncreaseRate = 10;
-    [SerializeField] private int thirstIncreaseRate = 5;
+	[SerializeField] private float currentDebuffMultiplier = 1f;
+	[SerializeField] private float currentDebuffMultiplierAmount = 1f;
+	[SerializeField] private float debuffMultiplier = 0.5f;
+	[SerializeField] private float debuffMultiplierAmount = 1f;
 
-    // How much tiredness you lose by sleeping
-    [SerializeField] private int tirednessDecreaseRate = 25;
-    [SerializeField] private int winBiasPercentage;
+	[SerializeField] private int winBiasPercentage;
 
-	private int tirednessAmount;
-	private int costAmount;
-	private int gameKnowledgeAmount;
-	private int teamPlayAmount;
-	private int mechanicsAmount;
+	[Header("Needs")]
+	// How much tiredness you lose by sleeping
+	[SerializeField] private int tirednessDecreaseRate = 25;
+
+	// How much hunger you get per hour
+	[SerializeField] private int hungerIncreaseRate = 10;
+
+	// How much thirst you get per hour
+	[SerializeField] private int thirstIncreaseRate = 5;
+
+	[Header("Streaming")]
+	[SerializeField] private int minimalFameForViews;
+	[SerializeField] private int minViewsPerFame;
+	[SerializeField] private int maxViewsPerFame;
+	[SerializeField] private int minimalViewsForIncome;
+	[SerializeField] private int minIncomePerViews;
+	[SerializeField] private int maxIncomePerViews;
+	[SerializeField] private int totalViews;
+	[SerializeField] private int totalIncome;
+
 
 	private List<Opponent> leaderboard;
-    private Opponent player;
+	private Opponent player;
 
-    public UIManager uiManager;
-    public GameManager gameManager;
-    public LeaderboardManager lbManager;
-    public OpponentManager opponentManager;
-    public ShopManager shopManager;
-    public PlayerData playerData;
+	[Header("References")]
+	public UIManager uiManager;
+	public GameManager gameManager;
+	public LeaderboardManager lbManager;
+	public OpponentManager opponentManager;
+	public ShopManager shopManager;
+	public PlayerData playerData;
 
-    private void Start()
+	private void Start()
+	{
+		leaderboard = lbManager.GetLeaderboard;
+		player = opponentManager.GetPlayer;
+
+		if (debuff)
+			ApplyDebuffs(debuffMultiplier, debuffMultiplierAmount);
+	}
+
+	public void ResetTotalViews()
+	{
+		totalIncome = 0;
+		totalViews = 0;
+	}
+
+	public void TryBattle(Battle.Mode battleType)
+	{
+		BattleResults(lbManager.GetRandomOpponent(leaderboard, lbManager.GetOpponentDivision(player, leaderboard, opponentManager.league)), battleType);
+	}
+
+	public float GetTrainingCostAmount(ActivityManager.TrainType trainType, float duration)
+	{
+		currentDebuffMultiplier *= currentDebuffMultiplierAmount;
+
+		switch (trainType)
+		{
+			case ActivityManager.TrainType.WatchingGK:
+
+				return 0;
+
+			case ActivityManager.TrainType.WatchingTP:
+
+				return 0;
+
+			case ActivityManager.TrainType.WatchingM:
+
+				return 0;
+
+			case ActivityManager.TrainType.CourseGK:
+
+				return trainLevel2.Money * currentDebuffMultiplier * duration;
+
+			case ActivityManager.TrainType.CourseTP:
+
+				return trainLevel2.Money * currentDebuffMultiplier * duration;
+
+			case ActivityManager.TrainType.CourseM:
+
+				return trainLevel2.Money * currentDebuffMultiplier * duration;
+
+			case ActivityManager.TrainType.CoursePlusGK:
+
+				return trainLevel3.Money * currentDebuffMultiplier * duration;
+
+			case ActivityManager.TrainType.CoursePlusTP:
+
+				return trainLevel3.Money * currentDebuffMultiplier * duration;
+
+			case ActivityManager.TrainType.CoursePlusM:
+
+				return trainLevel3.Money * currentDebuffMultiplier * duration;
+
+			default:
+				Debug.LogError("No training type has been given");
+				return 0;
+		}
+	}
+
+	public int GetMinStreamIncome(int fame, int duration)
+	{
+		int views = 0;
+		int incomeAmount = 0;
+		int fameCount = fame / minimalFameForViews;
+
+		for (int i = 0; i < fameCount * duration; i++)
+		{
+			views += minViewsPerFame;
+		}
+
+		int viewCount = views / minimalViewsForIncome;
+
+
+		for (int i = 0; i < viewCount * duration; i++)
+		{
+			incomeAmount += minIncomePerViews;
+		}
+
+		return incomeAmount;
+	}
+
+	public int GetMaxStreamIncome(int fame, int duration)
+	{
+		int views = 0;
+		int incomeAmount = 0;
+		int fameCount = fame / minimalFameForViews;
+
+		for (int i = 0; i < fameCount * duration; i++)
+		{
+			views += minViewsPerFame;
+		}
+
+		int viewCount = views / minimalViewsForIncome;
+
+
+		for (int i = 0; i < viewCount * duration; i++)
+		{
+			incomeAmount += maxIncomePerViews;
+		}
+
+		return incomeAmount;
+	}
+
+	/// <summary>
+	/// Returns a random amount of views the player gets per hour based on amount of fame
+	/// </summary>
+	/// <param name="fameCount"></param>
+	/// <param name="minViewsPerFame"></param>
+	/// <param name="maxViewsPerFame"></param>
+	/// <returns></returns>
+	public int GetStreamViews(int fameCount, int minViewsPerFame, int maxViewsPerFame)
+	{
+		int views = 0;
+		for (int i = 0; i < fameCount; i++)
+		{
+			views += Random.Range(minViewsPerFame, maxViewsPerFame);
+		}
+		return views;
+	}
+
+	/// <summary>
+	/// Returns a random amount of money the player gets per hour based on amount of views
+	/// </summary>
+	/// <param name="viewCount"></param>
+	/// <param name="minIncomePerViews"></param>
+	/// <param name="maxIncomePerViews"></param>
+	/// <returns></returns>
+	public int GetStreamIncome(int viewCount, int minIncomePerViews, int maxIncomePerViews)
+	{
+		int incomeAmount = 0;
+		for (int i = 0; i < viewCount; i++)
+		{
+			incomeAmount += Random.Range(minIncomePerViews, maxIncomePerViews);
+		}
+
+		return incomeAmount;
+	}
+
+    public void StreamResults(int fame)
     {
-        leaderboard = lbManager.GetLeaderboard;
-        player = opponentManager.GetPlayer;
+		if (fame < minimalFameForViews) return;
 
-        if (debuff)
-            ApplyDebuffs(debuffMultiplier, debuffMultiplierAmount);
-    }
+		int fameCount = fame / minimalFameForViews;
+		totalViews += GetStreamViews(fameCount, minViewsPerFame, maxViewsPerFame);
 
-    public void TryBattle(Battle.Mode battleType)
-    {
-        BattleResults(lbManager.GetRandomOpponent(leaderboard, lbManager.GetOpponentDivision(player, leaderboard, opponentManager.league)), battleType);
-    }
+		int viewCount = totalViews / minimalViewsForIncome;
+		int money = GetStreamIncome(viewCount, minIncomePerViews, maxIncomePerViews);
 
-    public float GetTrainingCostAmount(ActivityManager.TrainType trainType, float duration)
-    {
-        currentDebuffMultiplier *= currentDebuffMultiplierAmount;
-
-        switch (trainType)
-        {
-            case ActivityManager.TrainType.WatchingGK:
-
-                return 0;
-
-            case ActivityManager.TrainType.WatchingTP:
-
-                return 0;
-
-            case ActivityManager.TrainType.WatchingM:
-
-                return 0;
-
-            case ActivityManager.TrainType.CourseGK:
-
-                return trainLevel2.Money * currentDebuffMultiplier * duration;
-
-            case ActivityManager.TrainType.CourseTP:
-
-                return trainLevel2.Money * currentDebuffMultiplier * duration;
-
-            case ActivityManager.TrainType.CourseM:
-
-                return trainLevel2.Money * currentDebuffMultiplier * duration;
-
-            case ActivityManager.TrainType.CoursePlusGK:
-
-                return trainLevel3.Money * currentDebuffMultiplier * duration;
-
-            case ActivityManager.TrainType.CoursePlusTP:
-
-                return trainLevel3.Money * currentDebuffMultiplier * duration;
-
-            case ActivityManager.TrainType.CoursePlusM:
-
-                return trainLevel3.Money * currentDebuffMultiplier * duration;
-
-            default:
-                Debug.LogError("No training type has been given");
-                return 0;
-        }
-    }
+		gameManager.IncreaseMoney(money);
+		totalIncome += money;
+	}
 	
     public void PayRent(AccommodationForm accommodation)
     {
@@ -265,11 +375,6 @@ public class ResultManager : MonoBehaviour
                 Debug.LogError("No training type has been given");
                 break;
         }
-    }
-
-    public void StreamResults(int fame, float duration)
-    {
-
     }
 
     public void BattleResults(Opponent opponent, Battle.Mode battleMode)
@@ -667,11 +772,12 @@ public class ResultManager : MonoBehaviour
         return winChance;
     }
 
-    #region Getters & Setters
+		#region Getters & Setters
 
     public int GetTirednessDecreaseRate { get { return tirednessDecreaseRate; } }
     public float GetDebuffMultiplier { get { return debuffMultiplier; } }
     public float GetDebuffMultiplierAmount { get { return debuffMultiplierAmount; } }
+	public int GetTotalViews { get { return totalViews; } }
 
-    #endregion
+		#endregion
 }

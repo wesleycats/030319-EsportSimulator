@@ -87,4 +87,9 @@ public class ActivityManager : MonoBehaviour
         timeManager.IncreaseTime(hourAmount, false);
         artManager.ChangeArt(currentActivity);
     }
+
+	#region Getters & Setters
+
+
+	#endregion
 }
