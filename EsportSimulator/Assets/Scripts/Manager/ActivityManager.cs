@@ -5,7 +5,7 @@ using System;
 
 public class ActivityManager : MonoBehaviour
 {
-    public enum Activity { Idle, Sleep, Eat, Drink, Work, Train, Battle, Stream, Contest }
+    public enum Activity { Idle, Sleep, Eat, Drink, Work, Train, Battle, Stream, Contest, Plan }
     public Activity currentActivity = Activity.Idle;
 
     public enum TrainType { None, WatchingGK, WatchingTP, WatchingM, CourseGK, CourseTP, CourseM, CoursePlusGK, CoursePlusTP, CoursePlusM }
@@ -19,8 +19,11 @@ public class ActivityManager : MonoBehaviour
     public TimeManager timeManager;
     public GameManager gameManager;
     public ResultManager resultsManager;
+    public ContestManager contestManager;
+    public OpponentManager opponentManager;
+    public ButtonManager buttonManager;
 
-    public Debugger debug;
+	public Debugger debug;
 
     private void Start()
     {
@@ -48,13 +51,18 @@ public class ActivityManager : MonoBehaviour
                 uiManager.activityText.text = "Battling...";
                 break;
 
-            case Activity.Contest:
-                uiManager.activityText.text = "Contesting...";
+			case Activity.Plan:
+				uiManager.activityText.text = "Planning...";
+				break;
+
+			case Activity.Contest:
+				uiManager.activityText.text = "Contesting...";
+				contestManager.SetParticipants = contestManager.CreateParticipantList(contestManager.GetParticipantAmount, opponentManager.GetAllOpponents);
                 break;
 
             case Activity.Idle:
                 uiManager.activityText.text = "Idle";
-                break;
+				break;
 
             case Activity.Sleep:
                 uiManager.activityText.text = "Sleeping...";
@@ -85,6 +93,11 @@ public class ActivityManager : MonoBehaviour
         }
 
         timeManager.IncreaseTime(hourAmount, false);
-        artManager.ChangeArt(currentActivity);
+		artManager.ChangeArt(currentActivity);
     }
+
+	#region Getters & Setters
+
+
+	#endregion
 }

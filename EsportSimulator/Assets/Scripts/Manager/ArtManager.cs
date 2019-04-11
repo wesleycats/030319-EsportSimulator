@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Controls dedicated art
@@ -9,16 +10,16 @@ public class ArtManager : MonoBehaviour
 
     public SpriteRenderer background;
     public SpriteRenderer character;
+    public SpriteRenderer chair;
+    public SpriteRenderer workstation;
     public SpriteRenderer headset;
     public SpriteRenderer keyboard;
     public SpriteRenderer screen;
-    public SpriteRenderer chair;
-    public SpriteRenderer workstation;
 
     #endregion
 
     #region Sprites
-    
+
     public Sprite[] houseSprites;
     public Sprite[] workplaceSprites;
     public Sprite[] characterSprites;
@@ -29,17 +30,19 @@ public class ArtManager : MonoBehaviour
     public Sprite[] tableSprites;
     public Sprite[] workstationSprites;
 
-    #endregion
+	#endregion
 
-    #region Animations
+	#region Animations
 
-    public Animator playerAnimator; 
+	public Animator playerAnimator; 
     public Animator workstationAnimator;
 
     #endregion
 
     public PlayerData playerData;
-    
+    public ShopManager shopManager;
+    public GameManager gameManager;
+
     /// <summary>
     /// Changes art according to activity and progress
     /// </summary>
@@ -51,15 +54,12 @@ public class ArtManager : MonoBehaviour
             case ActivityManager.Activity.Battle:
                 playerAnimator.Play("OnComputer");
                 workstationAnimator.Play("WoodenTable");
-
-                background.sprite = houseSprites[(int)playerData.GetHouseLevel];
-                chair.sprite = chairSprites[(int)playerData.GetHouseLevel];
-                workstation.sprite = tableSprites[(int)playerData.GetHouseLevel];
                 break;
 
             case ActivityManager.Activity.Contest:
-
-                break;
+				playerAnimator.Play("OnComputer");
+				workstationAnimator.Play("WoodenTable");
+				break;
 
             case ActivityManager.Activity.Drink:
 
@@ -73,22 +73,41 @@ public class ArtManager : MonoBehaviour
                 playerAnimator.Play("Idle");
                 workstationAnimator.Play("WoodenTable");
 
-                screen.sprite = screenSprites[0];
-                keyboard.sprite = keyboardSprites[0];
-                //screen.sprite = screenSprites[(int)playerData.GetScreenLevel];
-                //keyboard.sprite = keyboardSprites[(int)playerData.GetKeyboardLevel];
-                background.sprite = houseSprites[(int)playerData.GetHouseLevel];
-                chair.sprite = chairSprites[(int)playerData.GetHouseLevel];
-                workstation.sprite = tableSprites[(int)playerData.GetHouseLevel];
+				int houseLevel = gameManager.GetCurrentAccommodationIndex(gameManager.GetCurrentAccommodation, shopManager.GetAllAccommodations);
+				background.sprite = houseSprites[houseLevel];
+				chair.sprite = chairSprites[houseLevel];
+				workstation.sprite = tableSprites[houseLevel];
+
+				// Sets item sprites to currently equiped items
+				foreach (ItemForm f in gameManager.GetEquipedItems)
+				{
+					switch (f.type)
+					{
+						case Item.Type.Keyboard:
+							keyboard.sprite = f.sprite;
+							break;
+
+						case Item.Type.Screen:
+							screen.sprite = f.sprite;
+							break;
+					}
+				}
                 break;
 
-            case ActivityManager.Activity.Sleep:
+
+			case ActivityManager.Activity.Plan:
+				playerAnimator.Play("OnComputer");
+				workstationAnimator.Play("WoodenTable");
+				break;
+
+			case ActivityManager.Activity.Sleep:
 
                 break;
 
             case ActivityManager.Activity.Stream:
-
-                break;
+				playerAnimator.Play("OnComputer");
+				workstationAnimator.Play("WoodenTable");
+				break;
 
             case ActivityManager.Activity.Train:
                 playerAnimator.Play("OnComputer");
@@ -96,6 +115,7 @@ public class ArtManager : MonoBehaviour
                 break;
 
             case ActivityManager.Activity.Work:
+				//TODO create different work enviorments
                 background.sprite = workplaceSprites[(int)playerData.GetWorkLevel];
                 screen.sprite = null;
                 keyboard.sprite = null;
@@ -106,28 +126,32 @@ public class ArtManager : MonoBehaviour
                         playerAnimator.Play("Working1");
                         workstationAnimator.Play("Grill");
                         chair.sprite = null;
-
                         break;
 
                     case 1:
-                        background.sprite = workplaceSprites[1];
-
-                        break;
+						playerAnimator.Play("Working1");
+						workstationAnimator.Play("Grill");
+						chair.sprite = null;
+						break;
 
                     case 2:
-                        background.sprite = workplaceSprites[2];
+						playerAnimator.Play("Working1");
+						workstationAnimator.Play("Grill");
+						chair.sprite = null;
+						break;
 
-                        break;
+					case 3:
+						playerAnimator.Play("Working1");
+						workstationAnimator.Play("Grill");
+						chair.sprite = null;
+						break;
 
-                    case 3:
-                        background.sprite = workplaceSprites[3];
-
-                        break;
-
-                    default:
-
-                        break;
-                }
+					default:
+						playerAnimator.Play("Working1");
+						workstationAnimator.Play("Grill");
+						chair.sprite = null;
+						break;
+				}
 
                 break;
 
@@ -137,5 +161,34 @@ public class ArtManager : MonoBehaviour
 
         }
 
+    }
+
+    public void UpdateItems(List<ItemForm> equipedItems)
+    {
+        foreach (ItemForm f in equipedItems)
+        { 
+            switch (f.type)
+            {
+                case Item.Type.Headset:
+                    headset.sprite = f.sprite;
+                    break;
+                case Item.Type.Keyboard:
+                    keyboard.sprite = f.sprite;
+                    break;
+                case Item.Type.Screen:
+                    screen.sprite = f.sprite;
+                    break;
+            }
+        }
+    }
+
+    public void UpdateAccommodation(AccommodationForm currentAccommodation)
+    {
+        background.sprite = currentAccommodation.sprite;
+    }
+
+    public void Initialize()
+    {
+        UpdateItems(gameManager.GetEquipedItems);
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -13,7 +13,6 @@ public class GameSaveData
     public int fame;
     public float workExperience;
     public int workLevel;
-    public int houseLevel;
 
     #endregion
 
@@ -48,11 +47,26 @@ public class GameSaveData
     public int realMonth;
     public int realYear;
 
-    #endregion
+	#endregion
 
-    #region Utilities
+	#region Events
 
-    public int saveSlotIndex;
+	[SerializeField] public List<Event> plannedTournaments;
+
+	#endregion
+
+	#region Properties
+
+	[SerializeField] public List<ItemForm> savedEquipedItems = new List<ItemForm>();
+	[SerializeField] public List<AccommodationForm> allAccommodations;
+	[SerializeField] public AccommodationForm currentAccommodation;
+
+	#endregion
+
+
+	#region Utilities
+
+	public int saveSlotIndex;
 
     #endregion
 

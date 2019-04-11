@@ -13,15 +13,150 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   defaultMoney: 500
-  money: 500
+  defaultItems:
+  - elementName: Mouse
+    type: 1
+    quality: 0
+    cost: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    sprite: {fileID: 0}
+  - elementName: Keyboard
+    type: 2
+    quality: 0
+    cost: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    sprite: {fileID: 21300000, guid: 10debfb5a49cf464b9a46c5f46840b03, type: 3}
+  - elementName: Headset
+    type: 3
+    quality: 0
+    cost: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    sprite: {fileID: 0}
+  - elementName: Guide
+    type: 4
+    quality: 0
+    cost: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    sprite: {fileID: 0}
+  - elementName: Screen
+    type: 5
+    quality: 0
+    cost: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    sprite: {fileID: 21300000, guid: 379fad23aa1d1d946a6042c7705e52f9, type: 3}
+  defaultAccommodations:
+  - elementName: Garage
+    accommodation:
+      type: 0
+      bought: 1
+    cost: 0
+    rent: 50
+    trainingLevel1Amount: 1
+    trainingLevel2Amount: 3
+    trainingLevel3Amount: 10
+    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
+  - elementName: Apartment
+    accommodation:
+      type: 1
+      bought: 0
+    cost: 500
+    rent: 200
+    trainingLevel1Amount: 1
+    trainingLevel2Amount: 4
+    trainingLevel3Amount: 12
+    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
+  - elementName: House
+    accommodation:
+      type: 2
+      bought: 0
+    cost: 2000
+    rent: 500
+    trainingLevel1Amount: 2
+    trainingLevel2Amount: 5
+    trainingLevel3Amount: 15
+    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
+  - elementName: Luxury Apartment
+    accommodation:
+      type: 3
+      bought: 0
+    cost: 5000
+    rent: 1500
+    trainingLevel1Amount: 3
+    trainingLevel2Amount: 6
+    trainingLevel3Amount: 20
+    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
+  money: 300
   rating: 0
   fame: 0
   workExperience: 0
   workLevel: 0
-  houseLevel: 0
   tiredness: 0
   hunger: 0
   thirst: 0
   gameKnowledge: 0
   teamPlay: 0
   mechanics: 0
+  savedEquipedItems:
+  - elementName: Mouse
+    type: 1
+    quality: 0
+    cost: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    sprite: {fileID: 0}
+  - elementName: Keyboard
+    type: 2
+    quality: 0
+    cost: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    sprite: {fileID: 21300000, guid: 10debfb5a49cf464b9a46c5f46840b03, type: 3}
+  - elementName: Headset
+    type: 3
+    quality: 0
+    cost: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    sprite: {fileID: 0}
+  - elementName: Guide
+    type: 4
+    quality: 0
+    cost: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    sprite: {fileID: 0}
+  - elementName: Screen
+    type: 5
+    quality: 0
+    cost: 0
+    gameKnowledge: 0
+    teamPlay: 0
+    mechanics: 0
+    sprite: {fileID: 21300000, guid: 379fad23aa1d1d946a6042c7705e52f9, type: 3}
+  allAccommodations: []
+  currentAccommodation:
+    elementName: Garage
+    accommodation:
+      type: 0
+      bought: 1
+    cost: 0
+    rent: 50
+    trainingLevel1Amount: 1
+    trainingLevel2Amount: 3
+    trainingLevel3Amount: 10
+    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
+  plannedTournaments: []

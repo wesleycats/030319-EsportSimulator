@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
-using System;
 
 /// <summary>
 /// Controls game stages & keeps track of variables in current session
@@ -22,8 +23,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int teamPlay;
     [SerializeField] private int mechanics;
 
-    #endregion
+	[SerializeField] private List<ItemForm> equipedItems = new List<ItemForm>();
+    [SerializeField] private AccommodationForm currentAccommodation;
+	[SerializeField] private List<Event> plannedEvents;
 
+	#endregion
+
+	#region References
+
+	[Header("References")]
     public PlayerData playerData;
     public GameData gameData;
     public UIManager uiManager;
@@ -34,22 +42,38 @@ public class GameManager : MonoBehaviour
     public OpponentManager opponentManager;
     public LeaderboardManager leaderboardManager;
     public ResultManager resultManager;
+    public ShopManager shopManager;
 
     public Debugger debug;
 
-    void Start()
+	#endregion
+
+	//TODO set current accommodation to saved
+
+	void Start()
     {
-        LoadData();
         Time.timeScale = 1f;
+		//ResetGame();
+		LoadData();
     }
+
+	public Event IsEventPlanned(int currentMonth, List<Event> events)
+	{
+		foreach (Event b in events)
+			if (b.month == currentMonth) return b;
+
+		return null;
+	}
 
     public void LoadData()
     {
         InitializePlayerData();
+        shopManager.Initialize();
         timeManager.InitializeGameData();
         opponentManager.InitializeOpponents(this);
         leaderboardManager.Initialize();
         uiManager.Initialize();
+        artManager.Initialize();
     }
 
     public void ResetGame()
@@ -113,7 +137,6 @@ public class GameManager : MonoBehaviour
         uiManager.UpdateProgress(money, rating, fame);
     }
 
-
     public void IncreaseGameKnowledge(int amount)
     {
         gameKnowledge += amount;
@@ -155,8 +178,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-
     public bool IsMoneyLowEnough(float amount)
     {
         return money <= amount;
@@ -196,6 +217,14 @@ public class GameManager : MonoBehaviour
     {
         return thirst >= amount;
     }
+
+	public int GetCurrentAccommodationIndex(AccommodationForm current, List<AccommodationForm> allAccommodations)
+	{
+		for (int i = 0; i < allAccommodations.Count; i++)
+			if (current.accommodation.type == allAccommodations[i].accommodation.type) return i;
+
+		return 0;
+	}
     
     /// <summary>
     /// Initializes player data in variables
@@ -213,6 +242,15 @@ public class GameManager : MonoBehaviour
         gameKnowledge = playerData.GetGameKnowledge;
         teamPlay = playerData.GetTeamPlay;
         mechanics = playerData.GetMechanics;
+		currentAccommodation = playerData.GetCurrentAccommodation;
+		plannedEvents = playerData.GetPlannedTournaments;
+
+		for (int i = 0; i < playerData.GetSavedEquipedItems.Count; i++)
+		{
+			equipedItems[i] = playerData.GetSavedEquipedItems[i];
+		}
+
+		currentAccommodation = playerData.GetCurrentAccommodation;
     }
 
     #region Getters & Setters
@@ -229,26 +267,29 @@ public class GameManager : MonoBehaviour
     public int GetGameKnowledge { get { return gameKnowledge; } }
     public int GetTeamPlay { get { return teamPlay; } }
     public int GetMechanics { get { return mechanics; } }
+    public List<Event> GetPlannedEvents { get { return plannedEvents; } }
+	public List<ItemForm> GetEquipedItems { get { return equipedItems; } }
+    public AccommodationForm GetCurrentAccommodation { get { return currentAccommodation; } }
 
     public int SetMoney { set { money = value; } }
     public int SetRating { set { rating = value; } }
     public int SetFame { set { fame = value; } }
     public float SetWorkExperience { set { workExperience = value; } }
     public int SetWorkLevel { set { workLevel = value; } }
-    public int SetHouseLevel { set { houseLevel = value; } }
     public int SetTiredness { set { tiredness = value; } }
     public int SetHunger { set { hunger = value; } }
     public int SetThirst { set { thirst = value; } }
     public int SetGameKnowledge { set { gameKnowledge = value; } }
     public int SetTeamPlay { set { teamPlay = value; } }
     public int SetMechanics { set { mechanics = value; } }
+    //public List<ItemForm> SetEquipedItems { set { equipedItems = value; } }
+    public AccommodationForm SetCurrentAccommodation { set { currentAccommodation = value; } }
 
     public int Money { get { return money; } set { money = value; } }
     public int Rating { get { return rating; } set { rating = value; } }
     public int Fame { get { return fame; } set { fame = value; } }
     public float WorkExperience { get { return workExperience; } set { workExperience = value; } }
     public int WorkLevel { get { return workLevel; } set { workLevel = value; } }
-    public int HouseLevel { get { return houseLevel; } set { houseLevel = value; } }
     public int Tiredness { get { return tiredness; } set { tiredness = value; } }
     public int Hunger { get { return hunger; } set { hunger = value; } }
     public int Thirst { get { return thirst; } set { thirst = value; } }

@@ -7,8 +7,9 @@ public class UIManager : MonoBehaviour
 {
     #region UI Elements
 
+    public Color defaultTextColor;
     public Text time;
-    public Text date;
+	public Text date;
     public Text moneyValue;
     public Text ratingValue;
     public Text fameValue;
@@ -27,23 +28,42 @@ public class UIManager : MonoBehaviour
     public Text leaderboardNames;
     public Text leaderboardRatings;
 
+	public GameObject battleMenu;
+	public GameObject contestResultMenu;
+	public Text contestPlacement;
+	public Text contestResults;
+	public Text competitorNames;
+	public Text playerStats;
+	public Text opponentStats;
+	public Text winChance;
+
+	public GameObject darkOverlay;
+	public Image sleepOverlay;
+	public Image needsMenuButton;
+
+	public GameObject monthsHolder;
+
+	public List<Text> allItemTexts = new List<Text>();
+    public List<Button> allAccommdationButtons = new List<Button>();
+
     #endregion
 
     [Tooltip("[0]=champion, [1]=diamond, etc.")]
     public Color[] divisionColors;
-    public Image sleepOverlay;
-    public Image needsMenuButton;
     public TimeManager timeManager;
-    public GameManager gameManager;
+	public GameManager gameManager;
+	public ButtonManager buttonManager;
+    public ContestManager contestManager;
     public OpponentManager opponentManager;
-    public LeaderboardManager leaderboardManager;
+	public LeaderboardManager leaderboardManager;
 
-    public void UpdateAll()
+	public void UpdateAll()
     {
         UpdateTime(timeManager.GetHour, timeManager.GetMinute, timeManager.GetYear, timeManager.GetMonth);
         UpdateProgress(gameManager.GetMoney, gameManager.GetRating, gameManager.GetFame);
         UpdateNeeds(gameManager.GetTiredness, gameManager.GetHunger, gameManager.GetThirst);
         UpdateSkills(gameManager.GetGameKnowledge, gameManager.GetTeamPlay, gameManager.GetMechanics);
+        UpdateItems(allItemTexts, gameManager.GetEquipedItems);
         UpdateLeaderboard(leaderboardManager.GetLeaderboard);
     }
 
@@ -57,9 +77,13 @@ public class UIManager : MonoBehaviour
         date.text = "Month " + month.ToString() + " of year " + year.ToString();
     }
 
-    public void UpdateProgress(float money, float rating, float fame)
+    public void UpdateProgress(int money, int rating, int fame)
     {
-        moneyValue.text = money.ToString();
+		moneyValue.color = GetTextColor(money, gameManager.GetCurrentAccommodation.rent, defaultTextColor);
+		ratingValue.color = GetTextColor(rating, 0, defaultTextColor);
+		fameValue.color = GetTextColor(fame, 0, defaultTextColor);
+
+		moneyValue.text = money.ToString();
         ratingValue.text = rating.ToString();
         fameValue.text = fame.ToString();
     }
@@ -82,6 +106,57 @@ public class UIManager : MonoBehaviour
         mechanicsValue.text = mechanics.ToString();
     }
 
+    public void UpdateItems(List<Text> allItemTexts, List<ItemForm> equipedItems)
+    {
+        string quality = "";
+        string type = "";
+
+        foreach (Text t in allItemTexts)
+        {
+            foreach (ItemForm f in equipedItems)
+            {
+                type = f.type.ToString();
+                if (t.transform.parent.name == type)
+                {
+                    quality = f.quality.ToString();
+                    t.text = type + ": " + quality;
+                }
+            }
+        }
+    }
+
+    public void UpdateAccommodations(List<Button> allAccommdationButton, AccommodationForm currentAccommodation, List<AccommodationForm> allAccommodations)
+    {
+        string status = "";
+        foreach (Button b in allAccommdationButton)
+        {
+            foreach (AccommodationForm a in allAccommodations)
+            {
+                b.interactable = true;
+
+                if (b.transform.parent.name == a.accommodation.type.ToString())
+                {
+                    if (a.accommodation.bought)
+                    {
+                        status = "OWNED";
+                    }
+                    else
+                    {
+                        status = "BUY";
+                    }
+                }
+            }
+
+            if (b.transform.parent.name == currentAccommodation.accommodation.type.ToString())
+            {
+                b.interactable = false;
+                status = "CURRENT";
+            }
+
+            b.transform.GetChild(0).GetComponent<Text>().text = status;
+        }
+    }
+
     public void UpdateLeaderboard(List<Opponent> leaderboard)
     {
         leaderboardNames.text = "";
@@ -95,7 +170,84 @@ public class UIManager : MonoBehaviour
 
     }
 
-    public void ActivateSleepOverlay()
+	public void UpdateCalender()
+	{
+		List<Image> eventImages = new List<Image>();
+		List<Event> plannendEvents = gameManager.GetPlannedEvents;
+
+		for (int i = 0; i < monthsHolder.transform.childCount; i++)
+		{
+			eventImages.Add(monthsHolder.transform.GetChild(i).transform.Find("Event").GetComponent<Image>());
+			eventImages[i].gameObject.SetActive(false);
+
+			for (int j = 0; j < gameManager.GetPlannedEvents.Count; j++)
+			{
+				if (gameManager.GetPlannedEvents[j].month - 1 == i)
+				{
+					eventImages[i].gameObject.SetActive(true);
+				}
+			}
+		}
+	}
+
+	public void UpdateCompetitorStats(Opponent player, Opponent opponent, Battle.Mode mode, int winChancePercentage)
+	{
+		battleMenu.SetActive(true);
+
+		competitorNames.text = player.name.ToUpper() + " VS " + opponent.name.ToUpper();
+
+		switch (mode)
+		{
+			case Battle.Mode.OneVersusOne:
+				playerStats.text = "game knowledge: " + player.gameKnowledge + "\n\n mechanics: " + player.mechanics + "\n\ntournament placement:\n" + contestManager.GetParticipants[contestManager.GetParticipants.IndexOf(player)].placement;
+				opponentStats.text = "game knowledge: " + opponent.gameKnowledge + "\n\n mechanics: " + opponent.mechanics + "\n\ntournament placement:\n" + contestManager.GetParticipants[contestManager.GetParticipants.IndexOf(opponent)].placement;
+				winChance.text = "win chance: " + winChancePercentage + "%";
+				break;
+
+			case Battle.Mode.ThreeVersusThree:
+				playerStats.text = "game knowledge: " + player.gameKnowledge + "\n\n team play: " + player.teamPlay + "\n\ntournament placement:\n" + contestManager.GetParticipants[contestManager.GetParticipants.IndexOf(player)].placement;
+				opponentStats.text = "game knowledge: " + opponent.gameKnowledge + "\n\n team play: " + opponent.teamPlay + "\n\ntournament placement:\n" + contestManager.GetParticipants[contestManager.GetParticipants.IndexOf(opponent)].placement;
+				winChance.text = "win chance: " + winChancePercentage + "%";
+				break;
+
+			case Battle.Mode.FiveVersusFive:
+				playerStats.text = "game knowledge: " + player.gameKnowledge + "\n\n team play: " + player.teamPlay + "\n\n mechanics: " + player.mechanics + "\n\ntournament placement:\n" + contestManager.GetParticipants[contestManager.GetParticipants.IndexOf(player)].placement;
+				opponentStats.text = "game knowledge: " + opponent.gameKnowledge + "\n\n team play: " + opponent.teamPlay + "\n\n mechanics: " + opponent.mechanics + "\n\ntournament placement:\n" + contestManager.GetParticipants[contestManager.GetParticipants.IndexOf(opponent)].placement;
+				winChance.text = "win chance: " + winChancePercentage + "%";
+				break;
+		}
+	}
+
+	public void UpdateContestResults(int placement, DivisionForm division)
+	{
+		string numberExtension = "th";
+
+		if (placement == 21 || placement == 1)
+			numberExtension = "st";
+		else if (placement == 2)
+			numberExtension = "nd";
+		else if (placement == 3)
+			numberExtension = "rd";
+
+		contestPlacement.text = "You finished " + placement + numberExtension;
+		contestResults.text = "You received:\n\n$" + division.moneyReward + "\n" + division.fameReward + " fame";
+	}
+
+	public Color GetTextColor(int currentValue, int checkValue, Color defaultColor)
+	{
+		if (currentValue < checkValue)
+			return Color.red;
+		else if (currentValue > checkValue)
+		{ 
+			Color color = Color.green * 0.7f;
+			color.a = 1;
+			return color;
+		}
+		else
+			return defaultColor;
+	}
+
+	public void ActivateSleepOverlay()
     {
         sleepOverlay.GetComponent<LerpColor>().Increasing = true;
         sleepOverlay.GetComponent<LerpColor>().LerpMaxAmount = 2;
@@ -112,4 +264,8 @@ public class UIManager : MonoBehaviour
     {
         UpdateAll();
     }
+
+    #region Getters & Settes
+
+    #endregion
 }
