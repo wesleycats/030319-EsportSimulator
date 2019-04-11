@@ -31,7 +31,6 @@ public class LeaderboardManager : MonoBehaviour
 
         if (randomOpponent.name == "YOU")
         {
-            Debug.Log(randomIndex);
             while (randomIndex == oldIndex)
             {
                 randomIndex = Random.Range(division.minRank, division.maxRank);
@@ -43,7 +42,7 @@ public class LeaderboardManager : MonoBehaviour
         return randomOpponent;
     }
 
-    public DivisionForm GetOpponentDivision(Opponent opponent, List<Opponent> leaderboard, LeagueForm league)
+	public DivisionForm GetOpponentDivision(Opponent opponent, List<Opponent> leaderboard, LeagueForm league)
     {
         DivisionForm division = null;
         
@@ -71,7 +70,7 @@ public class LeaderboardManager : MonoBehaviour
 
     public void Initialize()
     {
-        npcs = opponentManager.GetOpponents;
+        npcs = opponentManager.GetAllOpponents;
         leaderboard = npcs;
         leaderboard.Add(opponentManager.GetPlayer);
         SortLeaderboard(leaderboard);

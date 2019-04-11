@@ -85,6 +85,8 @@ public class LerpColor : MonoBehaviour
 
             if (lerpStop)
             {
+				lerpActivated = false;
+				lerping = true;
                 lerpPause = false;
                 lerpStop = false;
                 lerpAmount = 0;

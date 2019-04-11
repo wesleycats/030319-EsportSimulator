@@ -13,7 +13,7 @@ public class PlayerData : ScriptableObject
 
     [SerializeField] private int defaultMoney;
     [SerializeField] private List<ItemForm> defaultItems;
-    [SerializeField] private AccommodationForm defaultAccommodation;
+    [SerializeField] private List<AccommodationForm> defaultAccommodations;
 
     #endregion
 
@@ -25,7 +25,6 @@ public class PlayerData : ScriptableObject
     [SerializeField] private int fame;
     [SerializeField] private float workExperience;
     [SerializeField] private int workLevel;
-    [SerializeField] private int houseLevel;
 
     #endregion
 
@@ -45,30 +44,27 @@ public class PlayerData : ScriptableObject
 
     #endregion
 
-    #region Items 
+    #region Properties 
     
     [SerializeField] private List<ItemForm> savedEquipedItems = new List<ItemForm>();
-
-    #endregion
-
-    #region Accommodation
-
+    [SerializeField] private List<AccommodationForm> allAccommodations;
     [SerializeField] private AccommodationForm currentAccommodation;
 
-    #endregion
+	#endregion
 
-    #region Utilities
+	#region Events
 
-    #endregion
+	[SerializeField] List<Event> plannedTournaments;
 
-    public void Reset(bool reset)
+	#endregion
+
+	public void Reset(bool reset)
     {
         money = defaultMoney;
         rating = 0;
         fame = 0;
         workLevel = 0;
         workExperience = 0;
-        houseLevel = 0;
         tiredness = 0;
         hunger = 0;
         thirst = 0;
@@ -76,8 +72,10 @@ public class PlayerData : ScriptableObject
         teamPlay = 0;
         mechanics = 0;
 		savedEquipedItems = defaultItems;
-        currentAccommodation = defaultAccommodation;
-    }
+		allAccommodations = defaultAccommodations;
+        currentAccommodation = defaultAccommodations[0];
+		plannedTournaments.Clear();
+	}
 
     #region Getters & Setters
 
@@ -87,7 +85,6 @@ public class PlayerData : ScriptableObject
     public int GetFame { get { return fame; } }
     public float GetWorkExperience { get { return workExperience; } }
     public int GetWorkLevel { get { return workLevel; } }
-    public int GetHouseLevel { get { return houseLevel; } }
     public int GetTiredness { get { return tiredness; } }
     public int GetHunger { get { return hunger; } }
     public int GetThirst { get { return thirst; } }
@@ -95,15 +92,16 @@ public class PlayerData : ScriptableObject
     public int GetTeamPlay { get { return teamPlay; } }
     public int GetMechanics { get { return mechanics; } }
     public List<ItemForm> GetSavedEquipedItems { get { return savedEquipedItems; } }
-    public AccommodationForm GetCurrentAccommodation { get { return currentAccommodation; } }
+    public List<Event> GetPlannedTournaments { get { return plannedTournaments; } }
+	public AccommodationForm GetCurrentAccommodation { get { return currentAccommodation; } }
+	public List<AccommodationForm> GetAllAccommodations { get { return allAccommodations; } }
 
-    public int SetDefaultMoney { set { defaultMoney = value; } }
+	public int SetDefaultMoney { set { defaultMoney = value; } }
     public int SetMoney { set { money = value; } }
     public int SetRating { set { rating = value; } }
     public int SetFame { set { fame = value; } }
     public float SetWorkExperience { set { workExperience = value; } }
     public int SetWorkLevel { set { workLevel = value; } }
-    public int SetHouseLevel { set { houseLevel = value; } }
     public int SetTiredness { set { tiredness = value; } }
     public int SetHunger { set { hunger = value; } }
     public int SetThirst { set { thirst = value; } }
@@ -111,8 +109,10 @@ public class PlayerData : ScriptableObject
     public int SetTeamPlay { set { teamPlay = value; } }
     public int SetMechanics { set { mechanics = value; } }
     public List<ItemForm> SetSavedEquipedItems { set { savedEquipedItems = value; } }
+    public List<Event> SetPlannedTournaments { set { plannedTournaments = value; } }
     public AccommodationForm SetCurrentAccommodation { set { currentAccommodation = value; } }
+	public List<AccommodationForm> SetAllAccommodations { set { allAccommodations = value; } }
 
-    #endregion
+	#endregion
 }
 

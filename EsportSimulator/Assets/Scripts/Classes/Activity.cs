@@ -5,7 +5,8 @@ using System;
 public class Activity : MonoBehaviour
 {
     public ActivityManager activityManager;
-    public Slider bar;
+    public ContestManager contestManager;
+	public Slider bar;
 
     [Tooltip("Used to let activity manager now which action to perform")]
     public ActivityManager.Activity activity;
@@ -27,6 +28,8 @@ public class Activity : MonoBehaviour
     public void ChangeActivity()
     {
         if (bar) hourAmount = GetSliderDuration();
+
+		if (contestManager) hourAmount = contestManager.GetContestDuration;
 
         activityManager.currentTrainType = trainType;
         activityManager.currentBattleMode = battleMode;

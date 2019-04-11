@@ -68,7 +68,6 @@ public class GameLoader : MonoBehaviour
         playerData.SetFame = gameSaveData.fame;
         playerData.SetWorkExperience = gameSaveData.workExperience;
         playerData.SetWorkLevel = gameSaveData.workLevel;
-        playerData.SetHouseLevel = gameSaveData.houseLevel;
 
         playerData.SetTiredness = gameSaveData.tiredness;
         playerData.SetHunger = gameSaveData.hunger;
@@ -78,12 +77,16 @@ public class GameLoader : MonoBehaviour
         playerData.SetTeamPlay = gameSaveData.teamPlay;
         playerData.SetMechanics = gameSaveData.mechanics;
 
+		playerData.SetCurrentAccommodation = gameSaveData.currentAccommodation;
+		playerData.SetAllAccommodations = gameSaveData.allAccommodations;
+		playerData.SetPlannedTournaments = gameSaveData.plannedTournaments;
+
         gameData.SetHour = gameSaveData.hour;
         gameData.SetMinute = gameSaveData.minute;
         gameData.SetYear = gameSaveData.year;
         gameData.SetMonth = gameSaveData.month;
 
-        opponentManager.ApplyOpponents(gameSaveData.opponents, opponentManager.GetOpponents);
+        opponentManager.ApplyOpponents(gameSaveData.opponents, opponentManager.GetAllOpponents);
 
         mainMenu.SetActive(false);
 
