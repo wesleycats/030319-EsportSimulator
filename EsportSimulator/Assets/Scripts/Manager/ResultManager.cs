@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Manages the results of all actions
+/// Manages the results of most actions
 /// </summary>
 public class ResultManager : MonoBehaviour
 {
@@ -52,6 +52,7 @@ public class ResultManager : MonoBehaviour
 	[SerializeField] private float debuffMultiplierAmount = 1f;
 
 	[SerializeField] private int winBiasPercentage;
+	[SerializeField] private float winPercentagePerSkillPoint;
 
 	[Header("Needs")]
 	// How much tiredness you lose by sleeping
@@ -83,6 +84,8 @@ public class ResultManager : MonoBehaviour
 	public LeaderboardManager lbManager;
 	public OpponentManager opponentManager;
 	public ShopManager shopManager;
+	public ContestManager contestManager;
+	public TimeManager timeManager;
 	public PlayerData playerData;
 
 	private void Start()
@@ -112,39 +115,30 @@ public class ResultManager : MonoBehaviour
 		switch (trainType)
 		{
 			case ActivityManager.TrainType.WatchingGK:
-
-				return 0;
+				return trainLevel1.Money * currentDebuffMultiplier * duration;
 
 			case ActivityManager.TrainType.WatchingTP:
-
-				return 0;
+				return trainLevel1.Money * currentDebuffMultiplier * duration;
 
 			case ActivityManager.TrainType.WatchingM:
-
-				return 0;
+				return trainLevel1.Money * currentDebuffMultiplier * duration;
 
 			case ActivityManager.TrainType.CourseGK:
-
 				return trainLevel2.Money * currentDebuffMultiplier * duration;
 
 			case ActivityManager.TrainType.CourseTP:
-
 				return trainLevel2.Money * currentDebuffMultiplier * duration;
 
 			case ActivityManager.TrainType.CourseM:
-
 				return trainLevel2.Money * currentDebuffMultiplier * duration;
 
 			case ActivityManager.TrainType.CoursePlusGK:
-
 				return trainLevel3.Money * currentDebuffMultiplier * duration;
 
 			case ActivityManager.TrainType.CoursePlusTP:
-
 				return trainLevel3.Money * currentDebuffMultiplier * duration;
 
 			case ActivityManager.TrainType.CoursePlusM:
-
 				return trainLevel3.Money * currentDebuffMultiplier * duration;
 
 			default:
@@ -385,8 +379,8 @@ public class ResultManager : MonoBehaviour
         int mDelta = gameManager.GetMechanics - opponent.mechanics;
         int tpDelta = gameManager.GetTeamPlay - opponent.teamPlay;
         int[] skillsDelta = new int[0];
-
         bool win = false;
+
         currentDebuffMultiplier *= currentDebuffMultiplierAmount;
 
         switch (battleMode)
@@ -396,22 +390,13 @@ public class ResultManager : MonoBehaviour
                 skillsDelta = new int[2];
                 skillsDelta[0] = gkDelta;
                 skillsDelta[1] = mDelta;
-                winChance = GetWinChance(skillsDelta) + winBiasPercentage;
-
-                /*
-                Debug.Log("Player gk: " + gameManager.GetGameKnowledge+ " Player m: " + gameManager.GetMechanics + " Player tp: " + gameManager.GetTeamPlay);
-                Debug.Log(opponent.name + " gk: " + opponent.gameKnowledge + " Opponent m: " + opponent.mechanics + " Opponent tp: " + opponent.teamPlay);
-                Debug.Log("Win chance + bias= " + winChance);
-                Debug.Log("randomizer= " + randomizer);
-                */
+                winChance = GetWinChance(skillsDelta, winPercentagePerSkillPoint) + winBiasPercentage;
 
                 if (randomizer < winChance || win)
                     win = true;
                 else
                     win = false;
-
-                //Debug.Log("Win=" + win);
-
+				
                 gameManager.IncreaseGameKnowledge((int)oneVsOne.GameKnowledge );
                 gameManager.IncreaseMechanics((int)oneVsOne.Mechanics);
                 gameManager.IncreaseTeamPlay((int)threeVsThree.Mechanics);
@@ -435,21 +420,12 @@ public class ResultManager : MonoBehaviour
                 skillsDelta[0] = gkDelta;
                 skillsDelta[1] = mDelta;
                 skillsDelta[2] = tpDelta;
-                winChance = GetWinChance(skillsDelta) + winBiasPercentage;
-
-                /*
-                Debug.Log("Player gk: " + gameManager.GetGameKnowledge+ " Player m: " + gameManager.GetMechanics + " Player tp: " + gameManager.GetTeamPlay);
-                Debug.Log(opponent.name + " gk: " + opponent.gameKnowledge + " Opponent m: " + opponent.mechanics + " Opponent tp: " + opponent.teamPlay);
-                Debug.Log("Win chance + bias= " + winChance);
-                Debug.Log("randomizer= " + randomizer);
-                */
+                winChance = GetWinChance(skillsDelta, winPercentagePerSkillPoint) + winBiasPercentage;
 
                 if (randomizer < winChance || win)
                     win = true;
                 else
                     win = false;
-
-                //Debug.Log("Win=" + win);
 
                 gameManager.IncreaseGameKnowledge((int)threeVsThree.GameKnowledge);
                 gameManager.IncreaseMechanics((int)threeVsThree.Mechanics);
@@ -474,7 +450,7 @@ public class ResultManager : MonoBehaviour
                 skillsDelta[0] = gkDelta;
                 skillsDelta[1] = mDelta;
                 skillsDelta[2] = tpDelta;
-                winChance = GetWinChance(skillsDelta) + winBiasPercentage;
+                winChance = GetWinChance(skillsDelta, winPercentagePerSkillPoint) + winBiasPercentage;
                 
                 Debug.Log("Player gk: " + gameManager.GetGameKnowledge+ " Player m: " + gameManager.GetMechanics + " Player tp: " + gameManager.GetTeamPlay);
                 Debug.Log(opponent.name + " gk: " + opponent.gameKnowledge + " Opponent m: " + opponent.mechanics + " Opponent tp: " + opponent.teamPlay);
@@ -510,6 +486,99 @@ public class ResultManager : MonoBehaviour
         lbManager.SortLeaderboard(lbManager.GetLeaderboard);
         uiManager.UpdateAll();
     }
+
+	public IEnumerator ContestResults(Event contest, List<Opponent> participants)
+	{
+		uiManager.battleMenu.SetActive(true);
+		timeManager.SetPause = true;
+		contestManager.IncreaseCurrentBattle();
+
+		Opponent player = participants[participants.IndexOf(opponentManager.GetPlayer)];
+		Opponent opponent = participants[participants.IndexOf(player) - 1];
+
+		bool win = false;
+		int winChance = 0;
+		int randomizer = 0;
+		int[] skillsDelta = new int[0];
+		int gkDelta = gameManager.GetGameKnowledge - opponent.gameKnowledge;
+		int mDelta = gameManager.GetMechanics - opponent.mechanics;
+		int tpDelta = gameManager.GetTeamPlay - opponent.teamPlay;
+
+		randomizer = GetRealRandom(0, 100);
+
+		//Debug.Log(opponent.name);
+		//Debug.Log("randomizer = " + randomizer);
+
+		switch (contest.battleMode)
+		{
+			case Battle.Mode.OneVersusOne:
+				skillsDelta = new int[2];
+				skillsDelta[0] = gkDelta;
+				skillsDelta[1] = mDelta;
+				break;
+
+			case Battle.Mode.ThreeVersusThree:
+				skillsDelta = new int[2];
+				skillsDelta[0] = gkDelta;
+				skillsDelta[1] = tpDelta;
+				break;
+
+			case Battle.Mode.FiveVersusFive:
+				skillsDelta = new int[3];
+				skillsDelta[0] = gkDelta;
+				skillsDelta[1] = mDelta;
+				skillsDelta[1] = tpDelta;
+				break;
+		}
+
+		winChance = GetWinChance(skillsDelta, winPercentagePerSkillPoint) + winBiasPercentage;
+
+		//Debug.Log("Win chance + bias = " + winChance);
+
+		if (winChance > 100) winChance = 100;
+		if (winChance < 0) winChance = 0;
+
+		uiManager.UpdateCompetitorStats(player, opponent, contest.battleMode, winChance);
+
+		yield return new WaitForSeconds(contestManager.GetBattleDuration);
+
+		// Win battle
+		if (randomizer < winChance)
+		{
+			SwapPlacement(participants, player, opponent);
+
+			//Debug.Log("WIN BATTLE");
+
+			// Win tournament
+			if (participants.IndexOf(player) == 0)
+			{
+				contestManager.EndContest(player, contest);
+				win = true;
+				//Debug.Log("WIN Tournament");
+			}
+
+			if (!win)
+			{
+				if (contestManager.GetCurrentBattle != contestManager.GetBattlesPerHour)
+				{
+					StartCoroutine(ContestResults(contest, participants));
+				}
+				else
+				{
+					timeManager.SetPause = false;
+					contestManager.ResetCurrentBattle();
+				}
+			}
+		}
+		else
+		{
+			// Lose battle & tournament
+
+			// Adds 1 to get real placement instead index
+			player.placement += 1;
+			contestManager.EndContest(player, contest);
+		}
+	}
 
     public void ApplyDebuffs(float debuffMultiplier, float debuffMultiplierAmount)
     {
@@ -713,68 +782,47 @@ public class ResultManager : MonoBehaviour
     /// </summary>
     /// <param name="skills"></param>
     /// <returns></returns>
-    private int GetWinChance(int[] skillsDelta)
+    private int GetWinChance(int[] skillsDelta, float percentagePerPoint)
     {
-        int winChance = 0;
+        float winChance = 0;
 
         foreach (int s in skillsDelta)
         {
-            if (s < -300)
-            {
-                winChance -= 30;
-            }
-            else if (s <= -200)
-            {
-                winChance -= 20;
-            }
-            else if (s <= -100)
-            {
-                winChance -= 15;
-            }
-            else if (s <= -50)
-            {
-                winChance -= 10;
-            }
-            else if (s <= -20)
-            {
-                winChance -= 5;
-            }
-            else if (s <= 0)
-            {
-                winChance = 0;
-            }
-            else if (s <= 20)
-            {
-                winChance += 5;
-            }
-            else if (s <= 50)
-            {
-                winChance += 10;
-            }
-            else if (s <= 100)
-            {
-                winChance += 15;
-            }
-            else if (s <= 200)
-            {
-                winChance += 20;
-            }
-            else if (s <= 300)
-            {
-                winChance += 30;
-            }
-            else if (s > 300)
-            {
-                winChance += 50;
-            }
+			//Debug.Log("skill delta " + s);
+			winChance += s * percentagePerPoint;
         }
 
-        return winChance;
+        return (int)winChance;
     }
 
-		#region Getters & Setters
+	public void SwapPlacement(List<Opponent> participants, Opponent player, Opponent opponent)
+	{
+		int tmp = opponent.placement;
+		player.placement--;
+		opponent.placement++;
 
-    public int GetTirednessDecreaseRate { get { return tirednessDecreaseRate; } }
+		contestManager.GetParticipants.Sort(SortByPlacement);
+	}
+
+	static int SortByPlacement(Opponent o1, Opponent o2)
+	{
+		return o1.placement.CompareTo(o2.placement);
+	}
+
+	private int GetRealRandom(int min, int max)
+	{
+		int randomNumber = Random.Range(min, max);
+		int oldNumber = randomNumber;
+
+		while (oldNumber == randomNumber)
+			randomNumber = Random.Range(min, max);
+
+		return randomNumber;
+	}
+
+	#region Getters & Setters
+
+	public int GetTirednessDecreaseRate { get { return tirednessDecreaseRate; } }
     public float GetDebuffMultiplier { get { return debuffMultiplier; } }
     public float GetDebuffMultiplierAmount { get { return debuffMultiplierAmount; } }
 	public int GetTotalViews { get { return totalViews; } }

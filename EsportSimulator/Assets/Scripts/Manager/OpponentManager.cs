@@ -47,14 +47,36 @@ public class OpponentManager : MonoBehaviour
         return opponents;
     }
 
-    /// <summary>
-    /// Applies saved opponents
-    /// </summary>
-    /// <param name="savedOpponents"></param>
-    /// <param name="existingOpponents"></param>
-    public void ApplyOpponents(Opponent[] savedOpponents, List<Opponent> existingOpponents)
+	public Opponent GetRandomOpponent(List<Opponent> opponentList)
+	{
+		Opponent randomOpponent = new Opponent();
+
+		int randomIndex = Random.Range(0, opponentList.Count);
+		int oldIndex = randomIndex;
+
+		randomOpponent = opponentList[randomIndex];
+
+		if (randomOpponent.name == "YOU")
+		{
+			while (randomIndex == oldIndex)
+			{
+				randomIndex = Random.Range(0, opponentList.Count);
+			}
+
+			randomOpponent = opponentList[randomIndex];
+		}
+
+		return randomOpponent;
+	}
+
+	/// <summary>
+	/// Applies saved opponents
+	/// </summary>
+	/// <param name="savedOpponents"></param>
+	/// <param name="existingOpponents"></param>
+	public void ApplyOpponents(Opponent[] savedOpponents, List<Opponent> existingOpponents)
     {
-        for (int i = 0; i < existingOpponents.Count; i++)
+		for (int i = 0; i < existingOpponents.Count; i++)
         {
             existingOpponents[i] = savedOpponents[i];
 
@@ -149,7 +171,7 @@ public class OpponentManager : MonoBehaviour
 
     #region Getters & Setters
 
-    public List<Opponent> GetOpponents { get { return opponents; } }
+    public List<Opponent> GetAllOpponents { get { return opponents; } }
     public int GetOpponentAmount { get { return opponentAmount; } }
     public Opponent GetPlayer { get { return player; } }
 

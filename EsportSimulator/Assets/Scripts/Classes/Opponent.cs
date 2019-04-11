@@ -11,8 +11,10 @@ public class Opponent
     public int gameKnowledge;
     public int teamPlay;
     public int mechanics;
+	public bool defeated;
+	public int placement;
 
-    /*public Opponent(string aName, int aEloRating, int aGameKnowledge, int aTeamplay, int aMechancis)
+	/*public Opponent(string aName, int aEloRating, int aGameKnowledge, int aTeamplay, int aMechancis)
     {
         name = aName;
         eloRating = aEloRating;

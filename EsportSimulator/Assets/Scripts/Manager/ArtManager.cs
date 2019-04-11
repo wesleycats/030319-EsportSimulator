@@ -15,6 +15,7 @@ public class ArtManager : MonoBehaviour
     public SpriteRenderer headset;
     public SpriteRenderer keyboard;
     public SpriteRenderer screen;
+
     #endregion
 
     #region Sprites
@@ -29,11 +30,11 @@ public class ArtManager : MonoBehaviour
     public Sprite[] tableSprites;
     public Sprite[] workstationSprites;
 
-    #endregion
+	#endregion
 
-    #region Animations
+	#region Animations
 
-    public Animator playerAnimator; 
+	public Animator playerAnimator; 
     public Animator workstationAnimator;
 
     #endregion
@@ -53,15 +54,12 @@ public class ArtManager : MonoBehaviour
             case ActivityManager.Activity.Battle:
                 playerAnimator.Play("OnComputer");
                 workstationAnimator.Play("WoodenTable");
-
-                background.sprite = houseSprites[(int)playerData.GetHouseLevel];
-                chair.sprite = chairSprites[(int)playerData.GetHouseLevel];
-                workstation.sprite = tableSprites[(int)playerData.GetHouseLevel];
                 break;
 
             case ActivityManager.Activity.Contest:
-
-                break;
+				playerAnimator.Play("OnComputer");
+				workstationAnimator.Play("WoodenTable");
+				break;
 
             case ActivityManager.Activity.Drink:
 
@@ -75,7 +73,12 @@ public class ArtManager : MonoBehaviour
                 playerAnimator.Play("Idle");
                 workstationAnimator.Play("WoodenTable");
 
-				// Sets item sprite to currently equiped item
+				int houseLevel = gameManager.GetCurrentAccommodationIndex(gameManager.GetCurrentAccommodation, shopManager.GetAllAccommodations);
+				background.sprite = houseSprites[houseLevel];
+				chair.sprite = chairSprites[houseLevel];
+				workstation.sprite = tableSprites[houseLevel];
+
+				// Sets item sprites to currently equiped items
 				foreach (ItemForm f in gameManager.GetEquipedItems)
 				{
 					switch (f.type)
@@ -89,13 +92,15 @@ public class ArtManager : MonoBehaviour
 							break;
 					}
 				}
-
-                background.sprite = houseSprites[(int)playerData.GetHouseLevel];
-                chair.sprite = chairSprites[(int)playerData.GetHouseLevel];
-                workstation.sprite = tableSprites[(int)playerData.GetHouseLevel];
                 break;
 
-            case ActivityManager.Activity.Sleep:
+
+			case ActivityManager.Activity.Plan:
+				playerAnimator.Play("OnComputer");
+				workstationAnimator.Play("WoodenTable");
+				break;
+
+			case ActivityManager.Activity.Sleep:
 
                 break;
 
@@ -110,6 +115,7 @@ public class ArtManager : MonoBehaviour
                 break;
 
             case ActivityManager.Activity.Work:
+				//TODO create different work enviorments
                 background.sprite = workplaceSprites[(int)playerData.GetWorkLevel];
                 screen.sprite = null;
                 keyboard.sprite = null;
@@ -120,28 +126,32 @@ public class ArtManager : MonoBehaviour
                         playerAnimator.Play("Working1");
                         workstationAnimator.Play("Grill");
                         chair.sprite = null;
-
                         break;
 
                     case 1:
-                        background.sprite = workplaceSprites[1];
-
-                        break;
+						playerAnimator.Play("Working1");
+						workstationAnimator.Play("Grill");
+						chair.sprite = null;
+						break;
 
                     case 2:
-                        background.sprite = workplaceSprites[2];
+						playerAnimator.Play("Working1");
+						workstationAnimator.Play("Grill");
+						chair.sprite = null;
+						break;
 
-                        break;
+					case 3:
+						playerAnimator.Play("Working1");
+						workstationAnimator.Play("Grill");
+						chair.sprite = null;
+						break;
 
-                    case 3:
-                        background.sprite = workplaceSprites[3];
-
-                        break;
-
-                    default:
-
-                        break;
-                }
+					default:
+						playerAnimator.Play("Working1");
+						workstationAnimator.Play("Grill");
+						chair.sprite = null;
+						break;
+				}
 
                 break;
 

@@ -14,6 +14,7 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private int year;
 
     [SerializeField] private float waitTime;
+	[SerializeField] private bool pause = false;
 
     public GameManager gameManager;
     public ActivityManager activityManager;
@@ -22,7 +23,8 @@ public class TimeManager : MonoBehaviour
     public ResultManager resultManager;
     public LeaderboardManager lbManager;
     public OpponentManager opponentManager;
-    public GameData gameData;
+    public ContestManager contestManager;
+	public GameData gameData;
 
     public void IncreaseTime(int hourAmount, bool instant)
     {
@@ -35,7 +37,6 @@ public class TimeManager : MonoBehaviour
                 IncreaseHours(1);
 
                 CheckActivity(activityManager.currentActivity, activityManager.currentTrainType, gameManager.GetWorkLevel, activityManager.currentBattleMode);
-
             }
 
             activityManager.ChangeActivity(ActivityManager.Activity.Idle, 0);
@@ -50,27 +51,31 @@ public class TimeManager : MonoBehaviour
 
     private IEnumerator TimeTimer(float duration)
     {
-        float totalDuration = duration;
-
         buttonManager.DisableAllButtons("Navigation");
 
         yield return new WaitForSeconds(waitTime);
-        duration--;
-        IncreaseHours(1);
 
-        CheckActivity(activityManager.currentActivity, activityManager.currentTrainType, gameManager.GetWorkLevel, activityManager.currentBattleMode);
-        uiManager.UpdateAll();
+		if (!pause)
+		{
+			duration--;
+			IncreaseHours(1);
+			CheckActivity(activityManager.currentActivity, activityManager.currentTrainType, gameManager.GetWorkLevel, activityManager.currentBattleMode);
+			uiManager.UpdateAll();
+		}
 
-        if (duration <= 0)
+		if (activityManager.currentActivity == ActivityManager.Activity.Idle || activityManager.currentActivity == ActivityManager.Activity.Plan)
+			duration = 0;
+
+		if (duration <= 0)
         {
             activityManager.ChangeActivity(ActivityManager.Activity.Idle, 0);
 			resultManager.ResetTotalViews();
 			buttonManager.EnableAllButtons();
         }
         else
-        {
-            StartCoroutine(TimeTimer(duration));
-        }
+		{
+			StartCoroutine(TimeTimer(duration));
+		}
     }
 
     /// <summary>
@@ -88,6 +93,8 @@ public class TimeManager : MonoBehaviour
                 resultManager.PayRent(gameManager.GetCurrentAccommodation);
                 hour = 0;
                 month++;
+
+				StartCoroutine(WaitTillIdle());
             }
 
             if (month > 12)
@@ -99,6 +106,26 @@ public class TimeManager : MonoBehaviour
 
         uiManager.UpdateTime(hour, minute, year, month);
     }
+
+	public IEnumerator WaitTillIdle()
+	{
+		yield return new WaitForSeconds(0.5f);
+
+		if (activityManager.currentActivity == ActivityManager.Activity.Idle)
+		{
+			for (int i = 0; i < gameManager.GetPlannedEvents.Count; i++)
+			{
+				if (month == gameManager.GetPlannedEvents[i].month)
+				{
+					activityManager.ChangeActivity(ActivityManager.Activity.Contest, contestManager.GetContestDuration);
+				}
+			}
+		}
+		else
+		{
+			StartCoroutine(WaitTillIdle());
+		}
+	}
 
     /// <summary>
     /// Decreases hours and checks time and months
@@ -152,9 +179,19 @@ public class TimeManager : MonoBehaviour
                 resultManager.BattleResults(lbManager.GetRandomOpponent(lbManager.GetLeaderboard, lbManager.GetOpponentDivision(opponentManager.GetPlayer, lbManager.GetLeaderboard, opponentManager.league)), currentBattleMode);
                 break;
 
-            case ActivityManager.Activity.Contest:
+			case ActivityManager.Activity.Plan:
+				contestManager.PlanTournament(currentBattleMode);
+				break;
 
-                break;
+			case ActivityManager.Activity.Contest:
+				for (int i = 0; i < gameManager.GetPlannedEvents.Count; i++)
+				{
+					if (month == gameManager.GetPlannedEvents[i].month)
+					{
+						StartCoroutine(resultManager.ContestResults(gameManager.GetPlannedEvents[i], contestManager.GetParticipants));
+					}
+				}
+				break;
 
             case ActivityManager.Activity.Sleep:
                 resultManager.SleepResults(resultManager.GetTirednessDecreaseRate);
@@ -178,16 +215,31 @@ public class TimeManager : MonoBehaviour
         }
     }
 
-    #region Getters & Setters 
+	public bool IsTournamentThisMonth(List<Event> plannedEvents)
+	{
+		for (int i = 0; i < plannedEvents.Count; i++)
+		{
+			if (month == plannedEvents[i].month)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
-    public int GetHour { get { return hour; } }
+	#region Getters & Setters 
+
+	public int GetHour { get { return hour; } }
     public int GetMinute { get { return minute; } }
     public int GetYear { get { return year; } }
     public int GetMonth { get { return month; } }
+	public bool GetPause { get { return pause; } }
+
     public int SetHour { set { hour = value; } }
     public int SetMinutes { set { minute = value; } }
     public int SetYear { set { year = value; } }
     public int SetMonth { set { month = value; } }
+	public bool SetPause { set { pause = value; } }
 
-    #endregion
+	#endregion
 }

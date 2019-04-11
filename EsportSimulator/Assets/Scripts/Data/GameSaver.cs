@@ -11,8 +11,9 @@ public class GameSaver : MonoBehaviour
     public GameManager gameManager;
     public OpponentManager opponentManager;
     public TimeManager timeManager;
+    public ShopManager shopManager;
 
-    private string dataPath;
+	private string dataPath;
 
     public void SaveGame(int saveSlot)
     {
@@ -27,25 +28,31 @@ public class GameSaver : MonoBehaviour
         gameSaveData.money = gameManager.GetMoney;
         gameSaveData.rating = gameManager.GetRating;
         gameSaveData.fame = gameManager.GetFame;
+
         gameSaveData.workExperience = gameManager.GetWorkExperience;
         gameSaveData.workLevel = gameManager.GetWorkLevel;
-        gameSaveData.houseLevel = gameManager.GetHouseLevel;
+
         gameSaveData.tiredness = gameManager.GetTiredness;
         gameSaveData.hunger = gameManager.GetHunger;
         gameSaveData.thirst = gameManager.GetThirst;
+
         gameSaveData.gameKnowledge = gameManager.GetGameKnowledge;
         gameSaveData.teamPlay = gameManager.GetTeamPlay;
         gameSaveData.mechanics = gameManager.GetMechanics;
+
         gameSaveData.hour = timeManager.GetHour;
         gameSaveData.minute = timeManager.GetMinute;
         gameSaveData.year = timeManager.GetYear;
         gameSaveData.month = timeManager.GetMonth;
-        
-        gameSaveData.opponents = new Opponent[opponentManager.GetOpponentAmount];
 
-        for (int i = 0; i < opponentManager.GetOpponentAmount; i++)
-        {
-            gameSaveData.opponents[i] = opponentManager.GetOpponents[i];
+		gameSaveData.plannedTournaments = gameManager.GetPlannedEvents;
+		gameSaveData.currentAccommodation = gameManager.GetCurrentAccommodation;
+		gameSaveData.allAccommodations = shopManager.GetAllAccommodations;
+
+		gameSaveData.opponents = new Opponent[opponentManager.GetAllOpponents.Count];
+        for (int i = 0; i < opponentManager.GetAllOpponents.Count; i++)
+		{
+			gameSaveData.opponents[i] = opponentManager.GetAllOpponents[i];
         }
 
         SaveData(gameSaveData, saveSlot, dataPath);

@@ -13,16 +13,17 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private List<ItemForm> keyboards = new List<ItemForm>();
     [SerializeField] private List<ItemForm> screens = new List<ItemForm>();
 
-    #endregion
-
     private List<List<ItemForm>> allItems = new List<List<ItemForm>>();
+
+    #endregion
 
     public ArtManager artManager;
     public UIManager uiManager;
     public ResultManager resultManager;
     public GameManager gameManager;
+    public PlayerData playerData;
 
-    private void Start()
+	private void Start()
     {
         allItems.Add(headsets);
         allItems.Add(gameGuides);
@@ -123,8 +124,7 @@ public class ShopManager : MonoBehaviour
 
     public void Initialize()
     {
-        // Set garage form to default
-        accommodations[0] = gameManager.GetCurrentAccommodation;
+		accommodations = playerData.GetAllAccommodations;
     }
 
     #region Getters & Setters
