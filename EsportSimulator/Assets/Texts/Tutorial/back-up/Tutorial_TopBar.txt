@@ -1,0 +1,5 @@
+#Top Bar#
+
+#0 
+*highlight top bar*
+|The top bar consists of a calender, pause menu, progress menu and an event bar.;

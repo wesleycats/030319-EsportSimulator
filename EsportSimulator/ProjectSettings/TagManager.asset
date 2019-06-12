@@ -14,6 +14,7 @@ TagManager:
   - Standard
   - Good
   - Excellent
+  - Tutorial
   layers:
   - Default
   - TransparentFX

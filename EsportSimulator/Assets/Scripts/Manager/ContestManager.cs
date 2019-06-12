@@ -22,8 +22,8 @@ public class ContestManager : MonoBehaviour
 	public OpponentManager opponentManager;
 	public ResultManager resultManager;
 	public ActivityManager activityManager;
-	public UIManager uiManager;
 	public GameManager gameManager;
+	public UIManager uiManager;
 
 	private void Start()
 	{
@@ -32,11 +32,10 @@ public class ContestManager : MonoBehaviour
 
 	private void Update()
 	{
-		if (createList)
-		{
-			participants = CreateParticipantList(participantAmount, opponentManager.GetAllOpponents);
-			createList = false;
-		}
+		if (!createList) return;
+
+		participants = CreateParticipantList(participantAmount, opponentManager.GetAllOpponents);
+		createList = false;
 	}
 
 	public void ResetCurrentBattle()

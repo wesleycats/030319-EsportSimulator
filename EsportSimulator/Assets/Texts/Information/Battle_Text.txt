@@ -1,0 +1,24 @@
+#Battle#
+
+#0
+|By battling your opponents, you can improve on multiple different aspects.;
+
+|Every battle is against an opponent in the same division as you are in. (see leaderboard for divisions);
+
+|Every game mode, has it's own corresponding skills and amount of elo and fame that will be altered.;
+
+|The amount of points you have in the corresponding skills, determines your chance to win.;
+
+|Skill influence for each game mode:
+1v1: Game Knowledge & Mechanics
+
+3v3: Game Knowledge & Team Play
+
+5v5: Game Knowledge & Mechanics & Team Play;
+
+#5
+|After every battle you will increase your skills, even if you lose.;
+
+|By winning battles from your opponents, you will increase your ranking and popularity.;
+
+|But lose battles, and you will decrease your ranking and popularity.;

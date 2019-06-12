@@ -61,14 +61,6 @@ public class ArtManager : MonoBehaviour
 				workstationAnimator.Play("WoodenTable");
 				break;
 
-            case ActivityManager.Activity.Drink:
-
-                break;
-
-            case ActivityManager.Activity.Eat:
-
-                break;
-
             case ActivityManager.Activity.Idle:
                 playerAnimator.Play("Idle");
                 workstationAnimator.Play("WoodenTable");
@@ -190,5 +182,6 @@ public class ArtManager : MonoBehaviour
     public void Initialize()
     {
         UpdateItems(gameManager.GetEquipedItems);
+		UpdateAccommodation(gameManager.GetCurrentAccommodation);
     }
 }

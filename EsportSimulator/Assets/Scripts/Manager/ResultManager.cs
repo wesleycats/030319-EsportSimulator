@@ -45,6 +45,7 @@ public class ResultManager : MonoBehaviour
 	#endregion
 
 	[SerializeField] private bool debuff = false;
+	[SerializeField] private int debuffLimit = 70;
 
 	[SerializeField] private float currentDebuffMultiplier = 1f;
 	[SerializeField] private float currentDebuffMultiplierAmount = 1f;
@@ -55,6 +56,7 @@ public class ResultManager : MonoBehaviour
 	[SerializeField] private float winPercentagePerSkillPoint;
 
 	[Header("Needs")]
+	[SerializeField] private int maxSleepHours = 12;
 	// How much tiredness you lose by sleeping
 	[SerializeField] private int tirednessDecreaseRate = 25;
 
@@ -106,45 +108,6 @@ public class ResultManager : MonoBehaviour
 	public void TryBattle(Battle.Mode battleType)
 	{
 		BattleResults(lbManager.GetRandomOpponent(leaderboard, lbManager.GetOpponentDivision(player, leaderboard, opponentManager.league)), battleType);
-	}
-
-	public float GetTrainingCostAmount(ActivityManager.TrainType trainType, float duration)
-	{
-		currentDebuffMultiplier *= currentDebuffMultiplierAmount;
-
-		switch (trainType)
-		{
-			case ActivityManager.TrainType.WatchingGK:
-				return trainLevel1.Money * currentDebuffMultiplier * duration;
-
-			case ActivityManager.TrainType.WatchingTP:
-				return trainLevel1.Money * currentDebuffMultiplier * duration;
-
-			case ActivityManager.TrainType.WatchingM:
-				return trainLevel1.Money * currentDebuffMultiplier * duration;
-
-			case ActivityManager.TrainType.CourseGK:
-				return trainLevel2.Money * currentDebuffMultiplier * duration;
-
-			case ActivityManager.TrainType.CourseTP:
-				return trainLevel2.Money * currentDebuffMultiplier * duration;
-
-			case ActivityManager.TrainType.CourseM:
-				return trainLevel2.Money * currentDebuffMultiplier * duration;
-
-			case ActivityManager.TrainType.CoursePlusGK:
-				return trainLevel3.Money * currentDebuffMultiplier * duration;
-
-			case ActivityManager.TrainType.CoursePlusTP:
-				return trainLevel3.Money * currentDebuffMultiplier * duration;
-
-			case ActivityManager.TrainType.CoursePlusM:
-				return trainLevel3.Money * currentDebuffMultiplier * duration;
-
-			default:
-				Debug.LogError("No training type has been given");
-				return 0;
-		}
 	}
 
 	public int GetMinStreamIncome(int fame, int duration)
@@ -250,6 +213,7 @@ public class ResultManager : MonoBehaviour
     /// </summary>
     public void SleepResults(int tirednessDecreaseRate)
     {
+		//TODO Decrease based on total amount needs to be decreased
         DecreaseTiredness(tirednessDecreaseRate);
     }
 
@@ -259,48 +223,15 @@ public class ResultManager : MonoBehaviour
     /// <param name="workLevel"></param>
     public void WorkResults(int workLevel)
     {
-        currentDebuffMultiplier *= currentDebuffMultiplierAmount;
+		ResultsForm workResults = GetWorkResult(workLevel);
+		gameManager.IncreaseMoney(workResults.Money);
+		gameManager.Tiredness += workResults.Tiredness;
+		gameManager.WorkExperience += workResults.WorkExperience;
+		gameManager.IncreaseGameKnowledge(workResults.GameKnowledge);
+		gameManager.IncreaseTeamPlay(workResults.TeamPlay);
+		gameManager.IncreaseMechanics(workResults.Mechanics);
 
-        switch (workLevel)
-        {
-            case 0:
-                gameManager.IncreaseMoney((int)(workLevel1.Money * currentDebuffMultiplier));
-                gameManager.Tiredness += workLevel1.Tiredness;
-                gameManager.WorkExperience += workLevel1.WorkExperience;
-                break;
-
-            case 1:
-                gameManager.IncreaseMoney((int)(workLevel2.Money * currentDebuffMultiplier));
-                gameManager.Tiredness += workLevel2.Tiredness;
-                gameManager.WorkExperience += workLevel2.WorkExperience;
-                gameManager.GameKnowledge += (int)(workLevel2.GameKnowledge * currentDebuffMultiplier);
-
-                break;
-
-            case 2:
-                gameManager.IncreaseMoney((int)(workLevel3.Money * currentDebuffMultiplier));
-                gameManager.Tiredness += workLevel3.Tiredness;
-                gameManager.WorkExperience += workLevel3.WorkExperience;
-                gameManager.GameKnowledge += (int)(workLevel3.GameKnowledge * currentDebuffMultiplier);
-                gameManager.GameKnowledge += (int)(workLevel3.Mechanics * currentDebuffMultiplier);
-
-                break;
-
-            case 3:
-                gameManager.IncreaseMoney((int)(workLevel4.Money * currentDebuffMultiplier));
-                gameManager.Tiredness += workLevel4.Tiredness;
-                gameManager.WorkExperience += workLevel4.WorkExperience;
-                gameManager.GameKnowledge += (int)(workLevel4.GameKnowledge * currentDebuffMultiplier);
-                gameManager.GameKnowledge += (int)(workLevel4.TeamPlay * currentDebuffMultiplier);
-
-                break;
-
-            default:
-                Debug.LogError("No work level has been given");
-                break;
-        }
-
-        IncreaseHunger(hungerIncreaseRate);
+		IncreaseHunger(hungerIncreaseRate);
         IncreaseThirst(thirstIncreaseRate);
     }
 
@@ -308,70 +239,61 @@ public class ResultManager : MonoBehaviour
     /// Applies the results you will get from training per hour
     /// </summary>
     /// <param name="trainType"></param>
-    public void TrainResults(ActivityManager.TrainType trainType)
+    public void TrainResults(Training training)
     {
         currentDebuffMultiplier *= currentDebuffMultiplierAmount;
+		int trainingAmount = 0;
+		int tirednessAmount = 0;
 
-        switch (trainType)
-        {
-            case ActivityManager.TrainType.WatchingGK:
-                gameManager.IncreaseGameKnowledge((int)(gameManager.GetCurrentAccommodation.trainingLevel1Amount * currentDebuffMultiplier));
-                gameManager.IncreaseTiredness(trainLevel1.Tiredness);
-                break;
+		switch (training.type)
+		{
+			case Training.Type.Watching:
+				tirednessAmount = trainLevel1.Tiredness;
+				trainingAmount = gameManager.GetCurrentAccommodation.trainingLevel1Amount;
+				break;
 
-            case ActivityManager.TrainType.WatchingTP:
-                gameManager.IncreaseTeamPlay((int)(gameManager.GetCurrentAccommodation.trainingLevel1Amount * currentDebuffMultiplier));
-                gameManager.IncreaseTiredness(trainLevel1.Tiredness);
-                break;
+			case Training.Type.Course:
+				tirednessAmount = trainLevel2.Tiredness;
+				trainingAmount = gameManager.GetCurrentAccommodation.trainingLevel2Amount;
+				break;
 
-            case ActivityManager.TrainType.WatchingM:
-                gameManager.IncreaseMechanics((int)(gameManager.GetCurrentAccommodation.trainingLevel1Amount * currentDebuffMultiplier));
-                gameManager.IncreaseTiredness(trainLevel1.Tiredness);
-                break;
+			case Training.Type.CoursePlus:
+				tirednessAmount = trainLevel3.Tiredness;
+				trainingAmount = gameManager.GetCurrentAccommodation.trainingLevel3Amount;
+				break;
 
-            case ActivityManager.TrainType.CourseGK:
-                gameManager.DecreaseMoney(trainLevel2.Money);
-                gameManager.IncreaseGameKnowledge((int)(gameManager.GetCurrentAccommodation.trainingLevel2Amount * currentDebuffMultiplier));
-                gameManager.IncreaseTiredness(trainLevel2.Tiredness);
-                break;
+			default:
+				Debug.LogWarning("Given training type is unavailable");
+				return;
+		}
 
-            case ActivityManager.TrainType.CourseTP:
-                gameManager.IncreaseTeamPlay((int)(gameManager.GetCurrentAccommodation.trainingLevel2Amount * currentDebuffMultiplier));
-                gameManager.DecreaseMoney(trainLevel2.Money);
-                gameManager.IncreaseTiredness(trainLevel2.Tiredness);
-                break;
+		int skillAmount = Mathf.CeilToInt(trainingAmount * currentDebuffMultiplier);
 
-            case ActivityManager.TrainType.CourseM:
-                gameManager.IncreaseMechanics((int)(gameManager.GetCurrentAccommodation.trainingLevel2Amount * currentDebuffMultiplier));
-                gameManager.DecreaseMoney(trainLevel2.Money);
-                gameManager.IncreaseTiredness(trainLevel2.Tiredness);
-                break;
+		foreach (Skill s in training.skills)
+		{
+			switch (s.type)
+			{
+				case Skill.Type.GameKnowledge:
+					gameManager.IncreaseGameKnowledge(skillAmount);
+					break;
 
-            case ActivityManager.TrainType.CoursePlusGK:
-                gameManager.IncreaseGameKnowledge((int)(gameManager.GetCurrentAccommodation.trainingLevel3Amount * currentDebuffMultiplier));
-                gameManager.DecreaseMoney(trainLevel3.Money);
-                gameManager.IncreaseTiredness(trainLevel3.Tiredness);
-                break;
+				case Skill.Type.TeamPlay:
+					gameManager.IncreaseTeamPlay(skillAmount);
+					break;
 
-            case ActivityManager.TrainType.CoursePlusTP:
-                gameManager.IncreaseTeamPlay((int)(gameManager.GetCurrentAccommodation.trainingLevel3Amount * currentDebuffMultiplier));
-                gameManager.DecreaseMoney(trainLevel3.Money);
-                gameManager.IncreaseTiredness(trainLevel3.Tiredness);
-                break;
+				case Skill.Type.Mechanics:
+					gameManager.IncreaseMechanics(skillAmount);
+					break;
+				default:
+					Debug.LogWarning("Given training skill is unavailable");
+					return;
+			}
+		}
 
-            case ActivityManager.TrainType.CoursePlusM:
-                gameManager.IncreaseMechanics((int)(gameManager.GetCurrentAccommodation.trainingLevel3Amount * currentDebuffMultiplier));
-                gameManager.DecreaseMoney(trainLevel3.Money);
-                gameManager.IncreaseTiredness(trainLevel3.Tiredness);
-                break;
+		gameManager.IncreaseTiredness(tirednessAmount);
+	}
 
-            default:
-                Debug.LogError("No training type has been given");
-                break;
-        }
-    }
-
-    public void BattleResults(Opponent opponent, Battle.Mode battleMode)
+	public void BattleResults(Opponent opponent, Battle.Mode battleMode)
     {
         int randomizer = 0;
         int winChance = 0;
@@ -580,6 +502,8 @@ public class ResultManager : MonoBehaviour
 		}
 	}
 
+	//TODO create separated sleep debuff + hunger & thirst debuff
+
     public void ApplyDebuffs(float debuffMultiplier, float debuffMultiplierAmount)
     {
         currentDebuffMultiplier = debuffMultiplier;
@@ -610,30 +534,32 @@ public class ResultManager : MonoBehaviour
 
     public void Eat(int foodLevel)
     {
+		if (gameManager.Hunger == 0) return;
+
         switch (foodLevel)
         {
-            case 1:
+            case 0:
                 //TODO create not enough money signal
                 if (gameManager.GetMoney < foodBad.Money) return;
 
                 DecreaseHunger(foodBad.Hunger);
                 gameManager.DecreaseMoney(foodBad.Money);
                 break;
-            case 2:
+            case 1:
                 //TODO create not enough money signal
                 if (gameManager.GetMoney < foodStandard.Money) return;
 
                 DecreaseHunger(foodStandard.Hunger);
                 gameManager.DecreaseMoney(foodStandard.Money);
                 break;
-            case 3:
+            case 2:
                 //TODO create not enough money signal
                 if (gameManager.GetMoney < foodGood.Money) return;
 
                 DecreaseHunger(foodGood.Hunger);
                 gameManager.DecreaseMoney(foodGood.Money);
                 break;
-            case 4:
+            case 3:
                 //TODO create not enough money signal
                 if (gameManager.GetMoney < foodExcellent.Money) return;
 
@@ -652,7 +578,9 @@ public class ResultManager : MonoBehaviour
 
     public void Drink(int drinkLevel)
     {
-        switch (drinkLevel)
+		if (gameManager.Thirst == 0) return;
+
+		switch (drinkLevel)
         {
             case 1:
                 //TODO create not enough money signal
@@ -696,7 +624,7 @@ public class ResultManager : MonoBehaviour
     {
         gameManager.Hunger += amount;
 
-        if (gameManager.Hunger >= 70)
+        if (gameManager.Hunger >= debuffLimit)
         {
             if (uiManager.needsMenuButton.GetComponent<LerpColor>().endColor != Color.red)
             {
@@ -707,7 +635,7 @@ public class ResultManager : MonoBehaviour
 
         if (gameManager.Hunger >= 100)
         {
-            ApplyDebuffs(debuffMultiplier, debuffMultiplierAmount);
+            //ApplyDebuffs(debuffMultiplier, debuffMultiplierAmount);
             uiManager.needsMenuButton.GetComponent<LerpColor>().endColor = Color.red;
         }
     }
@@ -727,7 +655,7 @@ public class ResultManager : MonoBehaviour
 
         if (gameManager.Thirst >= 100)
         {
-            ApplyDebuffs(debuffMultiplier, debuffMultiplierAmount);
+            //ApplyDebuffs(debuffMultiplier, debuffMultiplierAmount);
             uiManager.needsMenuButton.GetComponent<LerpColor>().endColor = Color.red;
         }
     }
@@ -736,11 +664,12 @@ public class ResultManager : MonoBehaviour
     {
         gameManager.Tiredness -= amount;
 
-        if (gameManager.Tiredness < 0)
+        if (gameManager.Tiredness <= 0)
         {
             gameManager.Tiredness = 0;
-        }
-        else if (gameManager.Tiredness < 70 && gameManager.Hunger < 70 && gameManager.Thirst < 70)
+			ResetDebuffs();
+		}
+		else if (gameManager.Tiredness < debuffLimit && gameManager.Hunger < debuffLimit && gameManager.Thirst < debuffLimit)
         {
             uiManager.needsMenuButton.GetComponent<Image>().color = uiManager.needsMenuButton.GetComponent<LerpColor>().startColor;
             uiManager.needsMenuButton.GetComponent<LerpColor>().LerpActivated = false;
@@ -751,10 +680,10 @@ public class ResultManager : MonoBehaviour
     {
         gameManager.Hunger -= amount;
 
-        if (gameManager.Hunger < 0)
+        if (gameManager.Hunger <= 0)
         {
             gameManager.Hunger = 0;
-        }
+		}
         else if (gameManager.Tiredness < 70 && gameManager.Hunger < 70 && gameManager.Thirst < 70)
         {
             uiManager.needsMenuButton.GetComponent<Image>().color = uiManager.needsMenuButton.GetComponent<LerpColor>().startColor;
@@ -777,24 +706,6 @@ public class ResultManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Checks the delta of the skills between player and opponent and returns win percentage
-    /// </summary>
-    /// <param name="skills"></param>
-    /// <returns></returns>
-    private int GetWinChance(int[] skillsDelta, float percentagePerPoint)
-    {
-        float winChance = 0;
-
-        foreach (int s in skillsDelta)
-        {
-			//Debug.Log("skill delta " + s);
-			winChance += s * percentagePerPoint;
-        }
-
-        return (int)winChance;
-    }
-
 	public void SwapPlacement(List<Opponent> participants, Opponent player, Opponent opponent)
 	{
 		int tmp = opponent.placement;
@@ -807,6 +718,120 @@ public class ResultManager : MonoBehaviour
 	static int SortByPlacement(Opponent o1, Opponent o2)
 	{
 		return o1.placement.CompareTo(o2.placement);
+	}
+
+	public ResultsForm GetWorkResult(int workLevel)
+	{
+		ResultsForm results = new ResultsForm();
+		currentDebuffMultiplier *= currentDebuffMultiplierAmount;
+
+		switch (workLevel)
+		{
+			case 0:
+				results.SetMoney = (int)(workLevel1.Money * currentDebuffMultiplier);
+				results.SetTiredness = workLevel1.Tiredness;
+				results.SetWorkExperience = workLevel1.WorkExperience;
+				results.SetGameKnowledge = (int)(workLevel1.GameKnowledge * currentDebuffMultiplier);
+				results.SetTeamPlay = (int)(workLevel1.TeamPlay * currentDebuffMultiplier);
+				results.SetMechanics = (int)(workLevel1.Mechanics * currentDebuffMultiplier);
+				break;
+
+			case 1:
+				results.SetMoney = (int)(workLevel2.Money * currentDebuffMultiplier);
+				results.SetTiredness = workLevel2.Tiredness;
+				results.SetWorkExperience = workLevel2.WorkExperience;
+				results.SetGameKnowledge = (int)(workLevel2.GameKnowledge * currentDebuffMultiplier);
+				results.SetTeamPlay = (int)(workLevel2.TeamPlay * currentDebuffMultiplier);
+				results.SetMechanics = (int)(workLevel2.Mechanics * currentDebuffMultiplier);
+
+				break;
+
+			case 2:
+				results.SetMoney = (int)(workLevel3.Money * currentDebuffMultiplier);
+				results.SetTiredness = workLevel3.Tiredness;
+				results.SetWorkExperience = workLevel3.WorkExperience;
+				results.SetGameKnowledge = (int)(workLevel3.GameKnowledge * currentDebuffMultiplier);
+				results.SetTeamPlay = (int)(workLevel3.TeamPlay * currentDebuffMultiplier);
+				results.SetMechanics = (int)(workLevel3.Mechanics * currentDebuffMultiplier);
+
+				break;
+
+			case 3:
+				results.SetMoney = (int)(workLevel4.Money * currentDebuffMultiplier);
+				results.SetTiredness = workLevel4.Tiredness;
+				results.SetWorkExperience = workLevel4.WorkExperience;
+				results.SetGameKnowledge = (int)(workLevel4.GameKnowledge * currentDebuffMultiplier);
+				results.SetTeamPlay = (int)(workLevel4.TeamPlay * currentDebuffMultiplier);
+				results.SetMechanics = (int)(workLevel4.Mechanics * currentDebuffMultiplier);
+
+				break;
+
+			default:
+				Debug.LogError("No work level has been given");
+				break;
+		}
+
+		return results;
+	}
+
+	/// <summary>
+	/// Checks the delta of the skills between player and opponent and returns win percentage
+	/// </summary>
+	/// <param name="skills"></param>
+	/// <returns></returns>
+	private int GetWinChance(int[] skillsDelta, float percentagePerPoint)
+    {
+        float winChance = 0;
+
+        foreach (int s in skillsDelta)
+        {
+			//Debug.Log("skill delta " + s);
+			winChance += s * percentagePerPoint;
+        }
+
+        return (int)winChance;
+    }
+
+	public float GetTrainingCostAmount(Training.Type trainType, float duration)
+	{
+		currentDebuffMultiplier *= currentDebuffMultiplierAmount;
+
+		switch (trainType)
+		{
+			case Training.Type.Watching:
+				return trainLevel1.Money * currentDebuffMultiplier * duration;
+
+			case Training.Type.Course:
+				return trainLevel2.Money * currentDebuffMultiplier * duration;
+
+			case Training.Type.CoursePlus:
+				return trainLevel3.Money * currentDebuffMultiplier * duration;
+
+			default:
+				Debug.LogError("Given training type is unavailable");
+				return 0;
+		}
+	}
+
+	public float GetTrainingTirednessAmount(Training.Type trainType, float duration)
+	{
+		currentDebuffMultiplier *= currentDebuffMultiplierAmount;
+
+		switch (trainType)
+		{
+			case Training.Type.Watching:
+				return trainLevel1.Tiredness * currentDebuffMultiplier * duration;
+
+			case Training.Type.Course:
+				return trainLevel2.Tiredness * currentDebuffMultiplier * duration;
+
+			case Training.Type.CoursePlus:
+				return trainLevel3.Tiredness * currentDebuffMultiplier * duration;
+
+			default:
+				Debug.LogError("Given training type is unavailable");
+				return 0;
+		}
 	}
 
 	private int GetRealRandom(int min, int max)
@@ -826,6 +851,10 @@ public class ResultManager : MonoBehaviour
     public float GetDebuffMultiplier { get { return debuffMultiplier; } }
     public float GetDebuffMultiplierAmount { get { return debuffMultiplierAmount; } }
 	public int GetTotalViews { get { return totalViews; } }
+	public ResultsForm GetTrainingLevel1Results { get { return trainLevel1; } }
+	public ResultsForm GetTrainingLevel2Results { get { return trainLevel2; } }
+	public ResultsForm GetTrainingLevel3Results { get { return trainLevel3; } }
+	public int GetMaxSleepHours { get { return maxSleepHours; } }
 
-		#endregion
+	#endregion
 }

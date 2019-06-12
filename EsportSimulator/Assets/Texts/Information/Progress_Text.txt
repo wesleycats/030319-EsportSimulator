@@ -1,0 +1,10 @@
+#Progress#
+
+#0
+|Here you can find your current situation in finance, ranking and popularity.;
+
+|On the finance tab you will find your income and expenses.;
+
+|On the ranking tab you will find the leaderboard with everybody their ranking.;
+
+|On the fame tab, you will find the amount of fame you have aquired or lost each month of the current year.;

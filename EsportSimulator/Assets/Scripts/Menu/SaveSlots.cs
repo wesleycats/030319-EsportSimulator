@@ -13,7 +13,6 @@ public class SaveSlots : MonoBehaviour
     public SlotStyle slotStyle;
     
     public GameObject[] saveSlotsObjects;
-    public GameLoader gameLoader;
 
     private void Start()
     {

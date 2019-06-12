@@ -8,9 +8,7 @@ public class ActivityManager : MonoBehaviour
     public enum Activity { Idle, Sleep, Eat, Drink, Work, Train, Battle, Stream, Contest, Plan }
     public Activity currentActivity = Activity.Idle;
 
-    public enum TrainType { None, WatchingGK, WatchingTP, WatchingM, CourseGK, CourseTP, CourseM, CoursePlusGK, CoursePlusTP, CoursePlusM }
-    [Tooltip("GK = Game Knowledge, TP = Team Play, M = Mechanics")]
-    public TrainType currentTrainType = TrainType.None;
+	public Training currentTraining;
 
     public Battle.Mode currentBattleMode = Battle.Mode.None;
 
@@ -22,6 +20,7 @@ public class ActivityManager : MonoBehaviour
     public ContestManager contestManager;
     public OpponentManager opponentManager;
     public ButtonManager buttonManager;
+	public FoodMenu foodMenu;
 
 	public Debugger debug;
 
@@ -30,12 +29,13 @@ public class ActivityManager : MonoBehaviour
         ChangeActivity(Activity.Idle, 0);
     }
 
-    /// <summary>
-    /// Sends activity to all receivers
-    /// </summary>
-    /// <param name="activity"></param>
-    /// <param name="duration"></param>
-    public void ChangeActivity(Activity activity, int hourAmount)
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="activity"></param>
+	/// <param name="hourAmount"></param>
+	/// <param name="foodLevel"></param>
+    public void ChangeActivity(Activity activity, int hourAmount, int foodLevel)
     {
         currentActivity = activity;
 
@@ -44,13 +44,52 @@ public class ActivityManager : MonoBehaviour
             timeManager.IncreaseTime(hourAmount, debug.noWait);
             return;
         }
-        
-        switch (currentActivity)
-        {
-            case Activity.Battle:
-                uiManager.activityText.text = "Battling...";
-                break;
 
+		switch (currentActivity)
+		{
+			case Activity.Eat:
+				resultsManager.Eat(foodLevel);
+				return;
+
+			case Activity.Drink:
+				resultsManager.Drink(foodLevel);
+				return;
+		}
+
+        if (hourAmount == 0)
+        {
+            currentActivity = Activity.Idle;
+            currentTraining = new Training(new Skill(Skill.Type.None, 0), Training.Type.None);
+            currentBattleMode = Battle.Mode.None;
+			artManager.ChangeArt(currentActivity);
+			return;
+		}
+
+		timeManager.IncreaseTime(hourAmount, false);
+		artManager.ChangeArt(currentActivity);
+    }
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="activity"></param>
+	/// <param name="hourAmount"></param>
+	public void ChangeActivity(Activity activity, int hourAmount)
+	{
+		currentActivity = activity;
+
+		if (debug.noWait)
+		{
+			timeManager.IncreaseTime(hourAmount, debug.noWait);
+			return;
+		}
+
+		switch (currentActivity)
+		{
+			case Activity.Battle:
+				uiManager.activityText.text = "Battling...";
+				break;
+				
 			case Activity.Plan:
 				uiManager.activityText.text = "Planning...";
 				break;
@@ -58,43 +97,48 @@ public class ActivityManager : MonoBehaviour
 			case Activity.Contest:
 				uiManager.activityText.text = "Contesting...";
 				contestManager.SetParticipants = contestManager.CreateParticipantList(contestManager.GetParticipantAmount, opponentManager.GetAllOpponents);
-                break;
-
-            case Activity.Idle:
-                uiManager.activityText.text = "Idle";
 				break;
 
-            case Activity.Sleep:
-                uiManager.activityText.text = "Sleeping...";
-                uiManager.ActivateSleepOverlay();
-                break;
+			case Activity.Idle:
+				uiManager.activityText.text = "Idle";
+				break;
 
-            case Activity.Stream:
-                uiManager.activityText.text = "Streaming...";
-                break;
+			case Activity.Sleep:
+				uiManager.activityText.text = "Sleeping...";
+				uiManager.ActivateSleepOverlay();
+				break;
 
-            case Activity.Train:
-                //TODO create not enough money signal
-                if (gameManager.GetMoney < resultsManager.GetTrainingCostAmount(currentTrainType, hourAmount)) return;
-                
-                uiManager.activityText.text = "Training...";
-                break;
+			case Activity.Stream:
+				uiManager.activityText.text = "Streaming...";
+				break;
 
-            case Activity.Work:                
-                uiManager.activityText.text = "Working...";
-                break;
-        }
+			case Activity.Train:
+				if (gameManager.GetMoney < resultsManager.GetTrainingCostAmount(currentTraining.type, hourAmount))
+				{
+					Debug.LogWarning("Not enough money");
+					return;
+				}
 
-        if (hourAmount == 0)
-        {
-            currentActivity = Activity.Idle;
-            currentTrainType = TrainType.None;
-            currentBattleMode = Battle.Mode.None;
-        }
+				uiManager.activityText.text = "Training...";
+				break;
 
-        timeManager.IncreaseTime(hourAmount, false);
+			case Activity.Work:
+				uiManager.activityText.text = "Working...";
+				break;
+		}
+
+		if (hourAmount == 0)
+		{
+			currentActivity = Activity.Idle;
+			currentTraining = new Training(new Skill(Skill.Type.None, 0), Training.Type.None);
+			currentBattleMode = Battle.Mode.None;
+			artManager.ChangeArt(currentActivity);
+			return;
+		}
+
+		timeManager.IncreaseTime(hourAmount, false);
 		artManager.ChangeArt(currentActivity);
-    }
+	}
 
 	#region Getters & Setters
 

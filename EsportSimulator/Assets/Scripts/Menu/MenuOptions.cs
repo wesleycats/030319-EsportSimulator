@@ -1,21 +1,34 @@
 ﻿using System.Collections;
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MenuOptions : MonoBehaviour
 {
+	public enum LoadType { None, NewGame, LoadGame }
+	
     [SerializeField] private float loadTime;
 
+	[Header("References")]
     public ButtonManager buttonManager;
     public UIManager uiManager;
     public GameManager gameManager;
-    public LerpColor switchOverlay;
+    public GameLoader gameLoader;
+	public LerpColor switchOverlay;
+	public Object tutorialScene;
+	public GameData gameData;
 
     private void OnEnable()
     {
         if (gameObject.tag == "MainMenu")
+		{
             Time.timeScale = 1f;
+			
+			if (gameData.tutorialDone)
+			{
+				gameManager.ResetGame();
+				gameObject.SetActive(false);
+			}
+		}
 
         if (!buttonManager) return;
 
@@ -24,39 +37,45 @@ public class MenuOptions : MonoBehaviour
 
     public void StartNewGame()
     {
-        gameManager.ResetGame();
-        switchOverlay.LerpMaxAmount = 1;
-        switchOverlay.Increasing = true;
-        switchOverlay.Lerping = true;
-        switchOverlay.LerpActivated = true;
-        buttonManager.DisableAllButtons();
-        StartCoroutine(LoadDelayer());
+		gameData.tutorialDone = false;
+		switchOverlay.Lerp(1);
+		StartCoroutine(LoadDelayer(0, LoadType.NewGame));
     }
 
-    public void RestartGame()
+	public void LoadGame(int slot)
+	{
+		switchOverlay.Lerp(1);
+		StartCoroutine(LoadDelayer(slot, LoadType.LoadGame));
+	}
+
+	public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    private IEnumerator LoadDelayer()
+    private IEnumerator LoadDelayer(int slot, LoadType loadType)
     {
         yield return new WaitForSeconds(loadTime);
 
-        if (!switchOverlay.Lerping && switchOverlay.LerpValue == 1)
+		if (!switchOverlay.LerpActivated)
         {
-            if (gameObject.tag == "MainMenu")
-                gameObject.SetActive(false);
+			switch (loadType)
+			{
+				case LoadType.NewGame:
+					SceneManager.LoadScene(tutorialScene.name);
+					break;
 
-            switchOverlay.LerpMaxAmount = 1;
-            switchOverlay.Increasing = false;
-            switchOverlay.Lerping = true;
-            switchOverlay.LerpActivated = true;
-            buttonManager.EnableAllButtons();
+				case LoadType.LoadGame:
+					gameLoader.LoadGame(slot);
+					break;
+
+				default:
+					Debug.Log("No load type was given.");
+					break;
+			}
         }
         else
-        {
-            StartCoroutine(LoadDelayer());
-        }
+            StartCoroutine(LoadDelayer(slot, loadType));
     }
 
     public void PerformActionTag(GameObject button)

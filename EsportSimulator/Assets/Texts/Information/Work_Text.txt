@@ -1,0 +1,28 @@
+#Work#
+
+#0
+|Working will give you money and work experience per hour.;
+
+|The amount of money you get is determined by your current work level.;
+
+|And your work level is determined by your work experience.;
+
+|Earnings per work level:
+
+Fast food cook (requires 0 exp):
++$10
+
+Game store clerk (requires 50 exp):
++$30
++1 Game knowledge;
+
+|Game tester (requires 150 exp):
++$60
++3 Game knowledge
++3 Mechanics;
+
+|Game coach (requires 350 exp):
++$120
++5 Game knowledge
++3 Mechanics
++3 Team play;

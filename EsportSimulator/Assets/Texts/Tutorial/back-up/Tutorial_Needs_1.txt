@@ -1,0 +1,20 @@
+#Needs#
+
+#0 
+*highlight needs menu*
+|Open the needs menu.;
+
+#1
+*opened needs menu*
+|Your needs will increase by performing actions.;
+
+#2
+|When one of the needs are 100% or higher, you will get a negative debuff on the results of actions.
+(For more details press question mark in the corner after tutorial);
+
+#3
+*waiting till needs are at 0% to continue tutorial*
+|Now eat, drink and sleep to lower your needs so you won't get a debuff.;
+
+*unfocus tutorial*
+|^;

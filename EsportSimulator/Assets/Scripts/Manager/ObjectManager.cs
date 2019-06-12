@@ -65,7 +65,6 @@ public class ObjectManager : MonoBehaviour
 
     public void DisableAllObjectsOf(string tag)
     {
-		Debug.Log(tag);
         foreach (GameObject b in allObjects)
         {
             if (b.tag != tag) continue;

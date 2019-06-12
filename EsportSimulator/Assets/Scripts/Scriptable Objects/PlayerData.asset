@@ -54,7 +54,47 @@ MonoBehaviour:
     teamPlay: 0
     mechanics: 0
     sprite: {fileID: 21300000, guid: 379fad23aa1d1d946a6042c7705e52f9, type: 3}
-  defaultAccommodations: []
+  defaultAccommodations:
+  - elementName: Garage
+    accommodation:
+      type: 0
+      bought: 1
+    cost: 0
+    rent: 50
+    trainingLevel1Amount: 1
+    trainingLevel2Amount: 3
+    trainingLevel3Amount: 10
+    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
+  - elementName: Garage
+    accommodation:
+      type: 0
+      bought: 1
+    cost: 0
+    rent: 50
+    trainingLevel1Amount: 1
+    trainingLevel2Amount: 3
+    trainingLevel3Amount: 10
+    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
+  - elementName: Garage
+    accommodation:
+      type: 0
+      bought: 1
+    cost: 0
+    rent: 50
+    trainingLevel1Amount: 1
+    trainingLevel2Amount: 3
+    trainingLevel3Amount: 10
+    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
+  - elementName: Garage
+    accommodation:
+      type: 0
+      bought: 1
+    cost: 0
+    rent: 50
+    trainingLevel1Amount: 1
+    trainingLevel2Amount: 3
+    trainingLevel3Amount: 10
+    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
   money: 500
   rating: 0
   fame: 0
@@ -107,7 +147,47 @@ MonoBehaviour:
     teamPlay: 0
     mechanics: 0
     sprite: {fileID: 21300000, guid: 379fad23aa1d1d946a6042c7705e52f9, type: 3}
-  allAccommodations: []
+  allAccommodations:
+  - elementName: Garage
+    accommodation:
+      type: 0
+      bought: 1
+    cost: 0
+    rent: 50
+    trainingLevel1Amount: 1
+    trainingLevel2Amount: 3
+    trainingLevel3Amount: 10
+    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
+  - elementName: Apartment
+    accommodation:
+      type: 1
+      bought: 0
+    cost: 1000
+    rent: 200
+    trainingLevel1Amount: 1
+    trainingLevel2Amount: 4
+    trainingLevel3Amount: 12
+    sprite: {fileID: 21300000, guid: 0191629f9b79a99409484d7b627166af, type: 3}
+  - elementName: House
+    accommodation:
+      type: 2
+      bought: 0
+    cost: 2000
+    rent: 500
+    trainingLevel1Amount: 2
+    trainingLevel2Amount: 5
+    trainingLevel3Amount: 15
+    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
+  - elementName: Luxury Apartment
+    accommodation:
+      type: 3
+      bought: 0
+    cost: 5000
+    rent: 1500
+    trainingLevel1Amount: 2
+    trainingLevel2Amount: 6
+    trainingLevel3Amount: 20
+    sprite: {fileID: 21300000, guid: 0191629f9b79a99409484d7b627166af, type: 3}
   currentAccommodation:
     elementName: Garage
     accommodation:

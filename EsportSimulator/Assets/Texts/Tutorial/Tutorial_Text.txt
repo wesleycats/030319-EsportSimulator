@@ -1,0 +1,41 @@
+#Tutorial#
+
+#0
+*Introduction*
+|Welcome to Esports Simulator, the game where you need to manage your character to become the best esports player!;
+
+|The only way to win the game, is to become #1 on the leaderboard.;
+
+|You achieve this with having the highest amount elo-points, which are collected by winning battles and contests.;
+
+|The only way to lose the game, is by not having enough money to pay your monthly rent.;
+
+*Top Bar*
+|The top bar consists of a calender, pause menu, progress menu and an event bar.;
+
+*Bottom Bar*
+|The bottom bar consists of a action bar, needs menu, skills menu, action menu and a shop.;
+
+#5
+*Needs Menu*
+|When your tiredness level is at 100% or higher, you will get a 50% rewards debuff.;
+
+|When your hunger or thirst level is at 100% or higher, you will get a debuff that gives 200% tiredness when you perform an action.;
+
+*Information*
+|To access the information about a topic, you can press any question mark in corner of the corresponding menu.;
+
+*Actions Menu*
+|You can go to work, battle, use your fame to get many views while streaming, or plan a contest to compete in.;
+
+*Skills Menu*
+|To be able to win battles and contests, you need high enough skills.;
+
+#10
+|You can get skills by battling, training or by buying new items.;
+
+*Shop Menu*
+|You are also able to buy new accommodations to increase your training rates.;
+
+*Outro*
+|Now you are fully informed, it is your turn to become the best!;

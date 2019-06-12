@@ -1,0 +1,4 @@
+#Items#
+
+#0
+|You can increase your skills by buying items instead of using your time for training.;

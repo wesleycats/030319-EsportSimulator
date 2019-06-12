@@ -72,7 +72,6 @@ public class PlayerData : ScriptableObject
         teamPlay = 0;
         mechanics = 0;
 		savedEquipedItems = defaultItems;
-		allAccommodations = defaultAccommodations;
         currentAccommodation = defaultAccommodations[0];
 		plannedTournaments.Clear();
 	}

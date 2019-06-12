@@ -7,8 +7,8 @@ public struct AccommodationForm
     public Accommodation accommodation;
     public int cost;
     public int rent;
-    public float trainingLevel1Amount;
-    public float trainingLevel2Amount;
-    public float trainingLevel3Amount;
+    public int trainingLevel1Amount;
+    public int trainingLevel2Amount;
+    public int trainingLevel3Amount;
     public Sprite sprite;
 }

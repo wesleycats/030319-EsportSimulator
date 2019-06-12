@@ -13,21 +13,46 @@ public class LerpColor : MonoBehaviour
     [SerializeField] private bool lerpStop;
     [SerializeField] private bool lerpPause;
     [SerializeField] private float lerpPauseTime = 2f;
-    [SerializeField] private int lerpMaxAmount;
+    [SerializeField] private int lerpMaxAmount = 2;
+	[SerializeField] private bool paused = false;
 
     private bool increasing = true;
     private float lerpSteps;
-    private int timer;
-    private int lerpAmount;
+    [SerializeField] private int timer;
+	[SerializeField] private int lerpAmount;
 
     public Color startColor;
     public Color endColor;
     public Image image;
+
+	/// <summary>
+	/// Initiates lerping functionality
+	/// </summary>
+	/// <param name="amount"></param>
+	public void Lerp(int amount)
+	{
+		lerpActivated = true;
+		lerping = true;
+		paused = false;
+		lerpMaxAmount = amount;
+
+		if (lerpValue >= 1)
+		{
+			increasing = false;
+		}
+		else
+		{
+			increasing = true;
+		}
+
+		lerping = true;
+	}
     
     void Update()
     {
         if (!lerpActivated) return;
 
+		// Activates pause timer
         if (lerpPause && !lerping)
         {
             timer++;
@@ -43,12 +68,6 @@ public class LerpColor : MonoBehaviour
 
         lerpSteps = Time.deltaTime * lerpSpeed;
 
-        if (lerpMaxAmount > 0)
-            lerpPause = true;
-
-        if (lerpAmount >= lerpMaxAmount-1 && lerpMaxAmount != 0)
-            lerpStop = true;
-
         if (increasing)
             lerpValue += lerpSteps;
         else
@@ -56,42 +75,45 @@ public class LerpColor : MonoBehaviour
 
         image.color = Color.Lerp(startColor, endColor, lerpValue);
 
-        if (lerpValue > 1)
-        {
-            lerpAmount++;
-            lerpValue = 1;
-            increasing = false;
+		if (lerpValue < 0 || lerpValue > 1)
+		{
+			lerpAmount += 1;
 
-            if (lerpPause)
-                lerping = false;
+			if (lerpValue > 1)
+			{
+				lerpValue = 1;
+				increasing = false;
+			}
+			else
+			{
+				lerpValue = 0;
+				increasing = true;
+			}
 
-            if (lerpStop)
-            {
-                lerping = false;
-                lerpPause = false;
-                lerpStop = false;
-                lerpAmount = 0;
-            }
-        }
+			if (lerpMaxAmount > 0)
+				lerpPause = true;
 
-        if (lerpValue < 0)
-        {
-            lerpAmount++;
-            lerpValue = 0;
-            increasing = true;
+			if (lerpPause)
+			{
+				lerping = false;
+				paused = true;
+			}
 
-            if (lerpPause)
-                lerping = false;
+			if (lerpAmount >= lerpMaxAmount)
+				lerpStop = true;
 
-            if (lerpStop)
-            {
+			if (lerpStop)
+			{
 				lerpActivated = false;
-				lerping = true;
-                lerpPause = false;
-                lerpStop = false;
-                lerpAmount = 0;
-            }
-        }
+				lerping = false;
+				lerpPause = false;
+				lerpStop = false;
+				paused = false;
+				lerpAmount = 0;
+			}
+		}
+
+
     }
 
     public bool isLerping()
@@ -110,6 +132,7 @@ public class LerpColor : MonoBehaviour
     public int LerpMaxAmount { get { return lerpMaxAmount; } set { lerpMaxAmount = value; } }
     public bool Increasing { get { return increasing; } set { increasing = value; } }
     public float LerpValue { get { return lerpValue; } }
+	public bool isPaused { get { return paused; } }
 
     #endregion
 }

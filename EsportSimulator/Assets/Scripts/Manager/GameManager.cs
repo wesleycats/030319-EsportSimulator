@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Controls game stages & keeps track of variables in current session
@@ -53,8 +52,9 @@ public class GameManager : MonoBehaviour
 	void Start()
     {
         Time.timeScale = 1f;
-		//ResetGame();
+		ResetGame();
 		LoadData();
+		//activityManager.ChangeActivity(ActivityManager.Activity.Idle, 0);
     }
 
 	public Event IsEventPlanned(int currentMonth, List<Event> events)

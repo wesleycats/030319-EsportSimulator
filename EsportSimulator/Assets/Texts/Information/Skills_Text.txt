@@ -1,0 +1,17 @@
+#Skills#
+
+#0
+|Skill points are needed to win battles and contests.;
+
+|Skill points can be gained by training, battling, working or buying items.
+
+|The amount of skill points you gain by training are determined by your current accommodation.;
+
+|The amount of skill points you have, determines your chance to win.;
+
+|Each skill has influence on a particular game mode:
+1v1: Game Knowledge & Mechanics
+
+3v3: Game Knowledge & Team Play
+
+5v5: Game Knowledge & Mechanics & Team Play;

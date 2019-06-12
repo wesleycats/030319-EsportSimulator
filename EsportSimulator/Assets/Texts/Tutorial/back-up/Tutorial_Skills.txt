@@ -1,0 +1,14 @@
+#Skills#
+
+#0
+|Now open the skills menu.;
+
+#1
+*opened skills menu*
+|Here you can find your skill levels and train them however you like.;
+
+#2
+*waiting till skills are at 100 to continue tutorial*
+|Now train your skills so you have at least 100 points in each.;
+
+|^;

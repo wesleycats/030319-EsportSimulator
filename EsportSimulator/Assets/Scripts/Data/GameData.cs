@@ -28,9 +28,11 @@ public class GameData : ScriptableObject
     public int realMonth;
     public int realYear;
 
-    #endregion
+	#endregion
 
-    #region Utilities
+	#region Utilities
+
+	public bool tutorialDone;
 
     #endregion
 

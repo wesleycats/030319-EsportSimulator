@@ -16,6 +16,8 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private float waitTime;
 	[SerializeField] private bool pause = false;
 
+	private int totalDuration;
+
     public GameManager gameManager;
     public ActivityManager activityManager;
     public UIManager uiManager;
@@ -36,7 +38,7 @@ public class TimeManager : MonoBehaviour
             {
                 IncreaseHours(1);
 
-                CheckActivity(activityManager.currentActivity, activityManager.currentTrainType, gameManager.GetWorkLevel, activityManager.currentBattleMode);
+                CheckActivity(activityManager.currentActivity, activityManager.currentTraining, gameManager.GetWorkLevel, activityManager.currentBattleMode);
             }
 
             activityManager.ChangeActivity(ActivityManager.Activity.Idle, 0);
@@ -45,21 +47,33 @@ public class TimeManager : MonoBehaviour
         else
         {
             StartCoroutine(TimeTimer(hourAmount));
+			totalDuration = hourAmount;
         }
 
     }
 
     private IEnumerator TimeTimer(float duration)
     {
-        buttonManager.DisableAllButtons("Navigation");
+		if (Time.timeScale > 0)
+			buttonManager.DisableAllButtons("Navigation");
 
-        yield return new WaitForSeconds(waitTime);
+		yield return new WaitForSeconds(waitTime);
 
 		if (!pause)
 		{
 			duration--;
 			IncreaseHours(1);
-			CheckActivity(activityManager.currentActivity, activityManager.currentTrainType, gameManager.GetWorkLevel, activityManager.currentBattleMode);
+
+			if (activityManager.currentActivity == ActivityManager.Activity.Sleep)
+			{
+				// Every 2 hours the tiredness will be decreased
+				int durationDelta = totalDuration - (int)duration;
+				if (durationDelta % 2 == 0)
+					CheckActivity(activityManager.currentActivity, activityManager.currentTraining, gameManager.GetWorkLevel, activityManager.currentBattleMode);
+			}
+			else
+				CheckActivity(activityManager.currentActivity, activityManager.currentTraining, gameManager.GetWorkLevel, activityManager.currentBattleMode);
+
 			uiManager.UpdateAll();
 		}
 
@@ -70,7 +84,7 @@ public class TimeManager : MonoBehaviour
         {
             activityManager.ChangeActivity(ActivityManager.Activity.Idle, 0);
 			resultManager.ResetTotalViews();
-			buttonManager.EnableAllButtons();
+			buttonManager.EnableAllButtons("Navigation");
         }
         else
 		{
@@ -171,7 +185,7 @@ public class TimeManager : MonoBehaviour
         year = gameData.GetYear;
     }
 
-    private void CheckActivity(ActivityManager.Activity currentActivity, ActivityManager.TrainType currentTrainType, int workLevel, Battle.Mode currentBattleMode)
+    private void CheckActivity(ActivityManager.Activity currentActivity, Training training, int workLevel, Battle.Mode currentBattleMode)
     {
         switch (currentActivity)
         {
@@ -188,7 +202,13 @@ public class TimeManager : MonoBehaviour
 				{
 					if (month == gameManager.GetPlannedEvents[i].month)
 					{
+						PauseGame();
+
 						StartCoroutine(resultManager.ContestResults(gameManager.GetPlannedEvents[i], contestManager.GetParticipants));
+
+						uiManager.darkOverlay.SetActive(true);
+						uiManager.darkOverlay.GetComponent<Button>().interactable = false;
+						uiManager.ActivateContestAnnouncement(gameManager.GetPlannedEvents[i].battleMode.ToString());
 					}
 				}
 				break;
@@ -202,7 +222,7 @@ public class TimeManager : MonoBehaviour
                 break;
 
             case ActivityManager.Activity.Train:
-                resultManager.TrainResults(currentTrainType);
+                resultManager.TrainResults(training);
                 break;
 
             case ActivityManager.Activity.Work:
@@ -214,18 +234,6 @@ public class TimeManager : MonoBehaviour
                 break;
         }
     }
-
-	public bool IsTournamentThisMonth(List<Event> plannedEvents)
-	{
-		for (int i = 0; i < plannedEvents.Count; i++)
-		{
-			if (month == plannedEvents[i].month)
-			{
-				return true;
-			}
-		}
-		return false;
-	}
 
 	#region Getters & Setters 
 
