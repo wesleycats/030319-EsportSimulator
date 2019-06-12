@@ -18,6 +18,8 @@
 
 #5
 *Needs Menu*
+|As in real life, you need to keep yourself refreshed, feed yourself and drink once in a while.;
+
 |When your tiredness level is at 100% or higher, you will get a 50% rewards debuff.;
 
 |When your hunger or thirst level is at 100% or higher, you will get a debuff that gives 200% tiredness when you perform an action.;

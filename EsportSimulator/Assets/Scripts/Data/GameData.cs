@@ -42,6 +42,7 @@ public class GameData : ScriptableObject
         minute = 0;
         month = 1;
         year = 0;
+		tutorialDone = false;
     }
 
     #region Getters & Setters

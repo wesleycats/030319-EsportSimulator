@@ -27,6 +27,7 @@ public class TutorialManager : MonoBehaviour
 	public Object mainScene;
 	public LerpColor switchOverlay;
 	public ButtonManager buttonManager;
+	public GameData gameData;
 
 	private void Start()
 	{
@@ -157,8 +158,6 @@ public class TutorialManager : MonoBehaviour
 
 		if (currentFocusedObjects.Count == 0)
 		{
-			//Debug.Log("Reset");
-
 			foreach (FocusObject f in tutorial.focusObjects)
 			{
 				ResetFocusObject(f);
@@ -202,6 +201,8 @@ public class TutorialManager : MonoBehaviour
 		{
 			switchOverlay.Lerp(1);
 			StartCoroutine(LerpDelayer(LerpType.Outro));
+			gameData.tutorialDone = true;
+			return;
 		}
 
 		textScanner.Reset();

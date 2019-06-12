@@ -131,7 +131,7 @@ public class LerpColor : MonoBehaviour
     public int LerpAmount { get { return lerpAmount; } set { lerpAmount = value; } }
     public int LerpMaxAmount { get { return lerpMaxAmount; } set { lerpMaxAmount = value; } }
     public bool Increasing { get { return increasing; } set { increasing = value; } }
-    public float LerpValue { get { return lerpValue; } }
+    public float LerpValue { get { return lerpValue; } set { lerpValue = value; } }
 	public bool isPaused { get { return paused; } }
 
     #endregion

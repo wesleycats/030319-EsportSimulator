@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
     public LeaderboardManager leaderboardManager;
     public ResultManager resultManager;
     public ShopManager shopManager;
+	public LerpColor switchOverlay;
 
     public Debugger debug;
 
@@ -54,8 +55,10 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
 		ResetGame();
 		LoadData();
+		switchOverlay.LerpValue = 1;
+		switchOverlay.Lerp(1);
 		//activityManager.ChangeActivity(ActivityManager.Activity.Idle, 0);
-    }
+	}
 
 	public Event IsEventPlanned(int currentMonth, List<Event> events)
 	{

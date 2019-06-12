@@ -36,7 +36,7 @@ public class TextScanner : MonoBehaviour
 
 	private void Start()
 	{
-		Reset();
+		ResetCurrentIndex();
 	}
 
 	public void Reset()
@@ -44,6 +44,11 @@ public class TextScanner : MonoBehaviour
 		currentTextIndex = 0;
 		textElement.text = "";
 		texts.Clear();
+	}
+
+	public void ResetCurrentIndex()
+	{
+		currentTextIndex = 0;
 	}
 
 	/// <summary>
@@ -65,7 +70,7 @@ public class TextScanner : MonoBehaviour
 		if (currentTextIndex >= texts.Count)
 		{
 			Reset();
-			TextAvailable(false);
+			SendTextAvailable(false);
 			return;
 		}
 
@@ -156,6 +161,11 @@ public class TextScanner : MonoBehaviour
 		}
 
 		return "No title found";
+	}
+
+	public void SendTextAvailable(bool available)
+	{
+		TextAvailable(available);
 	}
 
 	public int GetCurrentTextIndex { get { return currentTextIndex; } }

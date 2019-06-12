@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: GameData
   m_EditorClassIdentifier: 
   hour: 0
-  month: 0
+  minute: 0
+  month: 1
   year: 0
-  saved: 0
-  debug: 1
+  realDay: 0
+  realMonth: 0
+  realYear: 0
+  tutorialDone: 1

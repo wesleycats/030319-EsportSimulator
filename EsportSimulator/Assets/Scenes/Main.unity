@@ -2351,7 +2351,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &158959113
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18438,6 +18438,7 @@ MonoBehaviour:
   leaderboardManager: {fileID: 1070449425}
   resultManager: {fileID: 1070449420}
   shopManager: {fileID: 1070449426}
+  switchOverlay: {fileID: 1739649207}
   debug: {fileID: 777039696}
 --- !u!114 &1070449419
 MonoBehaviour:
