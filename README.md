@@ -1,2 +1,2 @@
 # Esport Simulator
-A game where the player is required to manage its needs, fame and money to become the best esport player in the world.
+Esport Simulator shows the player that being a pro gamer is not only about gaming. Just like in real life, the player needs to manage it's needs, finances, popularity and ranking. By giving a variety of options to choose from and a limited amount of energy, the player is forced to choose his actions wisely.
