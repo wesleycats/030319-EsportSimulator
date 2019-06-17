@@ -57,25 +57,25 @@ MonoBehaviour:
   defaultAccommodations:
   - elementName: Garage
     accommodation:
-      type: 0
+      type: 1
       bought: 1
     cost: 0
     rent: 50
     trainingLevel1Amount: 1
     trainingLevel2Amount: 3
     trainingLevel3Amount: 10
-    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
+    sprite: {fileID: 21300000, guid: 0191629f9b79a99409484d7b627166af, type: 3}
   money: 2500
-  rating: 120
-  fame: 250
+  rating: 0
+  fame: 0
   workExperience: 0
   workLevel: 0
-  tiredness: 150
-  hunger: 20
-  thirst: 70
-  gameKnowledge: 75
-  teamPlay: 100
-  mechanics: 75
+  tiredness: 0
+  hunger: 0
+  thirst: 0
+  gameKnowledge: 0
+  teamPlay: 0
+  mechanics: 0
   savedEquipedItems:
   - elementName: Mouse
     type: 1
@@ -159,17 +159,14 @@ MonoBehaviour:
     trainingLevel3Amount: 20
     sprite: {fileID: 21300000, guid: 0191629f9b79a99409484d7b627166af, type: 3}
   currentAccommodation:
-    elementName: Apartment
+    elementName: Garage
     accommodation:
       type: 1
       bought: 1
-    cost: 500
-    rent: 200
+    cost: 0
+    rent: 50
     trainingLevel1Amount: 1
-    trainingLevel2Amount: 4
+    trainingLevel2Amount: 3
     trainingLevel3Amount: 10
     sprite: {fileID: 21300000, guid: 0191629f9b79a99409484d7b627166af, type: 3}
-  plannedTournaments:
-  - type: 1
-    battleMode: 2
-    month: 8
+  plannedTournaments: []

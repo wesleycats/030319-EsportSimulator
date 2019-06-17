@@ -5,7 +5,9 @@ using System.IO;
 
 public class GameLoader : MonoBehaviour
 {
-    [SerializeField] private float loadTime;
+	public enum LoadType { None, NewGame, LoadGame }
+
+	[SerializeField] private float loadTime;
 
     public LerpColor switchOverlay;
     public GameSaver gameSaver;
@@ -28,10 +30,7 @@ public class GameLoader : MonoBehaviour
         }
         dataPath = Path.Combine(Application.persistentDataPath, "GameSaveData_SaveSlot_" + saveSlot + ".txt");
 
-        switchOverlay.LerpMaxAmount = 1;
-        switchOverlay.Increasing = true;
-        switchOverlay.Lerping = true;
-        switchOverlay.LerpActivated = true;
+		switchOverlay.Lerp(1);
         StartCoroutine(LoadDelayer(saveSlot));
     }
 
@@ -43,10 +42,7 @@ public class GameLoader : MonoBehaviour
         {
             LoadData(saveSlot, dataPath);
 
-            switchOverlay.LerpMaxAmount = 1;
-            switchOverlay.Increasing = false;
-            switchOverlay.Lerping = true;
-            switchOverlay.LerpActivated = true;
+			switchOverlay.Lerp(1);
             buttonManager.EnableAllButtons();
         }
         else

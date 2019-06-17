@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LerpColor : MonoBehaviour
 {
-    [SerializeField] private bool lerpActivated;
+	public Action<bool> LerpStopped;
+
+	[SerializeField] private bool lerpActivated;
     [SerializeField] private bool lerping = true;
     [Range(0, 1)]
     [SerializeField] private float lerpValue;
@@ -37,13 +38,9 @@ public class LerpColor : MonoBehaviour
 		lerpMaxAmount = amount;
 
 		if (lerpValue >= 1)
-		{
 			increasing = false;
-		}
 		else
-		{
 			increasing = true;
-		}
 
 		lerping = true;
 	}
@@ -100,21 +97,23 @@ public class LerpColor : MonoBehaviour
 			}
 
 			if (lerpAmount >= lerpMaxAmount)
-				lerpStop = true;
-
-			if (lerpStop)
-			{
-				lerpActivated = false;
-				lerping = false;
-				lerpPause = false;
-				lerpStop = false;
-				paused = false;
-				lerpAmount = 0;
-			}
+				StopLerp();
 		}
-
-
     }
+
+	private void StopLerp()
+	{
+		lerpActivated = false;
+		lerping = false;
+		lerpPause = false;
+		lerpStop = false;
+		paused = false;
+		lerpAmount = 0;
+
+		if (LerpStopped == null) return;
+
+		LerpStopped(true);
+	}
 
     public bool isLerping()
     {

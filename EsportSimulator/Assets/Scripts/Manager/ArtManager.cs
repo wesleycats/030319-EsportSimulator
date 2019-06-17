@@ -67,9 +67,9 @@ public class ArtManager : MonoBehaviour
 
 				int houseLevel = gameManager.GetCurrentAccommodationIndex(gameManager.GetCurrentAccommodation, shopManager.GetAllAccommodations);
 				background.sprite = houseSprites[houseLevel];
-				chair.sprite = chairSprites[houseLevel];
-				workstation.sprite = tableSprites[houseLevel];
-
+				chair.sprite = chairSprites[0];//chairSprites[houseLevel];
+				workstation.sprite = tableSprites[0];//tableSprites[houseLevel];
+				 
 				// Sets item sprites to currently equiped items
 				foreach (ItemForm f in gameManager.GetEquipedItems)
 				{

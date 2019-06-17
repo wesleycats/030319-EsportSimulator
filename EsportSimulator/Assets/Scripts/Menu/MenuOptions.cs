@@ -4,20 +4,26 @@ using UnityEngine.SceneManagement;
 
 public class MenuOptions : MonoBehaviour
 {
-	public enum LoadType { None, NewGame, LoadGame }
-	
+	public GameLoader.LoadType loadType;
+
     [SerializeField] private float loadTime;
+	private int slotToLoad;
 
 	[Header("References")]
+	public int tutorialSceneIndex;
     public ButtonManager buttonManager;
     public UIManager uiManager;
     public GameManager gameManager;
     public GameLoader gameLoader;
 	public LerpColor switchOverlay;
-	public Object tutorialScene;
 	public GameData gameData;
 
-    private void OnEnable()
+	private void Start()
+	{
+		switchOverlay.LerpStopped += LoadInGame;
+	}
+
+	private void OnEnable()
     {
         if (gameObject.tag == "MainMenu")
 		{
@@ -35,47 +41,42 @@ public class MenuOptions : MonoBehaviour
         buttonManager.EnableAllButtonsOf("Navigation");
     }
 
-    public void StartNewGame()
-    {
-		gameData.tutorialDone = false;
+	public void StartNewGame()
+	{
+		loadType = GameLoader.LoadType.NewGame;
 		switchOverlay.Lerp(1);
-		StartCoroutine(LoadDelayer(0, LoadType.NewGame));
-    }
+	}
 
 	public void LoadGame(int slot)
 	{
+		loadType = GameLoader.LoadType.LoadGame;
+		slotToLoad = slot;
 		switchOverlay.Lerp(1);
-		StartCoroutine(LoadDelayer(slot, LoadType.LoadGame));
+	}
+
+	public void LoadInGame(bool b)
+	{
+		if (!b || loadType == GameLoader.LoadType.None) return;
+
+		switch (loadType)
+		{
+			case GameLoader.LoadType.NewGame:
+				SceneManager.LoadScene(tutorialSceneIndex);
+				break;
+
+			case GameLoader.LoadType.LoadGame:
+				gameLoader.LoadGame(slotToLoad);
+				break;
+
+			default:
+				Debug.LogError("Given load type is unavailable");
+				break;
+		}
 	}
 
 	public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    private IEnumerator LoadDelayer(int slot, LoadType loadType)
-    {
-        yield return new WaitForSeconds(loadTime);
-
-		if (!switchOverlay.LerpActivated)
-        {
-			switch (loadType)
-			{
-				case LoadType.NewGame:
-					SceneManager.LoadScene(tutorialScene.name);
-					break;
-
-				case LoadType.LoadGame:
-					gameLoader.LoadGame(slot);
-					break;
-
-				default:
-					Debug.Log("No load type was given.");
-					break;
-			}
-        }
-        else
-            StartCoroutine(LoadDelayer(slot, loadType));
     }
 
     public void PerformActionTag(GameObject button)

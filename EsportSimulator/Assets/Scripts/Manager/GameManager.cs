@@ -50,10 +50,14 @@ public class GameManager : MonoBehaviour
 
 	//TODO set current accommodation to saved
 
+	private void Awake()
+	{
+		ResetGame();
+	}
+
 	void Start()
     {
         Time.timeScale = 1f;
-		ResetGame();
 		LoadData();
 		switchOverlay.LerpValue = 1;
 		switchOverlay.Lerp(1);

@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class TutorialManager : MonoBehaviour
 {
-	public enum LerpType { None, Intro, Outro }
+	public enum Transition { None, Intro, Outro }
+	public Transition transition;
+
 
 	[SerializeField] private TutorialForm tutorialForm;
 	[SerializeField] private Tutorial currentTutorial;
@@ -24,16 +26,16 @@ public class TutorialManager : MonoBehaviour
 	public Text tutorialTitle;
 	public GameObject tutorialWindow;
 	public Canvas overlay;
-	public Object mainScene;
+	public int mainSceneIndex;
 	public LerpColor switchOverlay;
 	public ButtonManager buttonManager;
 	public GameData gameData;
 
 	private void Start()
 	{
-		buttonManager.DisableAllButtons();
-		switchOverlay.Lerp(1);
-		StartCoroutine(LerpDelayer(LerpType.Intro));
+		switchOverlay.LerpStopped += LoadMainScene;
+
+		buttonManager.DisableAllButtons("Tutorial");
 
 		originalWindowPos = tutorialWindow.GetComponent<RectTransform>().localPosition;
 		originalWindowSize = new Vector2(tutorialWindow.GetComponent<RectTransform>().rect.width, tutorialWindow.GetComponent<RectTransform>().rect.height);
@@ -42,29 +44,20 @@ public class TutorialManager : MonoBehaviour
 		StartTutorial(tutorialForm.tutorialParts[currentTutorialIndex]);
 	}
 
-	private IEnumerator LerpDelayer(LerpType lerpType)
+	public void LoadMainScene(bool b)
 	{
-		yield return new WaitForSeconds(1f);
+		if (!b || transition == Transition.None) return;
 
-		if (!switchOverlay.LerpActivated)
+		switch (transition)
 		{
-			switch (lerpType)
-			{
-				case LerpType.Intro:
-					buttonManager.EnableAllButtonsOf("Tutorial");
-					break;
+			case Transition.Outro:
+				SceneManager.LoadScene(mainSceneIndex);
+				break;
 
-				case LerpType.Outro:
-					SceneManager.LoadScene(mainScene.name);
-					break;
-
-				default:
-					Debug.LogWarning("No lerp type given");
-					break;
-			}
+			default:
+				Debug.LogError("Given transition is unavailable");
+				break;
 		}
-		else
-			StartCoroutine(LerpDelayer(lerpType));
 	}
 
 	public void StartTutorial(Tutorial tutorial)
@@ -200,7 +193,7 @@ public class TutorialManager : MonoBehaviour
 		if (GetNextTutorial(tutorialForm) == null)
 		{
 			switchOverlay.Lerp(1);
-			StartCoroutine(LerpDelayer(LerpType.Outro));
+			transition = Transition.Outro;
 			gameData.tutorialDone = true;
 			return;
 		}
