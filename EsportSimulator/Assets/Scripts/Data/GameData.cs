@@ -36,7 +36,7 @@ public class GameData : ScriptableObject
 
     #endregion
 
-    public void Reset(bool reset)
+    public void Reset()
     {
         hour = 0;
         minute = 0;

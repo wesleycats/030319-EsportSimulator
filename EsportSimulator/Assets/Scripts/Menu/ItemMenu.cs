@@ -9,8 +9,6 @@ using UnityEngine.UI;
 /// </summary>
 public class ItemMenu : MonoBehaviour
 {
-    public ShopManager shopManager;
-    public GameManager gameManager;
     public Text itemTitle;
     public GameObject badQuality;
     public GameObject standardQuality;
@@ -19,12 +17,17 @@ public class ItemMenu : MonoBehaviour
 
     [SerializeField] private Item item;
     private Button[] buttons;
-    private Text[] results;
-    
-    private void OnDisable()
+	private Text[] results;
+
+	[Header("References")]
+	public PlayerData playerData;
+	public ShopManager shopManager;
+	public GameManager gameManager;
+
+	private void OnDisable()
     {
         Skill[] skills = new Skill[0];
-        item = new Item(Item.Type.None, Item.Quality.Default, skills);
+        item = new Item(Item.Type.None, Item.Quality.Default, 0, skills, null);
 
         foreach (Button b in buttons)
             b.interactable = true;
@@ -32,23 +35,26 @@ public class ItemMenu : MonoBehaviour
 
     public void BuyItem()
     {
-        if (!gameManager.IsMoneyHighEnough(shopManager.GetItemForm(item, shopManager.GetAllItems).cost))
+		SetItem(item.type, item.quality);
+		Debug.Log(item.type);
+		Debug.Log(item.quality);
+		Debug.Log(item.cost);
+
+		if (!gameManager.IsMoneyHighEnough(item.cost))
         {
             Debug.LogWarning("Not Enough Money");
             return;
         }
 
-        shopManager.BuyItem(item, shopManager.GetAllItems, gameManager.GetEquipedItems);
-        ApplyAccquiredItems(item, gameManager.GetEquipedItems);
+		shopManager.BuyItem(item, gameManager.GetCurrentItems);
+		ApplyCurrentItems(gameManager.GetCurrentItems);
     }
 
-    public void ApplyAccquiredItems(Item item, List<ItemForm> equipedItems)
+	public void ApplyCurrentItems(List<Item> currentItems)
     {
-        for (int i = 0; i < equipedItems.Count; i++)
+        foreach (Item i in currentItems)
         {
-            if (item.type != equipedItems[i].type) continue;
-
-            switch (equipedItems[i].quality)
+			switch (i.quality)
             {
                 case Item.Quality.Bad:
                     buttons[0].interactable = false;
@@ -134,100 +140,97 @@ public class ItemMenu : MonoBehaviour
         }
     }
 
-    public void SetItemSkills()
-    {
-        item.skills = SetSkills(item, shopManager.GetAllItems);
-    }
+	public void SetItem(Item.Type type, Item.Quality quality)
+	{
+		foreach (ItemForm f in playerData.GetAllItems)
+		{
+			if (f.itemType != type.ToString()) continue;
+
+			foreach (Item i in f.qualities)
+			{
+				Debug.Log(i.type);
+				Debug.Log(i.quality);
+				Debug.Log(i.cost);
+				if (i.quality != quality) continue;
+
+				item = i;
+				return;
+			}
+		}
+	}
 
     public void ApplyItemTitle(Text itemTitle, string text)
     {
         itemTitle.text = text;
     }
     
-    public void ApplyItemResults(Item item, List<List<ItemForm>> itemList)
+    public void ApplyItemResults(Item.Type type)
     {
-        List<ItemForm> itemType = new List<ItemForm>();
-
         for (int i = 0; i < results.Length; i++)
         {
             results[i].text = "";
         }
 
-        for (int i = 0; i < itemList.Count; i++)
-        {
-            for (int j = 0; j < itemList[i].Count; j++)
-            {
-                if (item.type == itemList[i][j].type)
-                {
-                    itemType = itemList[i];
-                }
-            }
-        }
+		List<int> gameKnowledge = new List<int>();
+		List<int> mechanics = new List<int>();
+		List<int> teamPlay = new List<int>();
+		List<int> cost = new List<int>();
 
-        switch (item.type)
-        {
-            case Item.Type.Guide:
-                for (int i = 0; i < results.Length; i++)
-                {
-                    results[i].text = "+" + itemType[i].gameKnowledge + " game knowledge, -$" + itemType[i].cost;
-                }
-                break;
+		foreach (ItemForm f in playerData.GetAllItems)
+		{
+			if (f.itemType != type.ToString()) continue;
 
-            case Item.Type.Headset:
-                for (int i = 0; i < results.Length; i++)
-                {
-                    results[i].text = "+" + itemType[i].teamPlay + " team play, -$" + itemType[i].cost;
-                }
-                break;
+			for (int i = 0; i < f.qualities.Count; i++)
+			{
+				if (f.qualities[i].quality == Item.Quality.Default) continue;
 
-            case Item.Type.Keyboard:
-                for (int i = 0; i < results.Length; i++)
-                {
-                    results[i].text = "+" + itemType[i].mechanics + " mechanics, -$" + itemType[i].cost;
-                }
-                break;
+				foreach (Skill s in f.qualities[i].skills)
+				{
+					switch (s.type)
+					{
+						case Skill.Type.GameKnowledge:
+							gameKnowledge.Add(s.amount);
+							break;
 
-            case Item.Type.Mouse:
-                for (int i = 0; i < results.Length; i++)
-                {
-                    results[i].text = "+" + itemType[i].mechanics + " mechanics, -$" + itemType[i].cost;
-                }
-                break;
+						case Skill.Type.Mechanics:
+							mechanics.Add(s.amount);
+							break;
 
-            case Item.Type.Screen:
-                for (int i = 0; i < results.Length; i++)
-                {
-                    results[i].text = "+" + itemType[i].teamPlay + " team play,\n +" + itemType[i].gameKnowledge + " game knowledge, -$" + itemType[i].cost;
-                }
-                break;
-        }
-    }
+						case Skill.Type.TeamPlay:
+							teamPlay.Add(s.amount);
+							break;
+					}
+				}
 
-    public Skill[] SetSkills(Item item, List<List<ItemForm>> itemList)
-    {
-        List<Skill> skillsBuffer = new List<Skill>();
+				cost.Add(f.qualities[i].cost);
+			}
+		}
 
-        for (int i = 0; i < itemList.Count; i++)
-        {
-            for (int j = 0; j < itemList[i].Count; j++)
-            {
-                if (item.type == itemList[i][j].type && item.quality == itemList[i][j].quality)
-                {
-                    skillsBuffer.Add(new Skill(Skill.Type.GameKnowledge, itemList[i][j].gameKnowledge));
-                    skillsBuffer.Add(new Skill(Skill.Type.TeamPlay, itemList[i][j].teamPlay));
-                    skillsBuffer.Add(new Skill(Skill.Type.Mechanics, itemList[i][j].mechanics));
-                }
-            }
-        }
+		for (int i = 0; i < results.Length; i++)
+		{
+			switch (item.type)
+			{
+				case Item.Type.Guide:
+					results[i].text = "+" + gameKnowledge[i] + " game knowledge, -$" + cost[i];
+					break;
 
-        Skill[] skills = new Skill[skillsBuffer.Count];
+				case Item.Type.Headset:
+					results[i].text = "+" + teamPlay[i] + " team play, -$" + cost[i];
+					break;
 
-        for (int i = 0; i < skills.Length; i++)
-        {
-            skills[i] = skillsBuffer[i];
-        }
+				case Item.Type.Keyboard:
+					results[i].text = "+" + mechanics[i] + " mechanics, -$" + cost[i];
+					break;
 
-        return skills;
+				case Item.Type.Mouse:
+					results[i].text = "+" + mechanics[i] + " mechanics, -$" + cost[i];
+					break;
+
+				case Item.Type.Screen:
+					results[i].text = "+" + teamPlay[i] + " team play,\n +" + gameKnowledge[i] + " game knowledge, -$" + cost[i];
+					break;
+			}
+		}
     }
 
     public void Initialize()
@@ -244,14 +247,14 @@ public class ItemMenu : MonoBehaviour
         results[2] = goodQuality.transform.Find("Result").GetComponent<Text>();
         results[3] = excellentQuality.transform.Find("Result").GetComponent<Text>();
 
+        ApplyItemResults(item.type);
         ApplyItemTitle(itemTitle, item.type.ToString());
-        ApplyItemResults(item, shopManager.GetAllItems);
-        ApplyAccquiredItems(item, gameManager.GetEquipedItems);
+		ApplyCurrentItems(gameManager.GetCurrentItems);
     }
 
     #region Getters & Setters
 
     public Item GetItem { get { return item; } }
 
-    #endregion
+	#endregion
 }

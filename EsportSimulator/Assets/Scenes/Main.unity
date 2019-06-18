@@ -1596,6 +1596,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 946908885}
   - {fileID: 1852164650}
   m_Father: {fileID: 2015654088}
   m_RootOrder: 0
@@ -1994,8 +1995,8 @@ RectTransform:
   m_Children:
   - {fileID: 1130913056}
   - {fileID: 728793694}
-  m_Father: {fileID: 588566973}
-  m_RootOrder: 2
+  m_Father: {fileID: 874417817}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2351,7 +2352,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &158959113
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2367,7 +2368,7 @@ RectTransform:
   - {fileID: 500973993}
   - {fileID: 991076855}
   m_Father: {fileID: 588566973}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -6580,7 +6581,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -10230,7 +10231,6 @@ RectTransform:
   m_Children:
   - {fileID: 951572981}
   - {fileID: 295953722}
-  - {fileID: 135858081}
   - {fileID: 1606226653}
   - {fileID: 874417817}
   - {fileID: 158959113}
@@ -14330,8 +14330,9 @@ RectTransform:
   - {fileID: 2055302122}
   - {fileID: 494116074}
   - {fileID: 1888458462}
+  - {fileID: 135858081}
   m_Father: {fileID: 588566973}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -15144,7 +15145,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -15309,6 +15310,17 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: SubMenu
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1888458466}
+        m_MethodName: Reset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -16065,6 +16077,145 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 943576167}
+  m_CullTransparentMesh: 0
+--- !u!1 &946908884
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 946908885}
+  - component: {fileID: 946908888}
+  - component: {fileID: 946908887}
+  - component: {fileID: 946908886}
+  m_Layer: 5
+  m_Name: CloseButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &946908885
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946908884}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 107715529}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -20.999996, y: -17}
+  m_SizeDelta: {x: 28, y: 25}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &946908886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946908884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 946908887}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2008183446}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1070449421}
+        m_MethodName: DisableAllObjectsOf
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: SubMenu
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &946908887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946908884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 7d7ccc8bc40d1df4e850a5e7888f977d, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300052, guid: 5ac532f8c1db72044978ab27c9570081, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!222 &946908888
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946908884}
   m_CullTransparentMesh: 0
 --- !u!1 &949353602
 GameObject:
@@ -18377,58 +18528,18 @@ MonoBehaviour:
   gameKnowledge: 0
   teamPlay: 0
   mechanics: 0
-  equipedItems:
-  - elementName: Mouse
-    type: 1
-    quality: 0
-    cost: 0
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 0
-    sprite: {fileID: 0}
-  - elementName: Keyboard
-    type: 2
-    quality: 0
-    cost: 0
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 0
-    sprite: {fileID: 0}
-  - elementName: Headset
-    type: 3
-    quality: 0
-    cost: 0
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 0
-    sprite: {fileID: 0}
-  - elementName: Guide
-    type: 4
-    quality: 0
-    cost: 0
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 0
-    sprite: {fileID: 0}
-  - elementName: Screen
-    type: 5
-    quality: 0
-    cost: 0
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 0
-    sprite: {fileID: 0}
+  currentItems: []
   currentAccommodation:
-    elementName: Garage
+    elementName: 
     accommodation:
       type: 0
-      bought: 1
+      bought: 0
     cost: 0
-    rent: 50
-    trainingLevel1Amount: 1
-    trainingLevel2Amount: 3
-    trainingLevel3Amount: 10
-    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
+    rent: 0
+    trainingLevel1Amount: 0
+    trainingLevel2Amount: 0
+    trainingLevel3Amount: 0
+    sprite: {fileID: 0}
   plannedEvents: []
   playerData: {fileID: 11400000, guid: b5721d035e1bf074789a14536477e52e, type: 2}
   gameData: {fileID: 11400000, guid: 89c743619d053e14397cbd8cd75f0f6b, type: 2}
@@ -18828,7 +18939,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d78d30ce1e501743a6c4d552210ac70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allObjects: []
 --- !u!114 &1070449422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18862,8 +18972,7 @@ MonoBehaviour:
     realMonth: 0
     realYear: 0
     plannedTournaments: []
-    savedEquipedItems: []
-    allAccommodations: []
+    currentItems: []
     currentAccommodation:
       elementName: 
       accommodation:
@@ -18921,8 +19030,7 @@ MonoBehaviour:
     realMonth: 0
     realYear: 0
     plannedTournaments: []
-    savedEquipedItems: []
-    allAccommodations: []
+    currentItems: []
     currentAccommodation:
       elementName: 
       accommodation:
@@ -19097,211 +19205,111 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8766864b192c8a549a2972a02f39c779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accommodations:
-  - elementName: Garage
-    accommodation:
-      type: 0
-      bought: 1
-    cost: 0
-    rent: 50
-    trainingLevel1Amount: 1
-    trainingLevel2Amount: 3
-    trainingLevel3Amount: 10
-    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
-  - elementName: Apartment
-    accommodation:
-      type: 1
-      bought: 0
-    cost: 1000
-    rent: 200
-    trainingLevel1Amount: 1
-    trainingLevel2Amount: 4
-    trainingLevel3Amount: 12
-    sprite: {fileID: 21300000, guid: 0191629f9b79a99409484d7b627166af, type: 3}
-  - elementName: House
-    accommodation:
-      type: 2
-      bought: 0
-    cost: 2000
-    rent: 500
-    trainingLevel1Amount: 2
-    trainingLevel2Amount: 5
-    trainingLevel3Amount: 15
-    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
-  - elementName: Luxury apartment
-    accommodation:
-      type: 3
-      bought: 0
-    cost: 5000
-    rent: 1500
-    trainingLevel1Amount: 3
-    trainingLevel2Amount: 6
-    trainingLevel3Amount: 20
-    sprite: {fileID: 21300000, guid: 0191629f9b79a99409484d7b627166af, type: 3}
+  accommodations: []
   gameGuides:
-  - elementName: Bad_Gg
-    type: 4
+  - type: 4
     quality: 1
     cost: 50
-    gameKnowledge: 10
-    teamPlay: 0
-    mechanics: 0
+    skills: []
     sprite: {fileID: 0}
-  - elementName: Standard_Gg
-    type: 4
+  - type: 4
     quality: 2
     cost: 150
-    gameKnowledge: 30
-    teamPlay: 0
-    mechanics: 0
+    skills: []
     sprite: {fileID: 0}
-  - elementName: Good_Gg
-    type: 4
+  - type: 4
     quality: 3
     cost: 300
-    gameKnowledge: 60
-    teamPlay: 0
-    mechanics: 0
+    skills: []
     sprite: {fileID: 0}
-  - elementName: Excellent_Gg
-    type: 4
+  - type: 4
     quality: 4
     cost: 600
-    gameKnowledge: 120
-    teamPlay: 0
-    mechanics: 0
+    skills: []
     sprite: {fileID: 0}
   headsets:
-  - elementName: Bad_Hs
-    type: 3
+  - type: 3
     quality: 1
     cost: 50
-    gameKnowledge: 0
-    teamPlay: 10
-    mechanics: 0
+    skills: []
     sprite: {fileID: 21300000, guid: 79b110acc8b3e82459a1605505504597, type: 3}
-  - elementName: Standard_Hs
-    type: 3
+  - type: 3
     quality: 2
     cost: 150
-    gameKnowledge: 0
-    teamPlay: 30
-    mechanics: 0
+    skills: []
     sprite: {fileID: 21300000, guid: 6687627d51768dd48a734aa1e110d396, type: 3}
-  - elementName: Good_Hs
-    type: 3
+  - type: 3
     quality: 3
     cost: 300
-    gameKnowledge: 0
-    teamPlay: 60
-    mechanics: 0
+    skills: []
     sprite: {fileID: 21300000, guid: ee775794d52f28c4cbdf656b5e09f6ba, type: 3}
-  - elementName: Excellent_Hs
-    type: 3
+  - type: 3
     quality: 4
     cost: 600
-    gameKnowledge: 0
-    teamPlay: 120
-    mechanics: 0
+    skills: []
     sprite: {fileID: 21300000, guid: d453bec757b8d654fa07ed51890d8e83, type: 3}
   mouses:
-  - elementName: Bad_Ms
-    type: 1
+  - type: 1
     quality: 1
     cost: 100
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 20
+    skills: []
     sprite: {fileID: 0}
-  - elementName: Standard_Ms
-    type: 1
+  - type: 1
     quality: 2
     cost: 400
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 80
+    skills: []
     sprite: {fileID: 0}
-  - elementName: Good_Ms
-    type: 1
+  - type: 1
     quality: 3
     cost: 2000
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 240
+    skills: []
     sprite: {fileID: 0}
-  - elementName: Excellent_Ms
-    type: 1
+  - type: 1
     quality: 4
     cost: 8000
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 500
+    skills: []
     sprite: {fileID: 0}
   keyboards:
-  - elementName: Bad_Kb
-    type: 2
+  - type: 2
     quality: 1
     cost: 100
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 20
+    skills: []
     sprite: {fileID: 21300000, guid: 10debfb5a49cf464b9a46c5f46840b03, type: 3}
-  - elementName: Standard_Kb
-    type: 2
+  - type: 2
     quality: 2
     cost: 200
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 30
+    skills: []
     sprite: {fileID: 21300000, guid: 70e474d072d6bb3459d7fd100a2f5099, type: 3}
-  - elementName: Good_Kb
-    type: 2
+  - type: 2
     quality: 3
     cost: 400
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 60
+    skills: []
     sprite: {fileID: 21300000, guid: 213e37d89c432024597c3275db0c75c0, type: 3}
-  - elementName: Excellent_Kb
-    type: 2
+  - type: 2
     quality: 4
     cost: 700
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 120
+    skills: []
     sprite: {fileID: 21300000, guid: d4dda4e3513a71c43b6455573791b626, type: 3}
   screens:
-  - elementName: Bad_Sn
-    type: 5
+  - type: 5
     quality: 1
     cost: 100
-    gameKnowledge: 10
-    teamPlay: 10
-    mechanics: 0
+    skills: []
     sprite: {fileID: 21300000, guid: 379fad23aa1d1d946a6042c7705e52f9, type: 3}
-  - elementName: Standard_Sn
-    type: 5
+  - type: 5
     quality: 2
     cost: 200
-    gameKnowledge: 15
-    teamPlay: 15
-    mechanics: 0
+    skills: []
     sprite: {fileID: 21300000, guid: 071479a424619244f8c74d2768997dd0, type: 3}
-  - elementName: Good_Sn
-    type: 5
+  - type: 5
     quality: 3
     cost: 400
-    gameKnowledge: 30
-    teamPlay: 30
-    mechanics: 0
+    skills: []
     sprite: {fileID: 21300000, guid: 826936e8eb42d5d4683f8b54891f7c80, type: 3}
-  - elementName: Excellent_Sn
-    type: 5
+  - type: 5
     quality: 4
     cost: 700
-    gameKnowledge: 60
-    teamPlay: 60
-    mechanics: 0
+    skills: []
     sprite: {fileID: 21300000, guid: 3ca736ce6fb65ac48aaada38b2d438d6, type: 3}
   artManager: {fileID: 949353603}
   uiManager: {fileID: 1579866881}
@@ -21355,6 +21363,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5ea0c32371440c7409f5ff4d0bc90623, type: 3}
   mainMenuClips:
   - {fileID: 8300000, guid: 910ad0d44a8c8d746b1d32bd1d1f12e6, type: 3}
+  - {fileID: 8300000, guid: f0196ce82a00426429406d2c5c4cb8d9, type: 3}
+  - {fileID: 8300000, guid: 5ea0c32371440c7409f5ff4d0bc90623, type: 3}
   tutorialClips:
   - {fileID: 8300000, guid: d56e0fd9eda93af4c81cefa1aef92a71, type: 3}
   currentPlaylist: []
@@ -30109,7 +30119,7 @@ RectTransform:
   - {fileID: 2008183447}
   - {fileID: 1739649206}
   m_Father: {fileID: 588566973}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -32737,7 +32747,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lerpActivated: 0
-  lerping: 1
+  lerping: 0
   lerpValue: 0
   lerpSpeed: 0.5
   lerpStop: 0
@@ -32950,7 +32960,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -34384,7 +34394,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 107715529}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -56193,17 +56203,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 3877833472896600812}
-        m_MethodName: SetItemSkills
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 3877833472896600812}
         m_MethodName: BuyItem
         m_Mode: 1
         m_Arguments:
@@ -58690,17 +58689,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 3877833472896600812}
-        m_MethodName: SetItemSkills
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 3877833472896600812}
         m_MethodName: BuyItem
         m_Mode: 1
         m_Arguments:
@@ -59673,17 +59661,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 3877833472896600812}
-        m_MethodName: SetItemSkills
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 3877833472896600812}
         m_MethodName: BuyItem
         m_Mode: 1
         m_Arguments:
@@ -60386,17 +60363,6 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Bad
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 3877833472896600812}
-        m_MethodName: SetItemSkills
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 3877833472896600812}
@@ -61706,8 +61672,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4a65547fea2a51448c6413dddedf1f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shopManager: {fileID: 1070449426}
-  gameManager: {fileID: 1070449418}
   itemTitle: {fileID: 3877833470915136432}
   badQuality: {fileID: 3877833471082106640}
   standardQuality: {fileID: 3877833472037586567}
@@ -61716,7 +61680,12 @@ MonoBehaviour:
   item:
     type: 0
     quality: 0
+    cost: 0
     skills: []
+    sprite: {fileID: 0}
+  playerData: {fileID: 11400000, guid: b5721d035e1bf074789a14536477e52e, type: 2}
+  shopManager: {fileID: 1070449426}
+  gameManager: {fileID: 1070449418}
 --- !u!224 &3877833472896600813
 RectTransform:
   m_ObjectHideFlags: 0

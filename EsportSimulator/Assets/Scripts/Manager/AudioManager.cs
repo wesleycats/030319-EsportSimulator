@@ -31,38 +31,28 @@ public class AudioManager : MonoBehaviour
 	private void Update()
 	{
 		if (!player.isPlaying && player.clip)
-		{
-			Play(GetNextClip);
-		}
+			PlaySong(GetNextSong);
 
 		if (fadeIn)
 		{
 			if (player.volume < 1)
-			{
 				player.volume += Time.deltaTime * fadeSpeed;
-			}
 			else
-			{
 				fadeIn = false;
-			}
 		}
 
 		if (fadeOut)
 		{
 			if (player.volume > 0)
-			{
 				player.volume -= Time.deltaTime * fadeSpeed;
-			}
 			else
-			{
 				fadeOut = false;
-			}
 		}
 	}
 
-	public void Play(AudioClip clip)
+	public void PlaySong(AudioClip song)
 	{
-		player.clip = clip;
+		player.clip = song;
 		FadeIn();
 		player.Play();
 	}
@@ -82,14 +72,15 @@ public class AudioManager : MonoBehaviour
 	}
 
 	public AudioClip GetCurrentClip { get { return player.clip; } }
-	public AudioClip GetNextClip {
+	public AudioClip GetNextSong
+	{
 		get
 		{
 			for (int i = 0; i < currentPlaylist.Count; i++)
 			{
 				if (currentPlaylist[i] == GetCurrentClip)
 				{
-					if (i >= currentPlaylist.Count)
+					if (i == currentPlaylist.Count - 1)
 						return currentPlaylist[0];
 					else
 						return currentPlaylist[i + 1];
@@ -99,7 +90,7 @@ public class AudioManager : MonoBehaviour
 			return null;
 		}
 	}
-	public AudioClip GetPrevClip
+	public AudioClip GetPrevSong
 	{
 		get
 		{
@@ -108,7 +99,7 @@ public class AudioManager : MonoBehaviour
 				if (currentPlaylist[i] == GetCurrentClip)
 				{
 					if (i <= 0)
-						return currentPlaylist[currentPlaylist.Count];
+						return currentPlaylist[currentPlaylist.Count - 1];
 					else
 						return currentPlaylist[i - 1];
 				}
@@ -125,7 +116,7 @@ public class AudioManager : MonoBehaviour
 		set
 		{
 			currentPlaylist = value;
-			Play(currentPlaylist[0]);
+			PlaySong(currentPlaylist[0]);
 		}
 	}
 }

@@ -7,13 +7,13 @@ public class ShopManager : MonoBehaviour
     #region Forms
     
     [SerializeField] private List<AccommodationForm> accommodations = new List<AccommodationForm>();
-    [SerializeField] private List<ItemForm> gameGuides = new List<ItemForm>();
-    [SerializeField] private List<ItemForm> headsets = new List<ItemForm>();
-    [SerializeField] private List<ItemForm> mouses = new List<ItemForm>();
-    [SerializeField] private List<ItemForm> keyboards = new List<ItemForm>();
-    [SerializeField] private List<ItemForm> screens = new List<ItemForm>();
+    [SerializeField] private List<Item> gameGuides = new List<Item>();
+    [SerializeField] private List<Item> headsets = new List<Item>();
+    [SerializeField] private List<Item> mouses = new List<Item>();
+    [SerializeField] private List<Item> keyboards = new List<Item>();
+    [SerializeField] private List<Item> screens = new List<Item>();
 
-    private List<List<ItemForm>> allItems = new List<List<ItemForm>>();
+    private List<List<Item>> allItems = new List<List<Item>>();
 
     #endregion
 
@@ -25,6 +25,7 @@ public class ShopManager : MonoBehaviour
 
 	private void Start()
     {
+		accommodations = playerData.GetAllAccommodations;
         allItems.Add(headsets);
         allItems.Add(gameGuides);
         allItems.Add(mouses);
@@ -32,22 +33,35 @@ public class ShopManager : MonoBehaviour
         allItems.Add(screens);
     }
 
-    public void BuyItem(Item item, List<List<ItemForm>> allItemList, List<ItemForm> equipedItems)
+    public void BuyItem(Item item, List<Item> currentItems)
     {
-		if (!gameManager.IsMoneyHighEnough(GetItemForm(item, allItems).cost))
+		if (!gameManager.IsMoneyHighEnough(item.cost))
 		{
 			Debug.LogWarning("Not Enough Money");
 			return;
 		}
 
-        SetEquipedItems(item, allItemList, equipedItems);
-        artManager.UpdateItems(equipedItems);
-        uiManager.UpdateItems(uiManager.allItemTexts, equipedItems);
+		artManager.UpdateItems(currentItems);
+        uiManager.UpdateItems(uiManager.allItemTexts, currentItems);
+        gameManager.DecreaseMoney(item.cost);
 
-        gameManager.DecreaseMoney(GetItemForm(item, allItems).cost);
-        gameManager.IncreaseGameKnowledge(GetItemSkill(item, Skill.Type.GameKnowledge));
-        gameManager.IncreaseTeamPlay(GetItemSkill(item, Skill.Type.TeamPlay));
-        gameManager.IncreaseMechanics(GetItemSkill(item, Skill.Type.Mechanics));
+		foreach (Skill s in item.skills)
+		{
+			switch (s.type)
+			{
+				case Skill.Type.GameKnowledge:
+					gameManager.IncreaseGameKnowledge(s.amount);
+					break;
+
+				case Skill.Type.Mechanics:
+					gameManager.IncreaseTeamPlay(s.amount);
+					break;
+
+				case Skill.Type.TeamPlay:
+					gameManager.IncreaseMechanics(s.amount);
+					break;
+			}
+		}
     }
 
     public void SwitchAccommodation(Accommodation accommodation, List<AccommodationForm> allAccommodations)
@@ -86,20 +100,7 @@ public class ShopManager : MonoBehaviour
 
         return skillAmount;
     }
-
-    public ItemForm GetItemForm(Item item, List<List<ItemForm>> allItemList)
-    {
-        for (int i = 0; i < allItemList.Count; i++)
-        {
-            for (int j = 0; j < allItemList[i].Count; j++)
-            {
-                if (item.type == allItemList[i][j].type && item.quality == allItemList[i][j].quality) return allItemList[i][j];
-            }
-        }
-
-        return allItemList[0][0];
-    }
-
+	
     public AccommodationForm GetAccommodationForm(Accommodation accommodation, List<AccommodationForm> allAccommodationList)
     {
         for (int i = 0; i < allAccommodationList.Count; i++)
@@ -110,18 +111,6 @@ public class ShopManager : MonoBehaviour
         return allAccommodationList[0];
     }
 
-    public void SetEquipedItems(Item item, List<List<ItemForm>> allItemList, List<ItemForm> equipedItems)
-    {
-        for (int i = 0; i < equipedItems.Count; i++)
-        {
-            if (item.type != equipedItems[i].type) continue;
-
-            equipedItems[i] = GetItemForm(item, allItemList);
-
-            return;
-        }
-    }
-
     public void Initialize()
     {
 		accommodations = playerData.GetAllAccommodations;
@@ -129,12 +118,12 @@ public class ShopManager : MonoBehaviour
 
     #region Getters & Setters
 
-    public List<ItemForm> GetHeadsetList { get { return headsets; } }
-    public List<ItemForm> GetGuideList { get { return gameGuides; } }
-    public List<ItemForm> GetMouseList { get { return mouses; } }
-    public List<ItemForm> GetKeyboardList { get { return keyboards; } }
-    public List<ItemForm> GetScreenList { get { return screens; } }
-    public List<List<ItemForm>> GetAllItems { get { return allItems; } }
+    public List<Item> GetHeadsetList { get { return headsets; } }
+    public List<Item> GetGuideList { get { return gameGuides; } }
+    public List<Item> GetMouseList { get { return mouses; } }
+    public List<Item> GetKeyboardList { get { return keyboards; } }
+    public List<Item> GetScreenList { get { return screens; } }
+    public List<List<Item>> GetAllItems { get { return allItems; } }
     public List<AccommodationForm> GetAllAccommodations { get { return accommodations; } }
 
     #endregion

@@ -66,7 +66,7 @@ public class UIManager : MonoBehaviour
 		UpdateProgress(gameManager.GetMoney, gameManager.GetRating, gameManager.GetFame);
 		UpdateNeeds(gameManager.GetTiredness, gameManager.GetHunger, gameManager.GetThirst);
 		UpdateSkills(gameManager.GetGameKnowledge, gameManager.GetTeamPlay, gameManager.GetMechanics);
-		UpdateItems(allItemTexts, gameManager.GetEquipedItems);
+		UpdateItems(allItemTexts, gameManager.GetCurrentItems);
 		UpdateLeaderboard(leaderboardManager.GetLeaderboard);
 	}
 
@@ -109,14 +109,14 @@ public class UIManager : MonoBehaviour
 		mechanicsValue.text = mechanics.ToString();
 	}
 
-	public void UpdateItems(List<Text> allItemTexts, List<ItemForm> equipedItems)
+	public void UpdateItems(List<Text> allItemTexts, List<Item> equipedItems)
 	{
 		string quality = "";
 		string type = "";
 
 		foreach (Text t in allItemTexts)
 		{
-			foreach (ItemForm f in equipedItems)
+			foreach (Item f in equipedItems)
 			{
 				type = f.type.ToString();
 				if (t.transform.parent.name == type)

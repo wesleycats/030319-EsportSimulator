@@ -74,7 +74,6 @@ public class GameLoader : MonoBehaviour
         playerData.SetMechanics = gameSaveData.mechanics;
 
 		playerData.SetCurrentAccommodation = gameSaveData.currentAccommodation;
-		playerData.SetAllAccommodations = gameSaveData.allAccommodations;
 		playerData.SetPlannedTournaments = gameSaveData.plannedTournaments;
 
         gameData.SetHour = gameSaveData.hour;

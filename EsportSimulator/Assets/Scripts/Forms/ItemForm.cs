@@ -1,14 +1,6 @@
-﻿using UnityEngine;
-
-[System.Serializable]
-public struct ItemForm
+﻿[System.Serializable]
+public class ItemForm
 {
-    public string elementName;
-    public Item.Type type;
-    public Item.Quality quality;
-    public int cost;
-    public int gameKnowledge;
-    public int teamPlay;
-    public int mechanics;
-    public Sprite sprite;
+	public string itemType;
+	public System.Collections.Generic.List<Item> qualities;
 }

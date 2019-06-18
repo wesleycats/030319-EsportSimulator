@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int teamPlay;
     [SerializeField] private int mechanics;
 
-	[SerializeField] private List<ItemForm> equipedItems = new List<ItemForm>();
+	[SerializeField] private List<Item> currentItems = new List<Item>();
     [SerializeField] private AccommodationForm currentAccommodation;
 	[SerializeField] private List<Event> plannedEvents;
 
@@ -47,8 +47,6 @@ public class GameManager : MonoBehaviour
 	public Debugger debug;
 
 	#endregion
-
-	//TODO set current accommodation to saved
 
 	void Start()
     {
@@ -80,8 +78,8 @@ public class GameManager : MonoBehaviour
 
     public void ResetGame()
     {
-        playerData.Reset(true);
-        gameData.Reset(true);
+        playerData.Reset();
+        gameData.Reset();
         LoadData();
     }
 
@@ -244,16 +242,10 @@ public class GameManager : MonoBehaviour
         gameKnowledge = playerData.GetGameKnowledge;
         teamPlay = playerData.GetTeamPlay;
         mechanics = playerData.GetMechanics;
-		currentAccommodation = playerData.GetCurrentAccommodation;
 		plannedEvents = playerData.GetPlannedTournaments;
-
-		for (int i = 0; i < playerData.GetSavedEquipedItems.Count; i++)
-		{
-			equipedItems[i] = playerData.GetSavedEquipedItems[i];
-		}
-
+		currentItems = playerData.GetCurrentItems;
 		currentAccommodation = playerData.GetCurrentAccommodation;
-    }
+	}
 
     #region Getters & Setters
 
@@ -270,7 +262,7 @@ public class GameManager : MonoBehaviour
     public int GetTeamPlay { get { return teamPlay; } }
     public int GetMechanics { get { return mechanics; } }
     public List<Event> GetPlannedEvents { get { return plannedEvents; } }
-	public List<ItemForm> GetEquipedItems { get { return equipedItems; } }
+	public List<Item> GetCurrentItems { get { return currentItems; } }
     public AccommodationForm GetCurrentAccommodation { get { return currentAccommodation; } }
 
     public int SetMoney { set { money = value; } }
@@ -284,8 +276,8 @@ public class GameManager : MonoBehaviour
     public int SetGameKnowledge { set { gameKnowledge = value; } }
     public int SetTeamPlay { set { teamPlay = value; } }
     public int SetMechanics { set { mechanics = value; } }
-    //public List<ItemForm> SetEquipedItems { set { equipedItems = value; } }
-    public AccommodationForm SetCurrentAccommodation { set { currentAccommodation = value; } }
+	//public List<Item> SetCurrentItems { set { currentItems = value; } }
+	public AccommodationForm SetCurrentAccommodation { set { currentAccommodation = value; } }
 
     public int Money { get { return money; } set { money = value; } }
     public int Rating { get { return rating; } set { rating = value; } }

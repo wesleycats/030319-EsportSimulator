@@ -77,6 +77,9 @@ public class MenuOptions : MonoBehaviour
 
 			case GameLoader.LoadType.LoadGame:
 				gameLoader.LoadGame(slotToLoad);
+				audioManager.CurrentPlaylist = audioManager.mainClips;
+				//switchOverlay.Lerp(1);
+				gameObject.SetActive(false);
 				break;
 
 			default:

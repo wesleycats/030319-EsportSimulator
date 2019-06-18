@@ -71,7 +71,7 @@ public class ArtManager : MonoBehaviour
 				workstation.sprite = tableSprites[0];//tableSprites[houseLevel];
 				 
 				// Sets item sprites to currently equiped items
-				foreach (ItemForm f in gameManager.GetEquipedItems)
+				foreach (Item f in gameManager.GetCurrentItems)
 				{
 					switch (f.type)
 					{
@@ -155,9 +155,9 @@ public class ArtManager : MonoBehaviour
 
     }
 
-    public void UpdateItems(List<ItemForm> equipedItems)
+    public void UpdateItems(List<Item> equipedItems)
     {
-        foreach (ItemForm f in equipedItems)
+        foreach (Item f in equipedItems)
         { 
             switch (f.type)
             {
@@ -181,7 +181,7 @@ public class ArtManager : MonoBehaviour
 
     public void Initialize()
     {
-        UpdateItems(gameManager.GetEquipedItems);
+        UpdateItems(gameManager.GetCurrentItems);
 		UpdateAccommodation(gameManager.GetCurrentAccommodation);
     }
 }
