@@ -102,7 +102,7 @@ public class PlayerData : ScriptableObject
     public int GetGameKnowledge { get { return gameKnowledge; } }
     public int GetTeamPlay { get { return teamPlay; } }
     public int GetMechanics { get { return mechanics; } }
-    public List<Item> GetCurrentItems { get { return currentItems; } }
+    public List<Item> CurrentItems { get { return currentItems; } }
     public List<ItemForm> GetAllItems { get { return allItems; } }
 	public List<Event> GetPlannedTournaments { get { return plannedTournaments; } }
 	public AccommodationForm GetCurrentAccommodation { get { return currentAccommodation; } }

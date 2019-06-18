@@ -59,6 +59,7 @@ public class UIManager : MonoBehaviour
 	public ContestManager contestManager;
 	public OpponentManager opponentManager;
 	public LeaderboardManager leaderboardManager;
+	public PlayerData playerData;
 
 	public void UpdateAll()
 	{
@@ -66,7 +67,7 @@ public class UIManager : MonoBehaviour
 		UpdateProgress(gameManager.GetMoney, gameManager.GetRating, gameManager.GetFame);
 		UpdateNeeds(gameManager.GetTiredness, gameManager.GetHunger, gameManager.GetThirst);
 		UpdateSkills(gameManager.GetGameKnowledge, gameManager.GetTeamPlay, gameManager.GetMechanics);
-		UpdateItems(allItemTexts, gameManager.GetCurrentItems);
+		UpdateItems(allItemTexts, gameManager.CurrentItems);
 		UpdateLeaderboard(leaderboardManager.GetLeaderboard);
 	}
 
@@ -128,12 +129,12 @@ public class UIManager : MonoBehaviour
 		}
 	}
 
-	public void UpdateAccommodations(List<Button> allAccommdationButton, AccommodationForm currentAccommodation, List<AccommodationForm> allAccommodations)
+	public void UpdateAccommodations(List<Button> allAccommdationButton, AccommodationForm currentAccommodation)
 	{
 		string status = "";
 		foreach (Button b in allAccommdationButton)
 		{
-			foreach (AccommodationForm a in allAccommodations)
+			foreach (AccommodationForm a in playerData.GetAllAccommodations)
 			{
 				b.interactable = true;
 

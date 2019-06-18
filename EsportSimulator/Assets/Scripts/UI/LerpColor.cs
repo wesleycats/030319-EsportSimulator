@@ -21,7 +21,9 @@ public class LerpColor : MonoBehaviour
     private float lerpSteps;
     [SerializeField] private int timer;
 	[SerializeField] private int lerpAmount;
+	private bool send = true;
 
+	[Header("References")]
     public Color startColor;
     public Color endColor;
     public Image image;
@@ -30,6 +32,22 @@ public class LerpColor : MonoBehaviour
 	/// Initiates lerping functionality
 	/// </summary>
 	/// <param name="amount"></param>
+	public void Lerp(int amount, bool sendWhenStopped)
+	{
+		lerpActivated = true;
+		lerping = true;
+		paused = false;
+		lerpMaxAmount = amount;
+
+		if (lerpValue >= 1)
+			increasing = false;
+		else
+			increasing = true;
+
+		lerping = true;
+		send = sendWhenStopped;
+	}
+
 	public void Lerp(int amount)
 	{
 		lerpActivated = true;
@@ -44,8 +62,8 @@ public class LerpColor : MonoBehaviour
 
 		lerping = true;
 	}
-    
-    void Update()
+
+	void Update()
     {
         if (!lerpActivated) return;
 
@@ -110,7 +128,7 @@ public class LerpColor : MonoBehaviour
 		paused = false;
 		lerpAmount = 0;
 
-		if (LerpStopped == null) return;
+		if (LerpStopped == null || !send) return;
 
 		LerpStopped(true);
 	}

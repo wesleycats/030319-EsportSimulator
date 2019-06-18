@@ -9,7 +9,6 @@ public class GameLoader : MonoBehaviour
 
 	[SerializeField] private float loadTime;
 
-    public LerpColor switchOverlay;
     public GameSaver gameSaver;
     public GameData gameData;
     public PlayerData playerData;
@@ -19,9 +18,10 @@ public class GameLoader : MonoBehaviour
     public GameSaveData gameSaveData;
 
     private int saveSlotToBeCleared = 0;
+	private int slotToBeLoaded = 0;
     private string dataPath;
 
-    public void LoadGame(int saveSlot)
+	public void LoadGame(int saveSlot)
     {
         if (saveSlot < 0 || saveSlot > gameSaver.GetMaxSaveSlots)
         {
@@ -30,28 +30,10 @@ public class GameLoader : MonoBehaviour
         }
         dataPath = Path.Combine(Application.persistentDataPath, "GameSaveData_SaveSlot_" + saveSlot + ".txt");
 
-		switchOverlay.Lerp(1);
-        StartCoroutine(LoadDelayer(saveSlot));
+		LoadData(saveSlot, dataPath);
     }
 
-    private IEnumerator LoadDelayer(int saveSlot)
-    {
-        yield return new WaitForSeconds(loadTime);
-
-        if (!switchOverlay.Lerping && switchOverlay.LerpValue == 1)
-        {
-            LoadData(saveSlot, dataPath);
-
-			switchOverlay.Lerp(1);
-            buttonManager.EnableAllButtons();
-        }
-        else
-        {
-            StartCoroutine(LoadDelayer(saveSlot));
-        }
-    }
-
-    public void LoadData(int saveSlot, string path)
+	public void LoadData(int saveSlot, string path)
     {
         using (StreamReader streamReader = File.OpenText(path))
         {
@@ -74,6 +56,7 @@ public class GameLoader : MonoBehaviour
         playerData.SetMechanics = gameSaveData.mechanics;
 
 		playerData.SetCurrentAccommodation = gameSaveData.currentAccommodation;
+		playerData.SetCurrentItems = gameSaveData.currentItems;
 		playerData.SetPlannedTournaments = gameSaveData.plannedTournaments;
 
         gameData.SetHour = gameSaveData.hour;
@@ -82,13 +65,6 @@ public class GameLoader : MonoBehaviour
         gameData.SetMonth = gameSaveData.month;
 
         opponentManager.ApplyOpponents(gameSaveData.opponents, opponentManager.GetAllOpponents);
-
-        mainMenu.SetActive(false);
-
-        switchOverlay.LerpMaxAmount = 1;
-        switchOverlay.Increasing = false;
-        switchOverlay.Lerping = true;
-        switchOverlay.LerpActivated = true;
     }
 
     public void ClearSlot()

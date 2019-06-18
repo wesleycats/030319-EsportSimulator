@@ -15,6 +15,7 @@ TagManager:
   - Good
   - Excellent
   - Tutorial
+  - ItemMenu
   layers:
   - Default
   - TransparentFX

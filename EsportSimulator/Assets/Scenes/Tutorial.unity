@@ -2447,7 +2447,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1711852441}
+      - m_Target: {fileID: 0}
         m_MethodName: SetItemQuality
         m_Mode: 5
         m_Arguments:
@@ -2458,7 +2458,7 @@ MonoBehaviour:
           m_StringArgument: Excellent
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1711852441}
+      - m_Target: {fileID: 0}
         m_MethodName: SetItemSkills
         m_Mode: 1
         m_Arguments:
@@ -2469,7 +2469,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1711852441}
+      - m_Target: {fileID: 0}
         m_MethodName: BuyItem
         m_Mode: 1
         m_Arguments:
@@ -22272,8 +22272,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 414613398}
   m_HandleRect: {fileID: 414613397}
   m_Direction: 2
-  m_Value: 0.9999996
-  m_Size: 0.24999999
+  m_Value: 0.9999998
+  m_Size: 0.25000003
   m_NumberOfSteps: 1
   m_OnValueChanged:
     m_PersistentCalls:
@@ -23310,47 +23310,7 @@ MonoBehaviour:
   gameKnowledge: 0
   teamPlay: 0
   mechanics: 0
-  equipedItems:
-  - elementName: Mouse
-    type: 1
-    quality: 0
-    cost: 0
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 0
-    sprite: {fileID: 0}
-  - elementName: Keyboard
-    type: 2
-    quality: 0
-    cost: 0
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 0
-    sprite: {fileID: 0}
-  - elementName: Headset
-    type: 3
-    quality: 0
-    cost: 0
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 0
-    sprite: {fileID: 0}
-  - elementName: Guide
-    type: 4
-    quality: 0
-    cost: 0
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 0
-    sprite: {fileID: 0}
-  - elementName: Screen
-    type: 5
-    quality: 0
-    cost: 0
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 0
-    sprite: {fileID: 0}
+  currentItems: []
   currentAccommodation:
     elementName: Garage
     accommodation:
@@ -23761,7 +23721,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d78d30ce1e501743a6c4d552210ac70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allObjects: []
 --- !u!114 &1070449422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23795,8 +23754,7 @@ MonoBehaviour:
     realMonth: 0
     realYear: 0
     plannedTournaments: []
-    savedEquipedItems: []
-    allAccommodations: []
+    currentItems: []
     currentAccommodation:
       elementName: 
       accommodation:
@@ -23854,8 +23812,7 @@ MonoBehaviour:
     realMonth: 0
     realYear: 0
     plannedTournaments: []
-    savedEquipedItems: []
-    allAccommodations: []
+    currentItems: []
     currentAccommodation:
       elementName: 
       accommodation:
@@ -24030,217 +23987,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8766864b192c8a549a2972a02f39c779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accommodations:
-  - elementName: Garage
-    accommodation:
-      type: 0
-      bought: 1
-    cost: 0
-    rent: 50
-    trainingLevel1Amount: 0
-    trainingLevel2Amount: 0
-    trainingLevel3Amount: 0
-    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
-  - elementName: Apartment
-    accommodation:
-      type: 1
-      bought: 0
-    cost: 1000
-    rent: 200
-    trainingLevel1Amount: 0
-    trainingLevel2Amount: 0
-    trainingLevel3Amount: 0
-    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
-  - elementName: House
-    accommodation:
-      type: 2
-      bought: 0
-    cost: 2000
-    rent: 500
-    trainingLevel1Amount: 0
-    trainingLevel2Amount: 0
-    trainingLevel3Amount: 0
-    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
-  - elementName: Luxury apartment
-    accommodation:
-      type: 3
-      bought: 0
-    cost: 5000
-    rent: 1500
-    trainingLevel1Amount: 0
-    trainingLevel2Amount: 0
-    trainingLevel3Amount: 0
-    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
-  gameGuides:
-  - elementName: Bad_Gg
-    type: 4
-    quality: 1
-    cost: 50
-    gameKnowledge: 10
-    teamPlay: 0
-    mechanics: 0
-    sprite: {fileID: 0}
-  - elementName: Standard_Gg
-    type: 4
-    quality: 2
-    cost: 150
-    gameKnowledge: 30
-    teamPlay: 0
-    mechanics: 0
-    sprite: {fileID: 0}
-  - elementName: Good_Gg
-    type: 4
-    quality: 3
-    cost: 300
-    gameKnowledge: 60
-    teamPlay: 0
-    mechanics: 0
-    sprite: {fileID: 0}
-  - elementName: Excellent_Gg
-    type: 4
-    quality: 4
-    cost: 600
-    gameKnowledge: 120
-    teamPlay: 0
-    mechanics: 0
-    sprite: {fileID: 0}
-  headsets:
-  - elementName: Bad_Hs
-    type: 3
-    quality: 1
-    cost: 50
-    gameKnowledge: 0
-    teamPlay: 10
-    mechanics: 0
-    sprite: {fileID: 21300000, guid: 79b110acc8b3e82459a1605505504597, type: 3}
-  - elementName: Standard_Hs
-    type: 3
-    quality: 2
-    cost: 150
-    gameKnowledge: 0
-    teamPlay: 30
-    mechanics: 0
-    sprite: {fileID: 21300000, guid: 6687627d51768dd48a734aa1e110d396, type: 3}
-  - elementName: Good_Hs
-    type: 3
-    quality: 3
-    cost: 300
-    gameKnowledge: 0
-    teamPlay: 60
-    mechanics: 0
-    sprite: {fileID: 21300000, guid: ee775794d52f28c4cbdf656b5e09f6ba, type: 3}
-  - elementName: Excellent_Hs
-    type: 3
-    quality: 4
-    cost: 600
-    gameKnowledge: 0
-    teamPlay: 120
-    mechanics: 0
-    sprite: {fileID: 21300000, guid: d453bec757b8d654fa07ed51890d8e83, type: 3}
-  mouses:
-  - elementName: Bad_Ms
-    type: 1
-    quality: 1
-    cost: 100
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 20
-    sprite: {fileID: 0}
-  - elementName: Standard_Ms
-    type: 1
-    quality: 2
-    cost: 400
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 80
-    sprite: {fileID: 0}
-  - elementName: Good_Ms
-    type: 1
-    quality: 3
-    cost: 2000
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 240
-    sprite: {fileID: 0}
-  - elementName: Excellent_Ms
-    type: 1
-    quality: 4
-    cost: 8000
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 500
-    sprite: {fileID: 0}
-  keyboards:
-  - elementName: Bad_Kb
-    type: 2
-    quality: 1
-    cost: 100
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 20
-    sprite: {fileID: 21300000, guid: 10debfb5a49cf464b9a46c5f46840b03, type: 3}
-  - elementName: Standard_Kb
-    type: 2
-    quality: 2
-    cost: 200
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 30
-    sprite: {fileID: 21300000, guid: 70e474d072d6bb3459d7fd100a2f5099, type: 3}
-  - elementName: Good_Kb
-    type: 2
-    quality: 3
-    cost: 400
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 60
-    sprite: {fileID: 21300000, guid: 213e37d89c432024597c3275db0c75c0, type: 3}
-  - elementName: Excellent_Kb
-    type: 2
-    quality: 4
-    cost: 700
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 120
-    sprite: {fileID: 21300000, guid: d4dda4e3513a71c43b6455573791b626, type: 3}
-  screens:
-  - elementName: Bad_Sn
-    type: 5
-    quality: 1
-    cost: 100
-    gameKnowledge: 10
-    teamPlay: 10
-    mechanics: 0
-    sprite: {fileID: 21300000, guid: 379fad23aa1d1d946a6042c7705e52f9, type: 3}
-  - elementName: Standard_Sn
-    type: 5
-    quality: 2
-    cost: 200
-    gameKnowledge: 15
-    teamPlay: 15
-    mechanics: 0
-    sprite: {fileID: 21300000, guid: 071479a424619244f8c74d2768997dd0, type: 3}
-  - elementName: Good_Sn
-    type: 5
-    quality: 3
-    cost: 400
-    gameKnowledge: 30
-    teamPlay: 30
-    mechanics: 0
-    sprite: {fileID: 21300000, guid: 826936e8eb42d5d4683f8b54891f7c80, type: 3}
-  - elementName: Excellent_Sn
-    type: 5
-    quality: 4
-    cost: 700
-    gameKnowledge: 60
-    teamPlay: 60
-    mechanics: 0
-    sprite: {fileID: 21300000, guid: 3ca736ce6fb65ac48aaada38b2d438d6, type: 3}
   artManager: {fileID: 949353603}
   uiManager: {fileID: 1579866881}
   resultManager: {fileID: 1070449420}
   gameManager: {fileID: 1070449418}
   playerData: {fileID: 11400000, guid: 6c93e5593e3aa0745bfd7099e4de7d3d, type: 2}
+  badItemQuality: {fileID: 0}
+  standardItemQuality: {fileID: 0}
+  goodItemQuality: {fileID: 0}
+  excellentItemQuality: {fileID: 0}
+  itemTitle: {fileID: 0}
 --- !u!114 &1070449427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25718,7 +25474,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1711852441}
+      - m_Target: {fileID: 0}
         m_MethodName: SetItemType
         m_Mode: 5
         m_Arguments:
@@ -25729,7 +25485,7 @@ MonoBehaviour:
           m_StringArgument: Keyboard
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1711852441}
+      - m_Target: {fileID: 0}
         m_MethodName: Initialize
         m_Mode: 1
         m_Arguments:
@@ -27158,7 +26914,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1711852441}
+      - m_Target: {fileID: 0}
         m_MethodName: SetItemType
         m_Mode: 5
         m_Arguments:
@@ -27169,7 +26925,7 @@ MonoBehaviour:
           m_StringArgument: Screen
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1711852441}
+      - m_Target: {fileID: 0}
         m_MethodName: Initialize
         m_Mode: 1
         m_Arguments:
@@ -28097,7 +27853,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1711852441}
+      - m_Target: {fileID: 0}
         m_MethodName: SetItemQuality
         m_Mode: 5
         m_Arguments:
@@ -28108,7 +27864,7 @@ MonoBehaviour:
           m_StringArgument: Good
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1711852441}
+      - m_Target: {fileID: 0}
         m_MethodName: SetItemSkills
         m_Mode: 1
         m_Arguments:
@@ -28119,7 +27875,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1711852441}
+      - m_Target: {fileID: 0}
         m_MethodName: BuyItem
         m_Mode: 1
         m_Arguments:
@@ -30478,7 +30234,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1711852441}
+      - m_Target: {fileID: 0}
         m_MethodName: SetItemType
         m_Mode: 5
         m_Arguments:
@@ -30489,7 +30245,7 @@ MonoBehaviour:
           m_StringArgument: Mouse
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1711852441}
+      - m_Target: {fileID: 0}
         m_MethodName: Initialize
         m_Mode: 1
         m_Arguments:
@@ -33225,7 +32981,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1711852441}
+      - m_Target: {fileID: 0}
         m_MethodName: SetItemType
         m_Mode: 5
         m_Arguments:
@@ -33236,7 +32992,7 @@ MonoBehaviour:
           m_StringArgument: Guide
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1711852441}
+      - m_Target: {fileID: 0}
         m_MethodName: Initialize
         m_Mode: 1
         m_Arguments:
@@ -40230,6 +39986,7 @@ MonoBehaviour:
   contestManager: {fileID: 1070449427}
   opponentManager: {fileID: 1070449424}
   leaderboardManager: {fileID: 1070449425}
+  playerData: {fileID: 0}
 --- !u!4 &1579866882
 Transform:
   m_ObjectHideFlags: 0
@@ -42413,7 +42170,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1711852440}
-  - component: {fileID: 1711852441}
   m_Layer: 5
   m_Name: ItemMenu
   m_TagString: SubMenu
@@ -42441,29 +42197,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1711852441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1711852439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4a65547fea2a51448c6413dddedf1f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shopManager: {fileID: 1070449426}
-  gameManager: {fileID: 1070449418}
-  itemTitle: {fileID: 403933893}
-  badQuality: {fileID: 300928613}
-  standardQuality: {fileID: 1526482930}
-  goodQuality: {fileID: 372386352}
-  excellentQuality: {fileID: 1722611446}
-  item:
-    type: 0
-    quality: 0
-    skills: []
 --- !u!1 &1713479641
 GameObject:
   m_ObjectHideFlags: 0
@@ -47182,7 +46915,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1711852441}
+      - m_Target: {fileID: 0}
         m_MethodName: SetItemQuality
         m_Mode: 5
         m_Arguments:
@@ -47193,7 +46926,7 @@ MonoBehaviour:
           m_StringArgument: Bad
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1711852441}
+      - m_Target: {fileID: 0}
         m_MethodName: SetItemSkills
         m_Mode: 1
         m_Arguments:
@@ -47204,7 +46937,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1711852441}
+      - m_Target: {fileID: 0}
         m_MethodName: BuyItem
         m_Mode: 1
         m_Arguments:
@@ -48747,6 +48480,7 @@ MonoBehaviour:
   shopManager: {fileID: 1070449426}
   gameManager: {fileID: 1070449418}
   uiManager: {fileID: 1579866881}
+  playerData: {fileID: 0}
   accommodation:
     type: 0
     bought: 0
@@ -49129,7 +48863,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1711852441}
+      - m_Target: {fileID: 0}
         m_MethodName: SetItemType
         m_Mode: 5
         m_Arguments:
@@ -49140,7 +48874,7 @@ MonoBehaviour:
           m_StringArgument: Headset
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1711852441}
+      - m_Target: {fileID: 0}
         m_MethodName: Initialize
         m_Mode: 1
         m_Arguments:
@@ -51428,7 +51162,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1711852441}
+      - m_Target: {fileID: 0}
         m_MethodName: SetItemQuality
         m_Mode: 5
         m_Arguments:
@@ -51439,7 +51173,7 @@ MonoBehaviour:
           m_StringArgument: Standard
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1711852441}
+      - m_Target: {fileID: 0}
         m_MethodName: SetItemSkills
         m_Mode: 1
         m_Arguments:
@@ -51450,7 +51184,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1711852441}
+      - m_Target: {fileID: 0}
         m_MethodName: BuyItem
         m_Mode: 1
         m_Arguments:

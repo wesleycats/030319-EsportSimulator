@@ -43,7 +43,7 @@ MonoBehaviour:
         amount: 30
       sprite: {fileID: 0}
     - type: 1
-      quality: 3
+      quality: 4
       cost: 300
       skills:
       - type: 3

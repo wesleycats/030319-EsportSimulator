@@ -12,6 +12,7 @@ public class AccommodationMenu : MonoBehaviour
     public ShopManager shopManager;
     public GameManager gameManager;
     public UIManager uiManager;
+	public PlayerData playerData;
 
     [SerializeField] private Accommodation accommodation;
     
@@ -24,17 +25,17 @@ public class AccommodationMenu : MonoBehaviour
     {
         if (accommodation.bought)
         {
-            shopManager.SwitchAccommodation(accommodation, shopManager.GetAllAccommodations);
+            shopManager.SwitchAccommodation(accommodation);
             return;
         }
 
-        if (!gameManager.IsMoneyHighEnough(shopManager.GetAccommodationForm(accommodation, shopManager.GetAllAccommodations).cost))
+        if (!gameManager.IsMoneyHighEnough(shopManager.GetAccommodationForm(accommodation).cost))
         {
             Debug.LogWarning("Not Enough Money");
             return;
         }
 
-        shopManager.SwitchAccommodation(accommodation, shopManager.GetAllAccommodations);
+        shopManager.SwitchAccommodation(accommodation);
     }
 
     /// <summary>
@@ -51,12 +52,12 @@ public class AccommodationMenu : MonoBehaviour
     /// <param name="accommodationLevel"></param>
     public void SetAccommodation(int accommodationLevel)
     {
-        accommodation = shopManager.GetAllAccommodations[accommodationLevel].accommodation;
+        accommodation = playerData.GetAllAccommodations[accommodationLevel].accommodation;
     }
 
     public void Initialize()
     {
-        uiManager.UpdateAccommodations(uiManager.allAccommdationButtons, gameManager.GetCurrentAccommodation, shopManager.GetAllAccommodations);
+        uiManager.UpdateAccommodations(uiManager.allAccommdationButtons, gameManager.GetCurrentAccommodation);
     }
 
     #region Getters & Setters

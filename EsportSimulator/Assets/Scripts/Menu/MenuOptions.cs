@@ -17,7 +17,6 @@ public class MenuOptions : MonoBehaviour
     public GameLoader gameLoader;
 	public LerpColor switchOverlay;
 	public GameData gameData;
-
 	private AudioManager audioManager;
 
 	private void Awake()
@@ -78,7 +77,7 @@ public class MenuOptions : MonoBehaviour
 			case GameLoader.LoadType.LoadGame:
 				gameLoader.LoadGame(slotToLoad);
 				audioManager.CurrentPlaylist = audioManager.mainClips;
-				//switchOverlay.Lerp(1);
+				switchOverlay.Lerp(1, false);
 				gameObject.SetActive(false);
 				break;
 

@@ -534,90 +534,108 @@ public class ResultManager : MonoBehaviour
 
     public void Eat(int foodLevel)
     {
-		if (gameManager.Hunger == 0) return;
+		//TODO combine with Drink()
+
+		if (gameManager.Hunger == 0)
+		{
+			Debug.LogWarning("You are currently full, you can buy food when you are hungry");
+			return;
+		}
+
+		int cost = 0;
+		int hunger = 0;
 
         switch (foodLevel)
         {
             case 0:
-                //TODO create not enough money signal
-                if (gameManager.GetMoney < foodBad.Money) return;
-
-                DecreaseHunger(foodBad.Hunger);
-                gameManager.DecreaseMoney(foodBad.Money);
+				cost = foodBad.Money;
+				hunger = foodBad.Hunger;
                 break;
+
             case 1:
-                //TODO create not enough money signal
-                if (gameManager.GetMoney < foodStandard.Money) return;
+				cost = foodStandard.Money;
+				hunger = foodStandard.Hunger;
+				break;
 
-                DecreaseHunger(foodStandard.Hunger);
-                gameManager.DecreaseMoney(foodStandard.Money);
-                break;
             case 2:
-                //TODO create not enough money signal
-                if (gameManager.GetMoney < foodGood.Money) return;
+				cost = foodGood.Money;
+				hunger = foodGood.Hunger;
+				break;
 
-                DecreaseHunger(foodGood.Hunger);
-                gameManager.DecreaseMoney(foodGood.Money);
-                break;
             case 3:
-                //TODO create not enough money signal
-                if (gameManager.GetMoney < foodExcellent.Money) return;
-
-                DecreaseHunger(foodExcellent.Hunger);
-                gameManager.DecreaseMoney(foodExcellent.Money);
-                break;
+				cost = foodExcellent.Money;
+				hunger = foodExcellent.Hunger;
+				break;
 
             default:
                 Debug.LogError("No food level has been given");
-                break;
+                return;
         }
 
-        uiManager.UpdateProgress(gameManager.GetMoney, gameManager.Rating, gameManager.Fame);
+		if (!gameManager.IsMoneyHighEnough(cost))
+		{
+			Debug.LogWarning("Not Enough Money");
+			return;
+		}
+
+		DecreaseHunger(hunger);
+		gameManager.DecreaseMoney(cost);
+
+		uiManager.UpdateProgress(gameManager.GetMoney, gameManager.Rating, gameManager.Fame);
         uiManager.UpdateNeeds(gameManager.Tiredness, gameManager.Hunger, gameManager.Thirst);
     }
 
     public void Drink(int drinkLevel)
-    {
-		if (gameManager.Thirst == 0) return;
+	{
+		//TODO combine with Eat()
+
+		if (gameManager.Thirst == 0)
+		{
+			Debug.LogWarning("You are currently hydrated, you can buy drinks when you are thirsty");
+			return;
+		}
+
+		int cost = 0;
+		int thirst = 0;
 
 		switch (drinkLevel)
-        {
-            case 1:
-                //TODO create not enough money signal
-                if (gameManager.GetMoney < drinkBad.Money) return;
+		{
+			case 0:
+				cost = drinkBad.Money;
+				thirst = drinkBad.Thirst;
+				break;
 
-                DecreaseThirst(drinkBad.Thirst);
-                gameManager.DecreaseMoney(drinkBad.Money);
-                break;
-            case 2:
-                //TODO create not enough money signal
-                if (gameManager.GetMoney < drinkStandard.Money) return;
+			case 1:
+				cost = drinkStandard.Money;
+				thirst = drinkStandard.Thirst;
+				break;
 
-                DecreaseThirst(drinkStandard.Thirst);
-                gameManager.DecreaseMoney(drinkStandard.Money);
-                break;
-            case 3:
-                //TODO create not enough money signal
-                if (gameManager.GetMoney < drinkGood.Money) return;
+			case 2:
+				cost = drinkGood.Money;
+				thirst = drinkGood.Thirst;
+				break;
 
-                DecreaseThirst(drinkGood.Thirst);
-                gameManager.DecreaseMoney(drinkGood.Money);
-                break;
-            case 4:
-                //TODO create not enough money signal
-                if (gameManager.GetMoney < drinkExcellent.Money) return;
+			case 3:
+				cost = drinkExcellent.Money;
+				thirst = drinkExcellent.Thirst;
+				break;
 
-                DecreaseThirst(drinkExcellent.Thirst);
-                gameManager.DecreaseMoney(drinkExcellent.Money);
-                break;
+			default:
+				Debug.LogError("No food level has been given");
+				return;
+		}
 
-            default:
-                Debug.LogError("No drink level has been given");
-                break;
-        }
+		if (!gameManager.IsMoneyHighEnough(cost))
+		{
+			Debug.LogWarning("Not Enough Money");
+			return;
+		}
 
-        uiManager.UpdateProgress(gameManager.GetMoney, gameManager.Rating, gameManager.Fame);
-        uiManager.UpdateNeeds(gameManager.Tiredness, gameManager.Hunger, gameManager.Thirst);
+		DecreaseThirst(thirst);
+		gameManager.DecreaseMoney(cost);
+
+		uiManager.UpdateProgress(gameManager.GetMoney, gameManager.Rating, gameManager.Fame);
+		uiManager.UpdateNeeds(gameManager.Tiredness, gameManager.Hunger, gameManager.Thirst);
     }
     
     private void IncreaseHunger(int amount)

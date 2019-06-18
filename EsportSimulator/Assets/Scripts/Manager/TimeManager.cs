@@ -129,10 +129,8 @@ public class TimeManager : MonoBehaviour
 		{
 			for (int i = 0; i < gameManager.GetPlannedEvents.Count; i++)
 			{
-				if (month == gameManager.GetPlannedEvents[i].month)
-				{
+				if (gameManager.GetPlannedEventOn(month, gameManager.GetPlannedEvents) != null)
 					activityManager.ChangeActivity(ActivityManager.Activity.Contest, contestManager.GetContestDuration);
-				}
 			}
 		}
 		else

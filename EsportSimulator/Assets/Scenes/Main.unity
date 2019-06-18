@@ -2352,7 +2352,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &158959113
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2699,7 +2699,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: -$20, -50% hunger
+  m_Text: -$25, -25% hunger
 --- !u!222 &173568046
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17668,8 +17668,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 414613398}
   m_HandleRect: {fileID: 414613397}
   m_Direction: 2
-  m_Value: 0.9999996
-  m_Size: 0.24999999
+  m_Value: 0.9999998
+  m_Size: 0.25000003
   m_NumberOfSteps: 1
   m_OnValueChanged:
     m_PersistentCalls:
@@ -19003,7 +19003,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadTime: 2
-  switchOverlay: {fileID: 1739649207}
   gameSaver: {fileID: 1070449422}
   gameData: {fileID: 11400000, guid: 89c743619d053e14397cbd8cd75f0f6b, type: 2}
   playerData: {fileID: 11400000, guid: b5721d035e1bf074789a14536477e52e, type: 2}
@@ -19205,117 +19204,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8766864b192c8a549a2972a02f39c779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accommodations: []
-  gameGuides:
-  - type: 4
-    quality: 1
-    cost: 50
-    skills: []
-    sprite: {fileID: 0}
-  - type: 4
-    quality: 2
-    cost: 150
-    skills: []
-    sprite: {fileID: 0}
-  - type: 4
-    quality: 3
-    cost: 300
-    skills: []
-    sprite: {fileID: 0}
-  - type: 4
-    quality: 4
-    cost: 600
-    skills: []
-    sprite: {fileID: 0}
-  headsets:
-  - type: 3
-    quality: 1
-    cost: 50
-    skills: []
-    sprite: {fileID: 21300000, guid: 79b110acc8b3e82459a1605505504597, type: 3}
-  - type: 3
-    quality: 2
-    cost: 150
-    skills: []
-    sprite: {fileID: 21300000, guid: 6687627d51768dd48a734aa1e110d396, type: 3}
-  - type: 3
-    quality: 3
-    cost: 300
-    skills: []
-    sprite: {fileID: 21300000, guid: ee775794d52f28c4cbdf656b5e09f6ba, type: 3}
-  - type: 3
-    quality: 4
-    cost: 600
-    skills: []
-    sprite: {fileID: 21300000, guid: d453bec757b8d654fa07ed51890d8e83, type: 3}
-  mouses:
-  - type: 1
-    quality: 1
-    cost: 100
-    skills: []
-    sprite: {fileID: 0}
-  - type: 1
-    quality: 2
-    cost: 400
-    skills: []
-    sprite: {fileID: 0}
-  - type: 1
-    quality: 3
-    cost: 2000
-    skills: []
-    sprite: {fileID: 0}
-  - type: 1
-    quality: 4
-    cost: 8000
-    skills: []
-    sprite: {fileID: 0}
-  keyboards:
-  - type: 2
-    quality: 1
-    cost: 100
-    skills: []
-    sprite: {fileID: 21300000, guid: 10debfb5a49cf464b9a46c5f46840b03, type: 3}
-  - type: 2
-    quality: 2
-    cost: 200
-    skills: []
-    sprite: {fileID: 21300000, guid: 70e474d072d6bb3459d7fd100a2f5099, type: 3}
-  - type: 2
-    quality: 3
-    cost: 400
-    skills: []
-    sprite: {fileID: 21300000, guid: 213e37d89c432024597c3275db0c75c0, type: 3}
-  - type: 2
-    quality: 4
-    cost: 700
-    skills: []
-    sprite: {fileID: 21300000, guid: d4dda4e3513a71c43b6455573791b626, type: 3}
-  screens:
-  - type: 5
-    quality: 1
-    cost: 100
-    skills: []
-    sprite: {fileID: 21300000, guid: 379fad23aa1d1d946a6042c7705e52f9, type: 3}
-  - type: 5
-    quality: 2
-    cost: 200
-    skills: []
-    sprite: {fileID: 21300000, guid: 071479a424619244f8c74d2768997dd0, type: 3}
-  - type: 5
-    quality: 3
-    cost: 400
-    skills: []
-    sprite: {fileID: 21300000, guid: 826936e8eb42d5d4683f8b54891f7c80, type: 3}
-  - type: 5
-    quality: 4
-    cost: 700
-    skills: []
-    sprite: {fileID: 21300000, guid: 3ca736ce6fb65ac48aaada38b2d438d6, type: 3}
   artManager: {fileID: 949353603}
   uiManager: {fileID: 1579866881}
   resultManager: {fileID: 1070449420}
   gameManager: {fileID: 1070449418}
   playerData: {fileID: 11400000, guid: b5721d035e1bf074789a14536477e52e, type: 2}
+  badItemQuality: {fileID: 3877833471082106640}
+  standardItemQuality: {fileID: 3877833472037586567}
+  goodItemQuality: {fileID: 3877833471018003269}
+  excellentItemQuality: {fileID: 3877833472906835843}
+  itemTitle: {fileID: 3877833470915136432}
 --- !u!114 &1070449427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21418,7 +21316,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 2, y: 0.000045776367}
+  m_AnchoredPosition: {x: 2, y: 0.000076293945}
   m_SizeDelta: {x: -2, y: 200}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1185394901
@@ -29455,6 +29353,7 @@ MonoBehaviour:
   contestManager: {fileID: 1070449427}
   opponentManager: {fileID: 1070449424}
   leaderboardManager: {fileID: 1070449425}
+  playerData: {fileID: 0}
 --- !u!4 &1579866882
 Transform:
   m_ObjectHideFlags: 0
@@ -37242,15 +37141,15 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2008183446}
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1579866883}
+        m_MethodName: EnableAllButtonsOf
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: ItemMenu
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1070449421}
@@ -37262,6 +37161,17 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: SubMenu
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2008183446}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -40375,8 +40285,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 300}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 250}
+  m_SizeDelta: {x: 0, y: -100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &938364687069231396
 CanvasRenderer:
@@ -55585,7 +55495,7 @@ GameObject:
   - component: {fileID: 3877833471018003268}
   m_Layer: 5
   m_Name: GoodQuality
-  m_TagString: Good
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55810,7 +55720,7 @@ GameObject:
   - component: {fileID: 3877833471082106643}
   m_Layer: 5
   m_Name: BadQuality
-  m_TagString: Bad
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56191,7 +56101,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3877833472896600812}
+      - m_Target: {fileID: 1070449426}
         m_MethodName: SetItemQuality
         m_Mode: 5
         m_Arguments:
@@ -56202,7 +56112,7 @@ MonoBehaviour:
           m_StringArgument: Excellent
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3877833472896600812}
+      - m_Target: {fileID: 1070449426}
         m_MethodName: BuyItem
         m_Mode: 1
         m_Arguments:
@@ -56257,7 +56167,7 @@ GameObject:
   - component: {fileID: 3877833471293130449}
   m_Layer: 5
   m_Name: Button
-  m_TagString: Untagged
+  m_TagString: ItemMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -57452,6 +57362,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1579866883}
+        m_MethodName: EnableAllButtonsOf
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: ItemMenu
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1070449421}
         m_MethodName: DisableAllObjectsOf
         m_Mode: 5
@@ -57576,7 +57497,7 @@ GameObject:
   - component: {fileID: 3877833472037586566}
   m_Layer: 5
   m_Name: StandardQuality
-  m_TagString: Standard
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58082,7 +58003,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 3877833472896600812}
+      - m_Target: {fileID: 1070449426}
         m_MethodName: SetItemType
         m_Mode: 5
         m_Arguments:
@@ -58093,8 +58014,8 @@ MonoBehaviour:
           m_StringArgument: Guide
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 3877833472896600812}
-        m_MethodName: Initialize
+      - m_Target: {fileID: 1070449426}
+        m_MethodName: InitializeItemMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -58538,7 +58459,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 3877833472896600812}
+      - m_Target: {fileID: 1070449426}
         m_MethodName: SetItemType
         m_Mode: 5
         m_Arguments:
@@ -58549,8 +58470,8 @@ MonoBehaviour:
           m_StringArgument: Mouse
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 3877833472896600812}
-        m_MethodName: Initialize
+      - m_Target: {fileID: 1070449426}
+        m_MethodName: InitializeItemMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -58632,7 +58553,7 @@ GameObject:
   - component: {fileID: 3877833472356526194}
   m_Layer: 5
   m_Name: Button
-  m_TagString: Untagged
+  m_TagString: ItemMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58677,7 +58598,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3877833472896600812}
+      - m_Target: {fileID: 1070449426}
         m_MethodName: SetItemQuality
         m_Mode: 5
         m_Arguments:
@@ -58688,7 +58609,7 @@ MonoBehaviour:
           m_StringArgument: Good
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3877833472896600812}
+      - m_Target: {fileID: 1070449426}
         m_MethodName: BuyItem
         m_Mode: 1
         m_Arguments:
@@ -58964,7 +58885,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 3877833472896600812}
+      - m_Target: {fileID: 1070449426}
         m_MethodName: SetItemType
         m_Mode: 5
         m_Arguments:
@@ -58975,8 +58896,8 @@ MonoBehaviour:
           m_StringArgument: Keyboard
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 3877833472896600812}
-        m_MethodName: Initialize
+      - m_Target: {fileID: 1070449426}
+        m_MethodName: InitializeItemMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -59126,7 +59047,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 3877833472896600812}
+      - m_Target: {fileID: 1070449426}
         m_MethodName: SetItemType
         m_Mode: 5
         m_Arguments:
@@ -59137,8 +59058,8 @@ MonoBehaviour:
           m_StringArgument: Screen
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 3877833472896600812}
-        m_MethodName: Initialize
+      - m_Target: {fileID: 1070449426}
+        m_MethodName: InitializeItemMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -59649,7 +59570,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3877833472896600812}
+      - m_Target: {fileID: 1070449426}
         m_MethodName: SetItemQuality
         m_Mode: 5
         m_Arguments:
@@ -59660,7 +59581,7 @@ MonoBehaviour:
           m_StringArgument: Standard
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3877833472896600812}
+      - m_Target: {fileID: 1070449426}
         m_MethodName: BuyItem
         m_Mode: 1
         m_Arguments:
@@ -59744,7 +59665,7 @@ GameObject:
   - component: {fileID: 3877833472581042080}
   m_Layer: 5
   m_Name: Button
-  m_TagString: Untagged
+  m_TagString: ItemMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59835,6 +59756,7 @@ MonoBehaviour:
   shopManager: {fileID: 1070449426}
   gameManager: {fileID: 1070449418}
   uiManager: {fileID: 1579866881}
+  playerData: {fileID: 11400000, guid: b5721d035e1bf074789a14536477e52e, type: 2}
   accommodation:
     type: 0
     bought: 1
@@ -59984,7 +59906,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 3877833472896600812}
+      - m_Target: {fileID: 1070449426}
         m_MethodName: SetItemType
         m_Mode: 5
         m_Arguments:
@@ -59995,8 +59917,8 @@ MonoBehaviour:
           m_StringArgument: Headset
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 3877833472896600812}
-        m_MethodName: Initialize
+      - m_Target: {fileID: 1070449426}
+        m_MethodName: InitializeItemMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -60280,7 +60202,7 @@ GameObject:
   - component: {fileID: 3877833472685973341}
   m_Layer: 5
   m_Name: Button
-  m_TagString: Untagged
+  m_TagString: ItemMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60354,7 +60276,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3877833472896600812}
+      - m_Target: {fileID: 1070449426}
         m_MethodName: SetItemQuality
         m_Mode: 5
         m_Arguments:
@@ -60365,7 +60287,7 @@ MonoBehaviour:
           m_StringArgument: Bad
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3877833472896600812}
+      - m_Target: {fileID: 1070449426}
         m_MethodName: BuyItem
         m_Mode: 1
         m_Arguments:
@@ -61652,7 +61574,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3877833472896600813}
-  - component: {fileID: 3877833472896600812}
   m_Layer: 5
   m_Name: ItemSubMenu
   m_TagString: SubMenu
@@ -61660,32 +61581,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &3877833472896600812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3877833472896600802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4a65547fea2a51448c6413dddedf1f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemTitle: {fileID: 3877833470915136432}
-  badQuality: {fileID: 3877833471082106640}
-  standardQuality: {fileID: 3877833472037586567}
-  goodQuality: {fileID: 3877833471018003269}
-  excellentQuality: {fileID: 3877833472906835843}
-  item:
-    type: 0
-    quality: 0
-    cost: 0
-    skills: []
-    sprite: {fileID: 0}
-  playerData: {fileID: 11400000, guid: b5721d035e1bf074789a14536477e52e, type: 2}
-  shopManager: {fileID: 1070449426}
-  gameManager: {fileID: 1070449418}
 --- !u!224 &3877833472896600813
 RectTransform:
   m_ObjectHideFlags: 0
@@ -61701,10 +61596,10 @@ RectTransform:
   m_Father: {fileID: 1668168155}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 300}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 250}
+  m_SizeDelta: {x: 0, y: -100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &3877833472906835842
 RectTransform:
@@ -61738,7 +61633,7 @@ GameObject:
   - component: {fileID: 3877833472906835842}
   m_Layer: 5
   m_Name: ExcellentQuality
-  m_TagString: Excellent
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

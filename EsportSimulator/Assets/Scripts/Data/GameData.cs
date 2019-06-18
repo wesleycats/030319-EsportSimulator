@@ -34,16 +34,16 @@ public class GameData : ScriptableObject
 
 	public bool tutorialDone;
 
-    #endregion
+	#endregion
 
-    public void Reset()
+	public void Reset()
     {
         hour = 0;
         minute = 0;
         month = 1;
         year = 0;
 		tutorialDone = false;
-    }
+	}
 
     #region Getters & Setters
 

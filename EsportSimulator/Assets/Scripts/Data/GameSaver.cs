@@ -47,7 +47,7 @@ public class GameSaver : MonoBehaviour
 
 		gameSaveData.plannedTournaments = gameManager.GetPlannedEvents;
 		gameSaveData.currentAccommodation = gameManager.GetCurrentAccommodation;
-		gameSaveData.currentItems = gameManager.GetCurrentItems;
+		gameSaveData.currentItems = gameManager.CurrentItems;
 
 		gameSaveData.opponents = new Opponent[opponentManager.GetAllOpponents.Count];
         for (int i = 0; i < opponentManager.GetAllOpponents.Count; i++)
