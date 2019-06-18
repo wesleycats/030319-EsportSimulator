@@ -7,9 +7,9 @@ using UnityEngine;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
-    #region Player Variables
+	#region Player Variables
 
-    [SerializeField] private int money;
+	[SerializeField] private int money;
     [SerializeField] private int rating;
     [SerializeField] private int fame;
     [SerializeField] private float workExperience;
@@ -44,24 +44,19 @@ public class GameManager : MonoBehaviour
     public ShopManager shopManager;
 	public LerpColor switchOverlay;
 
-    public Debugger debug;
+	public Debugger debug;
 
 	#endregion
 
 	//TODO set current accommodation to saved
 
-	private void Awake()
-	{
-		ResetGame();
-	}
-
 	void Start()
     {
-        Time.timeScale = 1f;
-		LoadData();
+		ResetGame();
+		Time.timeScale = 1f;
 		switchOverlay.LerpValue = 1;
 		switchOverlay.Lerp(1);
-		//activityManager.ChangeActivity(ActivityManager.Activity.Idle, 0);
+		LoadData();
 	}
 
 	public Event IsEventPlanned(int currentMonth, List<Event> events)

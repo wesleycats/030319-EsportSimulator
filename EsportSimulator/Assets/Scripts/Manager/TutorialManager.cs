@@ -30,12 +30,18 @@ public class TutorialManager : MonoBehaviour
 	public LerpColor switchOverlay;
 	public ButtonManager buttonManager;
 	public GameData gameData;
+	public AudioManager audioManager;
+
+	private void Awake()
+	{
+		audioManager = FindObjectOfType<AudioManager>();
+	}
 
 	private void Start()
 	{
 		switchOverlay.LerpStopped += LoadMainScene;
-
 		buttonManager.DisableAllButtons("Tutorial");
+		audioManager.CurrentPlaylist = audioManager.tutorialClips;
 
 		originalWindowPos = tutorialWindow.GetComponent<RectTransform>().localPosition;
 		originalWindowSize = new Vector2(tutorialWindow.GetComponent<RectTransform>().rect.width, tutorialWindow.GetComponent<RectTransform>().rect.height);
@@ -58,6 +64,14 @@ public class TutorialManager : MonoBehaviour
 				Debug.LogError("Given transition is unavailable");
 				break;
 		}
+	}
+	
+	public void SkipTutorial()
+	{
+		audioManager.FadeOut();
+		switchOverlay.Lerp(1);
+		transition = Transition.Outro;
+		gameData.tutorialDone = true;
 	}
 
 	public void StartTutorial(Tutorial tutorial)
@@ -83,27 +97,46 @@ public class TutorialManager : MonoBehaviour
 			ResetWindow(tutorialWindow.GetComponent<RectTransform>());
 	}
 
-	public void UnPauseTutorial()
-	{
-		currentTutorial.pause = false;
-	}
-
 	/// <summary>
-	/// Focuses the tutorial, so the player cannot perform actions
+	/// Advances to the next tutorial
 	/// </summary>
-	public void FocusTutorial()
+	/// <param name="tutorial"></param>
+	public void FinishTutorialPart(Tutorial tutorial)
 	{
-		tutorialWindow.SetActive(true);
-		overlay.gameObject.SetActive(true);
-	}
+		if (GetNextTutorial(tutorialForm) == null)
+		{
+			audioManager.FadeOut();
+			switchOverlay.Lerp(1);
+			transition = Transition.Outro;
+			gameData.tutorialDone = true;
+			return;
+		}
 
-	/// <summary>
-	/// Unfocuses the tutorial, so the player can perform actions
-	/// </summary>
-	public void UnFocusTutorial()
-	{
-		tutorialWindow.SetActive(false);
-		overlay.gameObject.SetActive(false);
+		textScanner.Reset();
+		tutorial.done = true;
+		tutorialWindow.GetComponent<RectTransform>().localPosition = originalWindowPos;
+
+		foreach (FocusObject o in tutorial.focusObjects)
+		{
+			//ResetFocusObject(o);
+
+			// Checks if focus object has button component to disable it
+			if (o.gObject.GetComponent<Button>())
+				o.gObject.GetComponent<Button>().interactable = false;
+
+			// Checks if childs in focus object has button component to disable it
+			if (o.gObject.transform.childCount > 0)
+			{
+				for (int i = 0; i < o.gObject.transform.childCount; i++)
+				{
+					if (o.gObject.transform.GetChild(i).GetComponent<Button>())
+						o.gObject.transform.GetChild(i).GetComponent<Button>().interactable = false;
+				}
+			}
+		}
+
+		tutorial = GetNextTutorial(tutorialForm);
+		StartTutorial(tutorial);
 	}
 
 	/// <summary>
@@ -172,57 +205,16 @@ public class TutorialManager : MonoBehaviour
 				{
 					fo.gObject.SetActive(true);
 
-					/*if (textScanner.GetCurrentTextIndex == 5)
-					{
-						Debug.Log(f.gObject.name);
-						Debug.Log(f.focusTextIndex);
-						Debug.Log(fo.gObject.name);
-						Debug.Log(fo.focusTextIndex);
-					}*/
+					//if (textScanner.GetCurrentTextIndex == 5)
+					//{
+					//	Debug.Log(f.gObject.name);
+					//	Debug.Log(f.focusTextIndex);
+					//	Debug.Log(fo.gObject.name);
+					//	Debug.Log(fo.focusTextIndex);
+					//}
 				}
 			}
 		}
-	}
-
-	/// <summary>
-	/// Advances to the next tutorial
-	/// </summary>
-	/// <param name="tutorial"></param>
-	public void FinishTutorialPart(Tutorial tutorial)
-	{
-		if (GetNextTutorial(tutorialForm) == null)
-		{
-			switchOverlay.Lerp(1);
-			transition = Transition.Outro;
-			gameData.tutorialDone = true;
-			return;
-		}
-
-		textScanner.Reset();
-		tutorial.done = true;
-		tutorialWindow.GetComponent<RectTransform>().localPosition = originalWindowPos;
-
-		foreach (FocusObject o in tutorial.focusObjects)
-		{
-			//ResetFocusObject(o);
-			
-			// Checks if focus object has button component to disable it
-			if (o.gObject.GetComponent<Button>())
-				o.gObject.GetComponent<Button>().interactable = false;
-			
-			// Checks if childs in focus object has button component to disable it
-			if (o.gObject.transform.childCount > 0)
-			{
-				for (int i = 0; i < o.gObject.transform.childCount; i++)
-				{
-					if (o.gObject.transform.GetChild(i).GetComponent<Button>())
-						o.gObject.transform.GetChild(i).GetComponent<Button>().interactable = false;
-				}
-			}
-		}
-
-		tutorial = GetNextTutorial(tutorialForm);
-		StartTutorial(tutorial);
 	}
 
 	public void SetupFocusObjects(Tutorial tutorial)
@@ -313,6 +305,29 @@ public class TutorialManager : MonoBehaviour
 
 		if (customTransform.newPos)
 			tutorialWindow.GetComponent<RectTransform>().localPosition = customTransform.position;
+	}
+
+	public void UnPauseTutorial()
+	{
+		currentTutorial.pause = false;
+	}
+
+	/// <summary>
+	/// Focuses the tutorial, so the player cannot perform actions
+	/// </summary>
+	public void FocusTutorial()
+	{
+		tutorialWindow.SetActive(true);
+		overlay.gameObject.SetActive(true);
+	}
+
+	/// <summary>
+	/// Unfocuses the tutorial, so the player can perform actions
+	/// </summary>
+	public void UnFocusTutorial()
+	{
+		tutorialWindow.SetActive(false);
+		overlay.gameObject.SetActive(false);
 	}
 
 	/// <summary>

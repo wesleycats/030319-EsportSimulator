@@ -13,10 +13,10 @@
 *Top Bar*
 |The top bar consists of a calender, pause menu, progress menu and an event bar.;
 
+#5
 *Bottom Bar*
 |The bottom bar consists of a action bar, needs menu, skills menu, action menu and a shop.;
 
-#5
 *Needs Menu*
 |As in real life, you need to keep yourself refreshed, feed yourself and drink once in a while.;
 
@@ -27,13 +27,13 @@
 *Information*
 |To access the information about a topic, you can press any question mark in corner of the corresponding menu.;
 
+#10
 *Actions Menu*
 |You can go to work, battle, use your fame to get many views while streaming, or plan a contest to compete in.;
 
 *Skills Menu*
 |To be able to win battles and contests, you need high enough skills.;
 
-#10
 |You can get skills by battling, training or by buying new items.;
 
 *Shop Menu*

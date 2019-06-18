@@ -18,24 +18,33 @@ public class MenuOptions : MonoBehaviour
 	public LerpColor switchOverlay;
 	public GameData gameData;
 
+	private AudioManager audioManager;
+
+	private void Awake()
+	{
+		audioManager = FindObjectOfType<AudioManager>();
+	}
+
 	private void Start()
 	{
 		switchOverlay.LerpStopped += LoadInGame;
+
+		if (gameObject.tag == "MainMenu")
+		{
+			Time.timeScale = 1f;
+			audioManager.CurrentPlaylist = audioManager.mainMenuClips;
+
+			if (gameData.tutorialDone)
+			{
+				gameManager.ResetGame();
+				audioManager.CurrentPlaylist = audioManager.mainClips;
+				gameObject.SetActive(false);
+			}
+		}
 	}
 
 	private void OnEnable()
     {
-        if (gameObject.tag == "MainMenu")
-		{
-            Time.timeScale = 1f;
-			
-			if (gameData.tutorialDone)
-			{
-				gameManager.ResetGame();
-				gameObject.SetActive(false);
-			}
-		}
-
         if (!buttonManager) return;
 
         buttonManager.EnableAllButtonsOf("Navigation");
@@ -44,6 +53,7 @@ public class MenuOptions : MonoBehaviour
 	public void StartNewGame()
 	{
 		loadType = GameLoader.LoadType.NewGame;
+		audioManager.FadeOut();
 		switchOverlay.Lerp(1);
 	}
 
@@ -51,6 +61,7 @@ public class MenuOptions : MonoBehaviour
 	{
 		loadType = GameLoader.LoadType.LoadGame;
 		slotToLoad = slot;
+		audioManager.FadeOut();
 		switchOverlay.Lerp(1);
 	}
 
