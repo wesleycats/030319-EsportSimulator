@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
 {
+	public Action<bool> SendMute;
+
 	[SerializeField] private float fadeSpeed = 0.1f;
 
 	[Header("References")]
@@ -22,7 +24,7 @@ public class AudioManager : MonoBehaviour
 	void Awake()
     {
 		player = GetComponent<AudioSource>();
-	
+		
 		if (FindObjectsOfType<AudioManager>().Length > 1) Destroy(this.gameObject);
 
 		DontDestroyOnLoad(this.gameObject);
@@ -56,7 +58,7 @@ public class AudioManager : MonoBehaviour
 		FadeIn();
 		player.Play();
 	}
-		
+
 	public void FadeIn()
 	{
 		fadeOut = false;
@@ -69,6 +71,12 @@ public class AudioManager : MonoBehaviour
 		fadeIn = false;
 		player.volume = 1;
 		fadeOut = true;
+	}
+
+	public void Mute()
+	{
+		player.mute = !player.mute;
+		SendMute(player.mute);
 	}
 
 	public AudioClip GetCurrentClip { get { return player.clip; } }

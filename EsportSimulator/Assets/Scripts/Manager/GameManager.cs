@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour
 
     public void ResetGame()
     {
+		Debug.Log("RESET BY GM");
         playerData.Reset();
         gameData.Reset();
         LoadData();

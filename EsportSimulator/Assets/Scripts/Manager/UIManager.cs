@@ -41,6 +41,9 @@ public class UIManager : MonoBehaviour
 	public Image sleepOverlay;
 	public Image needsMenuButton;
 
+	public Sprite mutedSprite;
+	public Sprite unMutedSprite;
+
 	public GameObject monthsHolder;
 
 	public GameObject contestAnnouncementMenu;

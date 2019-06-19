@@ -56,7 +56,13 @@ public class GameLoader : MonoBehaviour
         playerData.SetMechanics = gameSaveData.mechanics;
 
 		playerData.SetCurrentAccommodation = gameSaveData.currentAccommodation;
-		playerData.SetCurrentItems = gameSaveData.currentItems;
+
+		Debug.Log("Set player data items");
+		foreach (Item i in gameSaveData.currentItems)
+		{
+			playerData.CurrentItems.Add(i);
+		}
+
 		playerData.SetPlannedTournaments = gameSaveData.plannedTournaments;
 
         gameData.SetHour = gameSaveData.hour;
