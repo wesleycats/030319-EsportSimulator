@@ -58,7 +58,7 @@ public class GameSaveData
 	#region Properties
 
 	[SerializeField] public List<Item> currentItems;
-	[SerializeField] public AccommodationForm currentAccommodation;
+	[SerializeField] public Accommodation currentAccommodation;
 
 	#endregion
 

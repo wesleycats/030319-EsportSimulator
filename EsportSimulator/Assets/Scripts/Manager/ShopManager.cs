@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
-	private Item.Type chosenType;
-	private Item.Quality chosenQuality;
+	private Item.Type chosenItemType;
+	private Item.Quality chosenItemQuality;
+	private Accommodation.Type chosenAccommodationType;
 
 	[Header("References")]
     public ArtManager artManager;
@@ -66,81 +67,7 @@ public class ShopManager : MonoBehaviour
 
 	public void BuyItem()
 	{
-		BuyItem(GetItem(chosenType, chosenQuality));
-	}
-
-	public void SetItemType(string type)
-	{
-		chosenType = GetItemType(type);
-	}
-
-	public void SetItemQuality(string quality)
-	{
-		chosenQuality = GetItemQuality(quality);
-	}
-
-	public Item.Type GetItemType(string type)
-	{
-		switch (type)
-		{
-			case "Guide":
-				return Item.Type.Guide;
-
-			case "Headset":
-				return Item.Type.Headset;
-
-			case "Mouse":
-				return Item.Type.Mouse;
-
-			case "Keyboard":
-				return Item.Type.Keyboard;
-
-			case "Screen":
-				return Item.Type.Screen;
-
-			default:
-				Debug.LogError("Given type is not available (try: Guide, Headset, Mouse, Keyboard or Screen)");
-				return Item.Type.None;
-		}
-	}
-
-	public Item.Quality GetItemQuality(string quality)
-	{
-		switch (quality)
-		{
-			case "Bad":
-				return Item.Quality.Bad;
-
-			case "Standard":
-				return Item.Quality.Standard;
-
-			case "Good":
-				return Item.Quality.Good;
-
-			case "Excellent":
-				return Item.Quality.Excellent;
-
-			default:
-				Debug.LogError("Given quality '" + quality + "' is not available (try Bad, Standard, Good or Excellent)");
-				return Item.Quality.Default;
-		}
-	}
-
-	public Item GetItem(Item.Type type, Item.Quality quality)
-	{
-		foreach (ItemForm f in playerData.GetAllItems)
-		{
-			if (type.ToString() != f.itemType) continue;
-
-			foreach (Item i in f.qualities)
-			{
-				if (quality != i.quality) continue;
-
-				return i;
-			}
-		}
-
-		return null;
+		BuyItem(GetItem(chosenItemType, chosenItemQuality));
 	}
 
 	public void ApplyCurrentItems(List<Item> currentItems, Item.Type currentType)
@@ -257,40 +184,134 @@ public class ShopManager : MonoBehaviour
 		}
 	}
 
-	public void SwitchAccommodation(Accommodation accommodation)
-    {
-        AccommodationForm currentAccommodation = GetAccommodationForm(accommodation);
+	public void BuyAccommodation(Accommodation accommodation)
+	{
+		if (!gameManager.IsMoneyHighEnough(accommodation.cost))
+		{
+			Debug.LogWarning("Not Enough Money");
+			return;
+		}
 
-        gameManager.SetCurrentAccommodation = currentAccommodation;
-        artManager.UpdateAccommodation(currentAccommodation);
-        uiManager.UpdateAccommodations(uiManager.allAccommdationButtons, currentAccommodation);
+		gameManager.CurrentAccommodation = accommodation;
+        artManager.UpdateAccommodation(accommodation);
+        uiManager.UpdateAccommodations(accommodation);
+		gameManager.DecreaseMoney(accommodation.cost);
+	}
 
-        if (!currentAccommodation.accommodation.bought)
-        {
-            for (int i = 0; i < playerData.GetAllAccommodations.Count; i++)
-            {
-                if (playerData.GetAllAccommodations[i].accommodation.type == currentAccommodation.accommodation.type)
-                {
-                    currentAccommodation.accommodation.bought = true;
-                }
-            }
+	public void BuyAccommodation()
+	{
+		BuyAccommodation(GetAccommodation(chosenAccommodationType));
+	}
 
-            gameManager.DecreaseMoney(currentAccommodation.cost);
-        }
-    }
+	public void SetItemType(string type)
+	{
+		chosenItemType = GetItemType(type);
+	}
+
+	public void SetItemQuality(string quality)
+	{
+		chosenItemQuality = GetItemQuality(quality);
+	}
+
+	public void SetAccommodation(string accommodation)
+	{
+
+	}
+
+	public Accommodation.Type GetAccomodationType(string accommodation)
+	{
+		switch (accommodation)
+		{
+			case "Garage":
+				return Accommodation.Type.Garage;
+
+			case "Apartment":
+				return Accommodation.Type.Apartment;
+
+			case "House":
+				return Accommodation.Type.House;
+
+			case "Luxury Apartment":
+				return Accommodation.Type.LuxuryApartment;
+
+			default:
+				Debug.LogWarning("Given accommodation is unavailable (try Garage, Apartment, House or Luxury Apartment)");
+				return Accommodation.Type.None;
+		}
+	}
+
+	public Accommodation GetAccommodation(Accommodation.Type type)
+	{
+		foreach (Accommodation a in playerData.GetAllAccommodations)
+		{
+			//if (type != f.itemType) continue;
+		}
+		return null;
+	}
+
+	public Item.Type GetItemType(string type)
+	{
+		switch (type)
+		{
+			case "Guide":
+				return Item.Type.Guide;
+
+			case "Headset":
+				return Item.Type.Headset;
+
+			case "Mouse":
+				return Item.Type.Mouse;
+
+			case "Keyboard":
+				return Item.Type.Keyboard;
+
+			case "Screen":
+				return Item.Type.Screen;
+
+			default:
+				Debug.LogError("Given type is not available (try: Guide, Headset, Mouse, Keyboard or Screen)");
+				return Item.Type.None;
+		}
+	}
+
+	public Item.Quality GetItemQuality(string quality)
+	{
+		switch (quality)
+		{
+			case "Bad":
+				return Item.Quality.Bad;
+
+			case "Standard":
+				return Item.Quality.Standard;
+
+			case "Good":
+				return Item.Quality.Good;
+
+			case "Excellent":
+				return Item.Quality.Excellent;
+
+			default:
+				Debug.LogError("Given quality '" + quality + "' is not available (try Bad, Standard, Good or Excellent)");
+				return Item.Quality.Default;
+		}
+	}
+
+	public Item GetItem(Item.Type type, Item.Quality quality)
+	{
+		foreach (ItemForm f in playerData.GetAllItems)
+		{
+			//if (type.ToString() != f.itemType) continue;
+
+			foreach (Item i in f.qualities)
+			{
+				if (type != i.type || quality != i.quality) continue;
+
+				return i;
+			}
+		}
+		return null;
+	}
 	
-    public AccommodationForm GetAccommodationForm(Accommodation accommodation)
-    {
-		List<AccommodationForm> allAccommodations = playerData.GetAllAccommodations;
-
-		for (int i = 0; i < allAccommodations.Count; i++)
-        {
-            if (accommodation.type == playerData.GetAllAccommodations[i].accommodation.type) return allAccommodations[i];
-        }
-
-        return allAccommodations[0];
-    }
-
 	public void InitializeItemMenu()
 	{
 		buttons[0] = badItemQuality.transform.Find("Button").GetComponent<Button>();
@@ -303,8 +324,8 @@ public class ShopManager : MonoBehaviour
 		results[2] = goodItemQuality.transform.Find("Result").GetComponent<Text>();
 		results[3] = excellentItemQuality.transform.Find("Result").GetComponent<Text>();
 
-		ApplyCurrentItems(gameManager.CurrentItems, chosenType);
-		ApplyItemResults(chosenType);
-		ApplyItemTitle(itemTitle, chosenType.ToString());
+		ApplyCurrentItems(gameManager.CurrentItems, chosenItemType);
+		ApplyItemResults(chosenItemType);
+		ApplyItemTitle(itemTitle, chosenItemType.ToString());
 	}
 }

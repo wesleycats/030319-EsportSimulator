@@ -18,8 +18,8 @@ public class SubMenuManager : MonoBehaviour
 		if (skill != "")
 		{
 			actionButton.training.type = Training.Type.Watching;
-			actionButton.training.skills.Add(new Skill(GetTrainingSkill(skill), 1));
-			menuTitle.text = actionButton.training.skills[0].type.ToString();
+			//actionButton.training.skills.Add(new Skill(GetTrainingSkill(skill), 1));
+			//menuTitle.text = actionButton.training.skills[0].type.ToString();
 		}
 
 		UpdateSliderValues(actionButton.activity);
@@ -52,7 +52,7 @@ public class SubMenuManager : MonoBehaviour
 
 			case ActivityManager.Activity.Train:
 				durationSlider.maxValue = GetMaxTrainingHours(actionButton.training.type) * sliderText.GetTimeMultiplier;
-				sliderText.SetSkills = GetTrainingSkills(actionButton.training);
+				sliderText.SetSkills = actionButton.training.skills;
 				sliderText.SetTirednessMultiplier = resultManager.GetTrainingTirednessAmount(actionButton.training.type, 1);
 				sliderText.SetCostMultiplier = resultManager.GetTrainingCostAmount(actionButton.training.type, 1);
 				sliderText.ValueToTrainResult(resultText);
@@ -132,36 +132,5 @@ public class SubMenuManager : MonoBehaviour
 		}
 
 		return 100 / addedTiredness;
-	}
-
-	public int GetTrainingSkillAmount(Training.Type trainType)
-	{
-		switch (trainType)
-		{
-			case Training.Type.Watching:
-				return gameManager.GetCurrentAccommodation.trainingLevel1Amount;
-
-			case Training.Type.Course:
-				return gameManager.GetCurrentAccommodation.trainingLevel2Amount;
-
-			case Training.Type.CoursePlus:
-				return gameManager.GetCurrentAccommodation.trainingLevel3Amount;
-
-			default:
-				Debug.LogWarning("Given training type is unavailable");
-				return 0;
-		}
-	}
-
-	public List<Skill> GetTrainingSkills(Training training)
-	{
-		List<Skill> skills = new List<Skill>();
-
-		foreach (Skill s in training.skills)
-		{
-			skills.Add(new Skill(s.type, GetTrainingSkillAmount(training.type)));
-		}
-
-		return skills;
 	}
 }

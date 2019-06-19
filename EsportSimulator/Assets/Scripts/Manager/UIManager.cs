@@ -86,7 +86,7 @@ public class UIManager : MonoBehaviour
 
 	public void UpdateProgress(int money, int rating, int fame)
 	{
-		moneyValue.color = GetTextColor(money, gameManager.GetCurrentAccommodation.rent, defaultTextColor);
+		moneyValue.color = GetTextColor(money, gameManager.CurrentAccommodation.rent, defaultTextColor);
 		ratingValue.color = GetTextColor(rating, 0, defaultTextColor);
 		fameValue.color = GetTextColor(fame, 0, defaultTextColor);
 
@@ -132,29 +132,22 @@ public class UIManager : MonoBehaviour
 		}
 	}
 
-	public void UpdateAccommodations(List<Button> allAccommdationButton, AccommodationForm currentAccommodation)
+	public void UpdateAccommodations(Accommodation currentAccommodation)
 	{
 		string status = "";
-		foreach (Button b in allAccommdationButton)
+		foreach (Button b in allAccommdationButtons)
 		{
-			foreach (AccommodationForm a in playerData.GetAllAccommodations)
+			foreach (Accommodation a in playerData.GetAllAccommodations)
 			{
 				b.interactable = true;
 
-				if (b.transform.parent.name == a.accommodation.type.ToString())
+				if (b.transform.parent.name == a.type.ToString())
 				{
-					if (a.accommodation.bought)
-					{
-						status = "OWNED";
-					}
-					else
-					{
-						status = "BUY";
-					}
+					status = "BUY";
 				}
 			}
 
-			if (b.transform.parent.name == currentAccommodation.accommodation.type.ToString())
+			if (b.transform.parent.name == currentAccommodation.type.ToString())
 			{
 				b.interactable = false;
 				status = "CURRENT";

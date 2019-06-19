@@ -16,6 +16,7 @@ public class GameLoader : MonoBehaviour
     public ButtonManager buttonManager;
     public OpponentManager opponentManager;
     public GameSaveData gameSaveData;
+	public GameManager gameManager;
 
     private int saveSlotToBeCleared = 0;
 	private int slotToBeLoaded = 0;
@@ -55,9 +56,9 @@ public class GameLoader : MonoBehaviour
         playerData.SetTeamPlay = gameSaveData.teamPlay;
         playerData.SetMechanics = gameSaveData.mechanics;
 
-		playerData.SetCurrentAccommodation = gameSaveData.currentAccommodation;
+		//set playerdata currentaccommodation: playerData.CurrentAccommodation
 
-		Debug.Log("Set player data items");
+		playerData.CurrentItems.Clear();
 		foreach (Item i in gameSaveData.currentItems)
 		{
 			playerData.CurrentItems.Add(i);

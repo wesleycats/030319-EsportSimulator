@@ -5,18 +5,23 @@ public class Training
 {
 	public enum Type { None, Watching, Course, CoursePlus }
 
-    public List<Skill> skills = new List<Skill>();
 	public Type type;
+	public int energyCost;
+    public List<Skill> skills = new List<Skill>();
 
-	public Training(List<Skill> aSkills, Type aType)
+	public Training(Type aType, int aEnergyCost, List<Skill> aSkills)
     {
-		skills = aSkills;
-        type = aType;
+		type = aType;
+		energyCost = aEnergyCost;
+
+		foreach (Skill s in aSkills)
+			skills.Add(s);
     }
 
-	public Training(Skill skill, Type aType)
+	public Training(Type aType, int aEnergyCost, Skill skill)
 	{
-		skills.Add(skill);
 		type = aType;
+		energyCost = aEnergyCost;
+		skills.Add(skill);
 	}
 }

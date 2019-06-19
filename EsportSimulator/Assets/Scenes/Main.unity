@@ -17811,8 +17811,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 414613398}
   m_HandleRect: {fileID: 414613397}
   m_Direction: 2
-  m_Value: 0.9999998
-  m_Size: 0.25000003
+  m_Value: 0.9999996
+  m_Size: 0.24999999
   m_NumberOfSteps: 1
   m_OnValueChanged:
     m_PersistentCalls:
@@ -19186,6 +19186,7 @@ MonoBehaviour:
       sprite: {fileID: 0}
     saveSlotIndex: 0
     opponents: []
+  gameManager: {fileID: 0}
 --- !u!114 &1070449424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29498,7 +29499,7 @@ MonoBehaviour:
   contestManager: {fileID: 1070449427}
   opponentManager: {fileID: 1070449424}
   leaderboardManager: {fileID: 1070449425}
-  playerData: {fileID: 0}
+  playerData: {fileID: 11400000, guid: b5721d035e1bf074789a14536477e52e, type: 2}
 --- !u!4 &1579866882
 Transform:
   m_ObjectHideFlags: 0
@@ -60573,7 +60574,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'cost: $0
+  m_Text: 'cost: $200
 
     rent: $50
 

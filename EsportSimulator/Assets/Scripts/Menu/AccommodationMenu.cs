@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 
 /// <summary>
-/// TODO change name of script or integrate in shopmanager
+/// TODO fuse in shopmanager
 /// </summary>
 public class AccommodationMenu : MonoBehaviour
 {
@@ -16,28 +16,6 @@ public class AccommodationMenu : MonoBehaviour
 
     [SerializeField] private Accommodation accommodation;
     
-    private void OnDisable()
-    {
-        accommodation = new Accommodation(Accommodation.Type.Garage, true);
-    }
-
-    public void BuyAccommodation()
-    {
-        if (accommodation.bought)
-        {
-            shopManager.SwitchAccommodation(accommodation);
-            return;
-        }
-
-        if (!gameManager.IsMoneyHighEnough(shopManager.GetAccommodationForm(accommodation).cost))
-        {
-            Debug.LogWarning("Not Enough Money");
-            return;
-        }
-
-        shopManager.SwitchAccommodation(accommodation);
-    }
-
     /// <summary>
     /// Call function for dropdown component
     /// </summary>
@@ -52,12 +30,12 @@ public class AccommodationMenu : MonoBehaviour
     /// <param name="accommodationLevel"></param>
     public void SetAccommodation(int accommodationLevel)
     {
-        accommodation = playerData.GetAllAccommodations[accommodationLevel].accommodation;
+        accommodation = playerData.GetAllAccommodations[accommodationLevel];
     }
 
     public void Initialize()
     {
-        uiManager.UpdateAccommodations(uiManager.allAccommdationButtons, gameManager.GetCurrentAccommodation);
+        uiManager.UpdateAccommodations(gameManager.CurrentAccommodation);
     }
 
     #region Getters & Setters

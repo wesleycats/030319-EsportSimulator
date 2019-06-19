@@ -13,7 +13,7 @@ public class PlayerData : ScriptableObject
 
     [SerializeField] private int defaultMoney;
 	[SerializeField] private List<ItemForm> allItems;
-	[SerializeField] private List<AccommodationForm> allAccommodations;
+	[SerializeField] private List<Accommodation> allAccommodations;
 
 	#endregion
 
@@ -48,7 +48,7 @@ public class PlayerData : ScriptableObject
     #region Properties 
 
     [SerializeField] private List<Item> currentItems = new List<Item>();
-	[SerializeField] private AccommodationForm currentAccommodation;
+	[SerializeField] private Accommodation currentAccommodation;
 
 	#endregion
 
@@ -61,7 +61,6 @@ public class PlayerData : ScriptableObject
 
 	public void Reset()
     {
-		Debug.Log("RESET");
         money = defaultMoney;
         rating = 0;
         fame = 0;
@@ -73,7 +72,7 @@ public class PlayerData : ScriptableObject
         gameKnowledge = 0;
         teamPlay = 0;
         mechanics = 0;
-		//currentItems.Clear();
+		currentItems.Clear();
 		
 		foreach (ItemForm f in allItems)
 		{
@@ -106,8 +105,7 @@ public class PlayerData : ScriptableObject
     public List<Item> CurrentItems { get { return currentItems; } }
     public List<ItemForm> GetAllItems { get { return allItems; } }
 	public List<Event> GetPlannedTournaments { get { return plannedTournaments; } }
-	public AccommodationForm GetCurrentAccommodation { get { return currentAccommodation; } }
-	public List<AccommodationForm> GetAllAccommodations { get { return allAccommodations; } }
+	public List<Accommodation> GetAllAccommodations { get { return allAccommodations; } }
 
 	public int SetDefaultMoney { set { defaultMoney = value; } }
     public int SetMoney { set { money = value; } }
@@ -122,8 +120,6 @@ public class PlayerData : ScriptableObject
     public int SetTeamPlay { set { teamPlay = value; } }
     public int SetMechanics { set { mechanics = value; } }
     public List<Event> SetPlannedTournaments { set { plannedTournaments = value; } }
-    public AccommodationForm SetCurrentAccommodation { set { currentAccommodation = value; } }
-	public List<AccommodationForm> SetAllAccommodations { set { allAccommodations = value; } }
 
 	#endregion
 }

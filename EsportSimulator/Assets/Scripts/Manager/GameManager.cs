@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int mechanics;
 
 	[SerializeField] private List<Item> currentItems = new List<Item>();
-    [SerializeField] private AccommodationForm currentAccommodation;
+    [SerializeField] private Accommodation currentAccommodation;
 	[SerializeField] private List<Event> plannedEvents;
 
 	#endregion
@@ -47,8 +47,6 @@ public class GameManager : MonoBehaviour
 	public Debugger debug;
 
 	#endregion
-
-	//TODO LOAD IN PROPERTIES CORRECTLY
 
 	void Start()
     {
@@ -79,7 +77,6 @@ public class GameManager : MonoBehaviour
 
     public void ResetGame()
     {
-		Debug.Log("RESET BY GM");
         playerData.Reset();
         gameData.Reset();
         LoadData();
@@ -229,14 +226,6 @@ public class GameManager : MonoBehaviour
     {
         return thirst >= amount;
     }
-
-	public int GetCurrentAccommodationIndex(AccommodationForm current, List<AccommodationForm> allAccommodations)
-	{
-		for (int i = 0; i < allAccommodations.Count; i++)
-			if (current.accommodation.type == allAccommodations[i].accommodation.type) return i;
-
-		return 0;
-	}
     
     /// <summary>
     /// Initializes player data in variables
@@ -256,9 +245,13 @@ public class GameManager : MonoBehaviour
         mechanics = playerData.GetMechanics;
 		plannedEvents.Clear();
 		plannedEvents = playerData.GetPlannedTournaments;
+
 		currentItems.Clear();
-		currentItems = playerData.CurrentItems;
-		currentAccommodation = playerData.GetCurrentAccommodation;
+		foreach (Item i in playerData.CurrentItems)
+		{
+			currentItems.Add(i);
+		}
+		//set currentAccommodation: currentAccommodation = playerData.Curre;
 	}
 
     #region Getters & Setters
@@ -276,7 +269,6 @@ public class GameManager : MonoBehaviour
     public int GetTeamPlay { get { return teamPlay; } }
     public int GetMechanics { get { return mechanics; } }
     public List<Event> GetPlannedEvents { get { return plannedEvents; } }
-    public AccommodationForm GetCurrentAccommodation { get { return currentAccommodation; } }
 
     public int SetMoney { set { money = value; } }
     public int SetRating { set { rating = value; } }
@@ -289,7 +281,6 @@ public class GameManager : MonoBehaviour
     public int SetGameKnowledge { set { gameKnowledge = value; } }
     public int SetTeamPlay { set { teamPlay = value; } }
     public int SetMechanics { set { mechanics = value; } }
-	public AccommodationForm SetCurrentAccommodation { set { currentAccommodation = value; } }
 
     public int Money { get { return money; } set { money = value; } }
     public int Rating { get { return rating; } set { rating = value; } }
@@ -303,6 +294,7 @@ public class GameManager : MonoBehaviour
     public int TeamPlay { get { return teamPlay; } set { teamPlay = value; } }
     public int Mechanics { get { return mechanics; } set { mechanics = value; } }
 	public List<Item> CurrentItems { set { currentItems = value; } get { return currentItems; } }
+	public Accommodation CurrentAccommodation { set { currentAccommodation = value; } get { return currentAccommodation; } }
 
 	#endregion
 }

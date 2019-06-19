@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93e323e690c4d15478d5fc38b6cc8b34, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  defaultMoney: 500
+  defaultMoney: 9999
   allItems:
   - itemType: Mouse
     qualities:
@@ -198,47 +198,27 @@ MonoBehaviour:
         amount: 60
       sprite: {fileID: 21300000, guid: 3ca736ce6fb65ac48aaada38b2d438d6, type: 3}
   allAccommodations:
-  - elementName: Garage
-    accommodation:
-      type: 0
-      bought: 1
+  - type: 1
     cost: 200
     rent: 50
-    trainingLevel1Amount: 1
-    trainingLevel2Amount: 3
-    trainingLevel3Amount: 10
+    trainingRates: 01000000030000000a000000
     sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
-  - elementName: Apartment
-    accommodation:
-      type: 1
-      bought: 0
+  - type: 2
     cost: 1000
     rent: 200
-    trainingLevel1Amount: 1
-    trainingLevel2Amount: 4
-    trainingLevel3Amount: 12
+    trainingRates: 01000000040000000c000000
     sprite: {fileID: 21300000, guid: 0191629f9b79a99409484d7b627166af, type: 3}
-  - elementName: House
-    accommodation:
-      type: 2
-      bought: 0
+  - type: 3
     cost: 2000
     rent: 500
-    trainingLevel1Amount: 2
-    trainingLevel2Amount: 5
-    trainingLevel3Amount: 15
+    trainingRates: 02000000050000000f000000
     sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
-  - elementName: Luxury Apartment
-    accommodation:
-      type: 3
-      bought: 0
+  - type: 4
     cost: 5000
     rent: 1500
-    trainingLevel1Amount: 2
-    trainingLevel2Amount: 6
-    trainingLevel3Amount: 20
+    trainingRates: 020000000600000014000000
     sprite: {fileID: 21300000, guid: 0191629f9b79a99409484d7b627166af, type: 3}
-  money: 500
+  money: 9999
   rating: 0
   fame: 0
   workExperience: 0
@@ -276,14 +256,9 @@ MonoBehaviour:
     skills: []
     sprite: {fileID: 0}
   currentAccommodation:
-    elementName: Garage
-    accommodation:
-      type: 0
-      bought: 1
-    cost: 200
-    rent: 50
-    trainingLevel1Amount: 1
-    trainingLevel2Amount: 3
-    trainingLevel3Amount: 10
+    type: 0
+    cost: 0
+    rent: 0
+    trainingRates: 
     sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
   plannedTournaments: []

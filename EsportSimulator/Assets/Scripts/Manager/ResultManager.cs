@@ -203,7 +203,7 @@ public class ResultManager : MonoBehaviour
 		totalIncome += money;
 	}
 	
-    public void PayRent(AccommodationForm accommodation)
+    public void PayRent(Accommodation accommodation)
     {
         gameManager.DecreaseMoney(accommodation.cost);
     }
@@ -242,24 +242,22 @@ public class ResultManager : MonoBehaviour
     public void TrainResults(Training training)
     {
         currentDebuffMultiplier *= currentDebuffMultiplierAmount;
-		int trainingAmount = 0;
+		int trainingRate = 0;
 		int tirednessAmount = 0;
+		trainingRate = GetTrainingRate(training.type);
 
 		switch (training.type)
 		{
 			case Training.Type.Watching:
 				tirednessAmount = trainLevel1.Tiredness;
-				trainingAmount = gameManager.GetCurrentAccommodation.trainingLevel1Amount;
 				break;
 
 			case Training.Type.Course:
 				tirednessAmount = trainLevel2.Tiredness;
-				trainingAmount = gameManager.GetCurrentAccommodation.trainingLevel2Amount;
 				break;
 
 			case Training.Type.CoursePlus:
 				tirednessAmount = trainLevel3.Tiredness;
-				trainingAmount = gameManager.GetCurrentAccommodation.trainingLevel3Amount;
 				break;
 
 			default:
@@ -267,7 +265,7 @@ public class ResultManager : MonoBehaviour
 				return;
 		}
 
-		int skillAmount = Mathf.CeilToInt(trainingAmount * currentDebuffMultiplier);
+		int skillAmount = Mathf.CeilToInt(trainingRate * currentDebuffMultiplier);
 
 		foreach (Skill s in training.skills)
 		{
@@ -861,6 +859,26 @@ public class ResultManager : MonoBehaviour
 			randomNumber = Random.Range(min, max);
 
 		return randomNumber;
+	}
+
+	public int GetTrainingRate(Training.Type trainType)
+	{
+		/*switch (trainType)
+		{
+			case Training.Type.Watching:
+				return gameManager.CurrentAccommodation.trainingTypes[0];
+
+			case Training.Type.Course:
+				return gameManager.CurrentAccommodation.trainingRates[1];
+
+			case Training.Type.CoursePlus:
+				return gameManager.CurrentAccommodation.trainingRates[2];
+
+			default:
+				Debug.LogWarning("Given training type is unavailable");
+				return 0;
+		}*/
+		return 0;
 	}
 
 	#region Getters & Setters

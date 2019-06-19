@@ -59,7 +59,7 @@ public class ActivityManager : MonoBehaviour
         if (hourAmount == 0)
         {
             currentActivity = Activity.Idle;
-            currentTraining = new Training(new Skill(Skill.Type.None, 0), Training.Type.None);
+			currentTraining = new Training(Training.Type.None, 0, new Skill(Skill.Type.None, 0));
             currentBattleMode = Battle.Mode.None;
 			artManager.ChangeArt(currentActivity);
 			return;
@@ -130,7 +130,7 @@ public class ActivityManager : MonoBehaviour
 		if (hourAmount == 0)
 		{
 			currentActivity = Activity.Idle;
-			currentTraining = new Training(new Skill(Skill.Type.None, 0), Training.Type.None);
+			currentTraining = new Training(Training.Type.None, 0, new Skill(Skill.Type.None, 0));
 			currentBattleMode = Battle.Mode.None;
 			artManager.ChangeArt(currentActivity);
 			return;

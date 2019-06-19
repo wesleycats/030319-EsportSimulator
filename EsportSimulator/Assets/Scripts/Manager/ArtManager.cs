@@ -65,7 +65,7 @@ public class ArtManager : MonoBehaviour
                 playerAnimator.Play("Idle");
                 workstationAnimator.Play("WoodenTable");
 
-				int houseLevel = gameManager.GetCurrentAccommodationIndex(gameManager.GetCurrentAccommodation, playerData.GetAllAccommodations);
+				int houseLevel = playerData.GetAllAccommodations.IndexOf(gameManager.CurrentAccommodation);
 				background.sprite = houseSprites[houseLevel];
 				chair.sprite = chairSprites[0];//chairSprites[chairLevel];
 				workstation.sprite = tableSprites[0];//tableSprites[tableLevel];
@@ -174,7 +174,7 @@ public class ArtManager : MonoBehaviour
         }
     }
 
-    public void UpdateAccommodation(AccommodationForm currentAccommodation)
+    public void UpdateAccommodation(Accommodation currentAccommodation)
     {
         background.sprite = currentAccommodation.sprite;
     }
@@ -182,6 +182,6 @@ public class ArtManager : MonoBehaviour
     public void Initialize()
     {
         UpdateItems(gameManager.CurrentItems);
-		UpdateAccommodation(gameManager.GetCurrentAccommodation);
+		UpdateAccommodation(gameManager.CurrentAccommodation);
     }
 }
