@@ -773,8 +773,9 @@ MonoBehaviour:
   activity: 0
   hourAmount: 0
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 0
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -9015,8 +9016,9 @@ MonoBehaviour:
   activity: 0
   hourAmount: 0
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 0
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -14988,8 +14990,9 @@ MonoBehaviour:
   activity: 0
   hourAmount: 0
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 0
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -16398,9 +16401,9 @@ MonoBehaviour:
   screen: {fileID: 1291356267}
   houseSprites:
   - {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 0191629f9b79a99409484d7b627166af, type: 3}
+  - {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
+  - {fileID: 21300000, guid: 0191629f9b79a99409484d7b627166af, type: 3}
   workplaceSprites:
   - {fileID: 21300000, guid: a1bac7544557dd24b9c777448cfa4840, type: 3}
   - {fileID: 0}
@@ -18620,8 +18623,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentActivity: 0
   currentTraining:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   currentBattleMode: 0
   uiManager: {fileID: 1579866881}
   artManager: {fileID: 949353603}
@@ -18673,15 +18677,10 @@ MonoBehaviour:
   mechanics: 0
   currentItems: []
   currentAccommodation:
-    elementName: 
-    accommodation:
-      type: 0
-      bought: 0
+    type: 0
     cost: 0
     rent: 0
-    trainingLevel1Amount: 0
-    trainingLevel2Amount: 0
-    trainingLevel3Amount: 0
+    trainingRates: 
     sprite: {fileID: 0}
   plannedEvents: []
   playerData: {fileID: 11400000, guid: b5721d035e1bf074789a14536477e52e, type: 2}
@@ -19117,15 +19116,10 @@ MonoBehaviour:
     plannedTournaments: []
     currentItems: []
     currentAccommodation:
-      elementName: 
-      accommodation:
-        type: 0
-        bought: 0
+      type: 0
       cost: 0
       rent: 0
-      trainingLevel1Amount: 0
-      trainingLevel2Amount: 0
-      trainingLevel3Amount: 0
+      trainingRates: 
       sprite: {fileID: 0}
     saveSlotIndex: 0
     opponents: []
@@ -19174,15 +19168,10 @@ MonoBehaviour:
     plannedTournaments: []
     currentItems: []
     currentAccommodation:
-      elementName: 
-      accommodation:
-        type: 0
-        bought: 0
+      type: 0
       cost: 0
       rent: 0
-      trainingLevel1Amount: 0
-      trainingLevel2Amount: 0
-      trainingLevel3Amount: 0
+      trainingRates: 
       sprite: {fileID: 0}
     saveSlotIndex: 0
     opponents: []
@@ -19348,6 +19337,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8766864b192c8a549a2972a02f39c779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chosenItemType: 0
+  chosenItemQuality: 0
+  chosenAccommodationType: 0
   artManager: {fileID: 949353603}
   uiManager: {fileID: 1579866881}
   resultManager: {fileID: 1070449420}
@@ -25265,8 +25257,9 @@ MonoBehaviour:
   activity: 0
   hourAmount: 0
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 0
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -42151,8 +42144,9 @@ MonoBehaviour:
   activity: 5
   hourAmount: 0
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 0
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -44139,8 +44133,9 @@ MonoBehaviour:
   activity: 9
   hourAmount: 0
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 2
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -44488,8 +44483,9 @@ MonoBehaviour:
   activity: 6
   hourAmount: 1
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 3
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -44698,8 +44694,9 @@ MonoBehaviour:
   activity: 7
   hourAmount: 0
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 0
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -47685,8 +47682,9 @@ MonoBehaviour:
   activity: 9
   hourAmount: 0
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 3
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -50702,8 +50700,9 @@ MonoBehaviour:
   activity: 6
   hourAmount: 1
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 1
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -52761,8 +52760,9 @@ MonoBehaviour:
   activity: 9
   hourAmount: 0
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 1
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -52947,8 +52947,9 @@ MonoBehaviour:
   activity: 4
   hourAmount: 0
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 0
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -54218,8 +54219,9 @@ MonoBehaviour:
   activity: 6
   hourAmount: 1
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 2
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -56705,7 +56707,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3877833472606679527}
+      - m_Target: {fileID: 1070449426}
         m_MethodName: BuyAccommodation
         m_Mode: 1
         m_Arguments:
@@ -57786,7 +57788,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3877833472606679527}
+      - m_Target: {fileID: 1070449426}
         m_MethodName: SetAccommodation
         m_Mode: 2
         m_Arguments:
@@ -59584,7 +59586,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3877833472606679527}
+      - m_Target: {fileID: 1070449426}
         m_MethodName: BuyAccommodation
         m_Mode: 1
         m_Arguments:
@@ -59899,13 +59901,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1bcb1f2fc1e4bc4eb971205d54d22d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shopManager: {fileID: 1070449426}
   gameManager: {fileID: 1070449418}
   uiManager: {fileID: 1579866881}
-  playerData: {fileID: 11400000, guid: b5721d035e1bf074789a14536477e52e, type: 2}
   accommodation:
     type: 0
-    bought: 1
+    cost: 0
+    rent: 0
+    trainingRates: 
+    sprite: {fileID: 0}
 --- !u!222 &3877833472606679528
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -60719,7 +60722,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3877833472606679527}
+      - m_Target: {fileID: 1070449426}
         m_MethodName: BuyAccommodation
         m_Mode: 1
         m_Arguments:
@@ -61163,7 +61166,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3877833472606679527}
+      - m_Target: {fileID: 1070449426}
         m_MethodName: BuyAccommodation
         m_Mode: 1
         m_Arguments:
@@ -64133,8 +64136,9 @@ MonoBehaviour:
   activity: 1
   hourAmount: 0
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 0
   foodLevel: 0
   activityManager: {fileID: 1070449416}

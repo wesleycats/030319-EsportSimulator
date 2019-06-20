@@ -239,31 +239,14 @@ public class ResultManager : MonoBehaviour
     /// Applies the results you will get from training per hour
     /// </summary>
     /// <param name="trainType"></param>
-    public void TrainResults(Training training)
+    public void TrainResults(Training training, int duration)
     {
         currentDebuffMultiplier *= currentDebuffMultiplierAmount;
-		int trainingRate = 0;
 		int tirednessAmount = 0;
+		int trainingRate = 0;
+
+		tirednessAmount = GetTrainingTirednessAmount(training.type, duration);
 		trainingRate = GetTrainingRate(training.type);
-
-		switch (training.type)
-		{
-			case Training.Type.Watching:
-				tirednessAmount = trainLevel1.Tiredness;
-				break;
-
-			case Training.Type.Course:
-				tirednessAmount = trainLevel2.Tiredness;
-				break;
-
-			case Training.Type.CoursePlus:
-				tirednessAmount = trainLevel3.Tiredness;
-				break;
-
-			default:
-				Debug.LogWarning("Given training type is unavailable");
-				return;
-		}
 
 		int skillAmount = Mathf.CeilToInt(trainingRate * currentDebuffMultiplier);
 
@@ -815,13 +798,13 @@ public class ResultManager : MonoBehaviour
 		switch (trainType)
 		{
 			case Training.Type.Watching:
-				return trainLevel1.Money * currentDebuffMultiplier * duration;
+				return trainLevel1.Money * duration * currentDebuffMultiplier;
 
 			case Training.Type.Course:
-				return trainLevel2.Money * currentDebuffMultiplier * duration;
+				return trainLevel2.Money * duration * currentDebuffMultiplier;
 
 			case Training.Type.CoursePlus:
-				return trainLevel3.Money * currentDebuffMultiplier * duration;
+				return trainLevel3.Money * duration * currentDebuffMultiplier;
 
 			default:
 				Debug.LogError("Given training type is unavailable");
@@ -863,10 +846,10 @@ public class ResultManager : MonoBehaviour
 
 	public int GetTrainingRate(Training.Type trainType)
 	{
-		/*switch (trainType)
+		switch (trainType)
 		{
 			case Training.Type.Watching:
-				return gameManager.CurrentAccommodation.trainingTypes[0];
+				return gameManager.CurrentAccommodation.trainingRates[0];
 
 			case Training.Type.Course:
 				return gameManager.CurrentAccommodation.trainingRates[1];
@@ -877,8 +860,7 @@ public class ResultManager : MonoBehaviour
 			default:
 				Debug.LogWarning("Given training type is unavailable");
 				return 0;
-		}*/
-		return 0;
+		}
 	}
 
 	#region Getters & Setters

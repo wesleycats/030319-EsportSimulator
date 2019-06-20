@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
 		Time.timeScale = 1f;
 		switchOverlay.LerpValue = 1;
 		switchOverlay.Lerp(1);
-		LoadData();
+		InitializeData();
 	}
 
 	public Event GetPlannedEventOn(int currentMonth, List<Event> events)
@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
 		return null;
 	}
 
-    public void LoadData()
+    public void InitializeData()
     {
         InitializePlayerData();
         timeManager.InitializeGameData();
@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
     {
         playerData.Reset();
         gameData.Reset();
-        LoadData();
+		InitializeData();
     }
 
     public void GameOver()
@@ -251,7 +251,7 @@ public class GameManager : MonoBehaviour
 		{
 			currentItems.Add(i);
 		}
-		//set currentAccommodation: currentAccommodation = playerData.Curre;
+		currentAccommodation = playerData.GetAllAccommodations[0];
 	}
 
     #region Getters & Setters

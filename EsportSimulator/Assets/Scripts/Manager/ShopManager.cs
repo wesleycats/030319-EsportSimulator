@@ -5,27 +5,27 @@ using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
-	private Item.Type chosenItemType;
-	private Item.Quality chosenItemQuality;
-	private Accommodation.Type chosenAccommodationType;
+	[SerializeField] private Item.Type chosenItemType;
+	[SerializeField] private Item.Quality chosenItemQuality;
+	[SerializeField] private Accommodation.Type chosenAccommodationType;
 
 	[Header("References")]
-    public ArtManager artManager;
-    public UIManager uiManager;
-    public ResultManager resultManager;
-    public GameManager gameManager;
-    public PlayerData playerData;
+	public ArtManager artManager;
+	public UIManager uiManager;
+	public ResultManager resultManager;
+	public GameManager gameManager;
+	public PlayerData playerData;
 
 	public GameObject badItemQuality;
 	public GameObject standardItemQuality;
 	public GameObject goodItemQuality;
 	public GameObject excellentItemQuality;
-    public Text itemTitle;
+	public Text itemTitle;
 	private Text[] results = new Text[4];
 	private Button[] buttons = new Button[4];
 
 	public void BuyItem(Item item)
-    {
+	{
 		if (!gameManager.IsMoneyHighEnough(item.cost))
 		{
 			Debug.LogWarning("Not Enough Money");
@@ -193,8 +193,8 @@ public class ShopManager : MonoBehaviour
 		}
 
 		gameManager.CurrentAccommodation = accommodation;
-        artManager.UpdateAccommodation(accommodation);
-        uiManager.UpdateAccommodations(accommodation);
+		artManager.UpdateAccommodation(accommodation);
+		uiManager.UpdateAccommodations(accommodation);
 		gameManager.DecreaseMoney(accommodation.cost);
 	}
 
@@ -213,9 +213,9 @@ public class ShopManager : MonoBehaviour
 		chosenItemQuality = GetItemQuality(quality);
 	}
 
-	public void SetAccommodation(string accommodation)
+	public void SetAccommodation(Dropdown dropdown)
 	{
-
+		chosenAccommodationType = playerData.GetAllAccommodations[dropdown.value].type;
 	}
 
 	public Accommodation.Type GetAccomodationType(string accommodation)
@@ -244,7 +244,9 @@ public class ShopManager : MonoBehaviour
 	{
 		foreach (Accommodation a in playerData.GetAllAccommodations)
 		{
-			//if (type != f.itemType) continue;
+			if (type != a.type) continue;
+
+			return a;
 		}
 		return null;
 	}

@@ -65,6 +65,8 @@ public class ArtManager : MonoBehaviour
                 playerAnimator.Play("Idle");
                 workstationAnimator.Play("WoodenTable");
 
+				if (gameManager.CurrentAccommodation != null) break;
+
 				int houseLevel = playerData.GetAllAccommodations.IndexOf(gameManager.CurrentAccommodation);
 				background.sprite = houseSprites[houseLevel];
 				chair.sprite = chairSprites[0];//chairSprites[chairLevel];
@@ -144,7 +146,6 @@ public class ArtManager : MonoBehaviour
 						chair.sprite = null;
 						break;
 				}
-
                 break;
 
             default:

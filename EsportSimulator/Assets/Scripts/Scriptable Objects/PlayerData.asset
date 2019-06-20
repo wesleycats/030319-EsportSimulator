@@ -113,7 +113,7 @@ MonoBehaviour:
         amount: 60
       sprite: {fileID: 21300000, guid: ee775794d52f28c4cbdf656b5e09f6ba, type: 3}
     - type: 3
-      quality: 3
+      quality: 4
       cost: 600
       skills:
       - type: 2
@@ -218,7 +218,7 @@ MonoBehaviour:
     rent: 1500
     trainingRates: 020000000600000014000000
     sprite: {fileID: 21300000, guid: 0191629f9b79a99409484d7b627166af, type: 3}
-  money: 9999
+  money: 2147474447
   rating: 0
   fame: 0
   workExperience: 0
@@ -226,39 +226,51 @@ MonoBehaviour:
   tiredness: 0
   hunger: 0
   thirst: 0
-  gameKnowledge: 0
-  teamPlay: 0
-  mechanics: 0
+  gameKnowledge: 340
+  teamPlay: 340
+  mechanics: 340
   currentItems:
   - type: 1
-    quality: 0
-    cost: 0
-    skills: []
+    quality: 4
+    cost: 300
+    skills:
+    - type: 3
+      amount: 60
     sprite: {fileID: 0}
   - type: 2
-    quality: 0
-    cost: 0
-    skills: []
-    sprite: {fileID: 21300000, guid: 10debfb5a49cf464b9a46c5f46840b03, type: 3}
+    quality: 4
+    cost: 700
+    skills:
+    - type: 3
+      amount: 120
+    sprite: {fileID: 21300000, guid: d4dda4e3513a71c43b6455573791b626, type: 3}
   - type: 3
-    quality: 0
-    cost: 0
-    skills: []
-    sprite: {fileID: 0}
+    quality: 4
+    cost: 600
+    skills:
+    - type: 2
+      amount: 120
+    sprite: {fileID: 21300000, guid: d453bec757b8d654fa07ed51890d8e83, type: 3}
   - type: 4
-    quality: 0
-    cost: 0
-    skills: []
+    quality: 4
+    cost: 600
+    skills:
+    - type: 1
+      amount: 120
     sprite: {fileID: 0}
   - type: 5
-    quality: 0
-    cost: 0
-    skills: []
-    sprite: {fileID: 0}
+    quality: 4
+    cost: 700
+    skills:
+    - type: 1
+      amount: 60
+    - type: 2
+      amount: 60
+    sprite: {fileID: 21300000, guid: 3ca736ce6fb65ac48aaada38b2d438d6, type: 3}
   currentAccommodation:
-    type: 0
-    cost: 0
-    rent: 0
-    trainingRates: 
+    type: 1
+    cost: 200
+    rent: 50
+    trainingRates: 01000000030000000a000000
     sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
   plannedTournaments: []

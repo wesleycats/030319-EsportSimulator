@@ -220,7 +220,7 @@ public class TimeManager : MonoBehaviour
                 break;
 
             case ActivityManager.Activity.Train:
-                resultManager.TrainResults(training);
+                resultManager.TrainResults(training, totalDuration);
                 break;
 
             case ActivityManager.Activity.Work:
