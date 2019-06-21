@@ -2842,7 +2842,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: -$25, -50% hunger
+  m_Text: -$20, -50% hunger
 --- !u!222 &173568046
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5877,7 +5877,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: -$50, -75% hunger
+  m_Text: -$30, -75% hunger
 --- !u!222 &311699528
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6861,7 +6861,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: -$100, -100% hunger
+  m_Text: -$40, -100% hunger
 --- !u!222 &381691749
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18912,7 +18912,7 @@ MonoBehaviour:
     tiredness: 0
     hunger: 25
     thirst: 0
-    money: 25
+    money: 10
     moneyMin: 0
     moneyMax: 0
     rating: 0
@@ -18929,7 +18929,7 @@ MonoBehaviour:
     tiredness: 0
     hunger: 50
     thirst: 0
-    money: 50
+    money: 20
     moneyMin: 0
     moneyMax: 0
     rating: 0
@@ -18946,7 +18946,7 @@ MonoBehaviour:
     tiredness: 0
     hunger: 75
     thirst: 0
-    money: 75
+    money: 30
     moneyMin: 0
     moneyMax: 0
     rating: 0
@@ -18963,7 +18963,7 @@ MonoBehaviour:
     tiredness: 0
     hunger: 100
     thirst: 0
-    money: 100
+    money: 40
     moneyMin: 0
     moneyMax: 0
     rating: 0
@@ -18980,7 +18980,7 @@ MonoBehaviour:
     tiredness: 0
     hunger: 0
     thirst: 25
-    money: 25
+    money: 10
     moneyMin: 0
     moneyMax: 0
     rating: 0
@@ -18997,7 +18997,7 @@ MonoBehaviour:
     tiredness: 0
     hunger: 0
     thirst: 50
-    money: 50
+    money: 20
     moneyMin: 0
     moneyMax: 0
     rating: 0
@@ -19014,7 +19014,7 @@ MonoBehaviour:
     tiredness: 0
     hunger: 0
     thirst: 75
-    money: 75
+    money: 30
     moneyMin: 0
     moneyMax: 0
     rating: 0
@@ -19031,7 +19031,7 @@ MonoBehaviour:
     tiredness: 0
     hunger: 0
     thirst: 100
-    money: 100
+    money: 40
     moneyMin: 0
     moneyMax: 0
     rating: 0
