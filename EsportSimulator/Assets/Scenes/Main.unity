@@ -1597,8 +1597,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 946908885}
   - {fileID: 1852164650}
+  - {fileID: 946908885}
   m_Father: {fileID: 2015654088}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1997,7 +1997,7 @@ RectTransform:
   - {fileID: 1130913056}
   - {fileID: 728793694}
   m_Father: {fileID: 874417817}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2348,7 +2348,7 @@ GameObject:
   - component: {fileID: 158959115}
   - component: {fileID: 158959114}
   m_Layer: 9
-  m_Name: MainMenuScreen
+  m_Name: MainMenu
   m_TagString: MainMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2368,13 +2368,13 @@ RectTransform:
   - {fileID: 1856144300}
   - {fileID: 500973993}
   - {fileID: 991076855}
-  m_Father: {fileID: 588566973}
-  m_RootOrder: 4
+  m_Father: {fileID: 874417817}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 360, y: 640.3279}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &158959114
 MonoBehaviour:
@@ -2842,7 +2842,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: -$25, -25% hunger
+  m_Text: -$25, -50% hunger
 --- !u!222 &173568046
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9059,7 +9059,7 @@ RectTransform:
   - {fileID: 883168512}
   - {fileID: 1840410372}
   m_Father: {fileID: 874417817}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10378,7 +10378,6 @@ RectTransform:
   - {fileID: 295953722}
   - {fileID: 1606226653}
   - {fileID: 874417817}
-  - {fileID: 158959113}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14472,6 +14471,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 158959113}
   - {fileID: 2055302122}
   - {fileID: 494116074}
   - {fileID: 1888458462}
@@ -16236,7 +16236,7 @@ GameObject:
   - component: {fileID: 946908888}
   - component: {fileID: 946908887}
   - component: {fileID: 946908886}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: CloseButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16255,7 +16255,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 107715529}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -17815,7 +17815,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 414613397}
   m_Direction: 2
   m_Value: 0.9999996
-  m_Size: 0.24999999
+  m_Size: 0.25
   m_NumberOfSteps: 1
   m_OnValueChanged:
     m_PersistentCalls:
@@ -18626,6 +18626,7 @@ MonoBehaviour:
     type: 0
     energyCost: 0
     skills: []
+  currentSkillType: 0
   currentBattleMode: 0
   uiManager: {fileID: 1579866881}
   artManager: {fileID: 949353603}
@@ -18637,6 +18638,7 @@ MonoBehaviour:
   buttonManager: {fileID: 1579866883}
   foodMenu: {fileID: 7188348519609243326}
   debug: {fileID: 777039696}
+  trainingPaid: 0
 --- !u!4 &1070449417
 Transform:
   m_ObjectHideFlags: 0
@@ -21296,7 +21298,7 @@ AudioSource:
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
-  Mute: 0
+  Mute: 1
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
@@ -34432,7 +34434,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 107715529}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -35189,7 +35191,7 @@ RectTransform:
   - {fileID: 627589234}
   - {fileID: 1976334400}
   m_Father: {fileID: 874417817}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -38443,7 +38445,7 @@ RectTransform:
   - {fileID: 1197729262}
   - {fileID: 312050532}
   m_Father: {fileID: 874417817}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -38876,7 +38878,7 @@ GameObject:
   - component: {fileID: 2082147529}
   m_Layer: 5
   m_Name: MainMenuButton
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

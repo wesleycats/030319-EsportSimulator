@@ -9,6 +9,7 @@ public class ActivityManager : MonoBehaviour
     public Activity currentActivity = Activity.Idle;
 
 	public Training currentTraining;
+	public Skill.Type currentSkillType;
 
     public Battle.Mode currentBattleMode = Battle.Mode.None;
 
@@ -24,9 +25,11 @@ public class ActivityManager : MonoBehaviour
 
 	public Debugger debug;
 
+	public bool trainingPaid;
+
     private void Start()
     {
-        ChangeActivity(Activity.Idle, 0);
+        //ChangeActivity(Activity.Idle, 0);
     }
 
 	/// <summary>
@@ -113,11 +116,13 @@ public class ActivityManager : MonoBehaviour
 				break;
 
 			case Activity.Train:
-				if (gameManager.GetMoney < resultsManager.GetTrainingCostAmount(currentTraining.type, hourAmount))
+				if (!gameManager.IsMoneyHighEnough((int)resultsManager.GetTrainingCostAmount(currentTraining.type, hourAmount)))
 				{
 					Debug.LogWarning("Not enough money");
 					return;
 				}
+
+				gameManager.DecreaseMoney((int)resultsManager.GetTrainingCostAmount(currentTraining.type, hourAmount));
 
 				uiManager.activityText.text = "Training...";
 				break;

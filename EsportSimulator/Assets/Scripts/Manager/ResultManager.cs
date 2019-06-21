@@ -76,7 +76,6 @@ public class ResultManager : MonoBehaviour
 	[SerializeField] private int totalViews;
 	[SerializeField] private int totalIncome;
 
-
 	private List<Opponent> leaderboard;
 	private Opponent player;
 
@@ -239,18 +238,35 @@ public class ResultManager : MonoBehaviour
     /// Applies the results you will get from training per hour
     /// </summary>
     /// <param name="trainType"></param>
-    public void TrainResults(Training training, int duration)
+    public void TrainResults(Training training, int totalDuration, Skill.Type skill)
     {
         currentDebuffMultiplier *= currentDebuffMultiplierAmount;
 		int tirednessAmount = 0;
 		int trainingRate = 0;
 
-		tirednessAmount = GetTrainingTirednessAmount(training.type, duration);
+		tirednessAmount = (int)(GetTrainingTirednessAmount(training.type, totalDuration) / totalDuration);
 		trainingRate = GetTrainingRate(training.type);
-
 		int skillAmount = Mathf.CeilToInt(trainingRate * currentDebuffMultiplier);
 
-		foreach (Skill s in training.skills)
+		switch (skill)
+		{
+			case Skill.Type.GameKnowledge:
+				gameManager.IncreaseGameKnowledge(skillAmount);
+				break;
+
+			case Skill.Type.TeamPlay:
+				gameManager.IncreaseTeamPlay(skillAmount);
+				break;
+
+			case Skill.Type.Mechanics:
+				gameManager.IncreaseMechanics(skillAmount);
+				break;
+			default:
+				Debug.LogWarning("Given training skill is unavailable");
+				return;
+		}
+
+		/*foreach (Skill s in training.skills)
 		{
 			switch (s.type)
 			{
@@ -269,9 +285,10 @@ public class ResultManager : MonoBehaviour
 					Debug.LogWarning("Given training skill is unavailable");
 					return;
 			}
-		}
-
+		}*/
 		gameManager.IncreaseTiredness(tirednessAmount);
+		IncreaseHunger(hungerIncreaseRate);
+		IncreaseThirst(thirstIncreaseRate);
 	}
 
 	public void BattleResults(Opponent opponent, Battle.Mode battleMode)
@@ -791,7 +808,7 @@ public class ResultManager : MonoBehaviour
         return (int)winChance;
     }
 
-	public float GetTrainingCostAmount(Training.Type trainType, float duration)
+	public float GetTrainingCostAmount(Training.Type trainType, int duration)
 	{
 		currentDebuffMultiplier *= currentDebuffMultiplierAmount;
 
@@ -812,7 +829,7 @@ public class ResultManager : MonoBehaviour
 		}
 	}
 
-	public float GetTrainingTirednessAmount(Training.Type trainType, float duration)
+	public float GetTrainingTirednessAmount(Training.Type trainType, int duration)
 	{
 		currentDebuffMultiplier *= currentDebuffMultiplierAmount;
 

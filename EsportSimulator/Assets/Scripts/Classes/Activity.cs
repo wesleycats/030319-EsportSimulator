@@ -42,8 +42,9 @@ public class Activity : MonoBehaviour
 		if (contestManager) hourAmount = contestManager.GetContestDuration;
 
 		activityManager.currentTraining = training;
+		if (activity == ActivityManager.Activity.Train) activityManager.currentSkillType = training.skills[0].type;
 		activityManager.currentBattleMode = battleMode;
-
+		
 		activityManager.ChangeActivity(activity, hourAmount);
 	}
 

@@ -65,7 +65,7 @@ public class ArtManager : MonoBehaviour
                 playerAnimator.Play("Idle");
                 workstationAnimator.Play("WoodenTable");
 
-				if (gameManager.CurrentAccommodation != null) break;
+				//if (gameManager.CurrentAccommodation != null) break;
 
 				int houseLevel = playerData.GetAllAccommodations.IndexOf(gameManager.CurrentAccommodation);
 				background.sprite = houseSprites[houseLevel];
@@ -87,7 +87,6 @@ public class ArtManager : MonoBehaviour
 					}
 				}
                 break;
-
 
 			case ActivityManager.Activity.Plan:
 				playerAnimator.Play("OnComputer");

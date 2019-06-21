@@ -18,8 +18,8 @@ public class SubMenuManager : MonoBehaviour
 		if (skill != "")
 		{
 			actionButton.training.type = Training.Type.Watching;
-			//actionButton.training.skills.Add(new Skill(GetTrainingSkill(skill), 1));
-			//menuTitle.text = actionButton.training.skills[0].type.ToString();
+			actionButton.training.skills.Add(new Skill(GetTrainingSkill(skill), resultManager.GetTrainingRate(actionButton.training.type)));
+			menuTitle.text = actionButton.training.skills[0].type.ToString();
 		}
 
 		UpdateSliderValues(actionButton.activity);
@@ -28,8 +28,13 @@ public class SubMenuManager : MonoBehaviour
 	public void UpdateTrainingType(string trainType)
 	{
 		actionButton.training.type = GetTrainingType(trainType);
+
+		foreach (Skill s in actionButton.training.skills)
+		{
+			s.amount = resultManager.GetTrainingRate(actionButton.training.type);
+		}
 	}
-	
+
 	public void UpdateSliderValues(ActivityManager.Activity activity)
 	{
 		SliderToText sliderText = durationSlider.GetComponent<SliderToText>();
