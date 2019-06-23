@@ -42,21 +42,23 @@ public class SubMenuManager : MonoBehaviour
 		switch (activity)
 		{
 			case ActivityManager.Activity.Sleep:
-				sliderText.SetSliderMaxValue(resultManager.GetTirednessDecreaseRate, gameManager.GetTiredness);
+				sliderText.SetSliderMaxValue(activity, resultManager.GetTirednessDecreaseRate, gameManager.GetTiredness);
 				sliderText.SetTirednessMultiplier = resultManager.GetTirednessDecreaseRate;
 				sliderText.ValueToSleepResult(resultText);
 
 				break;
 
 			case ActivityManager.Activity.Work:
+				sliderText.SetSliderMaxValue(activity, resultManager.GetWorkResult(gameManager.WorkLevel).Tiredness, 100 - gameManager.GetTiredness);
 				break;
 
 			case ActivityManager.Activity.Stream:
+				sliderText.SetSliderMaxValue(activity, resultManager.streamEnergyCost, 100 - gameManager.GetTiredness);
 				sliderText.ValueToStreamResult(resultText);
 				break;
 
 			case ActivityManager.Activity.Train:
-				durationSlider.maxValue = GetMaxTrainingHours(actionButton.training.type) * sliderText.GetTimeMultiplier;
+				sliderText.SetSliderMaxValue(activity, resultManager.GetTrainingResults(actionButton.training.type).Tiredness, 100 - gameManager.GetTiredness);
 				sliderText.SetSkills = actionButton.training.skills;
 				sliderText.SetTirednessMultiplier = resultManager.GetTrainingTirednessAmount(actionButton.training.type, 1);
 				sliderText.SetCostMultiplier = resultManager.GetTrainingCostAmount(actionButton.training.type, 1);

@@ -75,6 +75,7 @@ public class ResultManager : MonoBehaviour
 	[SerializeField] private int maxIncomePerViews;
 	[SerializeField] private int totalViews;
 	[SerializeField] private int totalIncome;
+	public int streamEnergyCost;
 
 	private List<Opponent> leaderboard;
 	private Opponent player;
@@ -199,12 +200,19 @@ public class ResultManager : MonoBehaviour
 		int money = GetStreamIncome(viewCount, minIncomePerViews, maxIncomePerViews);
 
 		gameManager.IncreaseMoney(money);
+		gameManager.IncreaseTiredness(streamEnergyCost);
 		totalIncome += money;
 	}
 	
     public void PayRent(Accommodation accommodation)
     {
-        gameManager.DecreaseMoney(accommodation.cost);
+		if (gameManager.IsMoneyHighEnough(accommodation.rent))
+			gameManager.DecreaseMoney(accommodation.rent);
+		else
+		{
+			gameManager.GameOver();
+			FindObjectOfType<ButtonManager>().EnableAllButtonsOf("GameOver");
+		}
     }
 
     /// <summary>
@@ -289,6 +297,25 @@ public class ResultManager : MonoBehaviour
 		gameManager.IncreaseTiredness(tirednessAmount);
 		IncreaseHunger(hungerIncreaseRate);
 		IncreaseThirst(thirstIncreaseRate);
+	}
+
+	public ResultsForm GetTrainingResults(Training.Type type) 
+	{
+		switch (type)
+		{
+			case Training.Type.Watching:
+				return trainLevel1;
+
+			case Training.Type.Course:
+				return trainLevel2;
+
+			case Training.Type.CoursePlus:
+				return trainLevel3;
+
+			default:
+				Debug.LogWarning("Given training type is unavailable");
+				return null;
+		}
 	}
 
 	public void BattleResults(Opponent opponent, Battle.Mode battleMode)

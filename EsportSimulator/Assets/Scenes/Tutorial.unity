@@ -1812,7 +1812,7 @@ MonoBehaviour:
         wasActive: 0
         waitForInput: 0
         interactable: 0
-        focusTextIndex: 4
+        focusTextIndex: 6
         originalOrder: 0
         isCustomSortOrder: 0
         customSortOrder: 0
@@ -1820,80 +1820,64 @@ MonoBehaviour:
         wasActive: 0
         waitForInput: 0
         interactable: 0
-        focusTextIndex: 4
-        originalOrder: 1
+        focusTextIndex: 6
+        originalOrder: 0
         isCustomSortOrder: 0
         customSortOrder: 0
       - gObject: {fileID: 1022755325}
         wasActive: 0
         waitForInput: 0
         interactable: 0
-        focusTextIndex: 4
-        originalOrder: 2
+        focusTextIndex: 6
+        originalOrder: 0
         isCustomSortOrder: 0
         customSortOrder: 0
       - gObject: {fileID: 852589772}
         wasActive: 0
         waitForInput: 0
         interactable: 0
-        focusTextIndex: 4
-        originalOrder: 3
+        focusTextIndex: 6
+        originalOrder: 0
         isCustomSortOrder: 0
         customSortOrder: 0
       - gObject: {fileID: 197400531}
         wasActive: 0
         waitForInput: 0
         interactable: 0
-        focusTextIndex: 5
-        originalOrder: 4
+        focusTextIndex: 7
+        originalOrder: 0
         isCustomSortOrder: 0
         customSortOrder: 0
       - gObject: {fileID: 1296643364}
         wasActive: 0
         waitForInput: 0
         interactable: 0
-        focusTextIndex: 5
-        originalOrder: 5
+        focusTextIndex: 7
+        originalOrder: 0
         isCustomSortOrder: 0
         customSortOrder: 0
       - gObject: {fileID: 1474621605}
         wasActive: 0
         waitForInput: 0
         interactable: 0
-        focusTextIndex: 5
-        originalOrder: 6
+        focusTextIndex: 7
+        originalOrder: 0
         isCustomSortOrder: 0
         customSortOrder: 0
       - gObject: {fileID: 739181428}
         wasActive: 0
         waitForInput: 0
         interactable: 0
-        focusTextIndex: 5
-        originalOrder: 7
+        focusTextIndex: 7
+        originalOrder: 0
         isCustomSortOrder: 0
         customSortOrder: 0
       - gObject: {fileID: 22224233}
         wasActive: 0
         waitForInput: 0
         interactable: 0
-        focusTextIndex: 5
-        originalOrder: 8
-        isCustomSortOrder: 0
-        customSortOrder: 0
-      - gObject: {fileID: 468331171}
-        wasActive: 0
-        waitForInput: 0
-        interactable: 0
-        focusTextIndex: 6
-        originalOrder: 9
-        isCustomSortOrder: 0
-        customSortOrder: 0
-      - gObject: {fileID: 468331171}
-        wasActive: 0
-        waitForInput: 0
-        interactable: 0
         focusTextIndex: 7
-        originalOrder: 10
+        originalOrder: 0
         isCustomSortOrder: 0
         customSortOrder: 0
       - gObject: {fileID: 468331171}
@@ -1901,10 +1885,10 @@ MonoBehaviour:
         waitForInput: 0
         interactable: 0
         focusTextIndex: 8
-        originalOrder: 11
+        originalOrder: 0
         isCustomSortOrder: 0
         customSortOrder: 0
-      - gObject: {fileID: 197527367}
+      - gObject: {fileID: 468331171}
         wasActive: 0
         waitForInput: 0
         interactable: 0
@@ -1912,15 +1896,7 @@ MonoBehaviour:
         originalOrder: 0
         isCustomSortOrder: 0
         customSortOrder: 0
-      - gObject: {fileID: 1442085403}
-        wasActive: 0
-        waitForInput: 0
-        interactable: 0
-        focusTextIndex: 9
-        originalOrder: 0
-        isCustomSortOrder: 0
-        customSortOrder: 0
-      - gObject: {fileID: 1442085403}
+      - gObject: {fileID: 468331171}
         wasActive: 0
         waitForInput: 0
         interactable: 0
@@ -1928,7 +1904,7 @@ MonoBehaviour:
         originalOrder: 0
         isCustomSortOrder: 0
         customSortOrder: 0
-      - gObject: {fileID: 943572709}
+      - gObject: {fileID: 197527367}
         wasActive: 0
         waitForInput: 0
         interactable: 0
@@ -1936,11 +1912,35 @@ MonoBehaviour:
         originalOrder: 0
         isCustomSortOrder: 0
         customSortOrder: 0
-      - gObject: {fileID: 1958801552}
+      - gObject: {fileID: 1442085403}
+        wasActive: 0
+        waitForInput: 0
+        interactable: 0
+        focusTextIndex: 11
+        originalOrder: 0
+        isCustomSortOrder: 0
+        customSortOrder: 0
+      - gObject: {fileID: 1442085403}
+        wasActive: 0
+        waitForInput: 0
+        interactable: 0
+        focusTextIndex: 12
+        originalOrder: 0
+        isCustomSortOrder: 0
+        customSortOrder: 0
+      - gObject: {fileID: 943572709}
         wasActive: 0
         waitForInput: 0
         interactable: 0
         focusTextIndex: 13
+        originalOrder: 0
+        isCustomSortOrder: 0
+        customSortOrder: 0
+      - gObject: {fileID: 1958801552}
+        wasActive: 0
+        waitForInput: 0
+        interactable: 0
+        focusTextIndex: 15
         originalOrder: 0
         isCustomSortOrder: 0
         customSortOrder: 0
@@ -6006,8 +6006,9 @@ MonoBehaviour:
   activity: 9
   hourAmount: 0
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 3
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -21173,8 +21174,9 @@ MonoBehaviour:
   activity: 9
   hourAmount: 0
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 2
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -21359,8 +21361,9 @@ MonoBehaviour:
   activity: 6
   hourAmount: 1
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 3
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -22272,8 +22275,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 414613398}
   m_HandleRect: {fileID: 414613397}
   m_Direction: 2
-  m_Value: 0.9999998
-  m_Size: 0.25000003
+  m_Value: 0.9999996
+  m_Size: 0.24999999
   m_NumberOfSteps: 1
   m_OnValueChanged:
     m_PersistentCalls:
@@ -22779,8 +22782,9 @@ MonoBehaviour:
   activity: 1
   hourAmount: 0
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 0
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -23259,8 +23263,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentActivity: 0
   currentTraining:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
+  currentSkillType: 0
   currentBattleMode: 0
   uiManager: {fileID: 1579866881}
   artManager: {fileID: 949353603}
@@ -23272,6 +23278,7 @@ MonoBehaviour:
   buttonManager: {fileID: 1579866883}
   foodMenu: {fileID: 0}
   debug: {fileID: 777039696}
+  trainingPaid: 0
 --- !u!4 &1070449417
 Transform:
   m_ObjectHideFlags: 0
@@ -23312,15 +23319,10 @@ MonoBehaviour:
   mechanics: 0
   currentItems: []
   currentAccommodation:
-    elementName: Garage
-    accommodation:
-      type: 0
-      bought: 1
+    type: 0
     cost: 0
     rent: 50
-    trainingLevel1Amount: 1
-    trainingLevel2Amount: 3
-    trainingLevel3Amount: 10
+    trainingRates: 
     sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
   plannedEvents: []
   playerData: {fileID: 11400000, guid: 6c93e5593e3aa0745bfd7099e4de7d3d, type: 2}
@@ -23756,15 +23758,10 @@ MonoBehaviour:
     plannedTournaments: []
     currentItems: []
     currentAccommodation:
-      elementName: 
-      accommodation:
-        type: 0
-        bought: 0
+      type: 0
       cost: 0
       rent: 0
-      trainingLevel1Amount: 0
-      trainingLevel2Amount: 0
-      trainingLevel3Amount: 0
+      trainingRates: 
       sprite: {fileID: 0}
     saveSlotIndex: 0
     opponents: []
@@ -23785,7 +23782,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadTime: 2
-  switchOverlay: {fileID: 1739649207}
   gameSaver: {fileID: 1070449422}
   gameData: {fileID: 11400000, guid: 5239ced18afa0f54ab8775b736970565, type: 2}
   playerData: {fileID: 11400000, guid: 6c93e5593e3aa0745bfd7099e4de7d3d, type: 2}
@@ -23814,18 +23810,14 @@ MonoBehaviour:
     plannedTournaments: []
     currentItems: []
     currentAccommodation:
-      elementName: 
-      accommodation:
-        type: 0
-        bought: 0
+      type: 0
       cost: 0
       rent: 0
-      trainingLevel1Amount: 0
-      trainingLevel2Amount: 0
-      trainingLevel3Amount: 0
+      trainingRates: 
       sprite: {fileID: 0}
     saveSlotIndex: 0
     opponents: []
+  gameManager: {fileID: 0}
 --- !u!114 &1070449424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23987,6 +23979,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8766864b192c8a549a2972a02f39c779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chosenItemType: 0
+  chosenItemQuality: 0
+  chosenAccommodationType: 0
   artManager: {fileID: 949353603}
   uiManager: {fileID: 1579866881}
   resultManager: {fileID: 1070449420}
@@ -24397,8 +24392,9 @@ MonoBehaviour:
   activity: 7
   hourAmount: 0
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 0
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -25133,8 +25129,9 @@ MonoBehaviour:
   activity: 6
   hourAmount: 1
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 2
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -28341,7 +28338,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_TargetDisplay: 0
 --- !u!114 &1197462333
 MonoBehaviour:
@@ -29130,7 +29127,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_TargetDisplay: 0
 --- !u!1 &1209319779
 GameObject:
@@ -31774,8 +31771,9 @@ MonoBehaviour:
   activity: 5
   hourAmount: 0
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 0
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -35056,8 +35054,9 @@ MonoBehaviour:
   activity: 9
   hourAmount: 0
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 1
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -35891,8 +35890,9 @@ MonoBehaviour:
   activity: 4
   hourAmount: 0
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 0
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -39960,6 +39960,8 @@ MonoBehaviour:
   darkOverlay: {fileID: 0}
   sleepOverlay: {fileID: 0}
   needsMenuButton: {fileID: 197400534}
+  mutedSprite: {fileID: 0}
+  unMutedSprite: {fileID: 0}
   monthsHolder: {fileID: 966347437}
   contestAnnouncementMenu: {fileID: 0}
   contestAnnouncementText: {fileID: 0}
@@ -43081,8 +43083,9 @@ MonoBehaviour:
   activity: 6
   hourAmount: 1
   training:
-    skills: []
     type: 0
+    energyCost: 0
+    skills: []
   battleMode: 1
   foodLevel: 0
   activityManager: {fileID: 1070449416}
@@ -48477,13 +48480,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1bcb1f2fc1e4bc4eb971205d54d22d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shopManager: {fileID: 1070449426}
   gameManager: {fileID: 1070449418}
   uiManager: {fileID: 1579866881}
-  playerData: {fileID: 0}
   accommodation:
     type: 0
-    bought: 0
+    cost: 0
+    rent: 0
+    trainingRates: 
+    sprite: {fileID: 0}
 --- !u!1 &1962322938
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,12 +8,16 @@
 
 |You achieve this with having the highest amount elo-points, which are collected by winning battles and contests.;
 
-|The only way to lose the game, is by not having enough money to pay your monthly rent.;
+|The only way to lose the game, is by not having enough money to pay your rent.;
+
+|Every 24th hour when the next month starts, your rent will be deducted from your treasury.;
+
+#5
+|So always check if you have enough money to pay the rent before you start performing an action.;
 
 *Top Bar*
 |The top bar consists of a calender, pause menu, progress menu and an event bar.;
 
-#5
 *Bottom Bar*
 |The bottom bar consists of a action bar, needs menu, skills menu, action menu and a shop.;
 
@@ -22,12 +26,12 @@
 
 |When your tiredness level is at 100% or higher, you will get a 50% rewards debuff.;
 
+#10
 |When your hunger or thirst level is at 100% or higher, you will get a debuff that gives 200% tiredness when you perform an action.;
 
 *Information*
 |To access the information about a topic, you can press any question mark in corner of the corresponding menu.;
 
-#10
 *Actions Menu*
 |You can go to work, battle, use your fame to get many views while streaming, or plan a contest to compete in.;
 
@@ -36,7 +40,8 @@
 
 |You can get skills by battling, training or by buying new items.;
 
-*Shop Menu*
+#15
+*Accommodation Menu*
 |You are also able to buy new accommodations to increase your training rates.;
 
 *Outro*

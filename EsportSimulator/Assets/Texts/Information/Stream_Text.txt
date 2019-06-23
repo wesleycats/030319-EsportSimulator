@@ -4,6 +4,6 @@
 |The amount of money you make with streaming, depends on the amount of viewers you get, which depends on your amount of fame.;
 
 |The results of streaming are all calculated as followed:
-per 50 fame -> between 5 - 10 views per hour
+per 50 fame -> receive between 5 - 10 views per hour
 
-per 50 views -> between +$1 - $5 per hour;
+per 50 views -> receive between +$1 - $5 per hour;

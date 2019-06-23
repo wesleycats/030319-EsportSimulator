@@ -122,7 +122,6 @@ public class ActivityManager : MonoBehaviour
 					return;
 				}
 
-				gameManager.DecreaseMoney((int)resultsManager.GetTrainingCostAmount(currentTraining.type, hourAmount));
 
 				uiManager.activityText.text = "Training...";
 				break;
@@ -141,6 +140,7 @@ public class ActivityManager : MonoBehaviour
 			return;
 		}
 
+		if (currentTraining.type != Training.Type.None) gameManager.DecreaseMoney((int)resultsManager.GetTrainingCostAmount(currentTraining.type, hourAmount));
 		timeManager.IncreaseTime(hourAmount, false);
 		artManager.ChangeArt(currentActivity);
 	}

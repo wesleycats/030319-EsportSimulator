@@ -104,10 +104,11 @@ public class SliderToText : MonoBehaviour
 		return skillText;
 	}
 
-    public void SetSliderMaxValue(float divisor, float amount)
+    public void SetSliderMaxValue(ActivityManager.Activity activity, float divisor, float amount)
     {
 		slider.maxValue = Mathf.CeilToInt(amount / divisor);
-		if (slider.maxValue >= resultManager.GetMaxSleepHours) slider.maxValue = resultManager.GetMaxSleepHours;
+
+		if (amount == 0) slider.maxValue = 0;
 	}
 
 	public void ResetSlider()

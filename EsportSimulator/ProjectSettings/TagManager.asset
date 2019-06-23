@@ -16,6 +16,7 @@ TagManager:
   - Excellent
   - Tutorial
   - ItemMenu
+  - GameOver
   layers:
   - Default
   - TransparentFX
