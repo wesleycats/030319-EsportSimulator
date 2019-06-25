@@ -1,0 +1,15 @@
+#Contest#
+
+#0
+|Contests will alter valuable resources like time, money and fame on the biggest scale in the game.;
+
+|So make sure you are well prepared by having high amounts of skill points when you plan a tournament.;
+
+|The game modes work the same as with normal battles;
+
+|Skill influence for each game mode:
+1v1: Game Knowledge & Mechanics
+
+3v3: Game Knowledge & Team Play
+
+5v5: Game Knowledge & Mechanics & Team Play;

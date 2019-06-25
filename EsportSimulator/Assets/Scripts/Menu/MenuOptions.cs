@@ -1,62 +1,96 @@
 ﻿using System.Collections;
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MenuOptions : MonoBehaviour
 {
-    [SerializeField] private float loadTime;
+	public GameLoader.LoadType loadType;
 
+    [SerializeField] private float loadTime;
+	private int slotToLoad;
+
+	[Header("References")]
+	public int tutorialSceneIndex;
     public ButtonManager buttonManager;
     public UIManager uiManager;
     public GameManager gameManager;
-    public LerpColor switchOverlay;
+    public GameLoader gameLoader;
+	public LerpColor switchOverlay;
+	public GameData gameData;
+	private AudioManager audioManager;
 
-    private void OnEnable()
+	private void Awake()
+	{
+		audioManager = FindObjectOfType<AudioManager>();
+	}
+
+	private void Start()
+	{
+		switchOverlay.LerpStopped += LoadInGame;
+
+		if (gameObject.tag == "MainMenu")
+		{
+			Time.timeScale = 1f;
+			audioManager.CurrentPlaylist = audioManager.mainMenuClips;
+
+			if (gameData.tutorialDone)
+			{
+				gameManager.ResetGame();
+				audioManager.CurrentPlaylist = audioManager.mainClips;
+				gameObject.SetActive(false);
+			}
+		}
+	}
+
+	private void OnEnable()
     {
-        if (gameObject.tag == "MainMenu")
-            Time.timeScale = 1f;
-
         if (!buttonManager) return;
 
         buttonManager.EnableAllButtonsOf("Navigation");
     }
 
-    public void StartNewGame()
-    {
-        gameManager.ResetGame();
-        switchOverlay.LerpMaxAmount = 1;
-        switchOverlay.Increasing = true;
-        switchOverlay.Lerping = true;
-        switchOverlay.LerpActivated = true;
-        buttonManager.DisableAllButtons();
-        StartCoroutine(LoadDelayer());
-    }
+	public void StartNewGame()
+	{
+		loadType = GameLoader.LoadType.NewGame;
+		audioManager.FadeOut();
+		switchOverlay.Lerp(1);
+	}
 
-    public void RestartGame()
+	public void LoadGame(int slot)
+	{
+		loadType = GameLoader.LoadType.LoadGame;
+		slotToLoad = slot;
+		audioManager.FadeOut();
+		switchOverlay.Lerp(1);
+	}
+
+	public void LoadInGame(bool b)
+	{
+		if (!b || loadType == GameLoader.LoadType.None) return;
+
+		switch (loadType)
+		{
+			case GameLoader.LoadType.NewGame:
+				SceneManager.LoadScene(tutorialSceneIndex);
+				break;
+
+			case GameLoader.LoadType.LoadGame:
+				gameLoader.LoadGame(slotToLoad);
+				gameManager.InitializeData();
+				audioManager.CurrentPlaylist = audioManager.mainClips;
+				switchOverlay.Lerp(1, false);
+				gameObject.SetActive(false);
+				break;
+
+			default:
+				Debug.LogError("Given load type is unavailable");
+				break;
+		}
+	}
+
+	public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    private IEnumerator LoadDelayer()
-    {
-        yield return new WaitForSeconds(loadTime);
-
-        if (!switchOverlay.Lerping && switchOverlay.LerpValue == 1)
-        {
-            if (gameObject.tag == "MainMenu")
-                gameObject.SetActive(false);
-
-            switchOverlay.LerpMaxAmount = 1;
-            switchOverlay.Increasing = false;
-            switchOverlay.Lerping = true;
-            switchOverlay.LerpActivated = true;
-            buttonManager.EnableAllButtons();
-        }
-        else
-        {
-            StartCoroutine(LoadDelayer());
-        }
     }
 
     public void PerformActionTag(GameObject button)

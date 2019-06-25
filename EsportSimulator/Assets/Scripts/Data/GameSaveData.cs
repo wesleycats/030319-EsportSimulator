@@ -57,12 +57,10 @@ public class GameSaveData
 
 	#region Properties
 
-	[SerializeField] public List<ItemForm> savedEquipedItems = new List<ItemForm>();
-	[SerializeField] public List<AccommodationForm> allAccommodations;
-	[SerializeField] public AccommodationForm currentAccommodation;
+	[SerializeField] public List<Item> currentItems;
+	[SerializeField] public Accommodation currentAccommodation;
 
 	#endregion
-
 
 	#region Utilities
 

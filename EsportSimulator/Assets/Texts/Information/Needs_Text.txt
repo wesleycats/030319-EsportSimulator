@@ -1,0 +1,8 @@
+#Needs#
+
+#0
+|If your tiredness is at 100%, you will get a 50% reward debuff on most actions.;
+
+|If your hunger OR thirst is at 100%, you will get a 150% tiredness debuff on most actions.;
+
+|If your hunger AND thirst is at 100%, you will get a 200% tiredness debuff on most actions.;

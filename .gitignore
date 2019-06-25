@@ -2,7 +2,6 @@
 [Tt]emp/
 [Oo]bj/
 [Bb]uild/
-[Bb]uilds/
 Assets/AssetStoreTools*
 
 # Visual Studio cache directory
@@ -32,5 +31,15 @@ ExportedObj/
 sysinfo.txt
 
 # Builds
-*.apk
 *.unitypackage
+EsportSimulator/Builds/Android/Test/Dev/UI/UI DevTest v2.apk
+EsportSimulator/Builds/Android/Test/Dev/UI/UI DevTest v1.apk
+EsportSimulator/Builds/Android/Test/Dev/Mechanics/DevTest v5 Battle.apk
+EsportSimulator/Builds/Android/Test/Dev/Mechanics/DevTest v4 Opponent.apk
+EsportSimulator/Builds/Android/Test/Dev/Mechanics/DevTest v3 Save.apk
+EsportSimulator/Builds/Android/Test/Dev/Mechanics/DevTest v2 Training.apk
+EsportSimulator/Builds/Android/Test/Dev/Mechanics/DevTest v1 Work.apk
+EsportSimulator/Builds/Android/Exported Projects/
+EsportSimulator/Builds/UI DevTest v3.apk
+EsportSimulator/Builds/Android/Dev/DevTest Tutorial.apk
+EsportSimulator/Builds/Android/Alpha/Alpha v1.apk

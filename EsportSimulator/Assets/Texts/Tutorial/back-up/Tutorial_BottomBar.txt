@@ -1,0 +1,5 @@
+#Bottom Bar#
+
+#0 
+*highlight bottom bar*
+|The bottom bar consists of a action bar, needs menu, skills menu, action menu and a shop menu.;

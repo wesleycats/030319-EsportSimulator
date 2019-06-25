@@ -61,25 +61,19 @@ public class ArtManager : MonoBehaviour
 				workstationAnimator.Play("WoodenTable");
 				break;
 
-            case ActivityManager.Activity.Drink:
-
-                break;
-
-            case ActivityManager.Activity.Eat:
-
-                break;
-
             case ActivityManager.Activity.Idle:
                 playerAnimator.Play("Idle");
                 workstationAnimator.Play("WoodenTable");
 
-				int houseLevel = gameManager.GetCurrentAccommodationIndex(gameManager.GetCurrentAccommodation, shopManager.GetAllAccommodations);
-				background.sprite = houseSprites[houseLevel];
-				chair.sprite = chairSprites[houseLevel];
-				workstation.sprite = tableSprites[houseLevel];
+				//if (gameManager.CurrentAccommodation != null) break;
 
+				int houseLevel = playerData.GetAllAccommodations.IndexOf(gameManager.CurrentAccommodation);
+				background.sprite = houseSprites[houseLevel];
+				chair.sprite = chairSprites[0];//chairSprites[chairLevel];
+				workstation.sprite = tableSprites[0];//tableSprites[tableLevel];
+				 
 				// Sets item sprites to currently equiped items
-				foreach (ItemForm f in gameManager.GetEquipedItems)
+				foreach (Item f in gameManager.CurrentItems)
 				{
 					switch (f.type)
 					{
@@ -93,7 +87,6 @@ public class ArtManager : MonoBehaviour
 					}
 				}
                 break;
-
 
 			case ActivityManager.Activity.Plan:
 				playerAnimator.Play("OnComputer");
@@ -152,7 +145,6 @@ public class ArtManager : MonoBehaviour
 						chair.sprite = null;
 						break;
 				}
-
                 break;
 
             default:
@@ -163,9 +155,9 @@ public class ArtManager : MonoBehaviour
 
     }
 
-    public void UpdateItems(List<ItemForm> equipedItems)
+    public void UpdateItems(List<Item> equipedItems)
     {
-        foreach (ItemForm f in equipedItems)
+        foreach (Item f in equipedItems)
         { 
             switch (f.type)
             {
@@ -182,13 +174,14 @@ public class ArtManager : MonoBehaviour
         }
     }
 
-    public void UpdateAccommodation(AccommodationForm currentAccommodation)
+    public void UpdateAccommodation(Accommodation currentAccommodation)
     {
         background.sprite = currentAccommodation.sprite;
     }
 
     public void Initialize()
     {
-        UpdateItems(gameManager.GetEquipedItems);
+        UpdateItems(gameManager.CurrentItems);
+		UpdateAccommodation(gameManager.CurrentAccommodation);
     }
 }

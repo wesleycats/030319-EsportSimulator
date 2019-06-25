@@ -1,4 +1,6 @@
-﻿[System.Serializable]
+﻿using UnityEngine;
+
+[System.Serializable]
 public class Item
 {
     public enum Type { None, Mouse, Keyboard, Headset, Guide, Screen }
@@ -6,21 +8,16 @@ public class Item
 
     public Type type;
     public Quality quality;
+	public int cost;
     public Skill[] skills;
+	public Sprite sprite;
 
-    private int itemLevel;
-
-    public Item(Type aType, Quality aQuality, Skill[] aSkills)
-    {
-        type = aType;
-        quality = aQuality;
-        skills = aSkills;
-        itemLevel = (int)aQuality;
-    }
-
-    #region Getters & Setters
-
-    public int ItemLevel { get { return itemLevel; } }
-
-    #endregion
+	public Item(Type aType, Quality aQuality, int aCost, Skill[] aSkills, Sprite aSprite)
+	{
+		type = aType;
+		quality = aQuality;
+		cost = aCost;
+		skills = aSkills;
+		sprite = aSprite;
+	}
 }

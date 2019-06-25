@@ -1,0 +1,6 @@
+#Accommodations#
+
+#0
+|Buying a new accommodation will increase your training rates.;
+
+|But be aware of the cost and rent, since you automatically lose your old accommodation when you buy a new one.;

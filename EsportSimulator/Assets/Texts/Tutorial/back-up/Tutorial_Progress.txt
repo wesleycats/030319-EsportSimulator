@@ -1,0 +1,25 @@
+#Progress#
+
+#0 
+*highlight button for progress menu*
+|Open the progress menu.;
+
+#1 
+*opened progress menu*
+|In this menu you find info about your finances, ranking and popularity.;
+
+#2
+|The monthly rent is based on the current home and needs to be paid after every 24 hours.;
+
+#3
+|If you are not able to pay the rent, it will be game over!;
+
+#4 
+*highlight ranking menu*
+|Open the ranking menu.;
+
+#5
+|When YOU achieve to reach rank #1, you win the game! :D;
+
+#6
+|Now close the menu by pressing the background.;

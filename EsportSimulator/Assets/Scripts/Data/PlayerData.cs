@@ -12,12 +12,12 @@ public class PlayerData : ScriptableObject
     #region Default Variables
 
     [SerializeField] private int defaultMoney;
-    [SerializeField] private List<ItemForm> defaultItems;
-    [SerializeField] private List<AccommodationForm> defaultAccommodations;
+	[SerializeField] private List<ItemForm> allItems;
+	[SerializeField] private List<Accommodation> allAccommodations;
 
-    #endregion
+	#endregion
 
-    [Header("Attributes")]
+	[Header("Attributes")]
     #region Progress
 
     [SerializeField] private int money;
@@ -44,21 +44,22 @@ public class PlayerData : ScriptableObject
 
     #endregion
 
+	[Header("Properties")]
     #region Properties 
-    
-    [SerializeField] private List<ItemForm> savedEquipedItems = new List<ItemForm>();
-    [SerializeField] private List<AccommodationForm> allAccommodations;
-    [SerializeField] private AccommodationForm currentAccommodation;
+
+    [SerializeField] private List<Item> currentItems = new List<Item>();
+	[SerializeField] private Accommodation currentAccommodation;
 
 	#endregion
 
+	[Header("Events")]
 	#region Events
 
 	[SerializeField] List<Event> plannedTournaments;
 
 	#endregion
 
-	public void Reset(bool reset)
+	public void Reset()
     {
         money = defaultMoney;
         rating = 0;
@@ -71,9 +72,19 @@ public class PlayerData : ScriptableObject
         gameKnowledge = 0;
         teamPlay = 0;
         mechanics = 0;
-		savedEquipedItems = defaultItems;
-		allAccommodations = defaultAccommodations;
-        currentAccommodation = defaultAccommodations[0];
+		currentItems.Clear();
+		
+		foreach (ItemForm f in allItems)
+		{
+			foreach (Item i in f.qualities)
+			{
+				if (i.quality != Item.Quality.Default) continue;
+
+				currentItems.Add(i);
+			}
+		}
+		
+        currentAccommodation = allAccommodations[0];
 		plannedTournaments.Clear();
 	}
 
@@ -91,10 +102,10 @@ public class PlayerData : ScriptableObject
     public int GetGameKnowledge { get { return gameKnowledge; } }
     public int GetTeamPlay { get { return teamPlay; } }
     public int GetMechanics { get { return mechanics; } }
-    public List<ItemForm> GetSavedEquipedItems { get { return savedEquipedItems; } }
-    public List<Event> GetPlannedTournaments { get { return plannedTournaments; } }
-	public AccommodationForm GetCurrentAccommodation { get { return currentAccommodation; } }
-	public List<AccommodationForm> GetAllAccommodations { get { return allAccommodations; } }
+    public List<Item> CurrentItems { get { return currentItems; } }
+    public List<ItemForm> GetAllItems { get { return allItems; } }
+	public List<Event> GetPlannedTournaments { get { return plannedTournaments; } }
+	public List<Accommodation> GetAllAccommodations { get { return allAccommodations; } }
 
 	public int SetDefaultMoney { set { defaultMoney = value; } }
     public int SetMoney { set { money = value; } }
@@ -108,10 +119,7 @@ public class PlayerData : ScriptableObject
     public int SetGameKnowledge { set { gameKnowledge = value; } }
     public int SetTeamPlay { set { teamPlay = value; } }
     public int SetMechanics { set { mechanics = value; } }
-    public List<ItemForm> SetSavedEquipedItems { set { savedEquipedItems = value; } }
     public List<Event> SetPlannedTournaments { set { plannedTournaments = value; } }
-    public AccommodationForm SetCurrentAccommodation { set { currentAccommodation = value; } }
-	public List<AccommodationForm> SetAllAccommodations { set { allAccommodations = value; } }
 
 	#endregion
 }

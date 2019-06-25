@@ -14,6 +14,7 @@ public class ButtonManager : MonoBehaviour
 
     public void EnableAllButtons(string exceptionTag)
     {
+		//Debug.Log("all except + " + exceptionTag);
         foreach (Button b in allButtons)
         {
             if (b.tag == exceptionTag) continue;
@@ -24,7 +25,8 @@ public class ButtonManager : MonoBehaviour
 
     public void EnableAllButtons()
     {
-        foreach (Button b in allButtons)
+		//Debug.Log("all");
+		foreach (Button b in allButtons)
         {
             b.interactable = true;
         }
@@ -32,7 +34,8 @@ public class ButtonManager : MonoBehaviour
 
     public void EnableAllButtonsOf(string tag)
     {
-        foreach (Button b in allButtons)
+		//Debug.Log("all of " + tag);
+		foreach (Button b in allButtons)
         {
             if (b.tag != tag) continue;
 
@@ -48,17 +51,17 @@ public class ButtonManager : MonoBehaviour
 
             b.interactable = false;
         }
-    }
+	}
 
-    public void DisableAllButtons()
+	public void DisableAllButtons()
     {
         foreach (Button b in allButtons)
         {
             b.interactable = false;
         }
-    }
+	}
 
-    public void DisableAllButtonsOf(string tag)
+	public void DisableAllButtonsOf(string tag)
     {
         foreach (Button b in allButtons)
         {
@@ -66,5 +69,6 @@ public class ButtonManager : MonoBehaviour
 
             b.interactable = false;
         }
-    }
+		Debug.Log("off");
+	}
 }

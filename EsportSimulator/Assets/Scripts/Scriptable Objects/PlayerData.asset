@@ -13,89 +13,212 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   defaultMoney: 500
-  defaultItems:
-  - elementName: Mouse
-    type: 1
-    quality: 0
-    cost: 0
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 0
-    sprite: {fileID: 0}
-  - elementName: Keyboard
-    type: 2
-    quality: 0
-    cost: 0
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 0
-    sprite: {fileID: 21300000, guid: 10debfb5a49cf464b9a46c5f46840b03, type: 3}
-  - elementName: Headset
-    type: 3
-    quality: 0
-    cost: 0
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 0
-    sprite: {fileID: 0}
-  - elementName: Guide
-    type: 4
-    quality: 0
-    cost: 0
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 0
-    sprite: {fileID: 0}
-  - elementName: Screen
-    type: 5
-    quality: 0
-    cost: 0
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 0
-    sprite: {fileID: 21300000, guid: 379fad23aa1d1d946a6042c7705e52f9, type: 3}
-  defaultAccommodations:
-  - elementName: Garage
-    accommodation:
-      type: 0
-      bought: 1
-    cost: 0
+  allItems:
+  - itemType: Mouse
+    qualities:
+    - type: 1
+      quality: 0
+      cost: 0
+      skills: []
+      sprite: {fileID: 0}
+    - type: 1
+      quality: 1
+      cost: 25
+      skills:
+      - type: 3
+        amount: 5
+      sprite: {fileID: 0}
+    - type: 1
+      quality: 2
+      cost: 75
+      skills:
+      - type: 3
+        amount: 15
+      sprite: {fileID: 0}
+    - type: 1
+      quality: 3
+      cost: 150
+      skills:
+      - type: 3
+        amount: 30
+      sprite: {fileID: 0}
+    - type: 1
+      quality: 4
+      cost: 300
+      skills:
+      - type: 3
+        amount: 60
+      sprite: {fileID: 0}
+  - itemType: Keyboard
+    qualities:
+    - type: 2
+      quality: 0
+      cost: 0
+      skills: []
+      sprite: {fileID: 21300000, guid: 10debfb5a49cf464b9a46c5f46840b03, type: 3}
+    - type: 2
+      quality: 1
+      cost: 100
+      skills:
+      - type: 3
+        amount: 20
+      sprite: {fileID: 21300000, guid: 10debfb5a49cf464b9a46c5f46840b03, type: 3}
+    - type: 2
+      quality: 2
+      cost: 200
+      skills:
+      - type: 3
+        amount: 30
+      sprite: {fileID: 21300000, guid: 70e474d072d6bb3459d7fd100a2f5099, type: 3}
+    - type: 2
+      quality: 3
+      cost: 400
+      skills:
+      - type: 3
+        amount: 60
+      sprite: {fileID: 21300000, guid: 213e37d89c432024597c3275db0c75c0, type: 3}
+    - type: 2
+      quality: 4
+      cost: 700
+      skills:
+      - type: 3
+        amount: 120
+      sprite: {fileID: 21300000, guid: d4dda4e3513a71c43b6455573791b626, type: 3}
+  - itemType: Headset
+    qualities:
+    - type: 3
+      quality: 0
+      cost: 0
+      skills: []
+      sprite: {fileID: 0}
+    - type: 3
+      quality: 1
+      cost: 50
+      skills:
+      - type: 2
+        amount: 10
+      sprite: {fileID: 21300000, guid: 79b110acc8b3e82459a1605505504597, type: 3}
+    - type: 3
+      quality: 2
+      cost: 150
+      skills:
+      - type: 2
+        amount: 30
+      sprite: {fileID: 21300000, guid: 6687627d51768dd48a734aa1e110d396, type: 3}
+    - type: 3
+      quality: 3
+      cost: 300
+      skills:
+      - type: 2
+        amount: 60
+      sprite: {fileID: 21300000, guid: ee775794d52f28c4cbdf656b5e09f6ba, type: 3}
+    - type: 3
+      quality: 4
+      cost: 600
+      skills:
+      - type: 2
+        amount: 120
+      sprite: {fileID: 21300000, guid: d453bec757b8d654fa07ed51890d8e83, type: 3}
+  - itemType: Guide
+    qualities:
+    - type: 4
+      quality: 0
+      cost: 0
+      skills: []
+      sprite: {fileID: 0}
+    - type: 4
+      quality: 1
+      cost: 50
+      skills:
+      - type: 1
+        amount: 10
+      sprite: {fileID: 0}
+    - type: 4
+      quality: 2
+      cost: 150
+      skills:
+      - type: 1
+        amount: 30
+      sprite: {fileID: 0}
+    - type: 4
+      quality: 3
+      cost: 300
+      skills:
+      - type: 1
+        amount: 60
+      sprite: {fileID: 0}
+    - type: 4
+      quality: 4
+      cost: 600
+      skills:
+      - type: 1
+        amount: 120
+      sprite: {fileID: 0}
+  - itemType: Screen
+    qualities:
+    - type: 5
+      quality: 0
+      cost: 0
+      skills: []
+      sprite: {fileID: 21300000, guid: 379fad23aa1d1d946a6042c7705e52f9, type: 3}
+    - type: 5
+      quality: 1
+      cost: 100
+      skills:
+      - type: 1
+        amount: 10
+      - type: 2
+        amount: 10
+      sprite: {fileID: 21300000, guid: 379fad23aa1d1d946a6042c7705e52f9, type: 3}
+    - type: 5
+      quality: 2
+      cost: 200
+      skills:
+      - type: 1
+        amount: 20
+      - type: 2
+        amount: 20
+      sprite: {fileID: 21300000, guid: 071479a424619244f8c74d2768997dd0, type: 3}
+    - type: 5
+      quality: 3
+      cost: 400
+      skills:
+      - type: 1
+        amount: 30
+      - type: 2
+        amount: 30
+      sprite: {fileID: 21300000, guid: 826936e8eb42d5d4683f8b54891f7c80, type: 3}
+    - type: 5
+      quality: 4
+      cost: 700
+      skills:
+      - type: 1
+        amount: 60
+      - type: 2
+        amount: 60
+      sprite: {fileID: 21300000, guid: 3ca736ce6fb65ac48aaada38b2d438d6, type: 3}
+  allAccommodations:
+  - type: 1
+    cost: 200
     rent: 50
-    trainingLevel1Amount: 1
-    trainingLevel2Amount: 3
-    trainingLevel3Amount: 10
+    trainingRates: 01000000030000000a000000
     sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
-  - elementName: Apartment
-    accommodation:
-      type: 1
-      bought: 0
-    cost: 500
+  - type: 2
+    cost: 1000
     rent: 200
-    trainingLevel1Amount: 1
-    trainingLevel2Amount: 4
-    trainingLevel3Amount: 12
-    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
-  - elementName: House
-    accommodation:
-      type: 2
-      bought: 0
+    trainingRates: 01000000040000000c000000
+    sprite: {fileID: 21300000, guid: 0191629f9b79a99409484d7b627166af, type: 3}
+  - type: 3
     cost: 2000
     rent: 500
-    trainingLevel1Amount: 2
-    trainingLevel2Amount: 5
-    trainingLevel3Amount: 15
+    trainingRates: 02000000050000000f000000
     sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
-  - elementName: Luxury Apartment
-    accommodation:
-      type: 3
-      bought: 0
+  - type: 4
     cost: 5000
     rent: 1500
-    trainingLevel1Amount: 3
-    trainingLevel2Amount: 6
-    trainingLevel3Amount: 20
-    sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
-  money: 300
+    trainingRates: 020000000600000014000000
+    sprite: {fileID: 21300000, guid: 0191629f9b79a99409484d7b627166af, type: 3}
+  money: 500
   rating: 0
   fame: 0
   workExperience: 0
@@ -106,57 +229,36 @@ MonoBehaviour:
   gameKnowledge: 0
   teamPlay: 0
   mechanics: 0
-  savedEquipedItems:
-  - elementName: Mouse
-    type: 1
+  currentItems:
+  - type: 1
     quality: 0
     cost: 0
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 0
+    skills: []
     sprite: {fileID: 0}
-  - elementName: Keyboard
-    type: 2
+  - type: 2
     quality: 0
     cost: 0
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 0
+    skills: []
     sprite: {fileID: 21300000, guid: 10debfb5a49cf464b9a46c5f46840b03, type: 3}
-  - elementName: Headset
-    type: 3
+  - type: 3
     quality: 0
     cost: 0
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 0
+    skills: []
     sprite: {fileID: 0}
-  - elementName: Guide
-    type: 4
+  - type: 4
     quality: 0
     cost: 0
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 0
+    skills: []
     sprite: {fileID: 0}
-  - elementName: Screen
-    type: 5
+  - type: 5
     quality: 0
     cost: 0
-    gameKnowledge: 0
-    teamPlay: 0
-    mechanics: 0
+    skills: []
     sprite: {fileID: 21300000, guid: 379fad23aa1d1d946a6042c7705e52f9, type: 3}
-  allAccommodations: []
   currentAccommodation:
-    elementName: Garage
-    accommodation:
-      type: 0
-      bought: 1
-    cost: 0
+    type: 1
+    cost: 200
     rent: 50
-    trainingLevel1Amount: 1
-    trainingLevel2Amount: 3
-    trainingLevel3Amount: 10
+    trainingRates: 01000000030000000a000000
     sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
   plannedTournaments: []

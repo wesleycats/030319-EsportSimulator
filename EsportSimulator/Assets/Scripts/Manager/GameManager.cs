@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Controls game stages & keeps track of variables in current session
 /// </summary>
 public class GameManager : MonoBehaviour
 {
-    #region Player Variables
+	#region Player Variables
 
-    [SerializeField] private int money;
+	[SerializeField] private int money;
     [SerializeField] private int rating;
     [SerializeField] private int fame;
     [SerializeField] private float workExperience;
@@ -23,8 +22,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int teamPlay;
     [SerializeField] private int mechanics;
 
-	[SerializeField] private List<ItemForm> equipedItems = new List<ItemForm>();
-    [SerializeField] private AccommodationForm currentAccommodation;
+	[SerializeField] private List<Item> currentItems = new List<Item>();
+    [SerializeField] private Accommodation currentAccommodation;
 	[SerializeField] private List<Event> plannedEvents;
 
 	#endregion
@@ -43,21 +42,22 @@ public class GameManager : MonoBehaviour
     public LeaderboardManager leaderboardManager;
     public ResultManager resultManager;
     public ShopManager shopManager;
+	public LerpColor switchOverlay;
 
-    public Debugger debug;
+	public Debugger debug;
 
 	#endregion
 
-	//TODO set current accommodation to saved
-
 	void Start()
     {
-        Time.timeScale = 1f;
-		//ResetGame();
-		LoadData();
-    }
+		ResetGame();
+		Time.timeScale = 1f;
+		switchOverlay.LerpValue = 1;
+		switchOverlay.Lerp(1);
+		InitializeData();
+	}
 
-	public Event IsEventPlanned(int currentMonth, List<Event> events)
+	public Event GetPlannedEventOn(int currentMonth, List<Event> events)
 	{
 		foreach (Event b in events)
 			if (b.month == currentMonth) return b;
@@ -65,10 +65,9 @@ public class GameManager : MonoBehaviour
 		return null;
 	}
 
-    public void LoadData()
+    public void InitializeData()
     {
         InitializePlayerData();
-        shopManager.Initialize();
         timeManager.InitializeGameData();
         opponentManager.InitializeOpponents(this);
         leaderboardManager.Initialize();
@@ -78,9 +77,9 @@ public class GameManager : MonoBehaviour
 
     public void ResetGame()
     {
-        playerData.Reset(true);
-        gameData.Reset(true);
-        LoadData();
+        playerData.Reset();
+        gameData.Reset();
+		InitializeData();
     }
 
     public void GameOver()
@@ -94,6 +93,16 @@ public class GameManager : MonoBehaviour
     {
         uiManager.winGameMenu.SetActive(true);
     }
+
+	public void RemoveItemOfType(Item.Type type)
+	{
+		foreach (Item i in currentItems)
+		{
+			if (type != i.type) continue;
+
+			currentItems.Remove(i);
+		}
+	}
     
     public void IncreaseMoney(int amount)
     {
@@ -217,14 +226,6 @@ public class GameManager : MonoBehaviour
     {
         return thirst >= amount;
     }
-
-	public int GetCurrentAccommodationIndex(AccommodationForm current, List<AccommodationForm> allAccommodations)
-	{
-		for (int i = 0; i < allAccommodations.Count; i++)
-			if (current.accommodation.type == allAccommodations[i].accommodation.type) return i;
-
-		return 0;
-	}
     
     /// <summary>
     /// Initializes player data in variables
@@ -242,16 +243,16 @@ public class GameManager : MonoBehaviour
         gameKnowledge = playerData.GetGameKnowledge;
         teamPlay = playerData.GetTeamPlay;
         mechanics = playerData.GetMechanics;
-		currentAccommodation = playerData.GetCurrentAccommodation;
+		plannedEvents.Clear();
 		plannedEvents = playerData.GetPlannedTournaments;
 
-		for (int i = 0; i < playerData.GetSavedEquipedItems.Count; i++)
+		currentItems.Clear();
+		foreach (Item i in playerData.CurrentItems)
 		{
-			equipedItems[i] = playerData.GetSavedEquipedItems[i];
+			currentItems.Add(i);
 		}
-
-		currentAccommodation = playerData.GetCurrentAccommodation;
-    }
+		currentAccommodation = playerData.GetAllAccommodations[0];
+	}
 
     #region Getters & Setters
 
@@ -268,8 +269,6 @@ public class GameManager : MonoBehaviour
     public int GetTeamPlay { get { return teamPlay; } }
     public int GetMechanics { get { return mechanics; } }
     public List<Event> GetPlannedEvents { get { return plannedEvents; } }
-	public List<ItemForm> GetEquipedItems { get { return equipedItems; } }
-    public AccommodationForm GetCurrentAccommodation { get { return currentAccommodation; } }
 
     public int SetMoney { set { money = value; } }
     public int SetRating { set { rating = value; } }
@@ -282,8 +281,6 @@ public class GameManager : MonoBehaviour
     public int SetGameKnowledge { set { gameKnowledge = value; } }
     public int SetTeamPlay { set { teamPlay = value; } }
     public int SetMechanics { set { mechanics = value; } }
-    //public List<ItemForm> SetEquipedItems { set { equipedItems = value; } }
-    public AccommodationForm SetCurrentAccommodation { set { currentAccommodation = value; } }
 
     public int Money { get { return money; } set { money = value; } }
     public int Rating { get { return rating; } set { rating = value; } }
@@ -296,7 +293,8 @@ public class GameManager : MonoBehaviour
     public int GameKnowledge { get { return gameKnowledge; } set { gameKnowledge = value; } }
     public int TeamPlay { get { return teamPlay; } set { teamPlay = value; } }
     public int Mechanics { get { return mechanics; } set { mechanics = value; } }
+	public List<Item> CurrentItems { set { currentItems = value; } get { return currentItems; } }
+	public Accommodation CurrentAccommodation { set { currentAccommodation = value; } get { return currentAccommodation; } }
 
-
-    #endregion
+	#endregion
 }

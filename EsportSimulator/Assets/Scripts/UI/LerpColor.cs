@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LerpColor : MonoBehaviour
 {
-    [SerializeField] private bool lerpActivated;
+	public Action<bool> LerpStopped;
+
+	[SerializeField] private bool lerpActivated;
     [SerializeField] private bool lerping = true;
     [Range(0, 1)]
     [SerializeField] private float lerpValue;
@@ -13,21 +14,60 @@ public class LerpColor : MonoBehaviour
     [SerializeField] private bool lerpStop;
     [SerializeField] private bool lerpPause;
     [SerializeField] private float lerpPauseTime = 2f;
-    [SerializeField] private int lerpMaxAmount;
+    [SerializeField] private int lerpMaxAmount = 2;
+	[SerializeField] private bool paused = false;
 
     private bool increasing = true;
     private float lerpSteps;
-    private int timer;
-    private int lerpAmount;
+    [SerializeField] private int timer;
+	[SerializeField] private int lerpAmount;
+	private bool send = true;
 
+	[Header("References")]
     public Color startColor;
     public Color endColor;
     public Image image;
-    
-    void Update()
+
+	/// <summary>
+	/// Initiates lerping functionality
+	/// </summary>
+	/// <param name="amount"></param>
+	public void Lerp(int amount, bool sendWhenStopped)
+	{
+		lerpActivated = true;
+		lerping = true;
+		paused = false;
+		lerpMaxAmount = amount;
+
+		if (lerpValue >= 1)
+			increasing = false;
+		else
+			increasing = true;
+
+		lerping = true;
+		send = sendWhenStopped;
+	}
+
+	public void Lerp(int amount)
+	{
+		lerpActivated = true;
+		lerping = true;
+		paused = false;
+		lerpMaxAmount = amount;
+
+		if (lerpValue >= 1)
+			increasing = false;
+		else
+			increasing = true;
+
+		lerping = true;
+	}
+
+	void Update()
     {
         if (!lerpActivated) return;
 
+		// Activates pause timer
         if (lerpPause && !lerping)
         {
             timer++;
@@ -43,12 +83,6 @@ public class LerpColor : MonoBehaviour
 
         lerpSteps = Time.deltaTime * lerpSpeed;
 
-        if (lerpMaxAmount > 0)
-            lerpPause = true;
-
-        if (lerpAmount >= lerpMaxAmount-1 && lerpMaxAmount != 0)
-            lerpStop = true;
-
         if (increasing)
             lerpValue += lerpSteps;
         else
@@ -56,43 +90,48 @@ public class LerpColor : MonoBehaviour
 
         image.color = Color.Lerp(startColor, endColor, lerpValue);
 
-        if (lerpValue > 1)
-        {
-            lerpAmount++;
-            lerpValue = 1;
-            increasing = false;
+		if (lerpValue < 0 || lerpValue > 1)
+		{
+			lerpAmount += 1;
 
-            if (lerpPause)
-                lerping = false;
+			if (lerpValue > 1)
+			{
+				lerpValue = 1;
+				increasing = false;
+			}
+			else
+			{
+				lerpValue = 0;
+				increasing = true;
+			}
 
-            if (lerpStop)
-            {
-                lerping = false;
-                lerpPause = false;
-                lerpStop = false;
-                lerpAmount = 0;
-            }
-        }
+			if (lerpMaxAmount > 0)
+				lerpPause = true;
 
-        if (lerpValue < 0)
-        {
-            lerpAmount++;
-            lerpValue = 0;
-            increasing = true;
+			if (lerpPause)
+			{
+				lerping = false;
+				paused = true;
+			}
 
-            if (lerpPause)
-                lerping = false;
-
-            if (lerpStop)
-            {
-				lerpActivated = false;
-				lerping = true;
-                lerpPause = false;
-                lerpStop = false;
-                lerpAmount = 0;
-            }
-        }
+			if (lerpAmount >= lerpMaxAmount)
+				StopLerp();
+		}
     }
+
+	private void StopLerp()
+	{
+		lerpActivated = false;
+		lerping = false;
+		lerpPause = false;
+		lerpStop = false;
+		paused = false;
+		lerpAmount = 0;
+
+		if (LerpStopped == null || !send) return;
+
+		LerpStopped(true);
+	}
 
     public bool isLerping()
     {
@@ -109,7 +148,8 @@ public class LerpColor : MonoBehaviour
     public int LerpAmount { get { return lerpAmount; } set { lerpAmount = value; } }
     public int LerpMaxAmount { get { return lerpMaxAmount; } set { lerpMaxAmount = value; } }
     public bool Increasing { get { return increasing; } set { increasing = value; } }
-    public float LerpValue { get { return lerpValue; } }
+    public float LerpValue { get { return lerpValue; } set { lerpValue = value; } }
+	public bool isPaused { get { return paused; } }
 
     #endregion
 }

@@ -28,19 +28,22 @@ public class GameData : ScriptableObject
     public int realMonth;
     public int realYear;
 
-    #endregion
+	#endregion
 
-    #region Utilities
+	#region Utilities
 
-    #endregion
+	public bool tutorialDone;
 
-    public void Reset(bool reset)
+	#endregion
+
+	public void Reset()
     {
         hour = 0;
         minute = 0;
         month = 1;
         year = 0;
-    }
+		tutorialDone = false;
+	}
 
     #region Getters & Setters
 

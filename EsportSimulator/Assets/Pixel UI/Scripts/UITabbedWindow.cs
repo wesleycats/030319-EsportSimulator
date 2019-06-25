@@ -42,24 +42,24 @@ namespace PixelsoftGames.PixelUI
         // The currently active tab
         GameObject activeTab;
 
-        #endregion
+		#endregion
 
-        #region Monobehaviour Callbacks
+		#region Monobehaviour Callbacks
 
-        private void Start()
-        {
-            SetupContent();
-        }
+		private void OnEnable()
+		{
+			SetupContent();
+		}
 
-        #endregion
+		#endregion
 
-        #region Public Methods
+		#region Public Methods
 
-        /// <summary>
-        /// This changes the active content tab and deactivates the previously active one.
-        /// </summary>
-        /// <param name="index"></param>
-        public void ActivateContentTab(int index)
+		/// <summary>
+		/// This changes the active content tab and deactivates the previously active one.
+		/// </summary>
+		/// <param name="index"></param>
+		public void ActivateContentTab(int index)
         {
             if (Tabs == null || index >= Tabs.Count)
             {
@@ -67,13 +67,31 @@ namespace PixelsoftGames.PixelUI
                 return;
             }
 
-            // Customized
-            activeTab.transform.GetChild(0).GetComponent<Image>().color = deactivatedColor;
-            activeTab.transform.GetChild(1).gameObject.SetActive(false);
-            activeTab = Tabs[index];
-            activeTab.transform.GetChild(0).GetComponent<Image>().color = defaultColor;
-            activeTab.transform.GetChild(1).gameObject.SetActive(true);
-        }
+			//TODO Fix ranking tab bug
+
+			// Customized
+			if (!activeTab.GetComponent<Image>())
+			{
+				if (!activeTab.GetComponentInChildren<Image>()) return;
+
+				//activeTab.transform.GetChild(0).GetComponent<Image>().color = deactivatedColor;
+				//activeTab = Tabs[index];
+				//activeTab.transform.GetChild(0).GetComponent<Image>().color = defaultColor;
+
+				activeTab.transform.GetChild(0).GetComponent<Image>().color = deactivatedColor;
+				activeTab.transform.GetChild(1).gameObject.SetActive(false);
+				activeTab = Tabs[index];
+				activeTab.transform.GetChild(0).GetComponent<Image>().color = defaultColor;
+				activeTab.transform.GetChild(1).gameObject.SetActive(true);
+			}
+			else
+			{
+				activeTab.GetComponent<Image>().color = deactivatedColor;
+				activeTab = Tabs[index];
+				activeTab.GetComponent<Image>().color = defaultColor;
+			}
+
+		}
 
         #endregion
 
@@ -98,20 +116,33 @@ namespace PixelsoftGames.PixelUI
 
             activeTab = DefaultTab;
 
-            // Customized
-            foreach (GameObject g in Tabs)
+			// Customized
+			foreach (GameObject g in Tabs)
             {
-                if (g == activeTab)
-                {
-                    g.transform.GetChild(0).GetComponent<Image>().color = defaultColor;
-                    g.transform.GetChild(1).gameObject.SetActive(true);
-                }
-                else
-                {
-                    g.transform.GetChild(0).GetComponent<Image>().color = deactivatedColor;
-                    g.transform.GetChild(1).gameObject.SetActive(false);
-                }
-            }
+				if (!g.GetComponent<Image>())
+				{
+					if (!g.GetComponentInChildren<Image>()) continue;
+
+					if (g == activeTab)
+						g.transform.GetChild(0).GetComponent<Image>().color = defaultColor;
+					else
+						g.transform.GetChild(0).GetComponent<Image>().color = deactivatedColor;
+
+					//g.transform.GetChild(0).GetComponent<Image>().color = deactivatedColor;
+					//g.transform.GetChild(1).gameObject.SetActive(false);
+					//g.transform.GetChild(0).GetComponent<Image>().color = defaultColor;
+					//g.transform.GetChild(1).gameObject.SetActive(true);
+				}
+				else
+				{
+					if (g == activeTab)
+						g.GetComponent<Image>().color = defaultColor;
+					else
+						g.GetComponent<Image>().color = deactivatedColor;
+				}
+
+
+			}
         }
 
         #endregion

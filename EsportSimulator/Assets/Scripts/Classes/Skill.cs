@@ -1,4 +1,7 @@
-﻿[System.Serializable]
+﻿using System;
+using UnityEngine;
+
+[System.Serializable]
 public class Skill
 {
     public enum Type { None, GameKnowledge, TeamPlay, Mechanics }

@@ -18,9 +18,9 @@ public class ResultsForm
     [SerializeField] private int moneyMax;
     [SerializeField] private int rating;
     [SerializeField] private int fame;
-    [SerializeField] private float gameKnowledge;
-    [SerializeField] private float teamPlay;
-    [SerializeField] private float mechanics;
+    [SerializeField] private int gameKnowledge;
+    [SerializeField] private int teamPlay;
+    [SerializeField] private int mechanics;
     [SerializeField] private float trainingLevel1Multiplier;
     [SerializeField] private float trainingLevel2Multiplier;
     [SerializeField] private float trainingLevel3Multiplier;
@@ -35,11 +35,21 @@ public class ResultsForm
     public int MoneyMax { get { return moneyMax; } }
     public int Rating { get { return rating; } }
     public int Fame { get { return fame; } }
-    public float GameKnowledge { get { return gameKnowledge; } }
-    public float TeamPlay { get { return teamPlay; } }
-    public float Mechanics { get { return mechanics; } }
+    public int GameKnowledge { get { return gameKnowledge; } }
+    public int TeamPlay { get { return teamPlay; } }
+    public int Mechanics { get { return mechanics; } }
     public float GetTrainingLevel1Multiplier { get { return trainingLevel1Multiplier; } }
     public float GetTrainingLevel2Multiplier { get { return trainingLevel2Multiplier; } }
     public float GetTrainingLevel3Multiplier { get { return trainingLevel3Multiplier; } }
     public float WorkExperience { get { return workExperience; } }
+
+	public float SetDuration { set { duration = value; } }
+	public int SetTiredness { set { tiredness = value; } }
+	public int SetHunger { set { hunger = value; } }
+	public int SetThirst { set { thirst = value; } }
+	public int SetMoney { set { money = value; } }
+	public float SetWorkExperience { set { workExperience = value; } }
+	public int SetGameKnowledge { set { gameKnowledge = value; } }
+	public int SetTeamPlay { set { teamPlay = value; } }
+	public int SetMechanics { set { mechanics = value; } }
 }
