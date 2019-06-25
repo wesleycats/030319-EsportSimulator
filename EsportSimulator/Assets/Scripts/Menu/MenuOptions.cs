@@ -11,12 +11,14 @@ public class MenuOptions : MonoBehaviour
 
 	[Header("References")]
 	public int tutorialSceneIndex;
+	public ObjectManager objectManager;
     public ButtonManager buttonManager;
     public UIManager uiManager;
     public GameManager gameManager;
     public GameLoader gameLoader;
 	public LerpColor switchOverlay;
 	public GameData gameData;
+
 	private AudioManager audioManager;
 
 	private void Awake()
@@ -35,7 +37,7 @@ public class MenuOptions : MonoBehaviour
 
 			if (gameData.tutorialDone)
 			{
-				gameManager.ResetGame();
+				//gameManager.ResetGame();
 				audioManager.CurrentPlaylist = audioManager.mainClips;
 				gameObject.SetActive(false);
 			}
@@ -51,6 +53,7 @@ public class MenuOptions : MonoBehaviour
 
 	public void StartNewGame()
 	{
+		Time.timeScale = 1f;
 		loadType = GameLoader.LoadType.NewGame;
 		audioManager.FadeOut();
 		switchOverlay.Lerp(1);
@@ -58,14 +61,20 @@ public class MenuOptions : MonoBehaviour
 
 	public void LoadGame(int slot)
 	{
+		Debug.Log(slot);
+		Time.timeScale = 1f;
 		loadType = GameLoader.LoadType.LoadGame;
 		slotToLoad = slot;
+		objectManager.DisableAllObjectsOf("Menu");
+		buttonManager.DisableAllButtons();
 		audioManager.FadeOut();
 		switchOverlay.Lerp(1);
 	}
 
+	// TODO fix switchoverlay lerping when loading in game
 	public void LoadInGame(bool b)
 	{
+		Debug.Log(gameObject.name);
 		if (!b || loadType == GameLoader.LoadType.None) return;
 
 		switch (loadType)
@@ -76,10 +85,12 @@ public class MenuOptions : MonoBehaviour
 
 			case GameLoader.LoadType.LoadGame:
 				gameLoader.LoadGame(slotToLoad);
-				gameManager.InitializeData();
+				gameManager.InitializeSaveData();
 				audioManager.CurrentPlaylist = audioManager.mainClips;
 				switchOverlay.Lerp(1, false);
 				gameObject.SetActive(false);
+				objectManager.DisableAllObjectsOf("SubMenu");
+				buttonManager.EnableAllButtons();
 				break;
 
 			default:

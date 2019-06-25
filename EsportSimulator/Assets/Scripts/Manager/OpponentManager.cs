@@ -8,8 +8,10 @@ using UnityEngine;
 public class OpponentManager : MonoBehaviour
 {
     public UIManager uiManager;
+    public GameManager gameManager;
+	public LeaderboardManager leaderboardManager;
 
-    [SerializeField] private int maxEloRating;
+	[SerializeField] private int maxEloRating;
     [SerializeField] private List<string> opponentNames = new List<string>();
     [SerializeField] private List<Opponent> opponents = new List<Opponent>();
     
@@ -18,7 +20,7 @@ public class OpponentManager : MonoBehaviour
 
     public LeagueForm league;
     
-    public void UpdatePlayerAttributes(Opponent player, GameManager gameManager)
+    public void UpdatePlayerAttributes(Opponent player)
     {
         player.name = "YOU";
         player.gameKnowledge = gameManager.GetGameKnowledge;
@@ -34,7 +36,6 @@ public class OpponentManager : MonoBehaviour
     /// <returns></returns>
     public List<Opponent> CreateNewOpponents(List<string> names)
     {
-
         List<Opponent> opponents = new List<Opponent>();
         opponentAmount = names.Count;
 
@@ -74,7 +75,7 @@ public class OpponentManager : MonoBehaviour
 	/// </summary>
 	/// <param name="savedOpponents"></param>
 	/// <param name="existingOpponents"></param>
-	public void ApplyOpponents(Opponent[] savedOpponents, List<Opponent> existingOpponents)
+	public void ApplyOpponents(List<Opponent> savedOpponents, List<Opponent> existingOpponents)
     {
 		for (int i = 0; i < existingOpponents.Count; i++)
         {
@@ -85,6 +86,8 @@ public class OpponentManager : MonoBehaviour
 
         existingOpponents.Sort(SortByRating);
         existingOpponents.Reverse();
+		leaderboardManager.Initialize();
+		uiManager.UpdateLeaderboard(leaderboardManager.GetLeaderboard);
     }
 
     /// <summary>
@@ -142,11 +145,11 @@ public class OpponentManager : MonoBehaviour
         return allOpponents.IndexOf(opponent) + 1;
     }
 
-    public void InitializeOpponents(GameManager gameManager)
+    public void InitializeOpponents()
     {
         opponents = CreateNewOpponents(opponentNames);
         RandomizeOpponentAttributes(opponents);
-        UpdatePlayerAttributes(player, gameManager);
+        UpdatePlayerAttributes(player);
     }
     
     static int SortByRating(Opponent o1, Opponent o2)

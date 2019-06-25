@@ -43,14 +43,11 @@ public class ResultManager : MonoBehaviour
 	[SerializeField] private ResultsForm drinkExcellent;
 
 	#endregion
-
-	[SerializeField] private bool debuff = false;
-	[SerializeField] private int debuffLimit = 70;
-
-	[SerializeField] private float currentDebuffMultiplier = 1f;
-	[SerializeField] private float currentDebuffMultiplierAmount = 1f;
-	[SerializeField] private float debuffMultiplier = 0.5f;
-	[SerializeField] private float debuffMultiplierAmount = 1f;
+	
+	[SerializeField] private bool hungerDebuff = false;
+	[SerializeField] private float hungerDebuffAddition = 0.5f;
+	[SerializeField] private bool thirstDebuff = false;
+	[SerializeField] private float thirstDebuffAddition = 0.5f;
 
 	[SerializeField] private int winBiasPercentage;
 	[SerializeField] private float winPercentagePerSkillPoint;
@@ -94,103 +91,313 @@ public class ResultManager : MonoBehaviour
 	{
 		leaderboard = lbManager.GetLeaderboard;
 		player = opponentManager.GetPlayer;
-
-		if (debuff)
-			ApplyDebuffs(debuffMultiplier, debuffMultiplierAmount);
 	}
 
-	public void ResetTotalViews()
+	public void Eat(int foodLevel)
 	{
-		totalIncome = 0;
-		totalViews = 0;
+		//TODO combine with Drink()
+
+		if (gameManager.Hunger == 0)
+		{
+			Debug.LogWarning("You are currently full, you can buy food when you are hungry");
+			return;
+		}
+
+		int cost = 0;
+		int hunger = 0;
+
+		switch (foodLevel)
+		{
+			case 0:
+				cost = foodBad.Money;
+				hunger = foodBad.Hunger;
+				break;
+
+			case 1:
+				cost = foodStandard.Money;
+				hunger = foodStandard.Hunger;
+				break;
+
+			case 2:
+				cost = foodGood.Money;
+				hunger = foodGood.Hunger;
+				break;
+
+			case 3:
+				cost = foodExcellent.Money;
+				hunger = foodExcellent.Hunger;
+				break;
+
+			default:
+				Debug.LogError("No food level has been given");
+				return;
+		}
+
+		if (!gameManager.IsMoneyHighEnough(cost))
+		{
+			Debug.LogWarning("Not Enough Money");
+			return;
+		}
+
+		gameManager.DecreaseHunger(hunger);
+		gameManager.DecreaseMoney(cost);
+
+		uiManager.UpdateProgress(gameManager.GetMoney, gameManager.Rating, gameManager.Fame);
+		uiManager.UpdateNeeds(gameManager.Tiredness, gameManager.Hunger, gameManager.Thirst);
 	}
 
-	public void TryBattle(Battle.Mode battleType)
+	public void Drink(int drinkLevel)
 	{
-		BattleResults(lbManager.GetRandomOpponent(leaderboard, lbManager.GetOpponentDivision(player, leaderboard, opponentManager.league)), battleType);
-	}
+		//TODO combine with Eat()
 
-	public int GetMinStreamIncome(int fame, int duration)
-	{
-		int views = 0;
-		int incomeAmount = 0;
-		int fameCount = fame / minimalFameForViews;
-
-		for (int i = 0; i < fameCount * duration; i++)
+		if (gameManager.Thirst == 0)
 		{
-			views += minViewsPerFame;
+			Debug.LogWarning("You are currently hydrated, you can buy drinks when you are thirsty");
+			return;
 		}
 
-		int viewCount = views / minimalViewsForIncome;
+		int cost = 0;
+		int thirst = 0;
 
-
-		for (int i = 0; i < viewCount * duration; i++)
+		switch (drinkLevel)
 		{
-			incomeAmount += minIncomePerViews;
+			case 0:
+				cost = drinkBad.Money;
+				thirst = drinkBad.Thirst;
+				break;
+
+			case 1:
+				cost = drinkStandard.Money;
+				thirst = drinkStandard.Thirst;
+				break;
+
+			case 2:
+				cost = drinkGood.Money;
+				thirst = drinkGood.Thirst;
+				break;
+
+			case 3:
+				cost = drinkExcellent.Money;
+				thirst = drinkExcellent.Thirst;
+				break;
+
+			default:
+				Debug.LogError("No food level has been given");
+				return;
 		}
 
-		return incomeAmount;
-	}
-
-	public int GetMaxStreamIncome(int fame, int duration)
-	{
-		int views = 0;
-		int incomeAmount = 0;
-		int fameCount = fame / minimalFameForViews;
-
-		for (int i = 0; i < fameCount * duration; i++)
+		if (!gameManager.IsMoneyHighEnough(cost))
 		{
-			views += minViewsPerFame;
+			Debug.LogWarning("Not Enough Money");
+			return;
 		}
 
-		int viewCount = views / minimalViewsForIncome;
+		gameManager.DecreaseThirst(thirst);
+		gameManager.DecreaseMoney(cost);
 
-
-		for (int i = 0; i < viewCount * duration; i++)
-		{
-			incomeAmount += maxIncomePerViews;
-		}
-
-		return incomeAmount;
+		uiManager.UpdateProgress(gameManager.GetMoney, gameManager.Rating, gameManager.Fame);
+		uiManager.UpdateNeeds(gameManager.Tiredness, gameManager.Hunger, gameManager.Thirst);
 	}
 
 	/// <summary>
-	/// Returns a random amount of views the player gets per hour based on amount of fame
+	/// Applies the results given by sleeping per hour, based on tiredness decrease rate
 	/// </summary>
-	/// <param name="fameCount"></param>
-	/// <param name="minViewsPerFame"></param>
-	/// <param name="maxViewsPerFame"></param>
-	/// <returns></returns>
-	public int GetStreamViews(int fameCount, int minViewsPerFame, int maxViewsPerFame)
+	public void SleepResults(int tirednessDecreaseRate)
 	{
-		int views = 0;
-		for (int i = 0; i < fameCount; i++)
-		{
-			views += Random.Range(minViewsPerFame, maxViewsPerFame);
-		}
-		return views;
+		gameManager.DecreaseTiredness(tirednessDecreaseRate);
 	}
 
 	/// <summary>
-	/// Returns a random amount of money the player gets per hour based on amount of views
+	/// Applies the results given by training per hour, based on training type and accommodation level
 	/// </summary>
-	/// <param name="viewCount"></param>
-	/// <param name="minIncomePerViews"></param>
-	/// <param name="maxIncomePerViews"></param>
-	/// <returns></returns>
-	public int GetStreamIncome(int viewCount, int minIncomePerViews, int maxIncomePerViews)
+	/// <param name="trainType"></param>
+	public void TrainResults(Training training, int totalDuration, Skill.Type skill)
 	{
-		int incomeAmount = 0;
-		for (int i = 0; i < viewCount; i++)
+		int tirednessAmount = 0;
+
+		tirednessAmount = (int)(GetTrainingTirednessAmount(training.type, totalDuration) / totalDuration);
+
+		switch (skill)
 		{
-			incomeAmount += Random.Range(minIncomePerViews, maxIncomePerViews);
+			case Skill.Type.GameKnowledge:
+				gameManager.IncreaseGameKnowledge(GetTrainingRate(training.type));
+				break;
+
+			case Skill.Type.TeamPlay:
+				gameManager.IncreaseTeamPlay(GetTrainingRate(training.type));
+				break;
+
+			case Skill.Type.Mechanics:
+				gameManager.IncreaseMechanics(GetTrainingRate(training.type));
+				break;
+			default:
+				Debug.LogWarning("No skill is given");
+				return;
 		}
 
-		return incomeAmount;
+		gameManager.IncreaseTiredness(tirednessAmount);
+		gameManager.IncreaseHunger(hungerIncreaseRate);
+		gameManager.IncreaseThirst(thirstIncreaseRate);
 	}
 
-    public void StreamResults(int fame)
-    {
+	/// <summary>
+	/// Applies the results given by working per hour, based on work level
+	/// </summary>
+	/// <param name="workLevel"></param>
+	public void WorkResults(int workLevel)
+	{
+		//TODO add worklevels
+
+		ResultsForm workResults = GetWorkResultForm(workLevel);
+
+		gameManager.IncreaseMoney(workResults.Money);
+		gameManager.IncreaseWorkExp(workResults.WorkExperience);
+		gameManager.IncreaseGameKnowledge(workResults.GameKnowledge);
+		gameManager.IncreaseTeamPlay(workResults.TeamPlay);
+		gameManager.IncreaseMechanics(workResults.Mechanics);
+
+		gameManager.IncreaseTiredness(workResults.Tiredness);
+		gameManager.IncreaseHunger(hungerIncreaseRate);
+		gameManager.IncreaseThirst(thirstIncreaseRate);
+	}
+
+	/// <summary>
+	/// Applies the results given by battling per hour, based on battle mode and outcome of the battle
+	/// </summary>
+	/// <param name="opponent"></param>
+	/// <param name="battleMode"></param>
+	public void BattleResults(Opponent opponent, Battle.Mode battleMode)
+	{
+		int randomizer = 0;
+		int winChance = 0;
+		int gkDelta = gameManager.GetGameKnowledge - opponent.gameKnowledge;
+		int mDelta = gameManager.GetMechanics - opponent.mechanics;
+		int tpDelta = gameManager.GetTeamPlay - opponent.teamPlay;
+		int[] skillsDelta = new int[0];
+		bool win = false;
+
+		int gameKnowledgeReward = 0;
+		int teamPlayReward = 0;
+		int mechanicsReward = 0;
+		int tiredness = 0;
+
+		switch (battleMode)
+		{
+			case Battle.Mode.OneVersusOne:
+				randomizer = Random.Range(0, 100);
+				skillsDelta = new int[2];
+				skillsDelta[0] = gkDelta;
+				skillsDelta[1] = mDelta;
+				winChance = GetWinChance(skillsDelta, winPercentagePerSkillPoint) + winBiasPercentage;
+
+				if (randomizer < winChance || win)
+					win = true;
+				else
+					win = false;
+
+				if (win)
+				{
+					gameManager.IncreaseFame(oneVsOne.Fame);
+					gameManager.IncreaseRating(oneVsOne.Rating);
+				}
+				else
+				{
+					gameManager.DecreaseFame(oneVsOne.Fame);
+					gameManager.DecreaseRating(oneVsOne.Rating);
+				}
+
+				gameKnowledgeReward = oneVsOne.GameKnowledge;
+				teamPlayReward = oneVsOne.TeamPlay;
+				mechanicsReward = oneVsOne.Mechanics;
+				tiredness = oneVsOne.Tiredness;
+				break;
+
+			case Battle.Mode.ThreeVersusThree:
+				randomizer = Random.Range(0, 100);
+				skillsDelta = new int[3];
+				skillsDelta[0] = gkDelta;
+				skillsDelta[1] = mDelta;
+				skillsDelta[2] = tpDelta;
+				winChance = GetWinChance(skillsDelta, winPercentagePerSkillPoint) + winBiasPercentage;
+
+				if (randomizer < winChance || win)
+					win = true;
+				else
+					win = false;
+
+				if (win)
+				{
+					gameManager.IncreaseFame(threeVsThree.Fame);
+					gameManager.IncreaseRating(threeVsThree.Rating);
+				}
+				else
+				{
+					gameManager.DecreaseFame(threeVsThree.Fame);
+					gameManager.DecreaseRating(threeVsThree.Rating);
+				}
+
+				gameKnowledgeReward = threeVsThree.GameKnowledge;
+				teamPlayReward = threeVsThree.TeamPlay;
+				mechanicsReward = threeVsThree.Mechanics;
+				tiredness = threeVsThree.Tiredness;
+				break;
+
+			case Battle.Mode.FiveVersusFive:
+				randomizer = Random.Range(0, 100);
+				skillsDelta = new int[3];
+				skillsDelta[0] = gkDelta;
+				skillsDelta[1] = mDelta;
+				skillsDelta[2] = tpDelta;
+				winChance = GetWinChance(skillsDelta, winPercentagePerSkillPoint) + winBiasPercentage;
+
+				Debug.Log("Player gk: " + gameManager.GetGameKnowledge + " Player m: " + gameManager.GetMechanics + " Player tp: " + gameManager.GetTeamPlay);
+				Debug.Log(opponent.name + " gk: " + opponent.gameKnowledge + " Opponent m: " + opponent.mechanics + " Opponent tp: " + opponent.teamPlay);
+				Debug.Log("Win chance + bias= " + winChance);
+				Debug.Log("randomizer= " + randomizer);
+
+				if (randomizer < winChance || win)
+					win = true;
+				else
+					win = false;
+
+				Debug.Log("Win=" + win);
+				
+				if (win)
+				{
+					gameManager.IncreaseFame(fiveVsFive.Fame);
+					gameManager.IncreaseRating(fiveVsFive.Rating);
+				}
+				else
+				{
+					gameManager.DecreaseFame(fiveVsFive.Fame);
+					gameManager.DecreaseRating(fiveVsFive.Rating);
+				}
+
+				gameKnowledgeReward = fiveVsFive.GameKnowledge;
+				teamPlayReward = fiveVsFive.TeamPlay;
+				mechanicsReward = fiveVsFive.Mechanics;
+				tiredness = fiveVsFive.Tiredness;
+				break;
+		}
+
+		gameManager.IncreaseGameKnowledge(gameKnowledgeReward);
+		gameManager.IncreaseMechanics(mechanicsReward);
+		gameManager.IncreaseTeamPlay(teamPlayReward);
+		gameManager.IncreaseTiredness((int)(tiredness * GetDebuffMultiplier(gameManager.Hunger, gameManager.Thirst)));
+
+		opponentManager.UpdatePlayerAttributes(player);
+		lbManager.SortLeaderboard(lbManager.GetLeaderboard);
+		uiManager.UpdateAll();
+	}
+
+	/// <summary>
+	/// Applies the results given by streaming per hour, based on the amount of fame and views
+	/// </summary>
+	/// <param name="fame"></param>
+	public void StreamResults(int fame)
+	{
+		//TODO apply debuffs
+
 		if (fame < minimalFameForViews) return;
 
 		int fameCount = fame / minimalFameForViews;
@@ -203,237 +410,14 @@ public class ResultManager : MonoBehaviour
 		gameManager.IncreaseTiredness(streamEnergyCost);
 		totalIncome += money;
 	}
-	
-    public void PayRent(Accommodation accommodation)
-    {
-		if (gameManager.IsMoneyHighEnough(accommodation.rent))
-			gameManager.DecreaseMoney(accommodation.rent);
-		else
-		{
-			gameManager.GameOver();
-			FindObjectOfType<ButtonManager>().EnableAllButtonsOf("GameOver");
-		}
-    }
 
-    /// <summary>
-    /// Applies the results you will get from sleeping per hour
-    /// </summary>
-    public void SleepResults(int tirednessDecreaseRate)
-    {
-		//TODO Decrease based on total amount needs to be decreased
-        DecreaseTiredness(tirednessDecreaseRate);
-    }
-
-    /// <summary>
-    /// Applies the results you will get from working per hour
-    /// </summary>
-    /// <param name="workLevel"></param>
-    public void WorkResults(int workLevel)
-    {
-		ResultsForm workResults = GetWorkResult(workLevel);
-		gameManager.IncreaseMoney(workResults.Money);
-		gameManager.Tiredness += workResults.Tiredness;
-		gameManager.WorkExperience += workResults.WorkExperience;
-		gameManager.IncreaseGameKnowledge(workResults.GameKnowledge);
-		gameManager.IncreaseTeamPlay(workResults.TeamPlay);
-		gameManager.IncreaseMechanics(workResults.Mechanics);
-
-		IncreaseHunger(hungerIncreaseRate);
-        IncreaseThirst(thirstIncreaseRate);
-    }
-
-    /// <summary>
-    /// Applies the results you will get from training per hour
-    /// </summary>
-    /// <param name="trainType"></param>
-    public void TrainResults(Training training, int totalDuration, Skill.Type skill)
-    {
-        currentDebuffMultiplier *= currentDebuffMultiplierAmount;
-		int tirednessAmount = 0;
-		int trainingRate = 0;
-
-		tirednessAmount = (int)(GetTrainingTirednessAmount(training.type, totalDuration) / totalDuration);
-		trainingRate = GetTrainingRate(training.type);
-		int skillAmount = Mathf.CeilToInt(trainingRate * currentDebuffMultiplier);
-
-		switch (skill)
-		{
-			case Skill.Type.GameKnowledge:
-				gameManager.IncreaseGameKnowledge(skillAmount);
-				break;
-
-			case Skill.Type.TeamPlay:
-				gameManager.IncreaseTeamPlay(skillAmount);
-				break;
-
-			case Skill.Type.Mechanics:
-				gameManager.IncreaseMechanics(skillAmount);
-				break;
-			default:
-				Debug.LogWarning("Given training skill is unavailable");
-				return;
-		}
-
-		/*foreach (Skill s in training.skills)
-		{
-			switch (s.type)
-			{
-				case Skill.Type.GameKnowledge:
-					gameManager.IncreaseGameKnowledge(skillAmount);
-					break;
-
-				case Skill.Type.TeamPlay:
-					gameManager.IncreaseTeamPlay(skillAmount);
-					break;
-
-				case Skill.Type.Mechanics:
-					gameManager.IncreaseMechanics(skillAmount);
-					break;
-				default:
-					Debug.LogWarning("Given training skill is unavailable");
-					return;
-			}
-		}*/
-		gameManager.IncreaseTiredness(tirednessAmount);
-		IncreaseHunger(hungerIncreaseRate);
-		IncreaseThirst(thirstIncreaseRate);
-	}
-
-	public ResultsForm GetTrainingResults(Training.Type type) 
-	{
-		switch (type)
-		{
-			case Training.Type.Watching:
-				return trainLevel1;
-
-			case Training.Type.Course:
-				return trainLevel2;
-
-			case Training.Type.CoursePlus:
-				return trainLevel3;
-
-			default:
-				Debug.LogWarning("Given training type is unavailable");
-				return null;
-		}
-	}
-
-	public void BattleResults(Opponent opponent, Battle.Mode battleMode)
-    {
-        int randomizer = 0;
-        int winChance = 0;
-        int gkDelta = gameManager.GetGameKnowledge - opponent.gameKnowledge;
-        int mDelta = gameManager.GetMechanics - opponent.mechanics;
-        int tpDelta = gameManager.GetTeamPlay - opponent.teamPlay;
-        int[] skillsDelta = new int[0];
-        bool win = false;
-
-        currentDebuffMultiplier *= currentDebuffMultiplierAmount;
-
-        switch (battleMode)
-        {
-            case Battle.Mode.OneVersusOne:
-                randomizer = Random.Range(0, 100);
-                skillsDelta = new int[2];
-                skillsDelta[0] = gkDelta;
-                skillsDelta[1] = mDelta;
-                winChance = GetWinChance(skillsDelta, winPercentagePerSkillPoint) + winBiasPercentage;
-
-                if (randomizer < winChance || win)
-                    win = true;
-                else
-                    win = false;
-				
-                gameManager.IncreaseGameKnowledge((int)oneVsOne.GameKnowledge );
-                gameManager.IncreaseMechanics((int)oneVsOne.Mechanics);
-                gameManager.IncreaseTeamPlay((int)threeVsThree.Mechanics);
-                gameManager.IncreaseTiredness(oneVsOne.Tiredness);
-
-                if (win)
-                {
-                    gameManager.IncreaseFame(oneVsOne.Fame);
-                    gameManager.IncreaseRating(oneVsOne.Rating);
-                }
-                else
-                {
-                    gameManager.DecreaseFame(oneVsOne.Fame);
-                    gameManager.DecreaseRating(oneVsOne.Rating);
-                }
-                break;
-
-            case Battle.Mode.ThreeVersusThree:
-                randomizer = Random.Range(0, 100);
-                skillsDelta = new int[3];
-                skillsDelta[0] = gkDelta;
-                skillsDelta[1] = mDelta;
-                skillsDelta[2] = tpDelta;
-                winChance = GetWinChance(skillsDelta, winPercentagePerSkillPoint) + winBiasPercentage;
-
-                if (randomizer < winChance || win)
-                    win = true;
-                else
-                    win = false;
-
-                gameManager.IncreaseGameKnowledge((int)threeVsThree.GameKnowledge);
-                gameManager.IncreaseMechanics((int)threeVsThree.Mechanics);
-                gameManager.IncreaseTeamPlay((int)threeVsThree.Mechanics);
-                gameManager.IncreaseTiredness(threeVsThree.Tiredness);
-
-                if (win)
-                {
-                    gameManager.IncreaseFame(threeVsThree.Fame);
-                    gameManager.IncreaseRating(threeVsThree.Rating);
-                }
-                else
-                {
-                    gameManager.DecreaseFame(threeVsThree.Fame);
-                    gameManager.DecreaseRating(threeVsThree.Rating);
-                }
-                break;
-
-            case Battle.Mode.FiveVersusFive:
-                randomizer = Random.Range(0, 100);
-                skillsDelta = new int[3];
-                skillsDelta[0] = gkDelta;
-                skillsDelta[1] = mDelta;
-                skillsDelta[2] = tpDelta;
-                winChance = GetWinChance(skillsDelta, winPercentagePerSkillPoint) + winBiasPercentage;
-                
-                Debug.Log("Player gk: " + gameManager.GetGameKnowledge+ " Player m: " + gameManager.GetMechanics + " Player tp: " + gameManager.GetTeamPlay);
-                Debug.Log(opponent.name + " gk: " + opponent.gameKnowledge + " Opponent m: " + opponent.mechanics + " Opponent tp: " + opponent.teamPlay);
-                Debug.Log("Win chance + bias= " + winChance);
-                Debug.Log("randomizer= " + randomizer);
-
-                if (randomizer < winChance || win)
-                    win = true;
-                else
-                    win = false;
-
-                Debug.Log("Win=" + win);
-
-                gameManager.IncreaseGameKnowledge((int)fiveVsFive.GameKnowledge);
-                gameManager.IncreaseMechanics((int)fiveVsFive.Mechanics);
-                gameManager.IncreaseTeamPlay((int)fiveVsFive.Mechanics);
-                gameManager.IncreaseTiredness(fiveVsFive.Tiredness);
-
-                if (win)
-                {
-                    gameManager.IncreaseFame(fiveVsFive.Fame);
-                    gameManager.IncreaseRating(fiveVsFive.Rating);
-                }
-                else
-                {
-                    gameManager.DecreaseFame(fiveVsFive.Fame);
-                    gameManager.DecreaseRating(fiveVsFive.Rating);
-                }
-                break;
-        }
-
-        opponentManager.UpdatePlayerAttributes(player, gameManager);
-        lbManager.SortLeaderboard(lbManager.GetLeaderboard);
-        uiManager.UpdateAll();
-    }
-
+	/// <summary>
+	/// Applies the results given by contesting per hour, based on type of contest, current opponent,
+	/// battle outcome and achieved position
+	/// </summary>
+	/// <param name="contest"></param>
+	/// <param name="participants"></param>
+	/// <returns></returns>
 	public IEnumerator ContestResults(Event contest, List<Opponent> participants)
 	{
 		uiManager.battleMenu.SetActive(true);
@@ -527,286 +511,147 @@ public class ResultManager : MonoBehaviour
 		}
 	}
 
-	//TODO create separated sleep debuff + hunger & thirst debuff
-
-    public void ApplyDebuffs(float debuffMultiplier, float debuffMultiplierAmount)
-    {
-        currentDebuffMultiplier = debuffMultiplier;
-        currentDebuffMultiplierAmount = debuffMultiplierAmount;
-
-        SliderToText[] sliders = Resources.FindObjectsOfTypeAll<SliderToText>();
-
-        foreach (SliderToText s in sliders)
-        {
-            s.DebuffMultiplier = currentDebuffMultiplier;
-            s.DebuffMultiplierAmount = currentDebuffMultiplierAmount;
-        }
-    }
-
-    public void ResetDebuffs()
-    {
-        currentDebuffMultiplier = 1f;
-        debuffMultiplierAmount = 1f;
-
-        SliderToText[] sliders = Resources.FindObjectsOfTypeAll<SliderToText>();
-
-        foreach (SliderToText s in sliders)
-        {
-            s.DebuffMultiplier = currentDebuffMultiplier;
-            s.DebuffMultiplierAmount = currentDebuffMultiplierAmount;
-        }
-    }
-
-    public void Eat(int foodLevel)
-    {
-		//TODO combine with Drink()
-
-		if (gameManager.Hunger == 0)
-		{
-			Debug.LogWarning("You are currently full, you can buy food when you are hungry");
-			return;
-		}
-
-		int cost = 0;
-		int hunger = 0;
-
-        switch (foodLevel)
-        {
-            case 0:
-				cost = foodBad.Money;
-				hunger = foodBad.Hunger;
-                break;
-
-            case 1:
-				cost = foodStandard.Money;
-				hunger = foodStandard.Hunger;
-				break;
-
-            case 2:
-				cost = foodGood.Money;
-				hunger = foodGood.Hunger;
-				break;
-
-            case 3:
-				cost = foodExcellent.Money;
-				hunger = foodExcellent.Hunger;
-				break;
-
-            default:
-                Debug.LogError("No food level has been given");
-                return;
-        }
-
-		if (!gameManager.IsMoneyHighEnough(cost))
-		{
-			Debug.LogWarning("Not Enough Money");
-			return;
-		}
-
-		DecreaseHunger(hunger);
-		gameManager.DecreaseMoney(cost);
-
-		uiManager.UpdateProgress(gameManager.GetMoney, gameManager.Rating, gameManager.Fame);
-        uiManager.UpdateNeeds(gameManager.Tiredness, gameManager.Hunger, gameManager.Thirst);
-    }
-
-    public void Drink(int drinkLevel)
+	public void TryBattle(Battle.Mode battleType)
 	{
-		//TODO combine with Eat()
-
-		if (gameManager.Thirst == 0)
-		{
-			Debug.LogWarning("You are currently hydrated, you can buy drinks when you are thirsty");
-			return;
-		}
-
-		int cost = 0;
-		int thirst = 0;
-
-		switch (drinkLevel)
-		{
-			case 0:
-				cost = drinkBad.Money;
-				thirst = drinkBad.Thirst;
-				break;
-
-			case 1:
-				cost = drinkStandard.Money;
-				thirst = drinkStandard.Thirst;
-				break;
-
-			case 2:
-				cost = drinkGood.Money;
-				thirst = drinkGood.Thirst;
-				break;
-
-			case 3:
-				cost = drinkExcellent.Money;
-				thirst = drinkExcellent.Thirst;
-				break;
-
-			default:
-				Debug.LogError("No food level has been given");
-				return;
-		}
-
-		if (!gameManager.IsMoneyHighEnough(cost))
-		{
-			Debug.LogWarning("Not Enough Money");
-			return;
-		}
-
-		DecreaseThirst(thirst);
-		gameManager.DecreaseMoney(cost);
-
-		uiManager.UpdateProgress(gameManager.GetMoney, gameManager.Rating, gameManager.Fame);
-		uiManager.UpdateNeeds(gameManager.Tiredness, gameManager.Hunger, gameManager.Thirst);
-    }
-    
-    private void IncreaseHunger(int amount)
-    {
-        gameManager.Hunger += amount;
-
-        if (gameManager.Hunger >= debuffLimit)
-        {
-            if (uiManager.needsMenuButton.GetComponent<LerpColor>().endColor != Color.red)
-            {
-                uiManager.needsMenuButton.GetComponent<LerpColor>().endColor = Color.yellow;
-                uiManager.needsMenuButton.GetComponent<LerpColor>().LerpActivated = true;
-            }
-        }
-
-        if (gameManager.Hunger >= 100)
-        {
-            //ApplyDebuffs(debuffMultiplier, debuffMultiplierAmount);
-            uiManager.needsMenuButton.GetComponent<LerpColor>().endColor = Color.red;
-        }
-    }
-
-    private void IncreaseThirst(int amount)
-    {
-        gameManager.Thirst += amount;
-
-        if (gameManager.Thirst >= 70)
-        {
-            if (uiManager.needsMenuButton.GetComponent<LerpColor>().endColor != Color.red)
-            {
-                uiManager.needsMenuButton.GetComponent<LerpColor>().endColor = Color.yellow;
-                uiManager.needsMenuButton.GetComponent<LerpColor>().LerpActivated = true;
-            }
-        }
-
-        if (gameManager.Thirst >= 100)
-        {
-            //ApplyDebuffs(debuffMultiplier, debuffMultiplierAmount);
-            uiManager.needsMenuButton.GetComponent<LerpColor>().endColor = Color.red;
-        }
-    }
-
-    private void DecreaseTiredness(int amount)
-    {
-        gameManager.Tiredness -= amount;
-
-        if (gameManager.Tiredness <= 0)
-        {
-            gameManager.Tiredness = 0;
-			ResetDebuffs();
-		}
-		else if (gameManager.Tiredness < debuffLimit && gameManager.Hunger < debuffLimit && gameManager.Thirst < debuffLimit)
-        {
-            uiManager.needsMenuButton.GetComponent<Image>().color = uiManager.needsMenuButton.GetComponent<LerpColor>().startColor;
-            uiManager.needsMenuButton.GetComponent<LerpColor>().LerpActivated = false;
-        }
-    }
-
-    private void DecreaseHunger(int amount)
-    {
-        gameManager.Hunger -= amount;
-
-        if (gameManager.Hunger <= 0)
-        {
-            gameManager.Hunger = 0;
-		}
-        else if (gameManager.Tiredness < 70 && gameManager.Hunger < 70 && gameManager.Thirst < 70)
-        {
-            uiManager.needsMenuButton.GetComponent<Image>().color = uiManager.needsMenuButton.GetComponent<LerpColor>().startColor;
-            uiManager.needsMenuButton.GetComponent<LerpColor>().LerpActivated = false;
-        }
-    }
-
-    private void DecreaseThirst(int amount)
-    {
-        gameManager.Thirst -= amount;
-
-        if (gameManager.Thirst < 0)
-        {
-            gameManager.Thirst = 0;
-        }
-        else if (gameManager.Tiredness < 70 && gameManager.Hunger < 70 && gameManager.Thirst < 70)
-        {
-            uiManager.needsMenuButton.GetComponent<Image>().color = uiManager.needsMenuButton.GetComponent<LerpColor>().startColor;
-            uiManager.needsMenuButton.GetComponent<LerpColor>().LerpActivated = false;
-        }
-    }
-
-	public void SwapPlacement(List<Opponent> participants, Opponent player, Opponent opponent)
-	{
-		int tmp = opponent.placement;
-		player.placement--;
-		opponent.placement++;
-
-		contestManager.GetParticipants.Sort(SortByPlacement);
+		BattleResults(lbManager.GetRandomOpponent(leaderboard, lbManager.GetOpponentDivision(player, leaderboard, opponentManager.league)), battleType);
 	}
 
-	static int SortByPlacement(Opponent o1, Opponent o2)
+	public void PayRent(Accommodation accommodation)
 	{
-		return o1.placement.CompareTo(o2.placement);
+		if (gameManager.IsMoneyHighEnough(accommodation.rent))
+			gameManager.DecreaseMoney(accommodation.rent);
+		else
+		{
+			gameManager.GameOver();
+			FindObjectOfType<ButtonManager>().EnableAllButtonsOf("GameOver");
+		}
 	}
 
-	public ResultsForm GetWorkResult(int workLevel)
+	public void ResetTotalViews()
+	{
+		totalIncome = 0;
+		totalViews = 0;
+	}
+
+	public int GetMinStreamIncome(int fame, int duration)
+	{
+		int views = 0;
+		int incomeAmount = 0;
+		int fameCount = fame / minimalFameForViews;
+
+		for (int i = 0; i < fameCount * duration; i++)
+		{
+			views += minViewsPerFame;
+		}
+
+		int viewCount = views / minimalViewsForIncome;
+
+
+		for (int i = 0; i < viewCount * duration; i++)
+		{
+			incomeAmount += minIncomePerViews;
+		}
+
+		return incomeAmount;
+	}
+
+	public int GetMaxStreamIncome(int fame, int duration)
+	{
+		int views = 0;
+		int incomeAmount = 0;
+		int fameCount = fame / minimalFameForViews;
+
+		for (int i = 0; i < fameCount * duration; i++)
+		{
+			views += minViewsPerFame;
+		}
+
+		int viewCount = views / minimalViewsForIncome;
+
+
+		for (int i = 0; i < viewCount * duration; i++)
+		{
+			incomeAmount += maxIncomePerViews;
+		}
+
+		return incomeAmount;
+	}
+
+	/// <summary>
+	/// Returns a random amount of views the player gets per hour based on amount of fame
+	/// </summary>
+	/// <param name="fameCount"></param>
+	/// <param name="minViewsPerFame"></param>
+	/// <param name="maxViewsPerFame"></param>
+	/// <returns></returns>
+	public int GetStreamViews(int fameCount, int minViewsPerFame, int maxViewsPerFame)
+	{
+		int views = 0;
+		for (int i = 0; i < fameCount; i++)
+		{
+			views += Random.Range(minViewsPerFame, maxViewsPerFame);
+		}
+		return views;
+	}
+
+	/// <summary>
+	/// Returns a random amount of money the player gets per hour based on amount of views
+	/// </summary>
+	/// <param name="viewCount"></param>
+	/// <param name="minIncomePerViews"></param>
+	/// <param name="maxIncomePerViews"></param>
+	/// <returns></returns>
+	public int GetStreamIncome(int viewCount, int minIncomePerViews, int maxIncomePerViews)
+	{
+		int incomeAmount = 0;
+		for (int i = 0; i < viewCount; i++)
+		{
+			incomeAmount += Random.Range(minIncomePerViews, maxIncomePerViews);
+		}
+
+		return incomeAmount;
+	}
+
+	public ResultsForm GetWorkResultForm(int workLevel)
 	{
 		ResultsForm results = new ResultsForm();
-		currentDebuffMultiplier *= currentDebuffMultiplierAmount;
 
 		switch (workLevel)
 		{
 			case 0:
-				results.SetMoney = (int)(workLevel1.Money * currentDebuffMultiplier);
-				results.SetTiredness = workLevel1.Tiredness;
-				results.SetWorkExperience = workLevel1.WorkExperience;
-				results.SetGameKnowledge = (int)(workLevel1.GameKnowledge * currentDebuffMultiplier);
-				results.SetTeamPlay = (int)(workLevel1.TeamPlay * currentDebuffMultiplier);
-				results.SetMechanics = (int)(workLevel1.Mechanics * currentDebuffMultiplier);
+				results.SetMoney = (int)(workLevel1.Money);
+				results.WorkExperience = workLevel1.WorkExperience;
+				results.SetGameKnowledge = (int)(workLevel1.GameKnowledge);
+				results.SetTeamPlay = (int)(workLevel1.TeamPlay);
+				results.SetMechanics = (int)(workLevel1.Mechanics);
+				results.SetTiredness = (int)((workLevel1.Tiredness) * GetDebuffMultiplier(gameManager.Hunger, gameManager.Thirst));
 				break;
 
 			case 1:
-				results.SetMoney = (int)(workLevel2.Money * currentDebuffMultiplier);
-				results.SetTiredness = workLevel2.Tiredness;
-				results.SetWorkExperience = workLevel2.WorkExperience;
-				results.SetGameKnowledge = (int)(workLevel2.GameKnowledge * currentDebuffMultiplier);
-				results.SetTeamPlay = (int)(workLevel2.TeamPlay * currentDebuffMultiplier);
-				results.SetMechanics = (int)(workLevel2.Mechanics * currentDebuffMultiplier);
-
+				results.SetMoney = (int)(workLevel2.Money);
+				results.WorkExperience = workLevel2.WorkExperience;
+				results.SetGameKnowledge = (int)(workLevel2.GameKnowledge);
+				results.SetTeamPlay = (int)(workLevel2.TeamPlay);
+				results.SetMechanics = (int)(workLevel2.Mechanics);
+				results.SetTiredness = (int)((workLevel2.Tiredness) * GetDebuffMultiplier(gameManager.Hunger, gameManager.Thirst));
 				break;
 
 			case 2:
-				results.SetMoney = (int)(workLevel3.Money * currentDebuffMultiplier);
-				results.SetTiredness = workLevel3.Tiredness;
-				results.SetWorkExperience = workLevel3.WorkExperience;
-				results.SetGameKnowledge = (int)(workLevel3.GameKnowledge * currentDebuffMultiplier);
-				results.SetTeamPlay = (int)(workLevel3.TeamPlay * currentDebuffMultiplier);
-				results.SetMechanics = (int)(workLevel3.Mechanics * currentDebuffMultiplier);
-
+				results.SetMoney = (int)(workLevel3.Money);
+				results.WorkExperience = workLevel3.WorkExperience;
+				results.SetGameKnowledge = (int)(workLevel3.GameKnowledge);
+				results.SetTeamPlay = (int)(workLevel3.TeamPlay);
+				results.SetMechanics = (int)(workLevel3.Mechanics);
+				results.SetTiredness = (int)(workLevel3.Tiredness);
 				break;
 
 			case 3:
-				results.SetMoney = (int)(workLevel4.Money * currentDebuffMultiplier);
-				results.SetTiredness = workLevel4.Tiredness;
-				results.SetWorkExperience = workLevel4.WorkExperience;
-				results.SetGameKnowledge = (int)(workLevel4.GameKnowledge * currentDebuffMultiplier);
-				results.SetTeamPlay = (int)(workLevel4.TeamPlay * currentDebuffMultiplier);
-				results.SetMechanics = (int)(workLevel4.Mechanics * currentDebuffMultiplier);
-
+				results.SetMoney = (int)(workLevel4.Money);
+				results.WorkExperience = workLevel4.WorkExperience;
+				results.SetGameKnowledge = (int)(workLevel4.GameKnowledge);
+				results.SetTeamPlay = (int)(workLevel4.TeamPlay);
+				results.SetMechanics = (int)(workLevel4.Mechanics);
+				results.SetTiredness = (int)(workLevel4.Tiredness);
 				break;
 
 			default:
@@ -815,6 +660,25 @@ public class ResultManager : MonoBehaviour
 		}
 
 		return results;
+	}
+
+	public ResultsForm GetTrainingResultsForm(Training.Type type)
+	{
+		switch (type)
+		{
+			case Training.Type.Watching:
+				return trainLevel1;
+
+			case Training.Type.Course:
+				return trainLevel2;
+
+			case Training.Type.CoursePlus:
+				return trainLevel3;
+
+			default:
+				Debug.LogWarning("Given training type is unavailable");
+				return null;
+		}
 	}
 
 	/// <summary>
@@ -837,42 +701,38 @@ public class ResultManager : MonoBehaviour
 
 	public float GetTrainingCostAmount(Training.Type trainType, int duration)
 	{
-		currentDebuffMultiplier *= currentDebuffMultiplierAmount;
-
 		switch (trainType)
 		{
 			case Training.Type.Watching:
-				return trainLevel1.Money * duration * currentDebuffMultiplier;
+				return trainLevel1.Money * duration;
 
 			case Training.Type.Course:
-				return trainLevel2.Money * duration * currentDebuffMultiplier;
+				return trainLevel2.Money * duration;
 
 			case Training.Type.CoursePlus:
-				return trainLevel3.Money * duration * currentDebuffMultiplier;
+				return trainLevel3.Money * duration;
 
 			default:
-				Debug.LogError("Given training type is unavailable");
+				Debug.LogWarning("No training type is given");
 				return 0;
 		}
 	}
 
 	public float GetTrainingTirednessAmount(Training.Type trainType, int duration)
 	{
-		currentDebuffMultiplier *= currentDebuffMultiplierAmount;
-
 		switch (trainType)
 		{
 			case Training.Type.Watching:
-				return trainLevel1.Tiredness * currentDebuffMultiplier * duration;
+				return trainLevel1.Tiredness * GetDebuffMultiplier(gameManager.Hunger, gameManager.Thirst) * duration;
 
 			case Training.Type.Course:
-				return trainLevel2.Tiredness * currentDebuffMultiplier * duration;
+				return trainLevel2.Tiredness * GetDebuffMultiplier(gameManager.Hunger, gameManager.Thirst) * duration;
 
 			case Training.Type.CoursePlus:
-				return trainLevel3.Tiredness * currentDebuffMultiplier * duration;
+				return trainLevel3.Tiredness * GetDebuffMultiplier(gameManager.Hunger, gameManager.Thirst) * duration;
 
 			default:
-				Debug.LogError("Given training type is unavailable");
+				Debug.LogWarning("No training type is given");
 				return 0;
 		}
 	}
@@ -907,11 +767,33 @@ public class ResultManager : MonoBehaviour
 		}
 	}
 
+	public float GetDebuffMultiplier(int hunger, int thirst)
+	{
+		float debuffMultiplier = 1f;
+
+		if (hunger >= 100) debuffMultiplier += hungerDebuffAddition;
+		if (thirst >= 100) debuffMultiplier += thirstDebuffAddition;
+
+		return debuffMultiplier;
+	}
+
+	public void SwapPlacement(List<Opponent> participants, Opponent player, Opponent opponent)
+	{
+		int tmp = opponent.placement;
+		player.placement--;
+		opponent.placement++;
+
+		contestManager.GetParticipants.Sort(SortByPlacement);
+	}
+
+	static int SortByPlacement(Opponent o1, Opponent o2)
+	{
+		return o1.placement.CompareTo(o2.placement);
+	}
+
 	#region Getters & Setters
 
 	public int GetTirednessDecreaseRate { get { return tirednessDecreaseRate; } }
-    public float GetDebuffMultiplier { get { return debuffMultiplier; } }
-    public float GetDebuffMultiplierAmount { get { return debuffMultiplierAmount; } }
 	public int GetTotalViews { get { return totalViews; } }
 	public ResultsForm GetTrainingLevel1Results { get { return trainLevel1; } }
 	public ResultsForm GetTrainingLevel2Results { get { return trainLevel2; } }

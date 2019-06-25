@@ -65,8 +65,8 @@ public class SliderToText : MonoBehaviour
 
     public void ValueToWorkResult(Text textToChange)
     {
-        tiredness = slider.value * resultManager.GetWorkResult(gameManager.GetWorkLevel).Tiredness;
-        money = slider.value * resultManager.GetWorkResult(gameManager.GetWorkLevel).Money * (debuffMultiplier * debuffMultiplierAmount);
+		tiredness = slider.value * resultManager.GetWorkResultForm(gameManager.GetWorkLevel).Tiredness;
+        money = slider.value * resultManager.GetWorkResultForm(gameManager.GetWorkLevel).Money;
 
         textToChange.text = "+$" + money.ToString() + ", -" + tiredness.ToString() + "% tiredness";
     }
@@ -106,7 +106,8 @@ public class SliderToText : MonoBehaviour
 
     public void SetSliderMaxValue(ActivityManager.Activity activity, float divisor, float amount)
     {
-		slider.maxValue = Mathf.CeilToInt(amount / divisor);
+		//slider.maxValue = Mathf.FloorToInt(amount / divisor * resultManager.GetDebuffMultiplier(gameManager.Hunger, gameManager.Thirst));
+		slider.maxValue = Mathf.FloorToInt(amount / divisor);
 
 		if (amount == 0) slider.maxValue = 0;
 	}

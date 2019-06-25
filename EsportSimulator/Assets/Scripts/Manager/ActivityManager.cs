@@ -29,7 +29,7 @@ public class ActivityManager : MonoBehaviour
 
     private void Start()
     {
-        //ChangeActivity(Activity.Idle, 0);
+        ChangeActivity(Activity.Idle, 0);
     }
 
 	/// <summary>

@@ -49,7 +49,7 @@ public class SubMenuManager : MonoBehaviour
 				break;
 
 			case ActivityManager.Activity.Work:
-				sliderText.SetSliderMaxValue(activity, resultManager.GetWorkResult(gameManager.WorkLevel).Tiredness, 100 - gameManager.GetTiredness);
+				sliderText.SetSliderMaxValue(activity, resultManager.GetWorkResultForm(gameManager.WorkLevel).Tiredness, 100 - gameManager.GetTiredness);
 				break;
 
 			case ActivityManager.Activity.Stream:
@@ -58,7 +58,7 @@ public class SubMenuManager : MonoBehaviour
 				break;
 
 			case ActivityManager.Activity.Train:
-				sliderText.SetSliderMaxValue(activity, resultManager.GetTrainingResults(actionButton.training.type).Tiredness, 100 - gameManager.GetTiredness);
+				sliderText.SetSliderMaxValue(activity, resultManager.GetTrainingResultsForm(actionButton.training.type).Tiredness, 100 - gameManager.GetTiredness);
 				sliderText.SetSkills = actionButton.training.skills;
 				sliderText.SetTirednessMultiplier = resultManager.GetTrainingTirednessAmount(actionButton.training.type, 1);
 				sliderText.SetCostMultiplier = resultManager.GetTrainingCostAmount(actionButton.training.type, 1);

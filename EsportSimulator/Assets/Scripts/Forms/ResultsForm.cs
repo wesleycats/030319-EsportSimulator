@@ -24,7 +24,7 @@ public class ResultsForm
     [SerializeField] private float trainingLevel1Multiplier;
     [SerializeField] private float trainingLevel2Multiplier;
     [SerializeField] private float trainingLevel3Multiplier;
-    [SerializeField] private float workExperience;
+    [SerializeField] private int workExperience;
 
     public float Duration { get { return duration; } }
     public int Tiredness { get { return tiredness; } }
@@ -41,14 +41,13 @@ public class ResultsForm
     public float GetTrainingLevel1Multiplier { get { return trainingLevel1Multiplier; } }
     public float GetTrainingLevel2Multiplier { get { return trainingLevel2Multiplier; } }
     public float GetTrainingLevel3Multiplier { get { return trainingLevel3Multiplier; } }
-    public float WorkExperience { get { return workExperience; } }
+    public int WorkExperience { get { return workExperience; } set { workExperience = value; } }
 
 	public float SetDuration { set { duration = value; } }
 	public int SetTiredness { set { tiredness = value; } }
 	public int SetHunger { set { hunger = value; } }
 	public int SetThirst { set { thirst = value; } }
 	public int SetMoney { set { money = value; } }
-	public float SetWorkExperience { set { workExperience = value; } }
 	public int SetGameKnowledge { set { gameKnowledge = value; } }
 	public int SetTeamPlay { set { teamPlay = value; } }
 	public int SetMechanics { set { mechanics = value; } }

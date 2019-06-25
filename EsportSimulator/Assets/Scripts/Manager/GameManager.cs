@@ -47,14 +47,13 @@ public class GameManager : MonoBehaviour
 	public Debugger debug;
 
 	#endregion
-
+	
 	void Start()
     {
 		ResetGame();
 		Time.timeScale = 1f;
 		switchOverlay.LerpValue = 1;
 		switchOverlay.Lerp(1);
-		InitializeData();
 	}
 
 	public Event GetPlannedEventOn(int currentMonth, List<Event> events)
@@ -69,13 +68,21 @@ public class GameManager : MonoBehaviour
     {
         InitializePlayerData();
         timeManager.InitializeGameData();
-        opponentManager.InitializeOpponents(this);
+        opponentManager.InitializeOpponents();
         leaderboardManager.Initialize();
         uiManager.Initialize();
         artManager.Initialize();
     }
 
-    public void ResetGame()
+	public void InitializeSaveData()
+	{
+		InitializePlayerData();
+		timeManager.InitializeGameData();
+		uiManager.Initialize();
+		artManager.Initialize();
+	}
+
+	public void ResetGame()
     {
         playerData.Reset();
         gameData.Reset();
@@ -167,27 +174,70 @@ public class GameManager : MonoBehaviour
         uiManager.UpdateSkills(gameKnowledge, teamPlay, mechanics);
     }
 
-    public void IncreaseTiredness(int amount)
+	public void IncreaseHunger(int amount)
+	{
+		hunger += amount;
+	}
+
+	public void IncreaseThirst(int amount)
+	{
+		thirst += amount;
+	}
+
+	public void IncreaseWorkExp(int amount)
+	{
+		workExperience += amount;
+	}
+
+	public void DecreaseHunger(int amount)
+	{
+		hunger -= amount;
+	}
+
+	public void DecreaseThirst(int amount)
+	{
+		thirst -= amount;
+	}
+
+	public void DecreaseWorkExp(int amount)
+	{
+		workExperience -= amount;
+	}
+
+	public void IncreaseTiredness(int amount)
     {
-        SetTiredness = GetTiredness + amount;
+        tiredness += amount;
 
-        if (GetTiredness >= 70)
+        if (tiredness >= 70)
         {
-            if (uiManager.needsMenuButton.GetComponent<LerpColor>().endColor != Color.red)
-            {
-                uiManager.needsMenuButton.GetComponent<LerpColor>().endColor = Color.yellow;
-                uiManager.needsMenuButton.GetComponent<LerpColor>().LerpActivated = true;
-            }
+			uiManager.needsMenuButton.GetComponent<LerpColor>().endColor = Color.yellow;
+            uiManager.needsMenuButton.GetComponent<LerpColor>().LerpActivated = true;
         }
 
-        if (GetTiredness >= 100)
+        if (tiredness >= 100)
         {
-            resultManager.ApplyDebuffs(resultManager.GetDebuffMultiplier, resultManager.GetDebuffMultiplierAmount);
             uiManager.needsMenuButton.GetComponent<LerpColor>().endColor = Color.red;
-        }
-    }
+            uiManager.needsMenuButton.GetComponent<LerpColor>().LerpActivated = true;
+		}
+	}
 
-    public bool IsMoneyLowEnough(float amount)
+	public void DecreaseTiredness(int amount)
+	{
+		tiredness -= amount;
+
+		if (tiredness < 100)
+		{
+			uiManager.needsMenuButton.GetComponent<LerpColor>().endColor = Color.yellow;
+			uiManager.needsMenuButton.GetComponent<LerpColor>().LerpActivated = true;
+		}
+
+		if (tiredness < 70)
+		{
+			uiManager.needsMenuButton.GetComponent<LerpColor>().LerpActivated = false;
+		}
+	}
+
+	public bool IsMoneyLowEnough(float amount)
     {
         return money <= amount;
     }
@@ -230,7 +280,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Initializes player data in variables
     /// </summary>
-    void InitializePlayerData()
+    public void InitializePlayerData()
     {
         money = playerData.GetMoney;
         rating = playerData.GetRating;
@@ -251,7 +301,8 @@ public class GameManager : MonoBehaviour
 		{
 			currentItems.Add(i);
 		}
-		currentAccommodation = playerData.GetAllAccommodations[0];
+
+		currentAccommodation = playerData.CurrentAccommodation;
 	}
 
     #region Getters & Setters

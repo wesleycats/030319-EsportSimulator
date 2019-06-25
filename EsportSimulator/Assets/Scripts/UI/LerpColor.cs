@@ -131,6 +131,7 @@ public class LerpColor : MonoBehaviour
 		if (LerpStopped == null || !send) return;
 
 		LerpStopped(true);
+		send = true;
 	}
 
     public bool isLerping()

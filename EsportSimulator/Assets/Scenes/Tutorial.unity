@@ -23703,6 +23703,7 @@ MonoBehaviour:
   maxIncomePerViews: 5
   totalViews: 0
   totalIncome: 0
+  streamEnergyCost: 0
   uiManager: {fileID: 1579866881}
   gameManager: {fileID: 1070449418}
   lbManager: {fileID: 1070449425}
@@ -23831,6 +23832,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiManager: {fileID: 1579866881}
+  gameManager: {fileID: 1070449418}
+  leaderboardManager: {fileID: 1070449425}
   maxEloRating: 5000
   opponentNames:
   - Sjaak Trekhaak

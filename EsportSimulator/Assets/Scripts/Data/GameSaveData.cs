@@ -68,5 +68,5 @@ public class GameSaveData
 
     #endregion
 
-    public Opponent[] opponents;
+    public List<Opponent> opponents;
 }

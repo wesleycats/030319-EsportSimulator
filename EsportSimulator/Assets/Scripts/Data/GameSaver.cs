@@ -47,7 +47,7 @@ public class GameSaver : MonoBehaviour
 
 		gameSaveData.plannedTournaments = gameManager.GetPlannedEvents;
 
-		//save current accommoadation: gameSaveData.currentAccommodation = gameManager.GetCurrentAccommodation;
+		gameSaveData.currentAccommodation = gameManager.CurrentAccommodation;
 
 		gameSaveData.currentItems.Clear();
 		foreach (Item i in gameManager.CurrentItems)
@@ -55,11 +55,12 @@ public class GameSaver : MonoBehaviour
 			gameSaveData.currentItems.Add(i);
 		}
 
-		gameSaveData.opponents = new Opponent[opponentManager.GetAllOpponents.Count];
-        for (int i = 0; i < opponentManager.GetAllOpponents.Count; i++)
+		gameSaveData.opponents.Clear();
+		foreach (Opponent o in opponentManager.GetAllOpponents)
 		{
-			gameSaveData.opponents[i] = opponentManager.GetAllOpponents[i];
-        }
+			gameSaveData.opponents.Add(o);
+		}
+        
 
         SaveData(gameSaveData, saveSlot, dataPath);
     }

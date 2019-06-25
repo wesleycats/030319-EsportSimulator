@@ -68,7 +68,7 @@ public class ArtManager : MonoBehaviour
 				//if (gameManager.CurrentAccommodation != null) break;
 
 				int houseLevel = playerData.GetAllAccommodations.IndexOf(gameManager.CurrentAccommodation);
-				background.sprite = houseSprites[houseLevel];
+				if (houseLevel >= 0) background.sprite = houseSprites[houseLevel];
 				chair.sprite = chairSprites[0];//chairSprites[chairLevel];
 				workstation.sprite = tableSprites[0];//tableSprites[tableLevel];
 				 

@@ -106,6 +106,7 @@ public class PlayerData : ScriptableObject
     public List<ItemForm> GetAllItems { get { return allItems; } }
 	public List<Event> GetPlannedTournaments { get { return plannedTournaments; } }
 	public List<Accommodation> GetAllAccommodations { get { return allAccommodations; } }
+	public Accommodation CurrentAccommodation { get { return currentAccommodation; } set { currentAccommodation = value; } }
 
 	public int SetDefaultMoney { set { defaultMoney = value; } }
     public int SetMoney { set { money = value; } }
