@@ -11,8 +11,9 @@ public class SaveSlots : MonoBehaviour
 {
     public enum SlotStyle { Load, Save }
     public SlotStyle slotStyle;
-    
-    public GameObject[] saveSlotsObjects;
+	public GameObject[] saveSlotsObjects;
+
+	private string dataPath = "";
 
     private void Start()
     {
@@ -21,8 +22,15 @@ public class SaveSlots : MonoBehaviour
 
     public bool isSaveSlotUsed(int saveSlot)
     {
-		//string path = Path.Combine(Application.persistentDataPath, "GameSaveData_SaveSlot_" + saveSlot + ".txt");
-		string dataPath = Path.Combine(Application.dataPath + "/Saves/", "GameSaveData_SaveSlot_" + saveSlot + ".txt");
+
+		if (Application.platform != RuntimePlatform.WindowsEditor)
+		{
+			dataPath = Path.Combine(Application.persistentDataPath, "GameSaveData_SaveSlot_" + saveSlot + ".txt");
+		}
+		else
+		{ 
+			dataPath = Path.Combine(Application.dataPath + "/Saves/", "GameSaveData_SaveSlot_" + saveSlot + ".txt");
+		}
 
 		if (!File.Exists(dataPath)) return false;
 
