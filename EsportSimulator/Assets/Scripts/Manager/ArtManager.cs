@@ -109,7 +109,7 @@ public class ArtManager : MonoBehaviour
 
             case ActivityManager.Activity.Work:
 				//TODO create different work enviorments
-                background.sprite = workplaceSprites[(int)playerData.GetWorkLevel];
+				background.sprite = workplaceSprites[0];//[(int)playerData.GetWorkLevel];
                 screen.sprite = null;
                 keyboard.sprite = null;
                 

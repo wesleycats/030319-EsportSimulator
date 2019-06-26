@@ -23,13 +23,14 @@ public class GameSaver : MonoBehaviour
             return;
         }
 
-        dataPath = Path.Combine(Application.persistentDataPath, "GameSaveData_SaveSlot_" + saveSlot + ".txt");
+        //dataPath = Path.Combine(Application.persistentDataPath, "GameSaveData_SaveSlot_" + saveSlot + ".txt");
+		dataPath = Path.Combine(Application.dataPath + "/Saves/", "GameSaveData_SaveSlot_" + saveSlot + ".txt");
 
         gameSaveData.money = gameManager.GetMoney;
         gameSaveData.rating = gameManager.GetRating;
         gameSaveData.fame = gameManager.GetFame;
 
-        gameSaveData.workExperience = gameManager.GetWorkExperience;
+        gameSaveData.workExperience = gameManager.WorkExperience;
         gameSaveData.workLevel = gameManager.GetWorkLevel;
 
         gameSaveData.tiredness = gameManager.GetTiredness;
@@ -61,7 +62,6 @@ public class GameSaver : MonoBehaviour
 			gameSaveData.opponents.Add(o);
 		}
         
-
         SaveData(gameSaveData, saveSlot, dataPath);
     }
 

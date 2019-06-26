@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 	[SerializeField] private int money;
     [SerializeField] private int rating;
     [SerializeField] private int fame;
-    [SerializeField] private float workExperience;
+    [SerializeField] private int workExperience;
     [SerializeField] private int workLevel;
     [SerializeField] private int houseLevel;
     [SerializeField] private int tiredness;
@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
 		money = playerData.GetMoney;
 		rating = playerData.GetRating;
 		fame = playerData.GetFame;
-		workExperience = playerData.GetWorkExperience;
+		workExperience = playerData.WorkExperience;
 		workLevel = playerData.GetWorkLevel;
 		tiredness = playerData.GetTiredness;
 		hunger = playerData.GetHunger;
@@ -326,7 +326,6 @@ public class GameManager : MonoBehaviour
     public int GetMoney { get { return money; } }
     public int GetRating { get { return rating; } }
     public int GetFame { get { return fame; } }
-    public float GetWorkExperience { get { return workExperience; } }
     public int GetWorkLevel { get { return workLevel; } }
     public int GetHouseLevel { get { return houseLevel; } }
     public int GetTiredness { get { return tiredness; } }
@@ -340,7 +339,6 @@ public class GameManager : MonoBehaviour
     public int SetMoney { set { money = value; } }
     public int SetRating { set { rating = value; } }
     public int SetFame { set { fame = value; } }
-    public float SetWorkExperience { set { workExperience = value; } }
     public int SetWorkLevel { set { workLevel = value; } }
     public int SetTiredness { set { tiredness = value; } }
     public int SetHunger { set { hunger = value; } }
@@ -352,7 +350,6 @@ public class GameManager : MonoBehaviour
     public int Money { get { return money; } set { money = value; } }
     public int Rating { get { return rating; } set { rating = value; } }
     public int Fame { get { return fame; } set { fame = value; } }
-    public float WorkExperience { get { return workExperience; } set { workExperience = value; } }
     public int WorkLevel { get { return workLevel; } set { workLevel = value; } }
     public int Tiredness { get { return tiredness; } set { tiredness = value; } }
     public int Hunger { get { return hunger; } set { hunger = value; } }
@@ -362,6 +359,8 @@ public class GameManager : MonoBehaviour
     public int Mechanics { get { return mechanics; } set { mechanics = value; } }
 	public List<Item> CurrentItems { set { currentItems = value; } get { return currentItems; } }
 	public Accommodation CurrentAccommodation { set { currentAccommodation = value; } get { return currentAccommodation; } }
+	public int WorkExperience { get { return workExperience; } set { workExperience = value; } }
+
 
 	#endregion
 }

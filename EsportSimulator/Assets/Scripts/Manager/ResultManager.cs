@@ -246,8 +246,6 @@ public class ResultManager : MonoBehaviour
 	/// <param name="workLevel"></param>
 	public void WorkResults(int workLevel)
 	{
-		//TODO add worklevels
-
 		ResultsForm workResults = GetWorkResultForm(workLevel);
 
 		gameManager.IncreaseMoney(workResults.Money);
@@ -642,7 +640,7 @@ public class ResultManager : MonoBehaviour
 				results.SetGameKnowledge = (int)(workLevel3.GameKnowledge);
 				results.SetTeamPlay = (int)(workLevel3.TeamPlay);
 				results.SetMechanics = (int)(workLevel3.Mechanics);
-				results.SetTiredness = (int)(workLevel3.Tiredness);
+				results.SetTiredness = (int)((workLevel3.Tiredness) * GetDebuffMultiplier(gameManager.Hunger, gameManager.Thirst));
 				break;
 
 			case 3:
@@ -651,7 +649,7 @@ public class ResultManager : MonoBehaviour
 				results.SetGameKnowledge = (int)(workLevel4.GameKnowledge);
 				results.SetTeamPlay = (int)(workLevel4.TeamPlay);
 				results.SetMechanics = (int)(workLevel4.Mechanics);
-				results.SetTiredness = (int)(workLevel4.Tiredness);
+				results.SetTiredness = (int)((workLevel4.Tiredness) * GetDebuffMultiplier(gameManager.Hunger, gameManager.Thirst));
 				break;
 
 			default:

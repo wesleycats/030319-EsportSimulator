@@ -75,24 +75,30 @@ namespace PixelsoftGames.PixelUI
         // Use this for initialization
         void Start()
         {
-            currentLevel = DefaultLevel;
-            CreateTable();
-            UpdateValue();
+			Initialize();
         }
 
-        #endregion
+		#endregion
 
-        #region Public Methods
+		#region Public Methods
 
-        /// <summary>
-        /// This method will grant experience points in the given amount of fire a level up event if necessary.
-        /// </summary>
-        /// <param name="amount"></param>
-        public void GiveExperiencePoints(int amount)
+		public void Initialize()
+		{
+			currentLevel = DefaultLevel;
+			currentExperienceTowardsLevel = 0;
+			CreateTable();
+			UpdateValue();
+		}
+
+		/// <summary>
+		/// This method will grant experience points in the given amount of fire a level up event if necessary.
+		/// </summary>
+		/// <param name="amount"></param>
+		public void GiveExperiencePoints(int amount)
         {
             currentExperienceTowardsLevel += amount;
-
-            if (currentExperienceTowardsLevel >= expTable[currentLevel - 1])
+			
+			if (currentExperienceTowardsLevel >= expTable[currentLevel - 1])
             {
                 currentExperienceTowardsLevel -= expTable[currentLevel - 1];
                 currentLevel++;

@@ -29,7 +29,9 @@ public class GameLoader : MonoBehaviour
             Debug.LogError("The given slot number is not available");
             return;
         }
-        dataPath = Path.Combine(Application.persistentDataPath, "GameSaveData_SaveSlot_" + saveSlot + ".txt");
+
+        //dataPath = Path.Combine(Application.persistentDataPath, "GameSaveData_SaveSlot_" + saveSlot + ".txt");
+		dataPath = Path.Combine(Application.dataPath + "/Saves/", "GameSaveData_SaveSlot_" + saveSlot + ".txt");
 
 		LoadData(saveSlot, dataPath);
     }
@@ -45,7 +47,7 @@ public class GameLoader : MonoBehaviour
         playerData.SetMoney = gameSaveData.money;
         playerData.SetRating = gameSaveData.rating;
         playerData.SetFame = gameSaveData.fame;
-        playerData.SetWorkExperience = gameSaveData.workExperience;
+        playerData.WorkExperience = gameSaveData.workExperience;
         playerData.SetWorkLevel = gameSaveData.workLevel;
 
         playerData.SetTiredness = gameSaveData.tiredness;

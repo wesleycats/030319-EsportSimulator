@@ -11,7 +11,7 @@ public class GameSaveData
     public int money;
     public int rating;
     public int fame;
-    public float workExperience;
+    public int workExperience;
     public int workLevel;
 
     #endregion

@@ -23,7 +23,7 @@ public class PlayerData : ScriptableObject
     [SerializeField] private int money;
     [SerializeField] private int rating;
     [SerializeField] private int fame;
-    [SerializeField] private float workExperience;
+    [SerializeField] private int workExperience;
     [SerializeField] private int workLevel;
 
     #endregion
@@ -94,7 +94,6 @@ public class PlayerData : ScriptableObject
     public int GetMoney { get { return money; } }
     public int GetRating { get { return rating; } }
     public int GetFame { get { return fame; } }
-    public float GetWorkExperience { get { return workExperience; } }
     public int GetWorkLevel { get { return workLevel; } }
     public int GetTiredness { get { return tiredness; } }
     public int GetHunger { get { return hunger; } }
@@ -107,12 +106,12 @@ public class PlayerData : ScriptableObject
 	public List<Event> GetPlannedTournaments { get { return plannedTournaments; } }
 	public List<Accommodation> GetAllAccommodations { get { return allAccommodations; } }
 	public Accommodation CurrentAccommodation { get { return currentAccommodation; } set { currentAccommodation = value; } }
+	public int WorkExperience { get { return workExperience; } set { workExperience = value; } }
 
 	public int SetDefaultMoney { set { defaultMoney = value; } }
     public int SetMoney { set { money = value; } }
     public int SetRating { set { rating = value; } }
     public int SetFame { set { fame = value; } }
-    public float SetWorkExperience { set { workExperience = value; } }
     public int SetWorkLevel { set { workLevel = value; } }
     public int SetTiredness { set { tiredness = value; } }
     public int SetHunger { set { hunger = value; } }
