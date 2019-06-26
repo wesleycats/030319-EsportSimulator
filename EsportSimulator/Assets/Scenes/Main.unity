@@ -1809,7 +1809,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 4
   m_TargetDisplay: 0
 --- !u!114 &127715219
 MonoBehaviour:
@@ -2469,7 +2469,7 @@ MonoBehaviour:
   loadType: 0
   loadTime: 0.5
   tutorialSceneIndex: 1
-  objectManager: {fileID: 0}
+  objectManager: {fileID: 1070449421}
   buttonManager: {fileID: 1579866883}
   uiManager: {fileID: 1579866881}
   gameManager: {fileID: 1070449418}
@@ -5226,7 +5226,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: f6d4b07bb4362844fa5281b1008ba67b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 18ab8eeb4d9c52741b9b9283f8e3cdf7, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13952,7 +13952,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: f6d4b07bb4362844fa5281b1008ba67b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 18ab8eeb4d9c52741b9b9283f8e3cdf7, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -15470,7 +15470,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &874417817
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19192,6 +19192,10 @@ MonoBehaviour:
   - {fileID: 1305509560}
   - {fileID: 2025671758}
   - {fileID: 165314541}
+  contentContainers:
+  - {fileID: 1335363237}
+  - {fileID: 1739502115}
+  - {fileID: 2066566141}
   DefaultTab: {fileID: 1305509560}
   deactivatedColor: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
@@ -19786,6 +19790,7 @@ MonoBehaviour:
     trainingRates: 
     sprite: {fileID: 0}
   plannedEvents: []
+  needsWarningLimit: 70
   playerData: {fileID: 11400000, guid: b5721d035e1bf074789a14536477e52e, type: 2}
   gameData: {fileID: 11400000, guid: 89c743619d053e14397cbd8cd75f0f6b, type: 2}
   uiManager: {fileID: 1579866881}
@@ -23042,7 +23047,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Version Alpha v1
+  m_Text: Version Alpha v1.1
 --- !u!222 &1203403443
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -30701,7 +30706,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: f6d4b07bb4362844fa5281b1008ba67b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 18ab8eeb4d9c52741b9b9283f8e3cdf7, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -31543,7 +31548,7 @@ MonoBehaviour:
   opponentStats: {fileID: 1882365251}
   winChance: {fileID: 1520842991}
   darkOverlay: {fileID: 2008183446}
-  sleepOverlay: {fileID: 127715219}
+  sleepOverlay: {fileID: 127715216}
   needsMenuButton: {fileID: 197400534}
   mutedSprite: {fileID: 21300082, guid: 5ac532f8c1db72044978ab27c9570081, type: 3}
   unMutedSprite: {fileID: 21300070, guid: 5ac532f8c1db72044978ab27c9570081, type: 3}
@@ -39723,7 +39728,7 @@ MonoBehaviour:
   loadType: 0
   loadTime: 0.5
   tutorialSceneIndex: 0
-  objectManager: {fileID: 0}
+  objectManager: {fileID: 1070449421}
   buttonManager: {fileID: 1579866883}
   uiManager: {fileID: 1579866881}
   gameManager: {fileID: 1070449418}
@@ -39917,7 +39922,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: f6d4b07bb4362844fa5281b1008ba67b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 18ab8eeb4d9c52741b9b9283f8e3cdf7, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -45902,6 +45907,7 @@ MonoBehaviour:
   - {fileID: 938364687497081184}
   - {fileID: 938364687899862498}
   - {fileID: 938364687069392284}
+  contentContainers: []
   DefaultTab: {fileID: 938364687497081184}
   deactivatedColor: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
@@ -52726,6 +52732,10 @@ MonoBehaviour:
   - {fileID: 2329816774941167558}
   - {fileID: 2329816773797888194}
   - {fileID: 2329816775006079390}
+  contentContainers:
+  - {fileID: 2329816775711302321}
+  - {fileID: 2329816773781400765}
+  - {fileID: 2329816775715193027}
   DefaultTab: {fileID: 2329816774941167558}
   deactivatedColor: {r: 0.30588236, g: 0.30588236, b: 0.30588236, a: 1}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
@@ -55330,6 +55340,10 @@ MonoBehaviour:
   - {fileID: 2329816775576961780}
   - {fileID: 2329816774675025174}
   - {fileID: 2329816775194328506}
+  contentContainers:
+  - {fileID: 2329816774231467753}
+  - {fileID: 2329816775540487801}
+  - {fileID: 2329816774676162730}
   DefaultTab: {fileID: 2329816775576961780}
   deactivatedColor: {r: 0.30588236, g: 0.30588236, b: 0.30588236, a: 1}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}

@@ -43,7 +43,7 @@ public class ResultManager : MonoBehaviour
 	[SerializeField] private ResultsForm drinkExcellent;
 
 	#endregion
-	
+
 	[SerializeField] private bool hungerDebuff = false;
 	[SerializeField] private float hungerDebuffAddition = 0.5f;
 	[SerializeField] private bool thirstDebuff = false;
@@ -97,7 +97,7 @@ public class ResultManager : MonoBehaviour
 	{
 		//TODO combine with Drink()
 
-		if (gameManager.Hunger == 0)
+		if (gameManager.Hunger <= 0)
 		{
 			Debug.LogWarning("You are currently full, you can buy food when you are hungry");
 			return;
@@ -150,7 +150,7 @@ public class ResultManager : MonoBehaviour
 	{
 		//TODO combine with Eat()
 
-		if (gameManager.Thirst == 0)
+		if (gameManager.Thirst <= 0)
 		{
 			Debug.LogWarning("You are currently hydrated, you can buy drinks when you are thirsty");
 			return;

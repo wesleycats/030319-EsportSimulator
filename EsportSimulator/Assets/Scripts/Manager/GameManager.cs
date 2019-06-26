@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
 
 	#endregion
 
+	public int needsWarningLimit = 70;
+
 	#region References
 
 	[Header("References")]
@@ -56,23 +58,44 @@ public class GameManager : MonoBehaviour
 		switchOverlay.Lerp(1);
 	}
 
-	public Event GetPlannedEventOn(int currentMonth, List<Event> events)
+	#region Game stage controls
+	/// <summary>
+	/// Initializes player data in variables
+	/// </summary>
+	public void InitializePlayerData()
 	{
-		foreach (Event b in events)
-			if (b.month == currentMonth) return b;
+		money = playerData.GetMoney;
+		rating = playerData.GetRating;
+		fame = playerData.GetFame;
+		workExperience = playerData.GetWorkExperience;
+		workLevel = playerData.GetWorkLevel;
+		tiredness = playerData.GetTiredness;
+		hunger = playerData.GetHunger;
+		thirst = playerData.GetThirst;
+		gameKnowledge = playerData.GetGameKnowledge;
+		teamPlay = playerData.GetTeamPlay;
+		mechanics = playerData.GetMechanics;
+		plannedEvents.Clear();
+		plannedEvents = playerData.GetPlannedTournaments;
 
-		return null;
+		currentItems.Clear();
+		foreach (Item i in playerData.CurrentItems)
+		{
+			currentItems.Add(i);
+		}
+
+		currentAccommodation = playerData.CurrentAccommodation;
 	}
 
-    public void InitializeData()
-    {
-        InitializePlayerData();
-        timeManager.InitializeGameData();
-        opponentManager.InitializeOpponents();
-        leaderboardManager.Initialize();
-        uiManager.Initialize();
-        artManager.Initialize();
-    }
+	public void InitializeData()
+	{
+		InitializePlayerData();
+		timeManager.InitializeGameData();
+		opponentManager.InitializeOpponents();
+		leaderboardManager.Initialize();
+		uiManager.Initialize();
+		artManager.Initialize();
+	}
 
 	public void InitializeSaveData()
 	{
@@ -101,17 +124,63 @@ public class GameManager : MonoBehaviour
         uiManager.winGameMenu.SetActive(true);
     }
 
-	public void RemoveItemOfType(Item.Type type)
-	{
-		foreach (Item i in currentItems)
-		{
-			if (type != i.type) continue;
+	#endregion
 
-			currentItems.Remove(i);
-		}
+	#region Needs variable methods
+
+	public void IncreaseTiredness(int amount)
+	{
+		tiredness += amount;
+
+		uiManager.CheckNeedsWarning();
 	}
-    
-    public void IncreaseMoney(int amount)
+
+	public void DecreaseTiredness(int amount)
+	{
+		tiredness -= amount;
+
+		if (tiredness < 0) tiredness = 0;
+
+		uiManager.CheckNeedsWarning();
+	}
+
+	public void IncreaseHunger(int amount)
+	{
+		hunger += amount;
+
+		uiManager.CheckNeedsWarning();
+	}
+
+	public void DecreaseHunger(int amount)
+	{
+		hunger -= amount;
+
+		if (hunger < 0) hunger = 0;
+
+		uiManager.CheckNeedsWarning();
+	}
+
+	public void IncreaseThirst(int amount)
+	{
+		thirst += amount;
+
+		uiManager.CheckNeedsWarning();
+	}
+
+	public void DecreaseThirst(int amount)
+	{
+		thirst -= amount;
+
+		if (thirst < 0) thirst = 0;
+
+		uiManager.CheckNeedsWarning();
+	}
+
+	#endregion
+
+	#region Progess variable methods
+
+	public void IncreaseMoney(int amount)
     {
         money += amount;
 
@@ -153,7 +222,21 @@ public class GameManager : MonoBehaviour
         uiManager.UpdateProgress(money, rating, fame);
     }
 
-    public void IncreaseGameKnowledge(int amount)
+	public void IncreaseWorkExp(int amount)
+	{
+		workExperience += amount;
+	}
+
+	public void DecreaseWorkExp(int amount)
+	{
+		workExperience -= amount;
+	}
+
+	#endregion
+
+	#region Skill variable methods
+
+	public void IncreaseGameKnowledge(int amount)
     {
         gameKnowledge += amount;
 
@@ -174,68 +257,9 @@ public class GameManager : MonoBehaviour
         uiManager.UpdateSkills(gameKnowledge, teamPlay, mechanics);
     }
 
-	public void IncreaseHunger(int amount)
-	{
-		hunger += amount;
-	}
+	#endregion
 
-	public void IncreaseThirst(int amount)
-	{
-		thirst += amount;
-	}
-
-	public void IncreaseWorkExp(int amount)
-	{
-		workExperience += amount;
-	}
-
-	public void DecreaseHunger(int amount)
-	{
-		hunger -= amount;
-	}
-
-	public void DecreaseThirst(int amount)
-	{
-		thirst -= amount;
-	}
-
-	public void DecreaseWorkExp(int amount)
-	{
-		workExperience -= amount;
-	}
-
-	public void IncreaseTiredness(int amount)
-    {
-        tiredness += amount;
-
-        if (tiredness >= 70)
-        {
-			uiManager.needsMenuButton.GetComponent<LerpColor>().endColor = Color.yellow;
-            uiManager.needsMenuButton.GetComponent<LerpColor>().LerpActivated = true;
-        }
-
-        if (tiredness >= 100)
-        {
-            uiManager.needsMenuButton.GetComponent<LerpColor>().endColor = Color.red;
-            uiManager.needsMenuButton.GetComponent<LerpColor>().LerpActivated = true;
-		}
-	}
-
-	public void DecreaseTiredness(int amount)
-	{
-		tiredness -= amount;
-
-		if (tiredness < 100)
-		{
-			uiManager.needsMenuButton.GetComponent<LerpColor>().endColor = Color.yellow;
-			uiManager.needsMenuButton.GetComponent<LerpColor>().LerpActivated = true;
-		}
-
-		if (tiredness < 70)
-		{
-			uiManager.needsMenuButton.GetComponent<LerpColor>().LerpActivated = false;
-		}
-	}
+	#region Check functions
 
 	public bool IsMoneyLowEnough(float amount)
     {
@@ -276,33 +300,25 @@ public class GameManager : MonoBehaviour
     {
         return thirst >= amount;
     }
-    
-    /// <summary>
-    /// Initializes player data in variables
-    /// </summary>
-    public void InitializePlayerData()
-    {
-        money = playerData.GetMoney;
-        rating = playerData.GetRating;
-        fame = playerData.GetFame;
-        workExperience = playerData.GetWorkExperience;
-        workLevel = playerData.GetWorkLevel;
-        tiredness = playerData.GetTiredness;
-        hunger = playerData.GetHunger;
-        thirst = playerData.GetThirst;
-        gameKnowledge = playerData.GetGameKnowledge;
-        teamPlay = playerData.GetTeamPlay;
-        mechanics = playerData.GetMechanics;
-		plannedEvents.Clear();
-		plannedEvents = playerData.GetPlannedTournaments;
 
-		currentItems.Clear();
-		foreach (Item i in playerData.CurrentItems)
+	#endregion
+
+	public void RemoveItemOfType(Item.Type type)
+	{
+		foreach (Item i in currentItems)
 		{
-			currentItems.Add(i);
-		}
+			if (type != i.type) continue;
 
-		currentAccommodation = playerData.CurrentAccommodation;
+			currentItems.Remove(i);
+		}
+	}
+
+	public Event GetPlannedEventOn(int currentMonth, List<Event> events)
+	{
+		foreach (Event b in events)
+			if (b.month == currentMonth) return b;
+
+		return null;
 	}
 
     #region Getters & Setters

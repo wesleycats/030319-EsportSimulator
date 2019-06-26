@@ -38,7 +38,7 @@ public class UIManager : MonoBehaviour
 	public Text winChance;
 
 	public GameObject darkOverlay;
-	public Image sleepOverlay;
+	public LerpColor sleepOverlay;
 	public Image needsMenuButton;
 
 	public Sprite mutedSprite;
@@ -64,6 +64,39 @@ public class UIManager : MonoBehaviour
 	public LeaderboardManager leaderboardManager;
 	public PlayerData playerData;
 
+	public void CheckNeedsWarning()
+	{
+		LerpColor needsButton = needsMenuButton.GetComponent<LerpColor>();
+
+		int[] needs = new int[3];
+		needs[0] = gameManager.Tiredness;
+		needs[1] = gameManager.Hunger;
+		needs[2] = gameManager.Thirst;
+
+		foreach (int i in needs)
+		{
+			if (i >= 100)
+			{
+				needsButton.endColor = Color.red;
+				needsButton.Lerp(true);
+				return;
+			}
+
+			if (i >= gameManager.needsWarningLimit)
+			{
+				needsButton.endColor = Color.yellow;
+				needsButton.Lerp(true);
+				return;
+			}
+
+			if (i < gameManager.needsWarningLimit)
+			{
+				needsButton.Lerp(false);
+				return;
+			}
+		}
+	}
+
 	public void UpdateAll()
 	{
 		UpdateTime(timeManager.GetHour, timeManager.GetMinute, timeManager.GetYear, timeManager.GetMonth);
@@ -72,6 +105,7 @@ public class UIManager : MonoBehaviour
 		UpdateSkills(gameManager.GetGameKnowledge, gameManager.GetTeamPlay, gameManager.GetMechanics);
 		UpdateItems(allItemTexts, gameManager.CurrentItems);
 		UpdateLeaderboard(leaderboardManager.GetLeaderboard);
+		CheckNeedsWarning();
 	}
 
 	public void UpdateTime(int hour, int minute, int year, int month)
@@ -247,17 +281,9 @@ public class UIManager : MonoBehaviour
 			return defaultColor;
 	}
 
-	public void ActivateSleepOverlay()
+	public void SleepOverlay(bool activate)
 	{
-		sleepOverlay.GetComponent<LerpColor>().Increasing = true;
-		sleepOverlay.GetComponent<LerpColor>().LerpMaxAmount = 2;
-		sleepOverlay.GetComponent<LerpColor>().LerpActivated = true;
-	}
-
-	public void DeactivateSleepOverlay()
-	{
-		sleepOverlay.GetComponent<LerpColor>().Increasing = false;
-		sleepOverlay.GetComponent<LerpColor>().LerpActivated = true;
+		sleepOverlay.Lerp(2);
 	}
 
 	public void ActivateContestAnnouncement(string battleMode)
@@ -267,7 +293,7 @@ public class UIManager : MonoBehaviour
 		contestAnnouncementMenu.GetComponent<Button>().interactable = true;
 	}
 
-public void Initialize()
+	public void Initialize()
     {
         UpdateAll();
     }

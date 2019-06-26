@@ -37,7 +37,6 @@ public class MenuOptions : MonoBehaviour
 
 			if (gameData.tutorialDone)
 			{
-				//gameManager.ResetGame();
 				audioManager.CurrentPlaylist = audioManager.mainClips;
 				gameObject.SetActive(false);
 			}
@@ -61,20 +60,16 @@ public class MenuOptions : MonoBehaviour
 
 	public void LoadGame(int slot)
 	{
-		Debug.Log(slot);
 		Time.timeScale = 1f;
 		loadType = GameLoader.LoadType.LoadGame;
 		slotToLoad = slot;
-		objectManager.DisableAllObjectsOf("Menu");
 		buttonManager.DisableAllButtons();
 		audioManager.FadeOut();
-		switchOverlay.Lerp(1);
+		switchOverlay.Lerp(1, true);
 	}
 
-	// TODO fix switchoverlay lerping when loading in game
 	public void LoadInGame(bool b)
 	{
-		Debug.Log(gameObject.name);
 		if (!b || loadType == GameLoader.LoadType.None) return;
 
 		switch (loadType)
@@ -89,6 +84,7 @@ public class MenuOptions : MonoBehaviour
 				audioManager.CurrentPlaylist = audioManager.mainClips;
 				switchOverlay.Lerp(1, false);
 				gameObject.SetActive(false);
+				objectManager.DisableAllObjectsOf("Menu");
 				objectManager.DisableAllObjectsOf("SubMenu");
 				buttonManager.EnableAllButtons();
 				break;

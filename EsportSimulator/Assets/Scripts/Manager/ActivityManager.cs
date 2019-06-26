@@ -108,7 +108,7 @@ public class ActivityManager : MonoBehaviour
 
 			case Activity.Sleep:
 				uiManager.activityText.text = "Sleeping...";
-				uiManager.ActivateSleepOverlay();
+				uiManager.SleepOverlay(true);
 				break;
 
 			case Activity.Stream:

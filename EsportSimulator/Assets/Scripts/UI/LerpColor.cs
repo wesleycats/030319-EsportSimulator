@@ -44,7 +44,6 @@ public class LerpColor : MonoBehaviour
 		else
 			increasing = true;
 
-		lerping = true;
 		send = sendWhenStopped;
 	}
 
@@ -59,8 +58,25 @@ public class LerpColor : MonoBehaviour
 			increasing = false;
 		else
 			increasing = true;
+	}
 
-		lerping = true;
+	public void Lerp(bool lerp)
+	{
+		if (!lerp)
+		{
+			image.color = startColor;
+			lerpValue = 0;
+		}
+
+		lerpMaxAmount = 999999;
+		lerpActivated = lerp;
+		lerping = lerp;
+		paused = !lerp;
+
+		if (lerpValue >= 1)
+			increasing = false;
+		else
+			increasing = true;
 	}
 
 	void Update()
@@ -130,8 +146,7 @@ public class LerpColor : MonoBehaviour
 
 		if (LerpStopped == null || !send) return;
 
-		LerpStopped(true);
-		send = true;
+		LerpStopped(send);
 	}
 
     public bool isLerping()

@@ -7,46 +7,46 @@ using UnityEngine;
 /// </summary>
 public class OpponentManager : MonoBehaviour
 {
-    public UIManager uiManager;
-    public GameManager gameManager;
+	public UIManager uiManager;
+	public GameManager gameManager;
 	public LeaderboardManager leaderboardManager;
 
 	[SerializeField] private int maxEloRating;
-    [SerializeField] private List<string> opponentNames = new List<string>();
-    [SerializeField] private List<Opponent> opponents = new List<Opponent>();
-    
-    private int opponentAmount;
-    private Opponent player = new Opponent();
+	[SerializeField] private List<string> opponentNames = new List<string>();
+	[SerializeField] private List<Opponent> opponents = new List<Opponent>();
 
-    public LeagueForm league;
-    
-    public void UpdatePlayerAttributes(Opponent player)
-    {
-        player.name = "YOU";
-        player.gameKnowledge = gameManager.GetGameKnowledge;
-        player.teamPlay = gameManager.GetTeamPlay;
-        player.mechanics = gameManager.GetMechanics;
-        player.eloRating = gameManager.GetRating;
-    }
+	private int opponentAmount;
+	private Opponent player = new Opponent();
 
-    /// <summary>
-    /// Creates new opponents
-    /// </summary>
-    /// <param name="names"></param>
-    /// <returns></returns>
-    public List<Opponent> CreateNewOpponents(List<string> names)
-    {
-        List<Opponent> opponents = new List<Opponent>();
-        opponentAmount = names.Count;
+	public LeagueForm league;
 
-        for (int i = 0; i < opponentAmount; i++)
-        {
-            opponents.Add(new Opponent());
-            opponents[i].name = opponentNames[i];
-        }
+	public void UpdatePlayerAttributes(Opponent player)
+	{
+		player.name = "YOU";
+		player.gameKnowledge = gameManager.GetGameKnowledge;
+		player.teamPlay = gameManager.GetTeamPlay;
+		player.mechanics = gameManager.GetMechanics;
+		player.eloRating = gameManager.GetRating;
+	}
 
-        return opponents;
-    }
+	/// <summary>
+	/// Creates new opponents
+	/// </summary>
+	/// <param name="names"></param>
+	/// <returns></returns>
+	public List<Opponent> CreateNewOpponents(List<string> names)
+	{
+		List<Opponent> opponents = new List<Opponent>();
+		opponentAmount = names.Count;
+
+		for (int i = 0; i < opponentAmount; i++)
+		{
+			opponents.Add(new Opponent());
+			opponents[i].name = opponentNames[i];
+		}
+
+		return opponents;
+	}
 
 	public Opponent GetRandomOpponent(List<Opponent> opponentList)
 	{
@@ -76,13 +76,17 @@ public class OpponentManager : MonoBehaviour
 	/// <param name="savedOpponents"></param>
 	/// <param name="existingOpponents"></param>
 	public void ApplyOpponents(List<Opponent> savedOpponents, List<Opponent> existingOpponents)
-    {
-		for (int i = 0; i < existingOpponents.Count; i++)
+	{
+		existingOpponents.Clear();
+		/*for (int i = 0; i < existingOpponents.Count; i++)
         {
             existingOpponents[i] = savedOpponents[i];
 
             if (savedOpponents[i] == null) existingOpponents.RemoveAt(i);
-        }
+        }*/
+
+		foreach (Opponent o in savedOpponents)
+			existingOpponents.Add(o);
 
         existingOpponents.Sort(SortByRating);
         existingOpponents.Reverse();

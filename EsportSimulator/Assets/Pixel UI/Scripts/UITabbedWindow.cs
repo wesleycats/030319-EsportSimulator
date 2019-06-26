@@ -27,7 +27,10 @@ namespace PixelsoftGames.PixelUI
         [SerializeField]
         [Tooltip("List of content tabs for this tabbed window")]
         List<GameObject> Tabs;
-        [SerializeField]
+		[SerializeField]
+		[Tooltip("List of content in the tabs")]
+		List<GameObject> contentContainers;
+		[SerializeField]
         [Tooltip("The default tab to display on instantiation")]
         GameObject DefaultTab;
 
@@ -51,9 +54,25 @@ namespace PixelsoftGames.PixelUI
 			SetupContent();
 		}
 
+		private void OnDisable()
+		{
+			DisableContent();
+		}
+
 		#endregion
 
 		#region Public Methods
+
+		/// <summary>
+		/// Customized
+		/// </summary>
+		public void DisableContent()
+		{
+			foreach (GameObject o in contentContainers)
+			{
+				o.SetActive(false);
+			}
+		}
 
 		/// <summary>
 		/// This changes the active content tab and deactivates the previously active one.
@@ -66,8 +85,6 @@ namespace PixelsoftGames.PixelUI
                 Debug.LogError("Could not switch to the requested content tab because the requested tab index is out of bounds or the content tabs list is null.", gameObject);
                 return;
             }
-
-			//TODO Fix ranking tab bug
 
 			// Customized
 			if (!activeTab.GetComponent<Image>())
@@ -114,7 +131,13 @@ namespace PixelsoftGames.PixelUI
                 DefaultTab = Tabs[0];
             }
 
-            activeTab = DefaultTab;
+			activeTab = DefaultTab;
+
+			// Customized
+			for (int i = 0; i < activeTab.transform.childCount; i++)
+			{
+				activeTab.transform.GetChild(i).gameObject.SetActive(true);
+			}
 
 			// Customized
 			foreach (GameObject g in Tabs)
