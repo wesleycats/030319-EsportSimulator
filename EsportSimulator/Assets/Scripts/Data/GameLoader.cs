@@ -20,7 +20,7 @@ public class GameLoader : MonoBehaviour
 
     private int saveSlotToBeCleared = 0;
 	private int slotToBeLoaded = 0;
-    private string dataPath;
+    private string dataPath = "";
 
 	public void LoadGame(int saveSlot)
     {
@@ -30,8 +30,14 @@ public class GameLoader : MonoBehaviour
             return;
         }
 
-        //dataPath = Path.Combine(Application.persistentDataPath, "GameSaveData_SaveSlot_" + saveSlot + ".txt");
-		dataPath = Path.Combine(Application.dataPath + "/Saves/", "GameSaveData_SaveSlot_" + saveSlot + ".txt");
+		if (Application.platform != RuntimePlatform.WindowsEditor)
+		{
+			dataPath = Path.Combine(Application.persistentDataPath, "GameSaveData_SaveSlot_" + saveSlot + ".txt");
+		}
+		else
+		{
+			dataPath = Path.Combine(Application.dataPath + "/Saves/", "GameSaveData_SaveSlot_" + saveSlot + ".txt");
+		}
 
 		LoadData(saveSlot, dataPath);
     }
@@ -78,8 +84,15 @@ public class GameLoader : MonoBehaviour
 
     public void ClearSlot()
     {
-        File.Delete(Path.Combine(Application.persistentDataPath, "GameSaveData_SaveSlot_" + saveSlotToBeCleared + ".txt"));
-    }
+		if (Application.platform != RuntimePlatform.WindowsEditor)
+		{
+			File.Delete(Path.Combine(Application.persistentDataPath, "GameSaveData_SaveSlot_" + saveSlotToBeCleared + ".txt"));
+		}
+		else
+		{
+			File.Delete(Path.Combine(Application.dataPath + "/Saves/", "GameSaveData_SaveSlot_" + saveSlotToBeCleared + ".txt"));
+		}
+	}
 
     #region Getters & Setters
 

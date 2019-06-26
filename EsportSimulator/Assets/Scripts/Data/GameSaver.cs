@@ -13,7 +13,7 @@ public class GameSaver : MonoBehaviour
     public TimeManager timeManager;
     public ShopManager shopManager;
 
-	private string dataPath;
+	private string dataPath = "";
 
     public void SaveGame(int saveSlot)
     {
@@ -23,10 +23,16 @@ public class GameSaver : MonoBehaviour
             return;
         }
 
-        //dataPath = Path.Combine(Application.persistentDataPath, "GameSaveData_SaveSlot_" + saveSlot + ".txt");
-		dataPath = Path.Combine(Application.dataPath + "/Saves/", "GameSaveData_SaveSlot_" + saveSlot + ".txt");
+		if (Application.platform != RuntimePlatform.WindowsEditor)
+		{
+			dataPath = Path.Combine(Application.persistentDataPath, "GameSaveData_SaveSlot_" + saveSlot + ".txt");
+		}
+		else
+		{
+			dataPath = Path.Combine(Application.dataPath + "/Saves/", "GameSaveData_SaveSlot_" + saveSlot + ".txt");
+		}
 
-        gameSaveData.money = gameManager.GetMoney;
+		gameSaveData.money = gameManager.GetMoney;
         gameSaveData.rating = gameManager.GetRating;
         gameSaveData.fame = gameManager.GetFame;
 

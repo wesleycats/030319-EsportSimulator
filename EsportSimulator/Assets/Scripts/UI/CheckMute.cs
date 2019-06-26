@@ -9,21 +9,26 @@ public class CheckMute : MonoBehaviour
 
 	public UIManager uiManager;
 
-	private void Awake()
+	private void OnEnable()
 	{
 		audioPlayer = FindObjectOfType<AudioSource>();
 		audioPlayer.GetComponent<AudioManager>().SendMute += Mute;
+		image = GetComponent<Image>();
+		Mute(audioPlayer.mute);
 	}
 
-	private void Start()
+	private void OnDisable()
 	{
-		Mute(audioPlayer.mute);
+		audioPlayer.GetComponent<AudioManager>().SendMute -= Mute;
+	}
+
+	public void Mute()
+	{
+		audioPlayer.GetComponent<AudioManager>().Mute();
 	}
 
 	public void Mute(bool muted)
 	{
-		image = GetComponent<Image>();
-
 		if (muted)
 			image.sprite = uiManager.mutedSprite;
 		else
