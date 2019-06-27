@@ -61,7 +61,7 @@ public class UIManager : MonoBehaviour
 	public ButtonManager buttonManager;
 	public ContestManager contestManager;
 	public OpponentManager opponentManager;
-	public LeaderboardManager leaderboardManager;
+	public LeaderboardManager lbManager;
 	public PlayerData playerData;
 
 	public void CheckNeedsWarning()
@@ -98,13 +98,13 @@ public class UIManager : MonoBehaviour
 	}
 
 	public void UpdateAll()
-	{
+	{ 
 		UpdateTime(timeManager.GetHour, timeManager.GetMinute, timeManager.GetYear, timeManager.GetMonth);
 		UpdateProgress(gameManager.GetMoney, gameManager.GetRating, gameManager.GetFame);
 		UpdateNeeds(gameManager.GetTiredness, gameManager.GetHunger, gameManager.GetThirst);
 		UpdateSkills(gameManager.GetGameKnowledge, gameManager.GetTeamPlay, gameManager.GetMechanics);
 		UpdateItems(allItemTexts, gameManager.CurrentItems);
-		UpdateLeaderboard(leaderboardManager.GetLeaderboard);
+		UpdateLeaderboard(lbManager.Leaderboard);
 		CheckNeedsWarning();
 	}
 
@@ -196,12 +196,11 @@ public class UIManager : MonoBehaviour
 		leaderboardNames.text = "";
 		leaderboardRatings.text = "";
 
-		for (int i = 0; i < leaderboard.Count; i++)
+		foreach (Opponent o in leaderboard)
 		{
-			leaderboardNames.text += i + 1 + ". " + leaderboard[i].name + "\n";
-			leaderboardRatings.text += leaderboard[i].eloRating.ToString() + "\n";
+			leaderboardNames.text += o.name + "\n";
+			leaderboardRatings.text += o.eloRating.ToString() + "\n";
 		}
-
 	}
 
 	public void UpdateCalender()

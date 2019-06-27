@@ -67,15 +67,10 @@ namespace PixelsoftGames.PixelUI
 
         #region Monobehaviour Callbacks
 
-        private void Awake()
-        {
-            slider = GetComponent<Slider>();
-        }
-
         // Use this for initialization
         void Start()
         {
-			Initialize();
+			//Initialize();
         }
 
 		#endregion
@@ -84,6 +79,7 @@ namespace PixelsoftGames.PixelUI
 
 		public void Initialize()
 		{
+			slider = GetComponent<Slider>();
 			currentLevel = DefaultLevel;
 			currentExperienceTowardsLevel = 0;
 			CreateTable();

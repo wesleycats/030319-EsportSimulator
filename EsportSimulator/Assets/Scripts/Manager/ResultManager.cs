@@ -74,9 +74,6 @@ public class ResultManager : MonoBehaviour
 	[SerializeField] private int totalIncome;
 	public int streamEnergyCost;
 
-	private List<Opponent> leaderboard;
-	private Opponent player;
-
 	[Header("References")]
 	public UIManager uiManager;
 	public GameManager gameManager;
@@ -86,12 +83,6 @@ public class ResultManager : MonoBehaviour
 	public ContestManager contestManager;
 	public TimeManager timeManager;
 	public PlayerData playerData;
-
-	private void Start()
-	{
-		leaderboard = lbManager.GetLeaderboard;
-		player = opponentManager.GetPlayer;
-	}
 
 	public void Eat(int foodLevel)
 	{
@@ -348,17 +339,17 @@ public class ResultManager : MonoBehaviour
 				skillsDelta[2] = tpDelta;
 				winChance = GetWinChance(skillsDelta, winPercentagePerSkillPoint) + winBiasPercentage;
 
-				Debug.Log("Player gk: " + gameManager.GetGameKnowledge + " Player m: " + gameManager.GetMechanics + " Player tp: " + gameManager.GetTeamPlay);
-				Debug.Log(opponent.name + " gk: " + opponent.gameKnowledge + " Opponent m: " + opponent.mechanics + " Opponent tp: " + opponent.teamPlay);
-				Debug.Log("Win chance + bias= " + winChance);
-				Debug.Log("randomizer= " + randomizer);
+				//Debug.Log("Player gk: " + gameManager.GetGameKnowledge + " Player m: " + gameManager.GetMechanics + " Player tp: " + gameManager.GetTeamPlay);
+				//Debug.Log(opponent.name + " gk: " + opponent.gameKnowledge + " Opponent m: " + opponent.mechanics + " Opponent tp: " + opponent.teamPlay);
+				//Debug.Log("Win chance + bias= " + winChance);
+				//Debug.Log("randomizer= " + randomizer);
 
 				if (randomizer < winChance || win)
 					win = true;
 				else
 					win = false;
 
-				Debug.Log("Win=" + win);
+				//Debug.Log("Win=" + win);
 				
 				if (win)
 				{
@@ -383,9 +374,7 @@ public class ResultManager : MonoBehaviour
 		gameManager.IncreaseTeamPlay(teamPlayReward);
 		gameManager.IncreaseTiredness((int)(tiredness * GetDebuffMultiplier(gameManager.Hunger, gameManager.Thirst)));
 
-		opponentManager.UpdatePlayerAttributes(player);
-		lbManager.SortLeaderboard(lbManager.GetLeaderboard);
-		uiManager.UpdateAll();
+		lbManager.SortLeaderboard();
 	}
 
 	/// <summary>
@@ -422,7 +411,7 @@ public class ResultManager : MonoBehaviour
 		timeManager.SetPause = true;
 		contestManager.IncreaseCurrentBattle();
 
-		Opponent player = participants[participants.IndexOf(opponentManager.GetPlayer)];
+		Opponent player = participants[participants.IndexOf(lbManager.GetPlayer)];
 		Opponent opponent = participants[participants.IndexOf(player) - 1];
 
 		bool win = false;
@@ -511,7 +500,7 @@ public class ResultManager : MonoBehaviour
 
 	public void TryBattle(Battle.Mode battleType)
 	{
-		BattleResults(lbManager.GetRandomOpponent(leaderboard, lbManager.GetOpponentDivision(player, leaderboard, opponentManager.league)), battleType);
+		BattleResults(lbManager.GetRandomOpponent(), battleType);
 	}
 
 	public void PayRent(Accommodation accommodation)

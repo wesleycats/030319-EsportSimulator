@@ -2576,6 +2576,7 @@ MonoBehaviour:
   - {fileID: 2005258121}
   - {fileID: 811647117}
   - {fileID: 1751337425}
+  contentContainers: []
   DefaultTab: {fileID: 2005258121}
   deactivatedColor: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
@@ -22413,6 +22414,7 @@ MonoBehaviour:
   - {fileID: 1305509560}
   - {fileID: 2025671758}
   - {fileID: 165314541}
+  contentContainers: []
   DefaultTab: {fileID: 1305509560}
   deactivatedColor: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
@@ -23325,6 +23327,7 @@ MonoBehaviour:
     trainingRates: 
     sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
   plannedEvents: []
+  needsWarningLimit: 70
   playerData: {fileID: 11400000, guid: 6c93e5593e3aa0745bfd7099e4de7d3d, type: 2}
   gameData: {fileID: 11400000, guid: 5239ced18afa0f54ab8775b736970565, type: 2}
   uiManager: {fileID: 1579866881}
@@ -23683,12 +23686,10 @@ MonoBehaviour:
     trainingLevel2Multiplier: 0
     trainingLevel3Multiplier: 0
     workExperience: 0
-  debuff: 0
-  debuffLimit: 70
-  currentDebuffMultiplier: 1
-  currentDebuffMultiplierAmount: 1
-  debuffMultiplier: 0.5
-  debuffMultiplierAmount: 1
+  hungerDebuff: 0
+  hungerDebuffAddition: 0.5
+  thirstDebuff: 0
+  thirstDebuffAddition: 0.5
   winBiasPercentage: 50
   winPercentagePerSkillPoint: 0.5
   maxSleepHours: 12
@@ -23833,7 +23834,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiManager: {fileID: 1579866881}
   gameManager: {fileID: 1070449418}
-  leaderboardManager: {fileID: 1070449425}
+  lbManager: {fileID: 1070449425}
   maxEloRating: 5000
   opponentNames:
   - Sjaak Trekhaak
@@ -23886,73 +23887,6 @@ MonoBehaviour:
   - Dick Tevereden
   - Kerst Boomsma
   opponents: []
-  league:
-    divisions:
-    - divisionName: Bronze
-      type: 0
-      mode: 0
-      minRank: 50
-      maxRank: 39
-      minGameKnowledge: 20
-      maxGameKnowledge: 100
-      minTeamPlay: 20
-      maxTeamPlay: 100
-      minMechanics: 20
-      maxMechanics: 100
-      fameReward: 0
-      moneyReward: 0
-    - divisionName: Silver
-      type: 0
-      mode: 0
-      minRank: 40
-      maxRank: 29
-      minGameKnowledge: 100
-      maxGameKnowledge: 200
-      minTeamPlay: 100
-      maxTeamPlay: 200
-      minMechanics: 100
-      maxMechanics: 200
-      fameReward: 0
-      moneyReward: 0
-    - divisionName: Gold
-      type: 0
-      mode: 0
-      minRank: 30
-      maxRank: 19
-      minGameKnowledge: 200
-      maxGameKnowledge: 400
-      minTeamPlay: 200
-      maxTeamPlay: 400
-      minMechanics: 200
-      maxMechanics: 400
-      fameReward: 0
-      moneyReward: 0
-    - divisionName: Diamond
-      type: 0
-      mode: 0
-      minRank: 20
-      maxRank: 9
-      minGameKnowledge: 400
-      maxGameKnowledge: 600
-      minTeamPlay: 400
-      maxTeamPlay: 600
-      minMechanics: 400
-      maxMechanics: 600
-      fameReward: 0
-      moneyReward: 0
-    - divisionName: Champion
-      type: 0
-      mode: 0
-      minRank: 10
-      maxRank: 1
-      minGameKnowledge: 600
-      maxGameKnowledge: 800
-      minTeamPlay: 600
-      maxTeamPlay: 800
-      minMechanics: 600
-      maxMechanics: 800
-      fameReward: 0
-      moneyReward: 0
 --- !u!114 &1070449425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23965,9 +23899,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b719581c4d96291408f52bd7766c436d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerName: YOU
+  league:
+    divisions: []
   divisionSize: 10
   leaderboard: []
   opponentManager: {fileID: 1070449424}
+  uiManager: {fileID: 1579866881}
   gameManager: {fileID: 1070449418}
   playerData: {fileID: 11400000, guid: 6c93e5593e3aa0745bfd7099e4de7d3d, type: 2}
 --- !u!114 &1070449426
@@ -24213,6 +24151,7 @@ MonoBehaviour:
   currentPlacement: 0
   participants: []
   opponentManager: {fileID: 1070449424}
+  lbManager: {fileID: 1070449425}
   resultManager: {fileID: 1070449420}
   activityManager: {fileID: 1070449416}
   gameManager: {fileID: 1070449418}
@@ -25593,6 +25532,7 @@ MonoBehaviour:
   - {fileID: 642716749}
   - {fileID: 1313669327}
   - {fileID: 416090289}
+  contentContainers: []
   DefaultTab: {fileID: 642716749}
   deactivatedColor: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
@@ -31713,6 +31653,7 @@ MonoBehaviour:
   loadType: 0
   loadTime: 0
   tutorialSceneIndex: 0
+  objectManager: {fileID: 0}
   buttonManager: {fileID: 0}
   uiManager: {fileID: 0}
   gameManager: {fileID: 0}
@@ -39990,7 +39931,7 @@ MonoBehaviour:
   buttonManager: {fileID: 1579866883}
   contestManager: {fileID: 1070449427}
   opponentManager: {fileID: 1070449424}
-  leaderboardManager: {fileID: 1070449425}
+  lbManager: {fileID: 1070449425}
   playerData: {fileID: 0}
 --- !u!4 &1579866882
 Transform:
@@ -40869,6 +40810,7 @@ MonoBehaviour:
   - {fileID: 1301955259}
   - {fileID: 131648857}
   - {fileID: 1689042421}
+  contentContainers: []
   DefaultTab: {fileID: 1301955259}
   deactivatedColor: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
@@ -48684,6 +48626,7 @@ MonoBehaviour:
   loadType: 0
   loadTime: 0
   tutorialSceneIndex: 0
+  objectManager: {fileID: 0}
   buttonManager: {fileID: 1579866883}
   uiManager: {fileID: 0}
   gameManager: {fileID: 0}

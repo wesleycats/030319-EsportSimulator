@@ -188,7 +188,7 @@ public class TimeManager : MonoBehaviour
         switch (currentActivity)
         {
             case ActivityManager.Activity.Battle:
-                resultManager.BattleResults(lbManager.GetRandomOpponent(lbManager.GetLeaderboard, lbManager.GetOpponentDivision(opponentManager.GetPlayer, lbManager.GetLeaderboard, opponentManager.league)), currentBattleMode);
+				resultManager.BattleResults(lbManager.GetRandomOpponent(), currentBattleMode);
                 break;
 
 			case ActivityManager.Activity.Plan:

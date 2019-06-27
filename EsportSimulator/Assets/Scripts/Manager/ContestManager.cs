@@ -20,6 +20,7 @@ public class ContestManager : MonoBehaviour
 
 	[Header("References")]
 	public OpponentManager opponentManager;
+	public LeaderboardManager lbManager;
 	public ResultManager resultManager;
 	public ActivityManager activityManager;
 	public GameManager gameManager;
@@ -34,7 +35,7 @@ public class ContestManager : MonoBehaviour
 	{
 		if (!createList) return;
 
-		participants = CreateParticipantList(participantAmount, opponentManager.GetAllOpponents);
+		participants = CreateParticipantList(participantAmount, lbManager.Leaderboard);
 		createList = false;
 	}
 
@@ -67,8 +68,8 @@ public class ContestManager : MonoBehaviour
 
 		// Puts the player in placement
 		participants.Reverse();
-		opponentManager.GetPlayer.placement = participants.Count;
-		participants.Add(opponentManager.GetPlayer);
+		lbManager.GetPlayer.placement = participants.Count;
+		participants.Add(lbManager.GetPlayer);
 
 		for (int i = 0; i < contestSize-1; i++)
 		{

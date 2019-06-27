@@ -6781,7 +6781,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1760874748}
-  - {fileID: 2129953713}
   m_Father: {fileID: 981232031}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7742,7 +7741,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: standard food
+  m_Text: standard quality
 --- !u!222 &389878078
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15845,7 +15844,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &874417817
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18970,7 +18969,7 @@ GameObject:
   - component: {fileID: 1009147734}
   m_Layer: 5
   m_Name: YesButton
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19648,13 +19647,13 @@ RectTransform:
   - {fileID: 1305509561}
   - {fileID: 2025671759}
   - {fileID: 165314542}
-  m_Father: {fileID: 2129953713}
-  m_RootOrder: 0
+  m_Father: {fileID: 1760874748}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -15}
-  m_SizeDelta: {x: 0, y: -30}
+  m_AnchoredPosition: {x: 0, y: -180.00002}
+  m_SizeDelta: {x: 20, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1018918372
 MonoBehaviour:
@@ -20813,7 +20812,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiManager: {fileID: 1579866881}
   gameManager: {fileID: 1070449418}
-  leaderboardManager: {fileID: 1070449425}
+  lbManager: {fileID: 1070449425}
   maxEloRating: 5000
   opponentNames:
   - Sjaak Trekhaak
@@ -20866,73 +20865,6 @@ MonoBehaviour:
   - Dick Tevereden
   - Kerst Boomsma
   opponents: []
-  league:
-    divisions:
-    - divisionName: Bronze
-      type: 0
-      mode: 0
-      minRank: 50
-      maxRank: 39
-      minGameKnowledge: 20
-      maxGameKnowledge: 100
-      minTeamPlay: 20
-      maxTeamPlay: 100
-      minMechanics: 20
-      maxMechanics: 100
-      fameReward: 0
-      moneyReward: 0
-    - divisionName: Silver
-      type: 0
-      mode: 0
-      minRank: 40
-      maxRank: 29
-      minGameKnowledge: 100
-      maxGameKnowledge: 200
-      minTeamPlay: 100
-      maxTeamPlay: 200
-      minMechanics: 100
-      maxMechanics: 200
-      fameReward: 0
-      moneyReward: 0
-    - divisionName: Gold
-      type: 0
-      mode: 0
-      minRank: 30
-      maxRank: 19
-      minGameKnowledge: 200
-      maxGameKnowledge: 400
-      minTeamPlay: 200
-      maxTeamPlay: 400
-      minMechanics: 200
-      maxMechanics: 400
-      fameReward: 0
-      moneyReward: 0
-    - divisionName: Diamond
-      type: 0
-      mode: 0
-      minRank: 20
-      maxRank: 9
-      minGameKnowledge: 400
-      maxGameKnowledge: 600
-      minTeamPlay: 400
-      maxTeamPlay: 600
-      minMechanics: 400
-      maxMechanics: 600
-      fameReward: 0
-      moneyReward: 0
-    - divisionName: Champion
-      type: 0
-      mode: 0
-      minRank: 10
-      maxRank: 1
-      minGameKnowledge: 600
-      maxGameKnowledge: 800
-      minTeamPlay: 600
-      maxTeamPlay: 800
-      minMechanics: 600
-      maxMechanics: 800
-      fameReward: 0
-      moneyReward: 0
 --- !u!114 &1070449425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20945,9 +20877,78 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b719581c4d96291408f52bd7766c436d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerName: YOU
+  league:
+    divisions:
+    - divisionName: Bronze
+      type: 1
+      mode: 0
+      minRank: 50
+      maxRank: 39
+      minGameKnowledge: 20
+      maxGameKnowledge: 100
+      minTeamPlay: 20
+      maxTeamPlay: 100
+      minMechanics: 20
+      maxMechanics: 100
+      fameReward: 0
+      moneyReward: 0
+    - divisionName: Silver
+      type: 2
+      mode: 0
+      minRank: 40
+      maxRank: 29
+      minGameKnowledge: 100
+      maxGameKnowledge: 200
+      minTeamPlay: 100
+      maxTeamPlay: 200
+      minMechanics: 100
+      maxMechanics: 200
+      fameReward: 0
+      moneyReward: 0
+    - divisionName: Gold
+      type: 3
+      mode: 0
+      minRank: 30
+      maxRank: 19
+      minGameKnowledge: 200
+      maxGameKnowledge: 400
+      minTeamPlay: 200
+      maxTeamPlay: 400
+      minMechanics: 200
+      maxMechanics: 400
+      fameReward: 0
+      moneyReward: 0
+    - divisionName: Diamond
+      type: 4
+      mode: 0
+      minRank: 20
+      maxRank: 9
+      minGameKnowledge: 400
+      maxGameKnowledge: 600
+      minTeamPlay: 400
+      maxTeamPlay: 600
+      minMechanics: 400
+      maxMechanics: 600
+      fameReward: 0
+      moneyReward: 0
+    - divisionName: Champion
+      type: 5
+      mode: 0
+      minRank: 10
+      maxRank: 1
+      minGameKnowledge: 600
+      maxGameKnowledge: 800
+      minTeamPlay: 600
+      maxTeamPlay: 800
+      minMechanics: 600
+      maxMechanics: 800
+      fameReward: 0
+      moneyReward: 0
   divisionSize: 10
   leaderboard: []
   opponentManager: {fileID: 1070449424}
+  uiManager: {fileID: 1579866881}
   gameManager: {fileID: 1070449418}
   playerData: {fileID: 11400000, guid: b5721d035e1bf074789a14536477e52e, type: 2}
 --- !u!114 &1070449426
@@ -21193,6 +21194,7 @@ MonoBehaviour:
   currentPlacement: 0
   participants: []
   opponentManager: {fileID: 1070449424}
+  lbManager: {fileID: 1070449425}
   resultManager: {fileID: 1070449420}
   activityManager: {fileID: 1070449416}
   gameManager: {fileID: 1070449418}
@@ -22852,7 +22854,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: excellent food
+  m_Text: excellent quality
 --- !u!222 &1148182466
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -23625,8 +23627,8 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 8ab51c1c1a075b24dbae878c9ecca604, type: 3}
-    m_FontSize: 10
+    m_Font: {fileID: 12800000, guid: 3752ded851e7f5640815fab69a2863ca, type: 3}
+    m_FontSize: 13
     m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 0
@@ -25046,7 +25048,7 @@ GameObject:
   - component: {fileID: 1273951583}
   m_Layer: 5
   m_Name: LoadButton
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32315,7 +32317,7 @@ MonoBehaviour:
   buttonManager: {fileID: 1579866883}
   contestManager: {fileID: 1070449427}
   opponentManager: {fileID: 1070449424}
-  leaderboardManager: {fileID: 1070449425}
+  lbManager: {fileID: 1070449425}
   playerData: {fileID: 11400000, guid: b5721d035e1bf074789a14536477e52e, type: 2}
 --- !u!4 &1579866882
 Transform:
@@ -34298,7 +34300,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -6, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1674142408
 MonoBehaviour:
@@ -34333,7 +34335,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: good food
+  m_Text: good quality
 --- !u!222 &1674142409
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -34356,7 +34358,7 @@ GameObject:
   - component: {fileID: 1676182729}
   m_Layer: 5
   m_Name: NoButton
-  m_TagString: Untagged
+  m_TagString: Navigation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36529,6 +36531,7 @@ RectTransform:
   - {fileID: 1910041854}
   - {fileID: 1499771179}
   - {fileID: 1518467199}
+  - {fileID: 1018918371}
   m_Father: {fileID: 350344074}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -41557,7 +41560,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -6, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2010031047
 MonoBehaviour:
@@ -41592,7 +41595,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: bad food
+  m_Text: bad quality
 --- !u!222 &2010031048
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -43846,42 +43849,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &2129953712
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2129953713}
-  m_Layer: 5
-  m_Name: Content
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2129953713
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2129953712}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1018918371}
-  m_Father: {fileID: 350344074}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -68870,7 +68837,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Drink
+          m_StringArgument: drink
           m_BoolArgument: 1
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -69730,7 +69697,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Food
+          m_StringArgument: eat
           m_BoolArgument: 1
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,

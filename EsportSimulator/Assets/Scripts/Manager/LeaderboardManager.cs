@@ -4,28 +4,32 @@ using UnityEngine;
 
 public class LeaderboardManager : MonoBehaviour
 {
-    [SerializeField] private int divisionSize = 10;
+	public string playerName;
+	public LeagueForm league;
+	[SerializeField] private int divisionSize = 10;
     [SerializeField] private List<Opponent> leaderboard;
 
-    public OpponentManager opponentManager;
-    public GameManager gameManager;
+	[Header("References")]
+	public OpponentManager opponentManager;
+	public UIManager uiManager;
+	public GameManager gameManager;
     public PlayerData playerData;
 
-    private List<Opponent> npcs;
+	private List<Opponent> npcs;
 
-    public void SortLeaderboard(List<Opponent> currentLeaderboard)
+	public void Initialize()
+	{
+		npcs = opponentManager.GetAllOpponents;
+		leaderboard = npcs;
+		SortLeaderboard();
+	}
+
+	public Opponent GetRandomOpponent()
     {
-        currentLeaderboard.Sort(SortByRating);
-        currentLeaderboard.Reverse();
-
-        if (opponentManager.GetPlayer == currentLeaderboard[0]) gameManager.WinGame();
-    }
-
-    public Opponent GetRandomOpponent(List<Opponent> leaderboard, DivisionForm division)
-    {
+		DivisionForm division = GetOpponentDivision(GetPlayer);
         Opponent randomOpponent = new Opponent();
 
-        int randomIndex = Random.Range(division.minRank, division.maxRank);
+		int randomIndex = Random.Range(division.minRank, division.maxRank);
         randomOpponent = leaderboard[randomIndex - 1];
         int oldIndex = randomIndex;
 
@@ -40,43 +44,54 @@ public class LeaderboardManager : MonoBehaviour
         }
 
         return randomOpponent;
-    }
+	}
 
-	public DivisionForm GetOpponentDivision(Opponent opponent, List<Opponent> leaderboard, LeagueForm league)
+	public DivisionForm GetOpponentDivision(Opponent opponent)
     {
-        DivisionForm division = null;
-        
-        for (int j = 0; j < league.divisions.Length; j++)
-        {
-            if (GetOpponentRank(opponent, leaderboard) >= league.divisions[j].maxRank && GetOpponentRank(opponent, leaderboard) <= league.divisions[j].minRank)
-            {
-                return league.divisions[j];
-            }
-        }
+		int rank = GetOpponentRank(opponent, leaderboard);
 
-        return division;
+		foreach (DivisionForm d in league.divisions)
+		{
+			if (rank <= d.minRank && rank >= d.maxRank)
+			{
+				return d;
+			}
+		}
+        return null;
     }
 
     /// <summary>
-    /// Returns the current rank of the opponent. !Caution! This is not the index
+    /// Returns the current rank of the opponent
     /// </summary>
     /// <param name="opponent"></param>
     /// <param name="allOpponents"></param>
     /// <returns></returns>
-    public int GetOpponentRank(Opponent opponent, List<Opponent> allOpponents)
+    public int GetOpponentRank(Opponent opponent, List<Opponent> list)
     {
-        return allOpponents.IndexOf(opponent) + 1;
+		return list.IndexOf(opponent) + 1;
     }
 
-    public void Initialize()
-    {
-        npcs = opponentManager.GetAllOpponents;
-        leaderboard = npcs;
-        leaderboard.Add(opponentManager.GetPlayer);
-        SortLeaderboard(leaderboard);
-    }
+	public void SortLeaderboard()
+	{
+		foreach (Opponent o in leaderboard)
+		{
+			if (o.name != playerName) continue;
 
-    static int SortByRating(Opponent o1, Opponent o2)
+			o.gameKnowledge = gameManager.GetGameKnowledge;
+			o.teamPlay = gameManager.GetTeamPlay;
+			o.mechanics = gameManager.GetMechanics;
+			o.eloRating = gameManager.GetRating;
+		}
+
+		leaderboard.Sort(SortByRating);
+		leaderboard.Reverse();
+
+		if (leaderboard[0].name == playerName) gameManager.WinGame();
+
+		uiManager.UpdateLeaderboard(leaderboard);
+	}
+
+	static int SortByRating(Opponent o1, Opponent o2)
     {
         return o1.eloRating.CompareTo(o2.eloRating);
     }
@@ -98,8 +113,32 @@ public class LeaderboardManager : MonoBehaviour
 
     #region Getter & Setters
 
-    public List<Opponent> GetLeaderboard { get { return leaderboard; } }
-    public List<Opponent> SetLeaderboard { set { leaderboard = value; } }
+    public List<Opponent> Leaderboard { get { return leaderboard; } set { leaderboard = value; } }
+	public Opponent GetPlayer
+	{
+		get
+		{
+			Opponent player = new Opponent();
 
-    #endregion
+			foreach (Opponent o in leaderboard)
+			{
+				if (o.name != playerName) continue;
+
+				o.gameKnowledge = gameManager.GetGameKnowledge;
+				o.teamPlay = gameManager.GetTeamPlay;
+				o.mechanics = gameManager.GetMechanics;
+				o.eloRating = gameManager.GetRating;
+				return o;
+			}
+
+			player.name = "YOU";
+			player.gameKnowledge = gameManager.GetGameKnowledge;
+			player.teamPlay = gameManager.GetTeamPlay;
+			player.mechanics = gameManager.GetMechanics;
+			player.eloRating = gameManager.GetRating;
+
+			return player;
+		}
+	}
+	#endregion
 }

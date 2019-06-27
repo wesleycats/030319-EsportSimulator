@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class FoodMenu : MonoBehaviour
 {
-	public enum FoodType { None, Food, Drink }
+	public enum FoodType { None, eat, drink }
 
 	[SerializeField] private FoodType foodType;
 
@@ -24,18 +24,26 @@ public class FoodMenu : MonoBehaviour
 	{
 		windowTitle.text = foodTypeName;
 		foodType = (FoodType)System.Enum.Parse(typeof(FoodType), foodTypeName);
-		question.text = "What would you like to " + foodType + "?";
-		
-		// TODO Change result text accordingly
+		question.text = "What would you like to " + foodType.ToString() + "?";
+
+		for (int i = 0; i < resultTexts.Count; i++)
+		{
+			resultTexts[i].text = "";
+			resultTexts[i].text = "-$" + 10 * (i+1) + ", -" + 25 * (i+1) + "% ";
+		}
 
 		switch (foodType)
 		{
-			case FoodType.Drink:
+			case FoodType.eat:
 
+				for (int i = 0; i < resultTexts.Count; i++)
+					resultTexts[i].text += "hunger";
 				break;
 
-			case FoodType.Food:
+			case FoodType.drink:
 
+				for (int i = 0; i < resultTexts.Count; i++)
+					resultTexts[i].text += "thirst";
 				break;
 		}
 	}

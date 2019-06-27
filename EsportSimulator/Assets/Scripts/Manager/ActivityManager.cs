@@ -10,9 +10,9 @@ public class ActivityManager : MonoBehaviour
 
 	public Training currentTraining;
 	public Skill.Type currentSkillType;
-
     public Battle.Mode currentBattleMode = Battle.Mode.None;
 
+	[Header("References")]
     public UIManager uiManager;
     public ArtManager artManager;
     public TimeManager timeManager;

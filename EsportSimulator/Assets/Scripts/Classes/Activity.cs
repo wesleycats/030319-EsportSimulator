@@ -52,13 +52,13 @@ public class Activity : MonoBehaviour
 	{
 		if (!foodMenu) return;
 			
-		if (foodMenu.GetFoodType == FoodMenu.FoodType.Drink)
-		{
-			activity = ActivityManager.Activity.Drink;
-		}
-		else if (foodMenu.GetFoodType == FoodMenu.FoodType.Food)
+		if (foodMenu.GetFoodType == FoodMenu.FoodType.eat)
 		{
 			activity = ActivityManager.Activity.Eat;
+		}
+		else if (foodMenu.GetFoodType == FoodMenu.FoodType.drink)
+		{
+			activity = ActivityManager.Activity.Drink;
 		}
 
 		activityManager.ChangeActivity(activity, hourAmount, foodLevel);
