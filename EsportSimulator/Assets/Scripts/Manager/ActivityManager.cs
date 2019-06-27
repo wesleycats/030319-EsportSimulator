@@ -122,7 +122,6 @@ public class ActivityManager : MonoBehaviour
 					return;
 				}
 
-
 				uiManager.activityText.text = "Training...";
 				break;
 

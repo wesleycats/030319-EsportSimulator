@@ -49,7 +49,9 @@ public class ArtManager : MonoBehaviour
     /// <param name="activity"></param>
     public void ChangeArt(ActivityManager.Activity activity)
     {
-        switch (activity)
+		int houseLevel = 0;
+
+		switch (activity)
         {
             case ActivityManager.Activity.Battle:
                 playerAnimator.Play("OnComputer");
@@ -67,8 +69,7 @@ public class ArtManager : MonoBehaviour
 
 				//if (gameManager.CurrentAccommodation != null) break;
 
-				int houseLevel = playerData.GetAllAccommodations.IndexOf(gameManager.CurrentAccommodation);
-				if (houseLevel >= 0) background.sprite = houseSprites[houseLevel];
+				background.sprite = gameManager.CurrentAccommodation.sprite;
 				chair.sprite = chairSprites[0];//chairSprites[chairLevel];
 				workstation.sprite = tableSprites[0];//tableSprites[tableLevel];
 				 

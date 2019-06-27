@@ -16,6 +16,8 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private float waitTime;
 	[SerializeField] private bool pause = false;
 
+	public bool contestStarted = false;
+
 	private int totalDuration;
 
     public GameManager gameManager;
@@ -49,7 +51,6 @@ public class TimeManager : MonoBehaviour
             StartCoroutine(TimeTimer(hourAmount));
 			totalDuration = hourAmount;
         }
-
     }
 
     private IEnumerator TimeTimer(float duration)
@@ -129,7 +130,7 @@ public class TimeManager : MonoBehaviour
 		{
 			for (int i = 0; i < gameManager.GetPlannedEvents.Count; i++)
 			{
-				if (gameManager.GetPlannedEventOn(month, gameManager.GetPlannedEvents) != null)
+				if (gameManager.GetPlannedEventOn(month, gameManager.GetPlannedEvents) != null && !contestStarted)
 					activityManager.ChangeActivity(ActivityManager.Activity.Contest, contestManager.GetContestDuration);
 			}
 		}
@@ -196,17 +197,20 @@ public class TimeManager : MonoBehaviour
 				break;
 
 			case ActivityManager.Activity.Contest:
-				for (int i = 0; i < gameManager.GetPlannedEvents.Count; i++)
+				foreach (Event e in gameManager.GetPlannedEvents)
 				{
-					if (month == gameManager.GetPlannedEvents[i].month)
+					if (month == e.month)
 					{
-						PauseGame();
+						if (!contestStarted)
+						{
+							PauseGame();
+							uiManager.ActivateContestAnnouncement(e.battleMode.ToString());
+							uiManager.darkOverlay.SetActive(true);
+							uiManager.darkOverlay.GetComponent<Button>().interactable = false;
+						}
 
-						StartCoroutine(resultManager.ContestResults(gameManager.GetPlannedEvents[i], contestManager.GetParticipants));
-
-						uiManager.darkOverlay.SetActive(true);
-						uiManager.darkOverlay.GetComponent<Button>().interactable = false;
-						uiManager.ActivateContestAnnouncement(gameManager.GetPlannedEvents[i].battleMode.ToString());
+						contestStarted = true;
+						StartCoroutine(resultManager.ContestResults(e, contestManager.GetParticipants));
 					}
 				}
 				break;

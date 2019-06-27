@@ -81,6 +81,7 @@ public class ContestManager : MonoBehaviour
 
 	public void EndContest(Opponent opponent, Event contest)
 	{
+		FindObjectOfType<TimeManager>().contestStarted = false;
 		activityManager.ChangeActivity(ActivityManager.Activity.Idle, 0);
 		uiManager.battleMenu.SetActive(false);
 		uiManager.contestResultMenu.SetActive(true);
@@ -93,31 +94,17 @@ public class ContestManager : MonoBehaviour
 		uiManager.UpdateAll();
 	}
 
-	private bool IsOpponentInList(Opponent opponent, List<Opponent> opponentList)
-	{
-		for (int i = 0; i < opponentList.Count; i++)
-			if (opponent == opponentList[i])
-				return true;
-
-		return false;
-	}
-
 	public DivisionForm GetPlacementDivision(Opponent opponent, List<DivisionForm> allDivisions, Battle.Mode mode)
 	{
-		DivisionForm division = null;
-
-		// Reverses the list so it can be checked properly on highest achieved division
-		allDivisions.Reverse();
-
 		foreach (DivisionForm f in allDivisions)
 		{
-			if (opponent.placement <= f.maxRank && mode == f.mode)
+			if (opponent.placement <= f.minRank && mode == f.mode)
 			{
-				division = f;
+				return f;
 			}
 		}
 
-		return division;
+		return null;
 	}
 
 	public void PlanTournament(Battle.Mode mode)
@@ -130,24 +117,13 @@ public class ContestManager : MonoBehaviour
 		gameManager.GetPlannedEvents.Add(tournament);
 	}
 
-	public int GetTournamentDate(Event eventToPlan)
+	private bool IsOpponentInList(Opponent opponent, List<Opponent> opponentList)
 	{
-		if (eventToPlan.type == Event.Type.Tournament)
-		{
-			switch (eventToPlan.battleMode)
-			{
-				case Battle.Mode.OneVersusOne:
-					return tournamentMonths[0];
+		for (int i = 0; i < opponentList.Count; i++)
+			if (opponent == opponentList[i])
+				return true;
 
-				case Battle.Mode.ThreeVersusThree:
-					return tournamentMonths[1];
-
-				case Battle.Mode.FiveVersusFive:
-					return tournamentMonths[2];
-			}
-		}
-
-		return 0;
+		return false;
 	}
 
 	public bool IsTournamentPlanned(Event tournament, List<Event> plannedEvents)
@@ -170,6 +146,26 @@ public class ContestManager : MonoBehaviour
 	static int SortByPlacement(Opponent o1, Opponent o2)
 	{
 		return o1.placement.CompareTo(o2.placement);
+	}
+
+	public int GetTournamentDate(Event eventToPlan)
+	{
+		if (eventToPlan.type == Event.Type.Tournament)
+		{
+			switch (eventToPlan.battleMode)
+			{
+				case Battle.Mode.OneVersusOne:
+					return tournamentMonths[0];
+
+				case Battle.Mode.ThreeVersusThree:
+					return tournamentMonths[1];
+
+				case Battle.Mode.FiveVersusFive:
+					return tournamentMonths[2];
+			}
+		}
+
+		return 0;
 	}
 
 	#region Getters & Setters
