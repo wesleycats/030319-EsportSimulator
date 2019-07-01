@@ -24,24 +24,16 @@ public class LeaderboardManager : MonoBehaviour
 		SortLeaderboard();
 	}
 
-	public Opponent GetRandomOpponent()
-    {
+	public Opponent GetRandomOpponent(Opponent o)
+	{
 		DivisionForm division = GetOpponentDivision(GetPlayer);
-        Opponent randomOpponent = new Opponent();
+		Opponent randomOpponent = new Opponent();
 
-		int randomIndex = Random.Range(division.minRank, division.maxRank);
-        randomOpponent = leaderboard[randomIndex - 1];
-        int oldIndex = randomIndex;
-
-        if (randomOpponent.name == "YOU")
-        {
-            while (randomIndex == oldIndex)
-            {
-                randomIndex = Random.Range(division.minRank, division.maxRank);
-            }
-
-            randomOpponent = leaderboard[randomIndex];
-        }
+		do
+		{
+			randomOpponent = leaderboard[GetRealRandom(division.minRank, division.maxRank)];
+		}
+		while (randomOpponent.name == o.name);
 
         return randomOpponent;
 	}
@@ -110,6 +102,17 @@ public class LeaderboardManager : MonoBehaviour
     {
         return o1.mechanics.CompareTo(o2.mechanics);
     }
+
+	public int GetRealRandom(int min, int max)
+	{
+		int randomNumber = Random.Range(min, max);
+		int oldNumber = randomNumber;
+
+		while (oldNumber == randomNumber)
+			randomNumber = Random.Range(min, max);
+
+		return randomNumber;
+	}
 
     #region Getter & Setters
 

@@ -55,7 +55,7 @@ public class ButtonManager : MonoBehaviour
 
 	public void DisableAllButtons()
     {
-        foreach (Button b in allButtons)
+		foreach (Button b in allButtons)
         {
             b.interactable = false;
         }
@@ -63,7 +63,7 @@ public class ButtonManager : MonoBehaviour
 
 	public void DisableAllButtonsOf(string tag)
     {
-        foreach (Button b in allButtons)
+		foreach (Button b in allButtons)
         {
             if (b.tag != tag) continue;
 

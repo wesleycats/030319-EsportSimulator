@@ -13,24 +13,56 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private int month;
     [SerializeField] private int year;
 
-    [SerializeField] private float waitTime;
-	[SerializeField] private bool pause = false;
+	[SerializeField] private float waitTime;
+	[SerializeField] private bool timerPause = false;
+
+	public bool battleStarted = false;
 
 	public bool contestStarted = false;
+	public bool nextBattle = false;
 
 	private int totalDuration;
 
-    public GameManager gameManager;
-    public ActivityManager activityManager;
+	[Header("References")]
+	public GameData gameData;
     public UIManager uiManager;
+    public GameManager gameManager;
     public ButtonManager buttonManager;
     public ResultManager resultManager;
     public LeaderboardManager lbManager;
-    public OpponentManager opponentManager;
     public ContestManager contestManager;
-	public GameData gameData;
+    public OpponentManager opponentManager;
+    public ActivityManager activityManager;
 
-    public void IncreaseTime(int hourAmount, bool instant)
+	public void InitializeGameData()
+	{
+		hour = gameData.GetHour;
+		minute = gameData.GetMinute;
+		month = gameData.GetMonth;
+		year = gameData.GetYear;
+	}
+
+	public void PauseTimer()
+	{
+		timerPause = true;
+	}
+
+	public void UnPauseTimer()
+	{
+		timerPause = false;
+	}
+
+	public void PauseGame()
+	{
+		Time.timeScale = 0f;
+	}
+
+	public void UnPauseGame()
+	{
+		Time.timeScale = 1f;
+	}
+
+	public void IncreaseTime(int hourAmount, bool instant)
     {
         if (hourAmount <= 0) return;
         
@@ -53,14 +85,70 @@ public class TimeManager : MonoBehaviour
         }
     }
 
-    private IEnumerator TimeTimer(float duration)
+	/// <summary>
+	/// Increases hours and checks time and months
+	/// </summary>
+	/// <param name="amount"></param>
+	public void IncreaseHours(int amount)
+	{
+		for (int i = 0; i < amount; i++)
+		{
+			hour++;
+
+			if (hour >= 24)
+			{
+				resultManager.PayRent(gameManager.CurrentAccommodation);
+				hour = 0;
+				month++;
+				gameManager.ResetEarnedSalary();
+
+				StartCoroutine(WaitTillIdle());
+			}
+
+			if (month > 12)
+			{
+				month = 1;
+				year++;
+			}
+		}
+
+		uiManager.UpdateTime(hour, minute, year, month);
+	}
+
+	/// <summary>
+	/// Decreases hours and checks time and months
+	/// </summary>
+	/// <param name="amount"></param>
+	public void DecreaseHours(int amount)
+	{
+		for (int i = 0; i < amount; i++)
+		{
+			hour--;
+
+			if (hour < 0)
+			{
+				hour = 23;
+				month--;
+			}
+
+			if (month < 1)
+			{
+				month = 12;
+				year--;
+			}
+		}
+
+		uiManager.UpdateTime(hour, minute, year, month);
+	}
+
+	private IEnumerator TimeTimer(float duration)
     {
 		if (Time.timeScale > 0)
 			buttonManager.DisableAllButtons("Navigation");
 
 		yield return new WaitForSeconds(waitTime);
 
-		if (!pause)
+		if (!timerPause)
 		{
 			duration--;
 			IncreaseHours(1);
@@ -93,35 +181,6 @@ public class TimeManager : MonoBehaviour
 		}
     }
 
-    /// <summary>
-    /// Increases hours and checks time and months
-    /// </summary>
-    /// <param name="amount"></param>
-    public void IncreaseHours(int amount)
-    {
-        for (int i = 0; i < amount; i++)
-        {
-            hour++;
-
-            if (hour >= 24)
-            {
-                resultManager.PayRent(gameManager.CurrentAccommodation);
-                hour = 0;
-                month++;
-
-				StartCoroutine(WaitTillIdle());
-            }
-
-            if (month > 12)
-            {
-                month = 1;
-                year++;
-            }
-        }
-
-        uiManager.UpdateTime(hour, minute, year, month);
-    }
-
 	public IEnumerator WaitTillIdle()
 	{
 		yield return new WaitForSeconds(0.5f);
@@ -140,60 +199,21 @@ public class TimeManager : MonoBehaviour
 		}
 	}
 
-    /// <summary>
-    /// Decreases hours and checks time and months
-    /// </summary>
-    /// <param name="amount"></param>
-    public void DecreaseHours(int amount)
-    {
-        for (int i = 0; i < amount; i++)
-        {
-            hour--;
-
-            if (hour < 0)
-            {
-                hour = 23;
-                month--;
-            }
-
-            if (month < 1)
-            {
-                month = 12;
-                year--;
-            }
-        }
-
-        uiManager.UpdateTime(hour, minute, year, month);
-    }
-
-    public void PauseGame()
-    {
-        Time.timeScale = 0f;
-    }
-
-    public void UnPauseGame()
-    {
-        Time.timeScale = 1f;
-    }
-
-    public void InitializeGameData()
-    {
-        hour = gameData.GetHour;
-        minute = gameData.GetMinute;
-        month = gameData.GetMonth;
-        year = gameData.GetYear;
-    }
-
-    private void CheckActivity(ActivityManager.Activity currentActivity, Training training, int workLevel, Battle.Mode currentBattleMode)
+    private void CheckActivity(ActivityManager.Activity currentActivity, Training training, int workLevel, Battle.Mode mode)
     {
         switch (currentActivity)
         {
             case ActivityManager.Activity.Battle:
-				resultManager.BattleResults(lbManager.GetRandomOpponent(), currentBattleMode);
+				if (!battleStarted)
+				{
+					battleStarted = true;
+					uiManager.darkOverlay.SetActive(true);
+					resultManager.BattleResult(mode);
+				}
                 break;
 
 			case ActivityManager.Activity.Plan:
-				contestManager.PlanTournament(currentBattleMode);
+				contestManager.PlanTournament(mode);
 				break;
 
 			case ActivityManager.Activity.Contest:
@@ -203,14 +223,11 @@ public class TimeManager : MonoBehaviour
 					{
 						if (!contestStarted)
 						{
+							contestStarted = true;
+							contestManager.StartContest(e);
+							PauseTimer();
 							PauseGame();
-							uiManager.ActivateContestAnnouncement(e.battleMode.ToString());
-							uiManager.darkOverlay.SetActive(true);
-							uiManager.darkOverlay.GetComponent<Button>().interactable = false;
 						}
-
-						contestStarted = true;
-						StartCoroutine(resultManager.ContestResults(e, contestManager.GetParticipants));
 					}
 				}
 				break;
@@ -237,19 +254,31 @@ public class TimeManager : MonoBehaviour
         }
     }
 
+	public void SetContestStarted(bool started)
+	{
+		contestStarted = started;
+	}
+
+	public void SetNextBattle(bool next)
+	{
+		nextBattle = next;
+	}
+
 	#region Getters & Setters 
 
 	public int GetHour { get { return hour; } }
     public int GetMinute { get { return minute; } }
     public int GetYear { get { return year; } }
     public int GetMonth { get { return month; } }
-	public bool GetPause { get { return pause; } }
+	public bool GetPause { get { return timerPause; } }
 
     public int SetHour { set { hour = value; } }
     public int SetMinutes { set { minute = value; } }
     public int SetYear { set { year = value; } }
     public int SetMonth { set { month = value; } }
-	public bool SetPause { set { pause = value; } }
+	public bool SetPause { set { timerPause = value; } }
+
+	public float WaitTime { get { return waitTime; } set { waitTime = value; } }
 
 	#endregion
 }

@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class ContestManager : MonoBehaviour
 {
-	[SerializeField] private bool createList;
-	[SerializeField] private int participantAmount;
-	[SerializeField] private int contestDuration;
-	[SerializeField] private float battleDuration;
-	[SerializeField] private List<DivisionForm> placementDivisions;
 	[Tooltip("[0]=1v1, [1]=3v3, [2]=5v5")]
 	[SerializeField] private List<int> tournamentMonths;
-
-	[Header("Debug")]
-	[SerializeField] private int currentBattle;
-	[SerializeField] private int battlesPerHour;
-	[SerializeField] private int currentPlacement;
 	[SerializeField] private List<Opponent> participants;
+
+	[Header("Contest")]
+	[SerializeField] private int contestDuration;
+	[SerializeField] private int contestParticipantAmount;
+	[SerializeField] private int battlesPerHour;
+	[SerializeField] private List<DivisionForm> placementDivisions;
+	[Tooltip("Bias to influence battle result")]
+	[SerializeField] private int playerBattleBias;
+	[Tooltip("Percentage to win given per point")]
+	[SerializeField] private float pointPercentage;
+
+	private Opponent player;
+	private Event currentEvent;
+	private int battleIndex = 0;
+	private bool battleWon;
 
 	[Header("References")]
 	public OpponentManager opponentManager;
@@ -25,38 +30,149 @@ public class ContestManager : MonoBehaviour
 	public ActivityManager activityManager;
 	public GameManager gameManager;
 	public UIManager uiManager;
+	public TimeManager timeManager;
 
-	private void Start()
+	public void StartContest(Event contest)
 	{
-		battlesPerHour = Mathf.FloorToInt(participantAmount / contestDuration);
+		uiManager.ActivateContestAnnouncement(contest.battleMode);
+		uiManager.buttonManager.EnableAllButtonsOf("Contest");
+		participants = CreateParticipantList(contestParticipantAmount, lbManager.Leaderboard);
+		battlesPerHour = Mathf.FloorToInt(participants.Count / contestDuration);
+		currentEvent = contest;
+		ResetBattleIndex();
 	}
 
-	private void Update()
+	public void StartBattle()
 	{
-		if (!createList) return;
+		Event contest = currentEvent;
+		player = participants[participants.IndexOf(lbManager.GetPlayer)];
+		Opponent opponent = participants[participants.IndexOf(player) - 1];
 
-		participants = CreateParticipantList(participantAmount, lbManager.Leaderboard);
-		createList = false;
+		uiManager.battleMenu.SetActive(true);
+
+		int[] skillsDelta = new int[0];
+		int gkDelta = gameManager.GetGameKnowledge - opponent.gameKnowledge;
+		int mDelta = gameManager.GetMechanics - opponent.mechanics;
+		int tpDelta = gameManager.GetTeamPlay - opponent.teamPlay;
+
+		int winChance = 0;
+		int randomizer = resultManager.GetRealRandom(0, 100);
+
+		switch (contest.battleMode)
+		{
+			case Battle.Mode.OneVersusOne:
+				skillsDelta = new int[2];
+				skillsDelta[0] = gkDelta;
+				skillsDelta[1] = mDelta;
+				break;
+
+			case Battle.Mode.ThreeVersusThree:
+				skillsDelta = new int[2];
+				skillsDelta[0] = gkDelta;
+				skillsDelta[1] = tpDelta;
+				break;
+
+			case Battle.Mode.FiveVersusFive:
+				skillsDelta = new int[3];
+				skillsDelta[0] = gkDelta;
+				skillsDelta[1] = mDelta;
+				skillsDelta[2] = tpDelta;
+				break;
+		}
+
+		winChance = GetWinChance(skillsDelta, pointPercentage) + playerBattleBias;
+
+		if (winChance > 100) winChance = 100;
+		if (winChance < 0) winChance = 0;
+
+		uiManager.UpdateBattleStats(player, opponent, contest.battleMode, winChance);
+		
+		if (randomizer < winChance)
+		{
+			battleWon = true;
+			SwapPlacement(participants, player, opponent);
+		}
+		else
+		{
+			battleWon = false;
+		}
 	}
 
-	public void ResetCurrentBattle()
+	public void BattleResult()
 	{
-		currentBattle = 0;
+		if (activityManager.currentActivity != ActivityManager.Activity.Contest) return;
+
+		uiManager.ActivateBattleResult(battleWon);
 	}
 
-	public void IncreaseCurrentBattle()
+	public void AdvanceBattle()
 	{
-		currentBattle++;
+		if (activityManager.currentActivity != ActivityManager.Activity.Contest) return;
+
+		uiManager.darkOverlay.SetActive(true);
+
+		if (!battleWon)
+		{
+			EndContest(false);
+			return;
+		}
+
+		if (participants.IndexOf(player) <= 0)
+		{
+			// Win tournament
+			EndContest(true);
+			return;
+		}
+		else
+		{
+			// Continue tournament
+			if (battleIndex >= GetBattlesPerHour)
+			{
+				timeManager.IncreaseHours(1);
+				ResetBattleIndex();
+			}		
+			else
+				IncreaseBattleIndex();
+
+			StartBattle();
+		}
+	}
+
+	public void EndContest(bool win)
+	{
+		Battle.Mode battleMode = currentEvent.battleMode;
+		activityManager.ChangeActivity(ActivityManager.Activity.Idle, 0);
+		timeManager.UnPauseTimer();
+		timeManager.UnPauseGame();
+		timeManager.contestStarted = false;
+		uiManager.battleMenu.SetActive(false);
+		uiManager.darkOverlay.SetActive(true);
+		uiManager.contestResultMenu.SetActive(true);
+		uiManager.UpdateContestResults(player.placement, GetPlacementDivision(player, placementDivisions, battleMode));
+		gameManager.IncreaseFame(GetPlacementDivision(player, placementDivisions, battleMode).fameReward);
+		gameManager.IncreaseMoney(GetPlacementDivision(player, placementDivisions, battleMode).moneyReward);
+		gameManager.GetPlannedEvents.RemoveAt(gameManager.GetPlannedEvents.IndexOf(currentEvent));
+		uiManager.UpdateAll();
+	}
+
+	public void ResetBattleIndex()
+	{
+		battleIndex = 1;
+	}
+
+	public void IncreaseBattleIndex()
+	{
+		battleIndex++;
 	}
 
 	public List<Opponent> CreateParticipantList(int contestSize, List<Opponent> allOpponents)
 	{
 		List<Opponent> participants = new List<Opponent>();
 
-		for (int i = 0; i < contestSize-1; i++)
+		for (int i = 0; i < contestSize - 1; i++)
 		{
 			Opponent randomOpponent = opponentManager.GetRandomOpponent(allOpponents);
-			
+
 			while (IsOpponentInList(randomOpponent, participants))
 				randomOpponent = opponentManager.GetRandomOpponent(allOpponents);
 
@@ -65,33 +181,18 @@ public class ContestManager : MonoBehaviour
 		}
 
 		participants.Sort(SortByRating);
-
-		// Puts the player in placement
 		participants.Reverse();
+
 		lbManager.GetPlayer.placement = participants.Count;
+
 		participants.Add(lbManager.GetPlayer);
 
-		for (int i = 0; i < contestSize-1; i++)
+		for (int i = 0; i < contestSize - 1; i++)
 		{
 			participants[i].placement = i + 1;
 		}
 
 		return participants;
-	}
-
-	public void EndContest(Opponent opponent, Event contest)
-	{
-		FindObjectOfType<TimeManager>().contestStarted = false;
-		activityManager.ChangeActivity(ActivityManager.Activity.Idle, 0);
-		uiManager.battleMenu.SetActive(false);
-		uiManager.contestResultMenu.SetActive(true);
-		uiManager.darkOverlay.SetActive(true);
-		uiManager.buttonManager.EnableAllButtons();
-		uiManager.UpdateContestResults(opponent.placement, GetPlacementDivision(opponent, placementDivisions, contest.battleMode));
-		gameManager.IncreaseFame(GetPlacementDivision(opponent, placementDivisions, contest.battleMode).fameReward);
-		gameManager.IncreaseMoney(GetPlacementDivision(opponent, placementDivisions, contest.battleMode).moneyReward);
-		gameManager.GetPlannedEvents.RemoveAt(gameManager.GetPlannedEvents.IndexOf(contest));
-		uiManager.UpdateAll();
 	}
 
 	public DivisionForm GetPlacementDivision(Opponent opponent, List<DivisionForm> allDivisions, Battle.Mode mode)
@@ -148,11 +249,20 @@ public class ContestManager : MonoBehaviour
 		return o1.placement.CompareTo(o2.placement);
 	}
 
-	public int GetTournamentDate(Event eventToPlan)
+	public void SwapPlacement(List<Opponent> participants, Opponent player, Opponent opponent)
 	{
-		if (eventToPlan.type == Event.Type.Tournament)
+		int tmp = opponent.placement;
+		player.placement--;
+		opponent.placement++;
+
+		participants.Sort(SortByPlacement);
+	}
+
+	public int GetTournamentDate(Event e)
+	{
+		if (e.type == Event.Type.Tournament)
 		{
-			switch (eventToPlan.battleMode)
+			switch (e.battleMode)
 			{
 				case Battle.Mode.OneVersusOne:
 					return tournamentMonths[0];
@@ -168,16 +278,30 @@ public class ContestManager : MonoBehaviour
 		return 0;
 	}
 
+	/// <summary>
+	/// Checks the delta of the skills between player and opponent and returns win percentage
+	/// </summary>
+	/// <param name="skills"></param>
+	/// <returns></returns>
+	private int GetWinChance(int[] skillsDelta, float percentagePerPoint)
+	{
+		float winChance = 0;
+
+		foreach (int s in skillsDelta)
+		{
+			//Debug.Log("skill delta " + s);
+			winChance += s * percentagePerPoint;
+		}
+
+		return (int)winChance;
+	}
+
 	#region Getters & Setters
 
-	public float GetBattleDuration { get { return battleDuration; } }
 	public int GetContestDuration { get { return contestDuration; } }
-	public int GetCurrentBattle { get { return currentBattle; } }
 	public int GetBattlesPerHour { get { return battlesPerHour; } }
-	public int GetParticipantAmount { get { return participantAmount; } }
-	public List<Opponent> GetParticipants { get { return participants; } }
 
-	public List<Opponent> SetParticipants { set { participants = value; } }
+	public List<Opponent> Participants { get { return participants; } set { participants = value; } }
 
 	#endregion
 }

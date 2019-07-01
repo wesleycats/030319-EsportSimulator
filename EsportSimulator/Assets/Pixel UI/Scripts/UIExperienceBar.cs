@@ -31,11 +31,11 @@ namespace PixelsoftGames.PixelUI
         #region Fields & Properties
 
         [SerializeField]
-        [Range(1, 1000)]
+        [Range(0, 4)]
         [Tooltip("The default level to begin with (i.e. - we start the game as a level 1 player)")]
-        int DefaultLevel = 1;
+        int DefaultLevel = 0;
         [SerializeField]
-        [Range(1, 1000)]
+        [Range(0, 4)]
         [Tooltip("The maximum possible level that can be achieved.")]
         int MaximumLevel = 100;
         [SerializeField]
@@ -45,7 +45,7 @@ namespace PixelsoftGames.PixelUI
         [Tooltip("How should the exp required to level for each level be staggered")]
         float TableStagger = 1.5f;
 
-        int[] expTable;
+        [SerializeField] int[] expTable;
         int currentExperienceTowardsLevel;
         int currentLevel;
         Slider slider;
@@ -57,7 +57,7 @@ namespace PixelsoftGames.PixelUI
         /// <summary>
         /// Returns the amount of experience points still required to level up.
         /// </summary>
-        public int GetExperienceToNextLevel { get { return expTable[currentLevel - 1] - currentExperienceTowardsLevel; } }
+        public int GetExperienceToNextLevel { get { return expTable[currentLevel] - currentExperienceTowardsLevel; } }
         /// <summary>
         /// Returns the current level.
         /// </summary>
@@ -93,17 +93,19 @@ namespace PixelsoftGames.PixelUI
 		public void GiveExperiencePoints(int amount)
         {
             currentExperienceTowardsLevel += amount;
-			
-			if (currentExperienceTowardsLevel >= expTable[currentLevel - 1])
+
+			while (currentExperienceTowardsLevel >= expTable[currentLevel])
             {
-                currentExperienceTowardsLevel -= expTable[currentLevel - 1];
+				currentExperienceTowardsLevel -= expTable[currentLevel];
                 currentLevel++;
 
                 if (LevelUp != null)
                     LevelUp(this);
             }
 
-            UpdateValue();
+			FindObjectOfType<GameManager>().WorkLevel = currentLevel;
+
+			UpdateValue();
         }
 
         /// <summary>
@@ -140,7 +142,7 @@ namespace PixelsoftGames.PixelUI
         /// </summary>
         void UpdateValue()
         {
-            slider.value = (float)currentExperienceTowardsLevel / expTable[currentLevel - 1];
+			slider.value = (float)currentExperienceTowardsLevel / expTable[currentLevel];
         }
 
         #endregion

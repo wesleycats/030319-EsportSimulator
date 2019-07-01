@@ -15,11 +15,24 @@ public class SubMenuManager : MonoBehaviour
 
 	public void SetupSubMenu(string skill)
 	{
-		if (skill != "")
+		/*if (skill != "")
 		{
 			actionButton.training.type = Training.Type.Watching;
 			actionButton.training.skills.Add(new Skill(GetTrainingSkill(skill), resultManager.GetTrainingRate(actionButton.training.type)));
 			menuTitle.text = actionButton.training.skills[0].type.ToString();
+		}*/
+
+		switch (actionButton.activity)
+		{
+			case ActivityManager.Activity.Train:
+				actionButton.training.type = Training.Type.Watching;
+				actionButton.training.skills.Add(new Skill(GetTrainingSkill(skill), resultManager.GetTrainingRate(actionButton.training.type)));
+				menuTitle.text = actionButton.training.skills[0].type.ToString();
+				break;
+
+			default:
+				Debug.Log("Given activity is not set");
+				break;
 		}
 
 		UpdateSliderValues(actionButton.activity);

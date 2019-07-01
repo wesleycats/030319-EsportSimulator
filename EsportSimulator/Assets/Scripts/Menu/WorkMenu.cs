@@ -21,7 +21,7 @@ public class WorkMenu : MonoBehaviour
 		expBar.Initialize();
 		expBar.GiveExperiencePoints(gameManager.WorkExperience);
 		currentExpText.text = gameManager.WorkExperience + " exp";
-		currentLevelText.text = "lvl " + expBar.GetCurrentLevel.ToString();
+		currentLevelText.text = "lvl " + (expBar.GetCurrentLevel + 1).ToString();
 		int percentage = (int)((double)expBar.GetExperienceTowardsLevel / (expBar.GetExperienceToNextLevel + expBar.GetExperienceTowardsLevel) * 100);
 		currentPercentage.text = percentage + "%";
 	}

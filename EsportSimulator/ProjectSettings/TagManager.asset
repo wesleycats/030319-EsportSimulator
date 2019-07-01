@@ -17,6 +17,7 @@ TagManager:
   - Tutorial
   - ItemMenu
   - GameOver
+  - Contest
   layers:
   - Default
   - TransparentFX

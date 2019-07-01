@@ -99,16 +99,18 @@ public class ActivityManager : MonoBehaviour
 
 			case Activity.Contest:
 				uiManager.activityText.text = "Contesting...";
-				contestManager.SetParticipants = contestManager.CreateParticipantList(contestManager.GetParticipantAmount, opponentManager.GetAllOpponents);
 				break;
 
 			case Activity.Idle:
 				uiManager.activityText.text = "Idle";
+				timeManager.WaitTime = 1f;
+				buttonManager.EnableAllButtons();
 				break;
 
 			case Activity.Sleep:
 				uiManager.activityText.text = "Sleeping...";
 				uiManager.SleepOverlay(true);
+				timeManager.WaitTime = 0.5f;
 				break;
 
 			case Activity.Stream:
@@ -127,6 +129,7 @@ public class ActivityManager : MonoBehaviour
 
 			case Activity.Work:
 				uiManager.activityText.text = "Working...";
+				timeManager.WaitTime = 0.5f;
 				break;
 		}
 

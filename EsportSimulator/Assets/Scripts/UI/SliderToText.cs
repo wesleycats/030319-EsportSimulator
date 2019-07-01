@@ -33,6 +33,7 @@ public class SliderToText : MonoBehaviour
 	[Header("References")]
 	public GameManager gameManager;
 	public ResultManager resultManager;
+	public Activity activityButton;
 
 	private void Awake()
 	{
@@ -58,7 +59,7 @@ public class SliderToText : MonoBehaviour
 
     public void ValueToSleepResult(Text textToChange)
     {
-        tiredness = slider.value * tirednessMultiplier;
+        tiredness = slider.value * resultManager.GetTirednessDecreaseRate;
 
         textToChange.text = "-" + tiredness.ToString() + "% tiredness";
     }
@@ -73,7 +74,7 @@ public class SliderToText : MonoBehaviour
 	
     public void ValueToTrainResult(Text textToChange)
     {
-        tiredness = slider.value * tirednessMultiplier;
+        tiredness = slider.value * resultManager.GetTrainingTirednessAmount(activityButton.training.type, 1);
         money = slider.value * costMultiplier;
 
 		string skillText = GetSkillText(skills, slider);
@@ -83,9 +84,10 @@ public class SliderToText : MonoBehaviour
 
     public void ValueToStreamResult(Text textToChange)
     {
-        tiredness = slider.value * tirednessMultiplier;
+        tiredness = slider.value * resultManager.streamEnergyCost;
         moneyMin = resultManager.GetMinStreamIncome(gameManager.GetFame, (int)slider.value);
         moneyMax = resultManager.GetMaxStreamIncome(gameManager.GetFame, (int)slider.value);
+
         textToChange.text = "between +$" + moneyMin.ToString() + "-$" + moneyMax.ToString() + ", -" + tiredness.ToString() + "% tiredness";
     }
 
@@ -104,10 +106,14 @@ public class SliderToText : MonoBehaviour
 		return skillText;
 	}
 
-    public void SetSliderMaxValue(ActivityManager.Activity activity, float divisor, float amount)
-    {
-		//slider.maxValue = Mathf.FloorToInt(amount / divisor * resultManager.GetDebuffMultiplier(gameManager.Hunger, gameManager.Thirst));
-		slider.maxValue = Mathf.FloorToInt(amount / divisor);
+	public void SetSliderMaxValue(ActivityManager.Activity activity, float divisor, float amount)
+	{
+		if (activity == ActivityManager.Activity.Sleep)
+		{
+			slider.maxValue = Mathf.CeilToInt(amount / divisor);
+		}
+		else
+			slider.maxValue = Mathf.FloorToInt(amount / divisor * gameManager.GetDebuffMultiplier(gameManager.Hunger, gameManager.Thirst));
 
 		if (amount == 0) slider.maxValue = 0;
 	}

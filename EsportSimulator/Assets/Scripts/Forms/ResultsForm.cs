@@ -27,28 +27,19 @@ public class ResultsForm
     [SerializeField] private int workExperience;
 
     public float Duration { get { return duration; } }
-    public int Tiredness { get { return tiredness; } }
-    public int Hunger { get { return hunger; } }
-    public int Thirst { get { return thirst; } }
+    public int Tiredness { get { return tiredness; } set { tiredness = value; } }
+    public int Hunger { get { return hunger; } set { hunger = value; } }
+    public int Thirst { get { return thirst; } set { thirst = value; } }
     public int Money { get { return money; } }
     public int MoneyMin { get { return moneyMin; } }
     public int MoneyMax { get { return moneyMax; } }
-    public int Rating { get { return rating; } }
-    public int Fame { get { return fame; } }
-    public int GameKnowledge { get { return gameKnowledge; } }
-    public int TeamPlay { get { return teamPlay; } }
-    public int Mechanics { get { return mechanics; } }
-    public float GetTrainingLevel1Multiplier { get { return trainingLevel1Multiplier; } }
-    public float GetTrainingLevel2Multiplier { get { return trainingLevel2Multiplier; } }
-    public float GetTrainingLevel3Multiplier { get { return trainingLevel3Multiplier; } }
+    public int Rating { get { return rating; } set { rating = value; } }
+    public int Fame { get { return fame; } set { fame = value; } }
+    public int GameKnowledge { get { return gameKnowledge; } set { gameKnowledge = value; } }
+    public int TeamPlay { get { return teamPlay; } set { teamPlay = value; } }
+    public int Mechanics { get { return mechanics; } set { mechanics = value; } }
     public int WorkExperience { get { return workExperience; } set { workExperience = value; } }
 
 	public float SetDuration { set { duration = value; } }
-	public int SetTiredness { set { tiredness = value; } }
-	public int SetHunger { set { hunger = value; } }
-	public int SetThirst { set { thirst = value; } }
 	public int SetMoney { set { money = value; } }
-	public int SetGameKnowledge { set { gameKnowledge = value; } }
-	public int SetTeamPlay { set { teamPlay = value; } }
-	public int SetMechanics { set { mechanics = value; } }
 }

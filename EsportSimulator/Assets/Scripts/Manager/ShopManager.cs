@@ -49,11 +49,11 @@ public class ShopManager : MonoBehaviour
 					break;
 
 				case Skill.Type.Mechanics:
-					gameManager.IncreaseTeamPlay(s.amount);
+					gameManager.IncreaseMechanics(s.amount);
 					break;
 
 				case Skill.Type.TeamPlay:
-					gameManager.IncreaseMechanics(s.amount);
+					gameManager.IncreaseTeamPlay(s.amount);
 					break;
 			}
 		}

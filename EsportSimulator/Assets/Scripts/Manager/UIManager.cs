@@ -33,8 +33,8 @@ public class UIManager : MonoBehaviour
 	public Text contestPlacement;
 	public Text contestResults;
 	public Text competitorNames;
-	public Text playerStats;
-	public Text opponentStats;
+	public Text opponent1Stats;
+	public Text opponent2Stats;
 	public Text winChance;
 
 	public GameObject darkOverlay;
@@ -48,6 +48,8 @@ public class UIManager : MonoBehaviour
 
 	public GameObject contestAnnouncementMenu;
 	public Text contestAnnouncementText;
+	public GameObject battleResultsMenu;
+	public Text battleResultsText;
 
 	public List<Text> allItemTexts = new List<Text>();
 	public List<Button> allAccommdationButtons = new List<Button>();
@@ -63,6 +65,7 @@ public class UIManager : MonoBehaviour
 	public OpponentManager opponentManager;
 	public LeaderboardManager lbManager;
 	public PlayerData playerData;
+	public ActivityManager activityManager;
 
 	public void CheckNeedsWarning()
 	{
@@ -223,32 +226,40 @@ public class UIManager : MonoBehaviour
 		}
 	}
 
-	public void UpdateCompetitorStats(Opponent player, Opponent opponent, Battle.Mode mode, int winChancePercentage)
+	public void UpdateBattleStats(Opponent o1, Opponent o2, Battle.Mode mode, int winChancePercentage)
 	{
 		battleMenu.SetActive(true);
 
-		competitorNames.text = player.name.ToUpper() + " VS " + opponent.name.ToUpper();
+		competitorNames.text = o1.name.ToUpper() + " VS " + o2.name.ToUpper();
 
 		switch (mode)
 		{
 			case Battle.Mode.OneVersusOne:
-				playerStats.text = "game knowledge: " + player.gameKnowledge + "\n\n mechanics: " + player.mechanics + "\n\ntournament placement:\n" + contestManager.GetParticipants[contestManager.GetParticipants.IndexOf(player)].placement;
-				opponentStats.text = "game knowledge: " + opponent.gameKnowledge + "\n\n mechanics: " + opponent.mechanics + "\n\ntournament placement:\n" + contestManager.GetParticipants[contestManager.GetParticipants.IndexOf(opponent)].placement;
-				winChance.text = "win chance: " + winChancePercentage + "%";
+				opponent1Stats.text = "game knowledge: " + o1.gameKnowledge + "\n\n mechanics: " + o1.mechanics;
+				opponent2Stats.text = "game knowledge: " + o2.gameKnowledge + "\n\n mechanics: " + o2.mechanics;
 				break;
 
 			case Battle.Mode.ThreeVersusThree:
-				playerStats.text = "game knowledge: " + player.gameKnowledge + "\n\n team play: " + player.teamPlay + "\n\ntournament placement:\n" + contestManager.GetParticipants[contestManager.GetParticipants.IndexOf(player)].placement;
-				opponentStats.text = "game knowledge: " + opponent.gameKnowledge + "\n\n team play: " + opponent.teamPlay + "\n\ntournament placement:\n" + contestManager.GetParticipants[contestManager.GetParticipants.IndexOf(opponent)].placement;
-				winChance.text = "win chance: " + winChancePercentage + "%";
+				opponent1Stats.text = "game knowledge: " + o1.gameKnowledge + "\n\n team play: " + o1.teamPlay;
+				opponent2Stats.text = "game knowledge: " + o2.gameKnowledge + "\n\n team play: " + o2.teamPlay;
 				break;
 
 			case Battle.Mode.FiveVersusFive:
-				playerStats.text = "game knowledge: " + player.gameKnowledge + "\n\n team play: " + player.teamPlay + "\n\n mechanics: " + player.mechanics + "\n\ntournament placement:\n" + contestManager.GetParticipants[contestManager.GetParticipants.IndexOf(player)].placement;
-				opponentStats.text = "game knowledge: " + opponent.gameKnowledge + "\n\n team play: " + opponent.teamPlay + "\n\n mechanics: " + opponent.mechanics + "\n\ntournament placement:\n" + contestManager.GetParticipants[contestManager.GetParticipants.IndexOf(opponent)].placement;
-				winChance.text = "win chance: " + winChancePercentage + "%";
+				opponent1Stats.text = "game knowledge: " + o1.gameKnowledge + "\n\n team play: " + o1.teamPlay + "\n\n mechanics: " + o1.mechanics;
+				opponent2Stats.text = "game knowledge: " + o2.gameKnowledge + "\n\n team play: " + o2.teamPlay + "\n\n mechanics: " + o2.mechanics;
 				break;
 		}
+
+		if (activityManager.currentActivity == ActivityManager.Activity.Contest)
+		{
+			opponent1Stats.text += "\n\ntournament placement:\n" + contestManager.Participants[contestManager.Participants.IndexOf(o1)].placement;
+			opponent2Stats.text += "\n\ntournament placement:\n" + contestManager.Participants[contestManager.Participants.IndexOf(o2)].placement;
+		}
+
+		if (winChancePercentage < 0) winChancePercentage = 0;
+		if (winChancePercentage > 100) winChancePercentage = 100;
+
+		winChance.text = "win chance: " + winChancePercentage + "%";
 	}
 
 	public void UpdateContestResults(int placement, DivisionForm division)
@@ -285,11 +296,23 @@ public class UIManager : MonoBehaviour
 		sleepOverlay.Lerp(2);
 	}
 
-	public void ActivateContestAnnouncement(string battleMode)
+	public void ActivateContestAnnouncement(Battle.Mode mode)
 	{
+		darkOverlay.SetActive(true);
+		darkOverlay.GetComponent<Button>().interactable = false;
 		contestAnnouncementMenu.SetActive(true);
-		contestAnnouncementText.text = "THE " + battleMode + " TOURNAMENT IS STARTING!";
+		contestAnnouncementText.text = "THE " + mode.ToString() + " TOURNAMENT IS STARTING!";
 		contestAnnouncementMenu.GetComponent<Button>().interactable = true;
+	}
+
+	public void ActivateBattleResult(bool win)
+	{
+		battleResultsMenu.SetActive(true);
+
+		if (win)
+			battleResultsText.text = "You won the battle!";
+		else
+			battleResultsText.text = "You lost the battle!";
 	}
 
 	public void Initialize()

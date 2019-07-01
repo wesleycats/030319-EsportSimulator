@@ -16,10 +16,10 @@
 |So always check if you have enough money to pay the rent before you start performing an action.;
 
 *Top Bar*
-|The top bar consists of a calender, pause menu, progress menu and an event bar.;
+|The top bar consists of buttons that direct you to the calender, pause menu, progress menu.;
 
 *Bottom Bar*
-|The bottom bar consists of a action bar, needs menu, skills menu, action menu and a shop.;
+|The bottom bar consists of needs menu, skills menu, action menu and a shop.;
 
 *Needs Menu*
 |As in real life, you need to keep yourself refreshed, feed yourself and drink once in a while.;
