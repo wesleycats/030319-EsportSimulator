@@ -6,6 +6,7 @@ public class LeaderboardManager : MonoBehaviour
 {
 	public string playerName;
 	public LeagueForm league;
+
 	[SerializeField] private int divisionSize = 10;
     [SerializeField] private List<Opponent> leaderboard;
 

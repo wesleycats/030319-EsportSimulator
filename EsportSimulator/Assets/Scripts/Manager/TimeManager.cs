@@ -100,7 +100,6 @@ public class TimeManager : MonoBehaviour
 				resultManager.PayRent(gameManager.CurrentAccommodation);
 				hour = 0;
 				month++;
-				gameManager.ResetEarnedSalary();
 
 				StartCoroutine(WaitTillIdle());
 			}
@@ -109,6 +108,7 @@ public class TimeManager : MonoBehaviour
 			{
 				month = 1;
 				year++;
+				gameManager.ResetFinance();
 			}
 		}
 

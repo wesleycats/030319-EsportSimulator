@@ -15,7 +15,7 @@ public class SliderToText : MonoBehaviour
 	[SerializeField] private List<Skill> skills = new List<Skill>();
 
 	private float duration;
-    private float tiredness;
+    private int tiredness;
     private float hunger;
     private float thirst;
     private float money;
@@ -27,13 +27,14 @@ public class SliderToText : MonoBehaviour
 
     private float debuffMultiplier = 1f;
     private float debuffMultiplierAmount = 1f;
-	private Slider slider;
-
 
 	[Header("References")]
 	public GameManager gameManager;
 	public ResultManager resultManager;
 	public Activity activityButton;
+	public Text debuffMultiplierText;
+
+	private Slider slider;
 
 	private void Awake()
 	{
@@ -59,37 +60,112 @@ public class SliderToText : MonoBehaviour
 
     public void ValueToSleepResult(Text textToChange)
     {
-        tiredness = slider.value * resultManager.GetTirednessDecreaseRate;
+        tiredness = (int)(slider.value * resultManager.GetTirednessDecreaseRate);
 
         textToChange.text = "-" + tiredness.ToString() + "% tiredness";
     }
 
-    public void ValueToWorkResult(Text textToChange)
-    {
-		tiredness = slider.value * resultManager.GetWorkResultForm(gameManager.GetWorkLevel).Tiredness;
-        money = slider.value * resultManager.GetWorkResultForm(gameManager.GetWorkLevel).Money;
+	public void ValueToResult(Text textToChange)
+	{
+		switch (activityButton.activity)
+		{
+			case ActivityManager.Activity.Work:
+				tiredness = GetTotalTiredness(resultManager.GetWorkResultForm(gameManager.GetWorkLevel).Tiredness);
+				money = slider.value * resultManager.GetWorkResultForm(gameManager.GetWorkLevel).Money;
 
-        textToChange.text = "+$" + money.ToString() + ", -" + tiredness.ToString() + "% tiredness";
-    }
-	
-    public void ValueToTrainResult(Text textToChange)
-    {
-        tiredness = slider.value * resultManager.GetTrainingTirednessAmount(activityButton.training.type, 1);
-        money = slider.value * costMultiplier;
+				textToChange.text = "+$" + money.ToString() + ", -" + tiredness.ToString() + "% tiredness";
+				break;
 
-		string skillText = GetSkillText(skills, slider);
+			case ActivityManager.Activity.Train:
+				tiredness = GetTotalTiredness((int)resultManager.GetTrainingTirednessAmount(activityButton.training.type, 1));
+				money = slider.value * costMultiplier;
 
-		textToChange.text = skillText + "\n+" + tiredness.ToString() + "% tiredness\n-$" + money.ToString();
+				string skillText = GetSkillText(skills, slider);
+
+				textToChange.text = skillText + "\n+" + tiredness.ToString() + "% tiredness\n-$" + money.ToString();
+				break;
+
+			case ActivityManager.Activity.Stream:
+
+				break;
+		}
     }
 
     public void ValueToStreamResult(Text textToChange)
     {
-        tiredness = slider.value * resultManager.streamEnergyCost;
+        tiredness = (int)(slider.value * resultManager.streamEnergyCost);
         moneyMin = resultManager.GetMinStreamIncome(gameManager.GetFame, (int)slider.value);
         moneyMax = resultManager.GetMaxStreamIncome(gameManager.GetFame, (int)slider.value);
 
         textToChange.text = "between +$" + moneyMin.ToString() + "-$" + moneyMax.ToString() + ", -" + tiredness.ToString() + "% tiredness";
     }
+
+	public void ResetSlider()
+	{
+		float origMax = slider.maxValue;
+		slider.maxValue = 1f;
+		slider.value = 1f;
+		slider.maxValue = origMax;
+		slider.value = 0;
+	}
+
+	public void ResetValues()
+    {
+        slider.value = 0f;
+        tiredness = 0;
+        hunger = 0f;
+        thirst = 0f;
+        money = 0f;
+        rating = 0f;
+        fame = 0f;
+        skill = 0f;
+		costMultiplier = 0f;
+		incomeMultiplier = 0f;
+		skillMultiplier = 0f;
+		tirednessMultiplier = 0f;
+		skills.Clear();
+	}
+
+	public int GetTotalTiredness(int rate)
+	{
+		int tiredness = 0;
+		int hungerRate = resultManager.GetHungerIncreaseRate;
+		int thirstRate = resultManager.GetThirstIncreaseRate;
+		//Debug.Log("hunger at " + (slider.value) + " will be " + (gameManager.Hunger + (hungerRate * slider.value)));
+		float debuffMultiplier = gameManager.GetDebuffMultiplier((int)(gameManager.Hunger + (hungerRate * slider.value)), (int)(gameManager.Thirst + (thirstRate * slider.value)));
+		//Debug.Log("debuff multiplier at " + (slider.value) + " will be " + debuffMultiplier);
+
+		float buffer = 0;
+
+		for (int i = 0; i < slider.value + 1; i++)
+		{
+			debuffMultiplier = gameManager.GetDebuffMultiplier((int)(gameManager.Hunger + (hungerRate * i)), (int)(gameManager.Thirst + (thirstRate * i)));
+
+			if (debuffMultiplier > 1)
+			{
+				tiredness = rate * (i - 1);
+				//Debug.Log("tiredness= " + tiredness);
+
+				for (int j = i; j < slider.value + 1; j++)
+				{
+					float difference = slider.value + 1 - j;
+					//Debug.Log("from j" + j + " to " + (slider.value + 1));
+					buffer = rate * debuffMultiplier * difference;
+					//Debug.Log("buffer = " + buffer);
+					break;
+				}
+				break;
+			}
+
+			tiredness = rate * i;
+			//Debug.Log("tiredness= " + tiredness);
+		}
+
+		debuffMultiplier = gameManager.GetDebuffMultiplier((int)(gameManager.Hunger + (hungerRate * slider.value)), (int)(gameManager.Thirst + (thirstRate * slider.value)));
+		SetMultiplierText(debuffMultiplier);
+
+		return (int)(tiredness + buffer);
+	}
 
 	public string GetSkillText(List<Skill> skills, Slider slider)
 	{
@@ -109,39 +185,16 @@ public class SliderToText : MonoBehaviour
 	public void SetSliderMaxValue(ActivityManager.Activity activity, float divisor, float amount)
 	{
 		if (activity == ActivityManager.Activity.Sleep)
-		{
 			slider.maxValue = Mathf.CeilToInt(amount / divisor);
-		}
 		else
-			slider.maxValue = Mathf.FloorToInt(amount / divisor * gameManager.GetDebuffMultiplier(gameManager.Hunger, gameManager.Thirst));
+			slider.maxValue = Mathf.FloorToInt(amount / divisor);
 
 		if (amount == 0) slider.maxValue = 0;
 	}
 
-	public void ResetSlider()
+	private void SetMultiplierText(float multiplier)
 	{
-		float origMax = slider.maxValue;
-		slider.maxValue = 1f;
-		slider.value = 1f;
-		slider.maxValue = origMax;
-		slider.value = 0;
-	}
-
-	public void ResetValues()
-    {
-        slider.value = 0f;
-        tiredness = 0f;
-        hunger = 0f;
-        thirst = 0f;
-        money = 0f;
-        rating = 0f;
-        fame = 0f;
-        skill = 0f;
-		costMultiplier = 0f;
-		incomeMultiplier = 0f;
-		skillMultiplier = 0f;
-		tirednessMultiplier = 0f;
-		skills.Clear();
+		debuffMultiplierText.text = "debuff multiplier = " + multiplier + "x";
 	}
 
 	#region Getters & Setters

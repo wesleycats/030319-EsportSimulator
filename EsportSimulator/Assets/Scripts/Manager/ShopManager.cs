@@ -60,6 +60,7 @@ public class ShopManager : MonoBehaviour
 
 		gameManager.CurrentItems.Add(item);
 		gameManager.DecreaseMoney(item.cost);
+		gameManager.IncreaseUpgradeExpenses(item.cost);
 		artManager.UpdateItems(gameManager.CurrentItems);
 		uiManager.UpdateItems(uiManager.allItemTexts, gameManager.CurrentItems);
 		ApplyCurrentItems(gameManager.CurrentItems, item.type);
@@ -193,9 +194,10 @@ public class ShopManager : MonoBehaviour
 		}
 
 		gameManager.CurrentAccommodation = accommodation;
+		gameManager.DecreaseMoney(accommodation.cost);
+		gameManager.IncreaseUpgradeExpenses(accommodation.cost);
 		artManager.UpdateAccommodation(accommodation);
 		uiManager.UpdateAccommodations(accommodation);
-		gameManager.DecreaseMoney(accommodation.cost);
 	}
 
 	public void BuyAccommodation()

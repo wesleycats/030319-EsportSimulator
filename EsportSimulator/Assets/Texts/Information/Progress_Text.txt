@@ -3,7 +3,7 @@
 #0
 |Here you can find your current situation in finance, ranking and popularity.;
 
-|On the finance tab you will find your income and expenses.;
+|On the finance tab you will find your total income and expenses of the current year.;
 
 |On the ranking tab you will find the leaderboard with everybody their ranking.;
 

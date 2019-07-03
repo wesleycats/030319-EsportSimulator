@@ -30,20 +30,24 @@ public class Activity : MonoBehaviour
 		training.type = Training.Type.None;
 	}
 
-    public int GetSliderDuration()
-    {
-		return (int)(slider.value * slider.GetComponent<SliderToText>().GetTimeMultiplier);
-    }
-
 	public void ChangeActivity()
 	{
-		if (slider) hourAmount = GetSliderDuration();
+		if (contestManager)
+		{
+			hourAmount = contestManager.GetContestDuration;
+		}
 
-		if (contestManager) hourAmount = contestManager.GetContestDuration;
+		switch (activity)
+		{
+			case ActivityManager.Activity.Train:
+				activityManager.currentTraining = training;
+				activityManager.currentSkillType = training.skills[0].type;
+				break;
 
-		activityManager.currentTraining = training;
-		if (activity == ActivityManager.Activity.Train) activityManager.currentSkillType = training.skills[0].type;
-		activityManager.currentBattleMode = battleMode;
+			case ActivityManager.Activity.Contest:
+				activityManager.currentBattleMode = battleMode;
+				break;
+		} 
 		
 		activityManager.ChangeActivity(activity, hourAmount);
 	}

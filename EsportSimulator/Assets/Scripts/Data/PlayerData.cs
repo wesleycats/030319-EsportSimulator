@@ -12,6 +12,10 @@ public class PlayerData : ScriptableObject
     #region Default Variables
 
     [SerializeField] private int defaultMoney;
+	[SerializeField] private int defaultTiredness;
+	[SerializeField] private int defaultHunger;
+	[SerializeField] private int defaultThirst;
+
 	[SerializeField] private List<ItemForm> allItems;
 	[SerializeField] private List<Accommodation> allAccommodations;
 
@@ -66,9 +70,9 @@ public class PlayerData : ScriptableObject
         fame = 0;
         workLevel = 0;
         workExperience = 0;
-        tiredness = 0;
-        hunger = 0;
-        thirst = 0;
+        tiredness = defaultTiredness;
+        hunger = defaultHunger;
+        thirst = defaultThirst;
         gameKnowledge = 0;
         teamPlay = 0;
         mechanics = 0;

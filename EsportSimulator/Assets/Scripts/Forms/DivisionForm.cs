@@ -1,7 +1,7 @@
 ﻿[System.Serializable]
 public class DivisionForm
 {
-	public enum DivisionType { None, Bronze, Silver, Gold, Diamond, Champion }
+	public enum DivisionType { None, Bronze, Silver, Gold, Diamond, Champion, GrandChampion }
 
 	public string divisionName;
     public DivisionType type;

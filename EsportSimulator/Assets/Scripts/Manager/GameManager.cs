@@ -22,8 +22,6 @@ public class GameManager : MonoBehaviour
 	[SerializeField] private int teamPlay;
 	[SerializeField] private int mechanics;
 
-	private int earnedSalary;
-
 	[SerializeField] private List<Item> currentItems = new List<Item>();
 	[SerializeField] private Accommodation currentAccommodation;
 	[SerializeField] private List<Event> plannedEvents;
@@ -40,6 +38,11 @@ public class GameManager : MonoBehaviour
 	[SerializeField] private bool thirstDebuff = false;
 	[SerializeField] private float thirstDebuffAddition = 0.5f;
 
+	private int earnedSalary;
+	private int earnedStreamDonations;
+	private int earnedEventRewards;
+	private int upgradeExpenses;
+	
 	#endregion
 
 	#region References
@@ -62,6 +65,8 @@ public class GameManager : MonoBehaviour
 
 	#endregion
 
+	#region Game stage controls
+
 	void Start()
 	{
 		ResetGame();
@@ -69,8 +74,6 @@ public class GameManager : MonoBehaviour
 		switchOverlay.LerpValue = 1;
 		switchOverlay.Lerp(1);
 	}
-
-	#region Game stage controls
 
 	/// <summary>
 	/// Initializes player data in variables
@@ -196,7 +199,6 @@ public class GameManager : MonoBehaviour
 	public void IncreaseMoney(int amount)
 	{
 		money += amount;
-		earnedSalary += amount;
 
 		uiManager.UpdateProgress(money, rating, fame);
 	}
@@ -246,9 +248,42 @@ public class GameManager : MonoBehaviour
 		workExperience -= amount;
 	}
 
-	public void ResetEarnedSalary()
+	public void IncreaseUpgradeExpenses(int amount)
+	{
+		upgradeExpenses += amount;
+	}
+
+	public void IncreaseEarnedStreamDonations(int amount)
+	{
+		earnedStreamDonations += amount;
+	}
+
+	public void IncreaseEarnedSalary(int amount)
+	{
+		earnedSalary += amount;
+	}
+
+	public void IncreaseEarnedEventRewards(int amount)
+	{
+		earnedEventRewards += amount;
+	}
+
+	public void ResetIncome()
 	{
 		earnedSalary = 0;
+		earnedStreamDonations = 0;
+		earnedEventRewards = 0;
+	}
+
+	public void ResetExpenses()
+	{
+		upgradeExpenses = 0;
+	}
+
+	public void ResetFinance()
+	{
+		ResetIncome();
+		ResetExpenses();
 	}
 
 	#endregion
@@ -390,6 +425,9 @@ public class GameManager : MonoBehaviour
 	public Accommodation CurrentAccommodation { set { currentAccommodation = value; } get { return currentAccommodation; } }
 	public int WorkExperience { get { return workExperience; } set { workExperience = value; } }
 	public int EarnedSalary { get { return earnedSalary; } }
+	public int EarnedStreamDonations { get { return earnedStreamDonations; } }
+	public int EarnedEventRewards { get { return earnedEventRewards; } }
+	public int UpgradeExpenses { get { return upgradeExpenses; } }
 
 	#endregion
 }

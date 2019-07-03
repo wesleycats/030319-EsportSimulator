@@ -19,6 +19,7 @@ public class ContestManager : MonoBehaviour
 	[SerializeField] private float pointPercentage;
 
 	private Opponent player;
+	private Opponent opponent;
 	private Event currentEvent;
 	private int battleIndex = 0;
 	private bool battleWon;
@@ -46,7 +47,7 @@ public class ContestManager : MonoBehaviour
 	{
 		Event contest = currentEvent;
 		player = participants[participants.IndexOf(lbManager.GetPlayer)];
-		Opponent opponent = participants[participants.IndexOf(player) - 1];
+		opponent = participants[participants.IndexOf(player) - 1];
 
 		uiManager.battleMenu.SetActive(true);
 
@@ -90,7 +91,6 @@ public class ContestManager : MonoBehaviour
 		if (randomizer < winChance)
 		{
 			battleWon = true;
-			SwapPlacement(participants, player, opponent);
 		}
 		else
 		{
@@ -103,6 +103,7 @@ public class ContestManager : MonoBehaviour
 		if (activityManager.currentActivity != ActivityManager.Activity.Contest) return;
 
 		uiManager.ActivateBattleResult(battleWon);
+		SwapPlacement(participants, player, opponent);
 	}
 
 	public void AdvanceBattle()
@@ -141,17 +142,22 @@ public class ContestManager : MonoBehaviour
 	public void EndContest(bool win)
 	{
 		Battle.Mode battleMode = currentEvent.battleMode;
+		DivisionForm divison = GetPlacementDivision(player, placementDivisions, battleMode);
 		activityManager.ChangeActivity(ActivityManager.Activity.Idle, 0);
+
 		timeManager.UnPauseTimer();
 		timeManager.UnPauseGame();
 		timeManager.contestStarted = false;
+
+		gameManager.IncreaseEarnedEventRewards(divison.moneyReward);
+		gameManager.IncreaseMoney(divison.moneyReward);
+		gameManager.IncreaseFame(divison.fameReward);
+		gameManager.GetPlannedEvents.RemoveAt(gameManager.GetPlannedEvents.IndexOf(currentEvent));
+
 		uiManager.battleMenu.SetActive(false);
 		uiManager.darkOverlay.SetActive(true);
 		uiManager.contestResultMenu.SetActive(true);
-		uiManager.UpdateContestResults(player.placement, GetPlacementDivision(player, placementDivisions, battleMode));
-		gameManager.IncreaseFame(GetPlacementDivision(player, placementDivisions, battleMode).fameReward);
-		gameManager.IncreaseMoney(GetPlacementDivision(player, placementDivisions, battleMode).moneyReward);
-		gameManager.GetPlannedEvents.RemoveAt(gameManager.GetPlannedEvents.IndexOf(currentEvent));
+		uiManager.UpdateContestResults(player.placement, divison);
 		uiManager.UpdateAll();
 	}
 
@@ -199,12 +205,11 @@ public class ContestManager : MonoBehaviour
 	{
 		foreach (DivisionForm f in allDivisions)
 		{
-			if (opponent.placement <= f.minRank && mode == f.mode)
+			if (opponent.placement >= f.minRank && mode == f.mode)
 			{
 				return f;
 			}
 		}
-
 		return null;
 	}
 

@@ -252,8 +252,8 @@ public class UIManager : MonoBehaviour
 
 		if (activityManager.currentActivity == ActivityManager.Activity.Contest)
 		{
-			opponent1Stats.text += "\n\ntournament placement:\n" + contestManager.Participants[contestManager.Participants.IndexOf(o1)].placement;
-			opponent2Stats.text += "\n\ntournament placement:\n" + contestManager.Participants[contestManager.Participants.IndexOf(o2)].placement;
+			opponent1Stats.text += "\n\ntournament placement:\n" + (contestManager.Participants.IndexOf(o1) + 1);
+			opponent2Stats.text += "\n\ntournament placement:\n" + (contestManager.Participants.IndexOf(o2) + 1);
 		}
 
 		if (winChancePercentage < 0) winChancePercentage = 0;

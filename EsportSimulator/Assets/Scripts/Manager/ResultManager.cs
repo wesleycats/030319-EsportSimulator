@@ -44,6 +44,8 @@ public class ResultManager : MonoBehaviour
 
 	#endregion
 
+	#region Variables
+
 	[Header("Needs")]
 	// How much tiredness you lose by sleeping
 	[SerializeField] private int tirednessDecreaseRate;
@@ -86,6 +88,8 @@ public class ResultManager : MonoBehaviour
 	public TimeManager timeManager;
 	public ActivityManager activityManager;
 	public PlayerData playerData;
+
+	#endregion
 
 	public void Eat(int foodLevel)
 	{
@@ -242,6 +246,7 @@ public class ResultManager : MonoBehaviour
 	{
 		ResultsForm workResults = GetWorkResultForm(workLevel);
 
+		gameManager.IncreaseEarnedSalary(workResults.Money);
 		gameManager.IncreaseMoney(workResults.Money);
 		gameManager.IncreaseWorkExp(workResults.WorkExperience);
 		gameManager.IncreaseGameKnowledge(workResults.GameKnowledge);
@@ -249,6 +254,28 @@ public class ResultManager : MonoBehaviour
 		gameManager.IncreaseMechanics(workResults.Mechanics);
 
 		gameManager.IncreaseTiredness(workResults.Tiredness);
+		gameManager.IncreaseHunger(hungerIncreaseRate);
+		gameManager.IncreaseThirst(thirstIncreaseRate);
+	}
+
+	/// <summary>
+	/// Applies the results given by streaming per hour, based on the amount of fame and views
+	/// </summary>
+	/// <param name="fame"></param>
+	public void StreamResults(int fame)
+	{
+		if (fame < minimalFameForViews) return;
+
+		int fameCount = fame / minimalFameForViews;
+		totalViews += GetStreamViews(fameCount, minViewsPerFame, maxViewsPerFame);
+
+		int viewCount = totalViews / minimalViewsForIncome;
+		int money = GetStreamIncome(viewCount, minIncomePerViews, maxIncomePerViews);
+
+		totalIncome += money;
+		gameManager.IncreaseMoney(money);
+		gameManager.IncreaseEarnedStreamDonations(money);
+		gameManager.IncreaseTiredness(streamEnergyCost);
 		gameManager.IncreaseHunger(hungerIncreaseRate);
 		gameManager.IncreaseThirst(thirstIncreaseRate);
 	}
@@ -324,7 +351,7 @@ public class ResultManager : MonoBehaviour
 				{
 					eloReward = fiveVsFive.Rating;
 					fameReward = fiveVsFive.Fame;
-				} 
+				}
 				else
 				{
 					eloReward = -fiveVsFive.Rating;
@@ -370,35 +397,6 @@ public class ResultManager : MonoBehaviour
 		ResetBattleStats();
 	}
 
-	public void ResetBattleStats()
-	{
-		opponent1 = null;
-		opponent2 = null;
-		battleResults = null;
-		timeManager.battleStarted = false;
-	}
-
-	/// <summary>
-	/// Applies the results given by streaming per hour, based on the amount of fame and views
-	/// </summary>
-	/// <param name="fame"></param>
-	public void StreamResults(int fame)
-	{
-		if (fame < minimalFameForViews) return;
-
-		int fameCount = fame / minimalFameForViews;
-		totalViews += GetStreamViews(fameCount, minViewsPerFame, maxViewsPerFame);
-
-		int viewCount = totalViews / minimalViewsForIncome;
-		int money = GetStreamIncome(viewCount, minIncomePerViews, maxIncomePerViews);
-
-		totalIncome += money;
-		gameManager.IncreaseMoney(money);
-		gameManager.IncreaseTiredness(streamEnergyCost);
-		gameManager.IncreaseHunger(hungerIncreaseRate);
-		gameManager.IncreaseThirst(thirstIncreaseRate);
-	}
-	
 	public void PayRent(Accommodation accommodation)
 	{
 		if (gameManager.IsMoneyHighEnough(accommodation.rent))
@@ -408,6 +406,14 @@ public class ResultManager : MonoBehaviour
 			gameManager.GameOver();
 			FindObjectOfType<ButtonManager>().EnableAllButtonsOf("GameOver");
 		}
+	}
+
+	public void ResetBattleStats()
+	{
+		opponent1 = null;
+		opponent2 = null;
+		battleResults = null;
+		timeManager.battleStarted = false;
 	}
 
 	public void ResetTotalViews()
@@ -502,24 +508,33 @@ public class ResultManager : MonoBehaviour
 
 	public ResultsForm GetWorkResultForm(int workLevel)
 	{
+		ResultsForm workForm;
+
 		switch (workLevel)
 		{
 			case 0:
-				return workLevel1;
+				workForm = workLevel1;
+				break;
 
 			case 1:
-				return workLevel2;
+				workForm = workLevel2;
+				break;
 
 			case 2:
-				return workLevel3;
+				workForm = workLevel3;
+				break;
 
 			case 3:
-				return workLevel4;
+				workForm = workLevel4;
+				break;
 
 			default:
 				Debug.LogError("Given work level is unavailable");
-				return null;
+				workForm = workLevel1;
+				break;
 		}
+
+		return workForm;
 	}
 
 	public ResultsForm GetTrainingResultsForm(Training.Type type)
@@ -578,7 +593,7 @@ public class ResultManager : MonoBehaviour
 				return 0;
 		}
 	}
-
+	
 	public int GetRealRandom(int min, int max)
 	{
 		int randomNumber = Random.Range(min, max);
@@ -612,6 +627,8 @@ public class ResultManager : MonoBehaviour
 	#region Getters & Setters
 
 	public int GetTirednessDecreaseRate { get { return tirednessDecreaseRate; } }
+	public int GetHungerIncreaseRate { get { return hungerIncreaseRate; } }
+	public int GetThirstIncreaseRate { get { return thirstIncreaseRate; } }
 	public int GetTotalViews { get { return totalViews; } }
 	public ResultsForm GetTrainingLevel1Results { get { return trainLevel1; } }
 	public ResultsForm GetTrainingLevel2Results { get { return trainLevel2; } }

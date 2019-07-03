@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   defaultMoney: 500
+  defaultTiredness: 0
+  defaultHunger: 0
+  defaultThirst: 0
   allItems:
   - itemType: Mouse
     qualities:
@@ -201,22 +204,22 @@ MonoBehaviour:
   - type: 1
     cost: 200
     rent: 50
-    trainingRates: 01000000030000000a000000
+    trainingRates: 030000000600000009000000
     sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
   - type: 2
     cost: 1000
     rent: 200
-    trainingRates: 01000000040000000c000000
+    trainingRates: 060000000c00000012000000
     sprite: {fileID: 21300000, guid: 0191629f9b79a99409484d7b627166af, type: 3}
   - type: 3
     cost: 2000
     rent: 500
-    trainingRates: 02000000050000000f000000
+    trainingRates: 0c0000001800000024000000
     sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
   - type: 4
     cost: 5000
     rent: 1500
-    trainingRates: 020000000600000014000000
+    trainingRates: 180000003000000048000000
     sprite: {fileID: 21300000, guid: 0191629f9b79a99409484d7b627166af, type: 3}
   money: 500
   rating: 0
@@ -224,8 +227,8 @@ MonoBehaviour:
   workExperience: 0
   workLevel: 0
   tiredness: 0
-  hunger: 0
-  thirst: 0
+  hunger: 80
+  thirst: 95
   gameKnowledge: 0
   teamPlay: 0
   mechanics: 0
@@ -259,6 +262,6 @@ MonoBehaviour:
     type: 1
     cost: 200
     rent: 50
-    trainingRates: 01000000030000000a000000
+    trainingRates: 030000000600000009000000
     sprite: {fileID: 21300000, guid: 0907e5db59fa5a44d879f6de2d9e5952, type: 3}
   plannedTournaments: []
